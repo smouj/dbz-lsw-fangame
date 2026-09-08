@@ -43,6 +43,19 @@ captures are separate domains. They remain available only in their correctly
 labelled UI, asset or research context; none is a substitute for a fighter
 combat frame.
 
+### Animation route consolidation
+
+`#dev/animation` and `#dev/animation-studio` now open the same physical-ROM
+inspector. It accepts only `physical/rom-p...` assets; legacy and remake
+manifest data may remain visible as diagnostic text, but cannot be rendered as
+thumbnails. This removes the former editable animation surface from the Dev
+navigation without deleting its historical data.
+
+The Cards preview follows the same rule. Its timeline ignores every cue except
+`ROM_PHYSICAL_FRAME` with a promoted `physical/` file. The focused Vegito SSJ
+gate exercises all 64 compatible cards (424 physical cues) so a semantic or
+external PNG cannot silently re-enter the preview.
+
 ## Guardrails
 
 `verify:dev-rom-truth` now rejects the former Goku-prefix rewrite, manual pose
@@ -58,3 +71,7 @@ Validation at this checkpoint:
 - `verify:dev-physical-sync` — 48 forms, 3,689 physical IDs, 24,823 instances;
 - `verify:rom-fighter-neutral` — 100 checks across all 48 forms;
 - action-preview runtime parity and frame-form identity gates.
+
+The physical-corpus verifier remains the source-of-truth gate for local asset
+promotion: if a declared physical file is absent, the Dev surface must show an
+explicit unavailable state and the build is not considered synchronized.

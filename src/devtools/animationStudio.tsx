@@ -1,13 +1,12 @@
 // ═══════════════════════════════════════════════════════════════════════
 // DEV STUDIO — ANIMATION STUDIO (P0.3) — ROM ↔ RUNTIME VISUAL DEBUGGER
 // ═══════════════════════════════════════════════════════════════════════
-// Compara en tres columnas sincronizadas:
-//   ROM PHYSICAL ↔ CURRENT MANIFEST ↔ PRODUCTION
-// por FORM + AnimationResource + sequence. Timeline por TICKS GBC (no fps).
-// No resuelve UNRESOLVED por similitud; solo marca CANDIDATE.
+// Inspecciona un único frame físico certificado por la ROM, por FORM +
+// AnimationResource + sequence. Timeline por TICKS GBC (no fps). Las
+// referencias históricas se muestran solo como texto de diagnóstico.
 // ═══════════════════════════════════════════════════════════════════════
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { spriteDirFor, spriteFrameUrl } from '../data/spriteManifest';
+import { spriteDirFor } from '../data/spriteManifest';
 import { getForm } from '../data/roster';
 import { GBC_FPS } from '../battle/timeline';
 import {
@@ -157,11 +156,15 @@ function animationFrameProvenance(view: RomFrameView, physicalFrame: StudioPhysi
 
 // ─── Componente de columna (imagen + metadatos) ─────────────────────────
 
-function FrameImg({ formId, file, zoom, flipped }: { formId: string; file: string | null; zoom: number; flipped: boolean }) {
-  if (!file) return <div className="as-frame-empty">—</div>;
+function PhysicalFrameImg({ formId, file, zoom, flipped }: { formId: string; file: string | null; zoom: number; flipped: boolean }) {
+  const dir = spriteDirFor(formId);
+  // Animation Studio only renders promoted physical corpus assets. A
+  // manifest/rework PNG can be described as a legacy reference elsewhere,
+  // but cannot become a visual preview in this ROM authority panel.
+  if (!dir || !file || !file.startsWith('physical/')) return <div className="as-frame-empty">ROM frame unavailable</div>;
   return (
     <img
-      src={spriteFrameUrl(formId, file)}
+      src={`/assets/sprites/${dir}/${file}`}
       alt={file}
       style={{ imageRendering: 'pixelated', transform: `scale(${zoom})${flipped ? ' scaleX(-1)' : ''}`, transformOrigin: 'top left', background: 'repeating-conic-gradient(#1a1a1a 0% 25%, #242424 0% 50%) 0 0/20px 20px' }}
     />
@@ -352,7 +355,6 @@ export function AnimationStudioModule() {
   const [side, setSide] = useState<StudioSide>('RIGHT');
   const [onlyUnresolved, setOnlyUnresolved] = useState(false);
   const [showOffsets, setShowOffsets] = useState(false);
-  const [overlay, setOverlay] = useState<'rom' | 'manifest' | 'overlay'>('manifest');
   const [zoom, setZoom] = useState(3);
   const [tick, setTick] = useState(0);
   const [playing, setPlaying] = useState(false);
@@ -496,8 +498,8 @@ export function AnimationStudioModule() {
       <header className="dev-header">
         <h1>Animation Studio — ROM ↔ Runtime</h1>
         <p className="dev-sub">
-          Compara ROM PHYSICAL ↔ CURRENT MANIFEST ↔ PRODUCTION por FORM + AnimationResource + sequence.
-          Timeline por TICKS GBC (no fps). UNRESOLVED se muestra, no se promociona por similitud.
+          Inspector de secuencias físicas ROM por forma, recurso y selector. Timeline por TICKS GBC.
+          Los PNG de manifest o remake no se previsualizan aquí: un hueco permanece explícito hasta que la ROM lo cierre.
         </p>
       </header>
 
@@ -505,10 +507,10 @@ export function AnimationStudioModule() {
 
       {/* Métricas */}
       <div className="as-metrics">
-        <div className="as-metric"><span>MANIFEST MAPPING GAPS</span><b>{metrics.totalUnresolved}</b></div>
-        <div className="as-metric"><span>REACHABLE MAPPING GAPS</span><b>{metrics.productionReachableUnresolved}</b></div>
-        <div className="as-metric"><span>GOLDEN MAPPING GAPS</span><b>{metrics.goldenReachableUnresolved}</b></div>
-        <div className="as-metric as-metric-goal"><span>scope</span><b>ASSET MAP ONLY</b></div>
+        <div className="as-metric"><span>UNRESOLVED LEGACY REFS</span><b>{metrics.totalUnresolved}</b></div>
+        <div className="as-metric"><span>REACHABLE REFS TO CLOSE</span><b>{metrics.productionReachableUnresolved}</b></div>
+        <div className="as-metric"><span>GOLDEN REFS TO CLOSE</span><b>{metrics.goldenReachableUnresolved}</b></div>
+        <div className="as-metric as-metric-goal"><span>preview source</span><b>ROM PHYSICAL ONLY</b></div>
       </div>
 
       {/* Selectores */}
@@ -578,8 +580,8 @@ export function AnimationStudioModule() {
         />
       )}
 
-      {/* Tres columnas */}
-      <div className="as-columns">
+      {/* La única columna visual es el corpus físico ROM. */}
+      <div className="as-columns" style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
         <div className="as-col">
           <div className="as-col-head">ROM PHYSICAL <span className="as-mono">physicalId · vf · ticks · dx/dy</span></div>
           <div className="as-col-body">
@@ -597,7 +599,7 @@ export function AnimationStudioModule() {
                   <span className="dev-tag ok">ROM SEQUENCE CLOSED</span>
                   <span className={`dev-tag ${view.physical.file ? 'ok' : 'warn'}`}>PHYSICAL PNG: {view.physical.file ? 'RENDERED' : 'RENDERER PENDING'}</span>
                 </div>
-                <FrameImg formId={formId} file={view.physical.file} zoom={zoom} flipped={side === 'LEFT'} />
+                <PhysicalFrameImg formId={formId} file={view.physical.file} zoom={zoom} flipped={side === 'LEFT'} />
               </>
             ) : (
               <div className="as-empty-box">
@@ -609,45 +611,6 @@ export function AnimationStudioModule() {
           </div>
         </div>
 
-        <div className="as-col">
-          <div className="as-col-head">CURRENT MANIFEST <span className="as-mono">F-MAP</span></div>
-          <div className="as-col-body">
-            {(() => {
-              const fmap = active.hasRomSequence ? view?.fmap : ctxFmap;
-              if (!fmap || fmap.bindings.length === 0) return <div className="as-empty-box">sin bindings</div>;
-              return (
-                <>
-                  <div className="as-col-meta">
-                    <Badge mapping={fmap.classification} />
-                    <span className="as-mono">{fmap.semanticRole} · {fmap.frames.length} frames</span>
-                  </div>
-                  <div className="as-frames">
-                    {fmap.frames.slice(0, 8).map((file, i) => (
-                      <FrameImg key={i} formId={formId} file={file} zoom={zoom} flipped={side === 'LEFT'} />
-                    ))}
-                  </div>
-                </>
-              );
-            })()}
-          </div>
-        </div>
-
-        <div className="as-col">
-          <div className="as-col-head">REMAKE MANIFEST <span className="as-mono">spriteConfig · not BattleScreen live</span></div>
-          <div className="as-col-body">
-            {(() => {
-              const frames = active.hasRomSequence ? view?.productionFrames : ctxProduction;
-              if (!frames || frames.length === 0) return <div className="as-empty-box">fallback → idle</div>;
-              return (
-                <div className="as-frames">
-                  {frames.slice(0, 8).map((file, i) => (
-                    <FrameImg key={i} formId={formId} file={file} zoom={zoom} flipped={side === 'LEFT'} />
-                  ))}
-                </div>
-              );
-            })()}
-          </div>
-        </div>
       </div>
 
       {/* Inspector + consumidores */}

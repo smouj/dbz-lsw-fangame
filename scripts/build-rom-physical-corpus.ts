@@ -16,11 +16,13 @@ import { ROM_BANK61_ANIMATION_CORE_RESOURCE_BASES } from '../src/data/generated/
 
 const ROOT = process.cwd();
 function runTsx(args: string[]): void {
-  const command = process.platform === 'win32'
-    ? (process.env.ComSpec ?? 'cmd.exe')
-    : 'npx';
+  // cmd.exe must receive tokens after /c (without /s): /s can discard child
+  // arguments when invoked from tsx, leaving a physical corpus stale. The
+  // tokens are fixed repository paths and hexadecimal selectors built here,
+  // so no shell interpolation is involved.
+  const command = process.platform === 'win32' ? (process.env.ComSpec ?? 'cmd.exe') : 'npx';
   const commandArgs = process.platform === 'win32'
-    ? ['/d', '/s', '/c', 'npx.cmd', 'tsx', ...args]
+    ? ['/d', '/c', 'npx.cmd', 'tsx', ...args]
     : ['tsx', ...args];
   execFileSync(command, commandArgs, { cwd: ROOT, stdio: 'pipe' });
 }

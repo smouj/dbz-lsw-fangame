@@ -19,7 +19,6 @@ import { StoryModule } from './story';
 import { ResearchModule } from './research';
 import MusicModule from './music';
 import GameConfigModule from './gameconfig';
-import { AnimationModule } from './animation';
 import { AnimationStudioModule } from './animationStudio';
 import { LabModule } from './lab';
 import { PixelArtModule } from './pixelart';
@@ -54,7 +53,7 @@ export const DEV_MODULES: DevModuleDef[] = [
   { id: 'workspace', label: 'Workspace', icon: FolderCode, desc: 'Explorador de código, paneles Dev y scratch editor local', group: 'Overview' },
 
   { id: 'characters', label: 'Characters', icon: Users, desc: 'Formas, assets y frames físicos ROM por personaje', group: 'ROM & Assets' },
-  { id: 'animation-studio', label: 'Animation Studio', icon: Film, desc: 'ROM ↔ current asset ↔ production, ticks GBC', group: 'ROM & Assets' },
+  { id: 'animation-studio', label: 'Animation Studio', icon: Film, desc: 'Secuencias y frames físicos ROM, ticks GBC', group: 'ROM & Assets' },
   { id: 'romdisplay', label: 'ROM Display', icon: Grid2X2, desc: 'ROM inspection, palettes, Fighter OBJ, FX y Support', group: 'ROM & Assets' },
   { id: 'assets', label: 'Assets', icon: Search, desc: 'Auditor de assets y manifiestos; no sustituye la fuente ROM física', group: 'ROM & Assets' },
   { id: 'facing', label: 'Facing', icon: Activity, desc: 'Orientación de chibis overworld', group: 'ROM & Assets' },
@@ -66,7 +65,7 @@ export const DEV_MODULES: DevModuleDef[] = [
   { id: 'hud', label: 'HUD', icon: Gauge, desc: 'Visualizador y editor del tema HUD', group: 'Runtime' },
 
   { id: 'cards', label: 'Cards', icon: TableProperties, desc: 'Base de datos ROM de las 125 cartas', group: 'Data' },
-  { id: 'animation', label: 'Animation', icon: Film, desc: 'Inspector legacy y runtime; la evidencia física vive en ROM Display', group: 'Data' },
+  { id: 'animation', label: 'Animation', icon: Film, desc: 'Inspector de animación física ROM', group: 'Data' },
   { id: 'story', label: 'Story', icon: Gamepad2, desc: 'Capítulos, viñetas y mazos de jefes', group: 'Data' },
   { id: 'music', label: 'Music', icon: Music, desc: 'BSO del juego y mapeo de contexto', group: 'Data' },
 
@@ -242,7 +241,7 @@ export function DevStudio({ onExit, onLaunchBattle }: DevStudioProps) {
           {module === 'dashboard' && <DashboardModule onNavigate={navigate} />}
           {module === 'characters' && <CharactersModule onOpenModule={openLinkedModule} />}
           {module === 'cards' && <CardsModule />}
-          {module === 'animation' && <AnimationModule target={linkedTarget} />}
+          {module === 'animation' && <AnimationStudioModule />}
           {module === 'animation-studio' && <AnimationStudioModule />}
           {module === 'pixelart' && <PixelArtModule target={pixelTarget} />}
           {module === 'facing' && <FacingModule />}
