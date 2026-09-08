@@ -569,12 +569,13 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
    MENÚ PRINCIPAL
    ═══════════════════════════════════════════════════════════ */
 
-.screen-enter { animation: screen-in 0.18s ease-out both; }
-/* Transición de página: corte tipo manga (spec §15) */
-.page-screen { animation: page-in 0.2s ease-out both; }
+.screen-enter { animation: screen-in .32s cubic-bezier(.2,.8,.3,1) both; }
+/* Transición de página: GBC feel — fade-in suave con ligero ascenso,
+   más pausado que un snap instantáneo, menos que un fade completo */
+.page-screen { animation: page-in .28s cubic-bezier(.2,.8,.3,1) both; }
 @keyframes screen-in {
-  from { opacity: 0; transform: translateY(10px) scale(0.995); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  from { opacity: 0; transform: translateY(12px) scale(.99); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .menu-screen {
@@ -1599,7 +1600,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   border-top: 2px solid rgba(246,199,68,.72);
   border-bottom: 2px solid rgba(246,199,68,.72);
   box-shadow: 0 18px 44px rgba(0,0,0,.62), 0 0 24px rgba(247,147,30,.22);
-  animation: phase-cue-in .64s steps(5, end) both;
+  animation: phase-cue-in .5s cubic-bezier(.2,.8,.3,1) both,
+             phase-cue-out .3s ease-in 0.8s both;
 }
 
 .phase-cue-line {
@@ -1637,10 +1639,12 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 
 @keyframes phase-cue-in {
-  0% { opacity: 0; filter: brightness(1.8); }
-  18% { opacity: 1; }
-  76% { opacity: 1; }
-  100% { opacity: 0; filter: brightness(1); }
+  from { opacity: 0; transform: translate(-50%, -50%) scale(1.08); }
+  to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+@keyframes phase-cue-out {
+  from { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  to   { opacity: 0; transform: translate(-50%, -50%) scale(.96); }
 }
 
 /* Entrada del HUD de batalla (tras la intro VS) */
@@ -2417,8 +2421,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   overflow: hidden;
 }
 @keyframes page-in {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .page-header {
@@ -4551,7 +4555,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;
   container-type: size;
-  animation: intro-bg-in .45s ease both;
+  animation: intro-bg-in .65s ease-out both;
 }
 @keyframes intro-bg-in { from { opacity: 0; } to { opacity: 1; } }
 /* textura GBC sutil: dither/scanlines estáticos */
@@ -4581,8 +4585,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   display: flex; flex-direction: column; align-items: center; gap: 12px;
   z-index: 3;
 }
-.intro-left { left: clamp(32px, 8cqw, 140px); animation: intro-slide-left .55s cubic-bezier(.2,.8,.3,1) .25s both; }
-.intro-right { right: clamp(32px, 8cqw, 140px); animation: intro-slide-right .55s cubic-bezier(.2,.8,.3,1) .25s both; }
+.intro-left { left: clamp(32px, 8cqw, 140px); animation: intro-slide-left .6s cubic-bezier(.2,.8,.3,1) .35s both; }
+.intro-right { right: clamp(32px, 8cqw, 140px); animation: intro-slide-right .6s cubic-bezier(.2,.8,.3,1) .35s both; }
 /* En 2v2 hay dos plazas independientes por equipo: ninguna caja puede
    invadir la otra ni el VS. Se conservan módulos 32×24 a ×3/×4. */
 .intro-team:has(> .intro-fighter:nth-child(2)) {
@@ -4617,8 +4621,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 /* ENTRADA CINEMATOGRÁFICA ÚNICA: los sprites vienen DESDE FUERA de la
    pantalla (±42vw) hasta su posición — no hay otra animación de entrada
    en la partida (sin READY/FIGHT ni nombres) */
-@keyframes intro-slide-left { from { transform: translateY(-50%) translateX(-42vw); opacity: 0; } to { transform: translateY(-50%) translateX(0); opacity: 1; } }
-@keyframes intro-slide-right { from { transform: translateY(-50%) translateX(42vw); opacity: 0; } to { transform: translateY(-50%) translateX(0); opacity: 1; } }
+@keyframes intro-slide-left { from { transform: translateY(-50%) translateX(-42vw); opacity: 0; } 30% { opacity: 1; } to { transform: translateY(-50%) translateX(0); opacity: 1; } }
+@keyframes intro-slide-right { from { transform: translateY(-50%) translateX(42vw); opacity: 0; } 30% { opacity: 1; } to { transform: translateY(-50%) translateX(0); opacity: 1; } }
 .intro-portrait {
   position: relative;
   display: flex; align-items: center; justify-content: center;
@@ -4626,7 +4630,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   border: 3px solid currentColor;
   box-shadow: 5px 5px 0 #000, 0 0 18px color-mix(in srgb, currentColor 25%, transparent);
   padding: 7px;
-  animation: intro-float 2.6s ease-in-out 1.4s infinite alternate;
+  animation: intro-float 2.6s ease-in-out 1.6s infinite alternate;
 }
 .intro-order {
   display: none;
@@ -4660,8 +4664,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   color: #f8f4e4;
   text-shadow: 4px 4px 0 #000, -2px 2px 0 #000, 2px -2px 0 #000, -2px -2px 0 #000, 3px 3px 0 #8a3030;
   letter-spacing: .04em;
-  animation: intro-vs-pop .55s cubic-bezier(.2,1.5,.4,1) .7s both,
-             intro-vs-glow 2s ease-in-out 1.3s infinite alternate;
+  animation: intro-vs-pop .6s cubic-bezier(.2,1.5,.4,1) .8s both,
+             intro-vs-glow 2s ease-in-out 1.5s infinite alternate;
   transform-origin: center;
   position: relative;
   z-index: 4;
@@ -4673,7 +4677,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   animation: intro-flash-anim .4s ease 1.5s both;
   z-index: 5;
 }
-@keyframes intro-flash-anim { 0% { opacity: 0; } 25% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes intro-flash-anim { 0% { opacity: 0; } 20% { opacity: 1; } 100% { opacity: 0; } }
 
 /* Banner de ROUND (X STRIKES FIRST) con entrada animada */
 /* (eliminado: la fase vive ahora en los chips phase-chip del panel inferior) */

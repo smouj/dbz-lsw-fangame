@@ -1945,10 +1945,11 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
       },
       onComplete: () => {
         setBattleIntroPresentation(prev => ({
-          ...reduceBattleIntroPresentation(prev, BATTLE_INTRO_PRESENTATION_CONFIG.countersVisible.ticks + 1),
+          ...reduceBattleIntroPresentation(prev, BATTLE_INTRO_PRESENTATION_CONFIG.introComplete.ticks),
           completed: true,
           inputLocked: true,
           introOverlayVisible: false,
+          fadeProgress: 1,
           cues: [...prev.cues, 'BATTLE_INTRO_COMPLETED'],
         }));
         if (!startedRef.current) {
@@ -3228,7 +3229,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
           SIN texto (nada de READY/FIGHT ni nombres). Cubre TODA la ventana.
           La desmonta BattleIntroPresentation por ticks. ═══ */}
       {battleIntroPresentation.introOverlayVisible && (
-        <div className="battle-intro">
+        <div className="battle-intro" style={{ opacity: 1 - battleIntroPresentation.fadeProgress }}>
           <div className="intro-team intro-team-left" data-team="PLAYER" aria-label="PLAYER TEAM">
             {[activePlayerFormId, player2?.formId].filter((id, i, all): id is string => Boolean(id) && all.indexOf(id) === i).map((formId, index) => (
               <div className={`intro-fighter intro-left intro-fighter--${index + 1}`} key={`player-${formId}-${index}`}>
