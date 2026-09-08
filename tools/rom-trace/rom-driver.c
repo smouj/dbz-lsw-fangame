@@ -84,8 +84,10 @@ static void cmd_state(void) {
   printf("OK");
   for (int i = 0; i < N_BATTLE; i++)
     printf(" %s=%02X", BATTLE_NAMES[i], rd(BATTLE_ADDRS[i]));
-  printf(" C3C6=%02X C3C7=%02X CA39=%02X SCX=%02X\n",
+  printf(" C3C6=%02X C3C7=%02X CA39=%02X SCX=%02X",
          rd(0xC3C6), rd(0xC3C7), rd(0xCA39), rd(0xFF43));
+  printf(" C405=%02X C406=%02X C407=%02X C408=%02X C409=%02X C40A=%02X C2D0=%02X C2D1=%02X\n",
+         rd(0xC405), rd(0xC406), rd(0xC407), rd(0xC408), rd(0xC409), rd(0xC40A), rd(0xC2D0), rd(0xC2D1));
   fflush(stdout);
 }
 
@@ -179,8 +181,9 @@ static void cmd_trace(const char* path, int n, const char* keyspec) {
         fprintf(f, "%s%d", b ? ", " : "", rd(base + b));
       fprintf(f, "]}");
     }
-    fprintf(f, "], \"activeObject\": %d, \"drawState\": %d, \"drawOrderFlag\": %d, \"display\": {\"scx\": %d, \"scy\": %d, \"lcdc\": %d, \"stat\": %d}, \"slots\": [",
-            rd(0xC3C6), rd(0xC3C7), rd(0xCA39), rd(0xFF43), rd(0xFF42), rd(0xFF40), rd(0xFF41));
+    fprintf(f, "], \"activeObject\": %d, \"drawState\": %d, \"drawOrderFlag\": %d, \"display\": {\"scx\": %d, \"scy\": %d, \"lcdc\": %d, \"stat\": %d}, \"scroll\": {\"C405\": %d, \"C406\": %d, \"C407\": %d, \"C408\": %d, \"C409\": %d, \"C40A\": %d, \"C2D0\": %d, \"C2D1\": %d}, \"slots\": [",
+            rd(0xC3C6), rd(0xC3C7), rd(0xCA39), rd(0xFF43), rd(0xFF42), rd(0xFF40), rd(0xFF41),
+            rd(0xC405), rd(0xC406), rd(0xC407), rd(0xC408), rd(0xC409), rd(0xC40A), rd(0xC2D0), rd(0xC2D1));
     for (int o = 0; o < N_SLOTS; o++) {
       fprintf(f, "%s{\"anim\": [%d, %d, %d], \"gfx\": [%d, %d, %d]}", o ? ", " : "",
               rd(0xCA0D + o*3), rd(0xCA0D + o*3 + 1), rd(0xCA0D + o*3 + 2),
