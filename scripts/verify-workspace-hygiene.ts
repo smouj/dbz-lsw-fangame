@@ -84,12 +84,12 @@ if (REQUIRE_ROM_PHYSICAL_EXPORTS) {
 
 const physicalCorpusGenerated = readFileSync(join(ROOT, 'src/data/generated/romPhysicalCorpus.generated.ts'), 'utf8');
 check('current generated corpus exposes fighter and Stage-promoted totals',
-  physicalCorpusGenerated.includes('"fighterPhysicalIdentities": 1193') &&
-  physicalCorpusGenerated.includes('"fighterFrameInstances": 9463') &&
-  physicalCorpusGenerated.includes('"physicalIdentities": 3689') &&
-  physicalCorpusGenerated.includes('"frameInstances": 24823') &&
-  physicalCorpusGenerated.includes('"transparentPhysicalIds": 7') &&
-  physicalCorpusGenerated.includes('"transparentFrameRecords": 36'));
+  physicalCorpusGenerated.includes('"fighterPhysicalIdentities": 2057') &&
+  physicalCorpusGenerated.includes('"fighterFrameInstances": 16525') &&
+  physicalCorpusGenerated.includes('"physicalIdentities": 4553') &&
+  physicalCorpusGenerated.includes('"frameInstances": 31885') &&
+  physicalCorpusGenerated.includes('"transparentPhysicalIds": 10') &&
+  physicalCorpusGenerated.includes('"transparentFrameRecords": 126'));
 
 if (failures) {
   console.log(`\nworkspace-hygiene: ${failures} failure(s)`);
