@@ -7,7 +7,7 @@
 import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, unlinkSync, writeFileSync } from 'fs';
 import { createHash } from 'crypto';
 import { execFileSync } from 'child_process';
-import { join } from 'path';
+import { dirname, join } from 'path';
 import { CARDS, type CardDef } from '../src/data/cards';
 import { FORMS } from '../src/data/roster';
 import { romCardData } from '../src/data/romCardData';
@@ -22,6 +22,13 @@ function runTsx(args: string[]): void {
   const localTsx = join(ROOT, 'node_modules', 'tsx', 'dist', 'cli.mjs');
   if (existsSync(localTsx)) {
     execFileSync(process.execPath, [localTsx, ...args], { cwd: ROOT, stdio: 'pipe' });
+    return;
+  }
+  // Invoke npm's JavaScript CLI with Node, not its Windows batch shim.  This
+  // keeps regeneration synchronous when tsx lives in npm's executable cache.
+  if (process.platform === 'win32') {
+    const npxCli = join(dirname(process.execPath), 'node_modules', 'npm', 'bin', 'npx-cli.js');
+    execFileSync(process.execPath, [npxCli, 'tsx', ...args], { cwd: ROOT, stdio: 'pipe' });
     return;
   }
   execFileSync('npx', ['tsx', ...args], { cwd: ROOT, stdio: 'pipe' });

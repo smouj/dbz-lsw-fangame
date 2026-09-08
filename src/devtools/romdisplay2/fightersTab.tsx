@@ -1,9 +1,5 @@
-// ROM Display Lab 2.1 — tab FIGHTERS (provenance correction).
-// Dos submodos SIN catalog-v9 (V9 obsoleto como autoridad):
-//  - MANIFEST POSE: mundo semántico del remake (pose → PNG canónico → runtime).
-//    La columna ROM PHYSICAL solo aparece con mapping demostrado
-//    (PHYSICAL_FRAME_RECONCILIATION: ROM frame ↔ manifest file).
-//  - ROM ANIMATION: mundo físico ROM (AnimationResource → sequence → frame
+// ROM Display Lab — tab FIGHTERS.
+// Animación física ROM (AnimationResource → sequence → frame
 //    [metasprite, durationTicks, offsetY, offsetX]) con playback ROM real
 //    (59.7275 Hz ≈ 16.7427 ms/tick) aplicando offsets.
 // Evidencia estática ROM (research-v3, ROM_STATIC_VERIFIED):
@@ -12,13 +8,11 @@
 //    UNUSED_RESERVED / OFFSCREEN_ENTRY; pendiente: reconciliar offsets de frame
 //    y base positions C3C8..C3CB contra traces dinámicos de ataques.
 import { useEffect, useMemo, useState } from 'react';
-import { MANIFEST_FRAME_INDEX, type ManifestFrameRecord } from '../../data/generated/manifestFrameIndex.generated';
 import { ANIMATION_RESOURCE_CATALOG, animationResourceById } from '../../battle/animationResources';
-import { PHYSICAL_FRAME_RECONCILIATION } from '../../battle/physicalFrameReconciliation';
 import { ROM_CGB_PALETTE_TABLE } from '../../data/generated/romCgbPaletteTable.generated';
+import { ROM_FIGHTER_FORM_IDENTITY } from '../../data/generated/romFighterFormIdentity.generated';
 import { FieldRow, Hex, MappingPill, Mono, PixelCanvas, SectionTitle, ZoomControls, useImage, type MappingStatus, type SpriteBackground } from './common';
 
-interface PoseInfo { pose: string; frames: ManifestFrameRecord[]; fps: number; loop: boolean; }
 interface PhysicalManifestFrame {
   file: string;
   rawCanvasFile?: string;
@@ -73,39 +67,16 @@ interface PhysicalProvenance {
   frames: PhysicalProvenanceFrame[];
 }
 
-const FORM_IDS = Array.from(new Set(MANIFEST_FRAME_INDEX.map((r) => r.formId))).sort();
+const FORM_IDS = ROM_FIGHTER_FORM_IDENTITY.map((row) => row.formId);
 const RESOURCE_IDS = ANIMATION_RESOURCE_CATALOG.map((e) => e.resourceId).sort((a, b) => a - b);
 const TICK_MS = 1000 / 59.7275; // ≈ 16.7427 ms/tick — reloj GBC real
-
-type SubMode = 'manifest' | 'rom';
-
-/** Mapping demostrado ROM frame ↔ manifest file (sin V9). */
-function mappingForFile(file: string | null): { status: MappingStatus; detail: string } {
-  if (!file) return { status: 'UNRESOLVED', detail: 'sin frame' };
-  for (const res of PHYSICAL_FRAME_RECONCILIATION) {
-    for (const f of res.frames) {
-      if (f.assetMapping.sampleFiles.includes(file)) {
-        return { status: f.assetMapping.status as MappingStatus, detail: `${res.resourceHex} seq${f.sequenceIndex} F${f.frameIndex} · ${f.assetMapping.reason}` };
-      }
-    }
-  }
-  return { status: 'UNRESOLVED', detail: 'sin correspondencia física demostrada en PHYSICAL_FRAME_RECONCILIATION' };
-}
 
 function paletteForKey(key: number) {
   return ROM_CGB_PALETTE_TABLE.find((p) => p.index === key) ?? null;
 }
 
 export function FightersTab({ initialForm, onFormChange }: { initialForm: string | null; onFormChange?: (form: string) => void }) {
-  const [mode, setMode] = useState<SubMode>('rom');
-  // ── MANIFEST POSE ──
   const [formId, setFormId] = useState<string>(initialForm && FORM_IDS.includes(initialForm) ? initialForm : FORM_IDS[0] ?? '');
-  const [poses, setPoses] = useState<PoseInfo[]>([]);
-  const [pose, setPose] = useState<string>('');
-  const [frameIdx, setFrameIdx] = useState(0);
-  const [playingRemake, setPlayingRemake] = useState(false);
-  const [loop, setLoop] = useState(true);
-  // ── ROM ANIMATION ──
   const [resourceId, setResourceId] = useState<number>(RESOURCE_IDS[0] ?? 3);
   const [seqIdx, setSeqIdx] = useState(0);
   const [romFrameIdx, setRomFrameIdx] = useState(0);
@@ -117,31 +88,6 @@ export function FightersTab({ initialForm, onFormChange }: { initialForm: string
   const [physicalManifest, setPhysicalManifest] = useState<PhysicalManifest | null>(null);
   const [physicalProvenance, setPhysicalProvenance] = useState<PhysicalProvenance | null>(null);
   const [physicalError, setPhysicalError] = useState<string | null>(null);
-
-  // carga del manifest del form (poses reales + fps)
-  useEffect(() => {
-    let alive = true;
-    setPoses([]);
-    setPose('');
-    fetch(`/assets/sprites/${formId}/manifest.json`)
-      .then((r) => (r.ok ? r.json() : null))
-      .then((m) => {
-        if (!alive || !m) return;
-        const list: PoseInfo[] = Object.entries(m as Record<string, { frame_count: number; fps: number; loop: boolean; frames: { file: string; w: number; h: number }[] }>)
-          .map(([name, info]) => ({
-            pose: name,
-            fps: info.fps ?? 4,
-            loop: info.loop ?? true,
-            frames: info.frames.map((f, i) => ({ formId, dir: formId, pose: name, index: i, file: f.file, name: f.file.replace(/\.png$/i, ''), w: f.w, h: f.h })),
-          }));
-        if (alive) {
-          setPoses(list);
-          if (list.length > 0) setPose(list[0].pose);
-        }
-      })
-      .catch(() => { /* form sin manifest */ });
-    return () => { alive = false; };
-  }, [formId]);
 
   useEffect(() => {
     let alive = true;
@@ -172,34 +118,10 @@ export function FightersTab({ initialForm, onFormChange }: { initialForm: string
     return () => { alive = false; };
   }, [formId]);
 
-  const poseInfo = poses.find((p) => p.pose === pose) ?? null;
-  const frame: ManifestFrameRecord | null = poseInfo?.frames[frameIdx] ?? null;
-  const imgUrl = frame ? `/assets/sprites/${frame.dir}/${frame.file}` : null;
-  const img = useImage(imgUrl);
-
-  useEffect(() => { setFrameIdx(0); }, [pose, formId]);
-
-  // playback REMAKE (manifest fps)
-  useEffect(() => {
-    if (!playingRemake || !poseInfo || poseInfo.frames.length === 0) return;
-    const ms = Math.max(40, Math.round(1000 / poseInfo.fps));
-    const id = setInterval(() => {
-      setFrameIdx((i) => {
-        if (i + 1 < poseInfo.frames.length) return i + 1;
-        if (loop) return 0;
-        setPlayingRemake(false);
-        return i;
-      });
-    }, ms);
-    return () => clearInterval(id);
-  }, [playingRemake, poseInfo, loop]);
-
   const selectForm = (f: string) => {
     setFormId(f);
     onFormChange?.(f);
   };
-
-  const mapping = mappingForFile(frame?.file ?? null);
 
   // ── ROM ANIMATION: resource del catálogo (sequences decodificadas) ──
   const romResource = useMemo(() => animationResourceById(resourceId), [resourceId]);
@@ -243,77 +165,16 @@ export function FightersTab({ initialForm, onFormChange }: { initialForm: string
   return (
     <div>
       <div style={{ display: 'flex', gap: 10, alignItems: 'center', padding: '8px 12px', flexWrap: 'wrap' }}>
-        <label style={{ fontSize: 13, color: '#cfe3ff' }}>VIEW</label>
-        {(['manifest', 'rom'] as SubMode[]).map((m) => (
-          <button key={m} onClick={() => setMode(m)}
-            style={{ background: mode === m ? '#2a4a6a' : '#141c2a', color: '#cfe3ff', border: '1px solid #2a4a6a', borderRadius: 4, padding: '2px 10px', cursor: 'pointer', fontSize: 12 }}>
-            {m === 'manifest' ? 'MANIFEST POSE' : 'ROM ANIMATION'}
-          </button>
-        ))}
+        <label style={{ fontSize: 13, color: '#cfe3ff' }}>CHARACTER / FORM</label>
+        <select value={formId} onChange={(e) => selectForm(e.target.value)} style={{ background: '#1a2434', color: '#cfe3ff', border: '1px solid #2a4a6a', borderRadius: 3, maxWidth: 260 }}>
+          {FORM_IDS.map((f) => <option key={f} value={f}>{f}</option>)}
+        </select>
+        <span style={{ fontSize: 12, opacity: 0.7 }}>ROM PHYSICAL · secuencia, duración y geometría extraídas de la ROM</span>
       </div>
 
-      {mode === 'manifest' && (
-        <div>
-          <div style={{ display: 'flex', gap: 12, alignItems: 'center', padding: '0 12px 8px', flexWrap: 'wrap' }}>
-            <label style={{ fontSize: 13, color: '#cfe3ff' }}>CHARACTER / FORM</label>
-            <select value={formId} onChange={(e) => selectForm(e.target.value)} style={{ background: '#1a2434', color: '#cfe3ff', border: '1px solid #2a4a6a', borderRadius: 3, maxWidth: 260 }}>
-              {FORM_IDS.map((f) => <option key={f} value={f}>{f}</option>)}
-            </select>
-            <label style={{ fontSize: 13, color: '#cfe3ff' }}>POSE</label>
-            <select value={pose} onChange={(e) => setPose(e.target.value)} style={{ background: '#1a2434', color: '#cfe3ff', border: '1px solid #2a4a6a', borderRadius: 3 }}>
-              {poses.map((p) => <option key={p.pose} value={p.pose}>{p.pose} ({p.frames.length}f @{p.fps}fps{!p.loop ? ' · no-loop' : ''})</option>)}
-            </select>
-            <span style={{ fontSize: 12, opacity: 0.7 }}>mundo semántico del remake — la pose NO es necesariamente una secuencia ROM</span>
-          </div>
-          {!poseInfo && <div style={{ padding: 12, opacity: 0.6, fontSize: 13 }}>Sin manifest para {formId} (o cargando…).</div>}
-          {poseInfo && (
-            <div style={{ display: 'flex', gap: 24, padding: 12, flexWrap: 'wrap' }}>
-              <div>
-                <SectionTitle>CANONICAL ASSET</SectionTitle>
-                <PixelCanvas img={img} zoom={zoom} background={background} grid={grid} showBaseline />
-                <ZoomControls zoom={zoom} setZoom={setZoom} background={background} setBackground={setBackground} grid={grid} setGrid={setGrid} />
-                <div style={{ fontSize: 12, opacity: 0.75, marginTop: 4 }}>
-                  {frame ? <Mono>{frame.file}</Mono> : '—'} · {frame?.w}×{frame?.h}px
-                </div>
-              </div>
-              <div style={{ minWidth: 300, maxWidth: 440 }}>
-                <SectionTitle>ROM PHYSICAL (solo mapping demostrado)</SectionTitle>
-                <FieldRow label="frame ROM↔manifest" value={<Mono>{mapping.detail}</Mono>} status={mapping.status} />
-                <FieldRow label="visualProfileKey" value={<Mono>Bank11 character/form record byte+1 (research-v3 §3)</Mono>} status="EXACT" />
-                <FieldRow label="graphicsBank" value={<Mono>$31 + visualProfileKey (Bank00:$367F)</Mono>} status="EXACT" />
-                <FieldRow label="palette profile" value={<Mono>Bank30:$6E00 + key×8 (research-v3 §4)</Mono>} status="EXACT" />
-                <FieldRow label="AnimationResource" value={<Mono dim>por técnica — ver ROM ANIMATION / ACTIONS</Mono>} />
-                <div style={{ marginTop: 10, fontSize: 11, opacity: 0.55, borderTop: '1px solid #2a3a4a', paddingTop: 6 }}>
-                  V9 (catalog-v9) eliminado como autoridad. La correspondencia física ROM↔manifest se calcula con
-                  PHYSICAL_FRAME_RECONCILIATION; sin evidencia → UNRESOLVED, nunca EXACT.
-                </div>
-              </div>
-              <div style={{ minWidth: 260 }}>
-                <SectionTitle>RUNTIME PIXI (REMAKE playback)</SectionTitle>
-                <FieldRow label="pose" value={<Mono>{pose}</Mono>} status={mapping.status === 'UNRESOLVED' ? 'RUNTIME' : mapping.status} />
-                <FieldRow label="timing" value={<Mono>{poseInfo.fps}fps (manifest, REMAKE_CANON)</Mono>} />
-                <div style={{ display: 'flex', gap: 6, alignItems: 'center', marginTop: 8, flexWrap: 'wrap' }}>
-                  <button onClick={() => { setFrameIdx(0); setPlayingRemake(false); }}>|◀</button>
-                  <button onClick={() => setFrameIdx((i) => Math.max(0, i - 1))}>◀</button>
-                  <button onClick={() => setPlayingRemake((p) => !p)}>{playingRemake ? '❚❚' : '▶ PLAY'}</button>
-                  <button onClick={() => setFrameIdx((i) => Math.min(poseInfo.frames.length - 1, i + 1))}>▶</button>
-                  <label style={{ fontSize: 12 }}><input type="checkbox" checked={loop} onChange={(e) => setLoop(e.target.checked)} /> LOOP</label>
-                </div>
-                <div style={{ marginTop: 6 }}>
-                  <input type="range" min={0} max={Math.max(0, poseInfo.frames.length - 1)} value={Math.min(frameIdx, poseInfo.frames.length - 1)}
-                    onChange={(e) => { setFrameIdx(Number(e.target.value)); setPlayingRemake(false); }} style={{ width: 220 }} />
-                  <span style={{ fontSize: 12, marginLeft: 8 }}><Mono>F{Math.min(frameIdx, poseInfo.frames.length - 1)}/{poseInfo.frames.length - 1}</Mono></span>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-      )}
-
-      {mode === 'rom' && (
-        <div>
-          <div style={{ display: 'flex', gap: 12, alignItems: 'center', padding: '0 12px 8px', flexWrap: 'wrap' }}>
-            <label style={{ fontSize: 13, color: '#cfe3ff' }}>ANIMATION RESOURCE</label>
+      <div>
+        <div style={{ display: 'flex', gap: 12, alignItems: 'center', padding: '0 12px 8px', flexWrap: 'wrap' }}>
+          <label style={{ fontSize: 13, color: '#cfe3ff' }}>ANIMATION RESOURCE</label>
             <select value={resourceId} onChange={(e) => { setResourceId(Number(e.target.value)); setSeqIdx(0); setRomFrameIdx(0); setPlayingRom(false); }}
               style={{ background: '#1a2434', color: '#cfe3ff', border: '1px solid #2a4a6a', borderRadius: 3 }}>
               {(physicalResourceIds.length ? physicalResourceIds : RESOURCE_IDS).map((id) => {
@@ -389,7 +250,7 @@ export function FightersTab({ initialForm, onFormChange }: { initialForm: string
                   <Mono dim>{(physicalFrameMeta?.palette?.bgr555 ?? pal?.bgr555Hex ?? []).join(' ')} · color0 alpha</Mono>
                 </span>
               ) : <Mono dim>—</Mono>} status="EXACT" />
-              <FieldRow label="frame↔manifest" value={<Mono>{romMapping.detail}</Mono>} status={romMapping.status} />
+              <FieldRow label="physical asset" value={<Mono>{romMapping.detail}</Mono>} status={romMapping.status} />
               <div style={{ marginTop: 8, fontSize: 11, opacity: 0.65 }}>
                 Esta vista lee ROM_PHYSICAL_FIGHTERS: trimmed PNG para assets y raw canvas para verificar origen/piezas. No usa V9 ni el crop del manifest como geometría ROM.
               </div>
@@ -418,7 +279,6 @@ export function FightersTab({ initialForm, onFormChange }: { initialForm: string
             </div>
           </div>
         </div>
-      )}
     </div>
   );
 }

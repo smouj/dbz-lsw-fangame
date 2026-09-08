@@ -47,9 +47,10 @@ combat frame.
 
 `#dev/animation` and `#dev/animation-studio` now open the same physical-ROM
 inspector. It accepts only `physical/rom-p...` assets; legacy and remake
-manifest data may remain visible as diagnostic text, but cannot be rendered as
-thumbnails. This removes the former editable animation surface from the Dev
-navigation without deleting its historical data.
+manifest data cannot be selected or rendered as thumbnails. ROM Display's
+Fighters tab follows the same contract and enumerates forms from the generated
+ROM identity table, so there is no alternate manifest pose mode to confuse the
+preview with a runtime frame.
 
 The Cards preview follows the same rule. Its timeline ignores every cue except
 `ROM_PHYSICAL_FRAME` with a promoted `physical/` file. The focused Vegito SSJ
@@ -68,7 +69,7 @@ Validation at this checkpoint:
 - `verify:dev-routes` — 22/22 modules;
 - `verify:dev-studio` — 58 checks;
 - `verify:dev-rom-truth` — 27 checks;
-- `verify:dev-physical-sync` — 48 forms, 3,689 physical IDs, 24,823 instances;
+- `verify:dev-physical-sync` — 48 forms, 4,407 physical IDs, 28,669 instances;
 - `verify:rom-fighter-neutral` — 100 checks across all 48 forms;
 - action-preview runtime parity and frame-form identity gates.
 

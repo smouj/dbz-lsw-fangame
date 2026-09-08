@@ -7,7 +7,7 @@
 // missing source resource from ROM, then promotes only rom_trimmed/raw canvas
 // files named by each provenance record.
 
-import { copyFileSync, existsSync, readdirSync, readFileSync } from 'fs';
+import { copyFileSync, existsSync, readdirSync, readFileSync, writeFileSync } from 'fs';
 import { execFileSync } from 'child_process';
 import { dirname, join } from 'path';
 
@@ -24,7 +24,8 @@ type ProvenanceFrame = {
   actorVisualProfileKey: number;
 };
 
-type Provenance = { source: string; frames: ProvenanceFrame[] };
+type Provenance = { source: string; frames: ProvenanceFrame[]; transparentFrameRecords?: unknown[] };
+type PhysicalManifest = { transparentFrameRecords?: unknown[] };
 
 type MissingFrame = { formDir: string; frame: ProvenanceFrame };
 
@@ -39,6 +40,14 @@ function renderResource(resourceId: number, profileKeys: number[]): void {
   const args = [RENDERER, '--resource', resourceId.toString(16).padStart(2, '0'), '--keys', keys];
   if (existsSync(localTsx)) {
     execFileSync(process.execPath, [localTsx, ...args], { cwd: ROOT, stdio: 'pipe' });
+    return;
+  }
+  // Invoke npm's JavaScript CLI with Node, not its Windows batch shim.  That
+  // makes the renderer synchronous and preserves failures for this recovery
+  // script instead of silently returning while npx continues elsewhere.
+  if (process.platform === 'win32') {
+    const npxCli = join(dirname(process.execPath), 'node_modules', 'npm', 'bin', 'npx-cli.js');
+    execFileSync(process.execPath, [npxCli, 'tsx', ...args], { cwd: ROOT, stdio: 'pipe' });
     return;
   }
   execFileSync('npx', ['tsx', ...args], { cwd: ROOT, stdio: 'pipe' });
@@ -92,6 +101,25 @@ for (const { formDir, frame } of missing) {
     }
     copyFileSync(source, target);
     promoted++;
+  }
+}
+
+// This is derived metadata, not an image transformation: an empty ROM frame
+// stays empty and must be represented identically in the public physical
+// manifest and its provenance.  Checkouts can retain the latter while losing
+// ignored build output, so reconcile the two during the same ROM-only repair.
+for (const entry of readdirSync(SPRITES, { withFileTypes: true })) {
+  if (!entry.isDirectory()) continue;
+  const formDir = entry.name;
+  const provenancePath = join(SPRITES, formDir, 'provenance.json');
+  const manifestPath = join(SPRITES, formDir, 'rom-physical.manifest.json');
+  if (!existsSync(provenancePath) || !existsSync(manifestPath)) continue;
+  const provenance = json<Provenance>(provenancePath);
+  if (provenance.source !== 'ROM_PHYSICAL_FIGHTERS') continue;
+  const manifest = json<PhysicalManifest>(manifestPath);
+  const records = provenance.transparentFrameRecords ?? [];
+  if (JSON.stringify(manifest.transparentFrameRecords ?? []) !== JSON.stringify(records)) {
+    writeFileSync(manifestPath, `${JSON.stringify({ ...manifest, transparentFrameRecords: records }, null, 2)}\n`);
   }
 }
 
