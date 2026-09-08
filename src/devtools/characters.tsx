@@ -629,9 +629,6 @@ export function CharactersModule({ onOpenModule }: {
           {/* SECCIÓN 2.5 — ROM Actions: binding card → handler → track → sequence */}
           <RomActionsPanel formId={form.id} />
 
-          {/* SECCIÓN 2.7 — ROM Canon Manifest: action → physicalId mapping */}
-          <RomCanonManifestPanel formId={form.id} />
-
           {/* Physical map: relaciones ROM y diagnóstico; no renderiza PNGs de manifest. */}
           <CharacterPhysicalMap formId={form.id} />
         </div>
