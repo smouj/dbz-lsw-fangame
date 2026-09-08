@@ -13,11 +13,30 @@ interface RawRow {
   actorRecordId: number | string;
   visualProfileKey: string;
   sequence: string;
+  selectorRowParam2: string | null | undefined;
+  selectorRowParam2Signed: number | string | null | undefined;
+  selectorRowParam3: string | null | undefined;
+  selectorRowParam3Signed: number | string | null | undefined;
+  C405_screenYDeltaSigned: number | string | null | undefined;
+  C406_side1_screenXDeltaByte: string | null | undefined;
+  C406_side2_screenXDeltaByte: string | null | undefined;
   evidence: string;
 }
 
 function parseHex(value: string): number {
   return Number.parseInt(value.replace(/^0x/i, ''), 16);
+}
+
+function optionalNumber(value: string | number | null | undefined): number | null {
+  if (value == null || value === '') return null;
+  return typeof value === 'number' ? value : parseHex(String(value));
+}
+
+function optionalSigned(value: string | number | null | undefined): number | null {
+  if (value == null || value === '') return null;
+  if (typeof value === 'number') return value;
+  const raw = Number.parseInt(String(value).replace(/^0x/i, ''), 16);
+  return Number.isNaN(raw) ? null : raw > 0x7f ? raw - 0x100 : raw;
 }
 
 const rows = (JSON.parse(readFileSync(SOURCE, 'utf8')) as RawRow[])
@@ -29,6 +48,21 @@ const rows = (JSON.parse(readFileSync(SOURCE, 'utf8')) as RawRow[])
     actorRecordId: Number(row.actorRecordId),
     actorVisualProfileKey: parseHex(row.visualProfileKey),
     sequence: parseHex(row.sequence),
+    // Beam state 14 presentation offsets: selector bytes (C2D0/C2D1) and
+    // C405/C406 screen deltas -> SCX/SCY via opcode $0D (Bank00:$0DA2).
+    // Both the raw ROM byte and the signed 8-bit delta are preserved verbatim
+    // (e.g. side2 0xAC = raw 172 = signed -84; mirror check rawSide1+rawSide2==256
+    // holds 240/240). NULL = row does not carry the byte in the ROM extraction.
+    selectorByte2: optionalNumber(row.selectorRowParam2),
+    selectorByte2Signed: optionalSigned(row.selectorRowParam2Signed ?? row.selectorRowParam2),
+    selectorByte3: optionalNumber(row.selectorRowParam3),
+    selectorByte3Signed: optionalSigned(row.selectorRowParam3Signed ?? row.selectorRowParam3),
+    screenYDeltaByte: optionalNumber(row.C405_screenYDeltaByte),
+    screenYDeltaSigned: optionalSigned(row.C405_screenYDeltaSigned ?? row.C405_screenYDeltaByte),
+    screenXDeltaSide1Byte: optionalNumber(row.C406_side1_screenXDeltaByte),
+    screenXDeltaSide1Signed: optionalSigned(row.C406_side1_screenXDeltaByte),
+    screenXDeltaSide2Byte: optionalNumber(row.C406_side2_screenXDeltaByte),
+    screenXDeltaSide2Signed: optionalSigned(row.C406_side2_screenXDeltaByte),
     evidence: row.evidence,
   }))
   .sort((a, b) =>
