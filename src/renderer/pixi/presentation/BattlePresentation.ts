@@ -14,7 +14,7 @@
 
 import type { RomMotionSegment } from '../../../battle/romMotionMath';
 import type { BattlePosition } from '../../../data/positions';
-import type { ActionObjectBinding, ActionObjectSlot } from '../../../battle/runtime/ActionObjectRuntime';
+import type { ActionObjectBinding, ActionObjectSlot } from '../../../battle/engine/presentation/ActionObjectRuntime';
 
 export type { RomMotionSegment };
 

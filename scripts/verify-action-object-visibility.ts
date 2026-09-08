@@ -2,7 +2,7 @@
 // Verifies the logical slot contract independently from Pixi: bindings are
 // role-based, rebinds replace the previous target, and STOP/UNBIND cannot
 // affect an object selected by a stale fixed-side assumption.
-import { ActionObjectRuntime } from '../src/battle/runtime/ActionObjectRuntime';
+import { ActionObjectRuntime } from '../src/battle/engine/presentation/ActionObjectRuntime';
 
 let passed = 0;
 let failed = 0;

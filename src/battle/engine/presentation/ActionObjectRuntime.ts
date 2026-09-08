@@ -157,3 +157,57 @@ export function detectSemanticReviveAttempt(pair: ActionObjectPair, sceneName: s
 export function actionObjectStateSummary(pair: ActionObjectPair): string {
   return `obj0(${pair.object0.logicalRole} v=${pair.object0.visible} a=${pair.object0.active}) obj1(${pair.object1.logicalRole} v=${pair.object1.visible} a=${pair.object1.active})`;
 }
+
+// ── Slice 2: runtime-effective logical slot bindings ──
+// The immutable helpers above remain the ROM contract used by static gates.
+// Pixi uses this small mutable facade so the same source of truth also governs
+// live BIND/UNBIND/STOP cues and can later be snapshotted by DOM.
+export type ActionObjectSlot = 0 | 1;
+export type ActionObjectCueRole = 'ACTOR' | 'TARGET' | 'ACTOR_PRIMARY' | 'ACTOR_SUPPORT' | 'FX_PARTICIPANT';
+export interface ActionObjectBinding {
+  role: ActionObjectCueRole;
+  fighterSide?: 'PLAYER' | 'ENEMY';
+}
+export interface ActionObjectRuntimeState {
+  slot: ActionObjectSlot;
+  binding: ActionObjectBinding | null;
+  active: boolean;
+  visible: boolean;
+}
+
+function cloneRuntimeState(state: ActionObjectRuntimeState): ActionObjectRuntimeState {
+  return { ...state, binding: state.binding ? { ...state.binding } : null };
+}
+
+/** Live logical-slot state. The binding, never a fixed side, selects the fighter. */
+export class ActionObjectRuntime {
+  private readonly slots: [ActionObjectRuntimeState, ActionObjectRuntimeState] = [
+    { slot: 0, binding: { role: 'ACTOR' }, active: true, visible: true },
+    { slot: 1, binding: { role: 'TARGET' }, active: true, visible: true },
+  ];
+
+  bind(slot: ActionObjectSlot, binding: ActionObjectBinding): void {
+    this.slots[slot] = { slot, binding: { ...binding }, active: true, visible: true };
+  }
+
+  unbind(slot: ActionObjectSlot): void {
+    this.slots[slot] = { slot, binding: null, active: false, visible: false };
+  }
+
+  stop(slot: ActionObjectSlot): void {
+    this.slots[slot] = { ...this.slots[slot], active: false, visible: false };
+  }
+
+  state(slot: ActionObjectSlot): ActionObjectRuntimeState {
+    return cloneRuntimeState(this.slots[slot]);
+  }
+
+  snapshot(): ActionObjectRuntimeState[] {
+    return this.slots.map(cloneRuntimeState);
+  }
+
+  resolve(slot: ActionObjectSlot): ActionObjectBinding | null {
+    const binding = this.slots[slot].binding;
+    return binding ? { ...binding } : null;
+  }
+}

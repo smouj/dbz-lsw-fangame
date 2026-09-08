@@ -19,7 +19,7 @@ import { ImpactSystem } from '../systems/ImpactSystem';
 import type { FormAtlas } from '../assets/AtlasLoader';
 import { BattlePosition } from '../../../data/positions';
 import { ACTION_LEFT_X, ACTION_RIGHT_X, ACTION_SPECIAL_LEFT_X, ACTION_SPECIAL_RIGHT_X } from '../scenes/ActionScene';
-import { ActionObjectRuntime } from '../../../battle/runtime/ActionObjectRuntime';
+import { ActionObjectRuntime } from '../../../battle/engine/presentation/ActionObjectRuntime';
 
 function fakeAtlas(): FormAtlas {
   return { formId: 'gohan_young', dir: '', anims: new Map(), textures: new Map(), maxW: 16, maxH: 16 };

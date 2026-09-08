@@ -22,7 +22,7 @@ import { resolveProjectileVisualMode, type ProjectileVisualMode } from './projec
 import { RomDisplayPresenter } from '../../../battle/romDisplay/RomDisplayPresenter';
 import { RomDisplayLayer } from '../../../battle/romDisplay/RomDisplayLayer';
 import { CameraPresenter } from './CameraPresenter';
-import { ActionObjectRuntime, type ActionObjectBinding, type ActionObjectSlot } from '../../../battle/runtime/ActionObjectRuntime';
+import { ActionObjectRuntime, type ActionObjectBinding, type ActionObjectSlot } from '../../../battle/engine/presentation/ActionObjectRuntime';
 
 export interface PixiPresentationConfig {
   playerFormId: string;

@@ -29,7 +29,7 @@
 import type { BattlePresentation, BattleScene } from './BattlePresentation';
 import type { PresentationCue } from '../../../battle/engine/presentation/PresentationCue';
 import type { RomDisplayPresenter } from '../../../battle/romDisplay/RomDisplayPresenter';
-import type { ActionObjectBinding, ActionObjectSlot } from '../../../battle/runtime/ActionObjectRuntime';
+import type { ActionObjectBinding, ActionObjectSlot } from '../../../battle/engine/presentation/ActionObjectRuntime';
 
 export type ProductionPresentationSource = 'ROM' | 'LEGACY' | 'NONE';
 
