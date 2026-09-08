@@ -14,7 +14,7 @@ import {
   type FighterVisualTrace,
   type ActionPresentationTrace,
 } from '../battle/actionPresentationTrace';
-import { spriteFrameUrl } from '../data/spriteManifest';
+import { romPhysicalAssetUrl } from './romPhysicalPreview';
 
 const STATUS_COLOR: Record<string, string> = {
   PHYSICAL: '#7CFC00', COMPOSITE: '#d9a0ff', FALLBACK: '#ffb0b0',
@@ -56,8 +56,8 @@ function FighterPanel({ label, fv }: { label: string; fv: FighterVisualTrace | n
         <div><span>canon</span><b className="ati-mono">{fv.canonicalId ? '✓' : '—'}</b></div>
       </div>
       {fv.fallbackReason && <div className="ati-fallback-chip">⚠ {fv.fallbackReason}</div>}
-      {fv.file && (
-        <img className="ati-fighter-img" src={spriteFrameUrl(fv.formId, fv.file)} alt={fv.file}
+      {romPhysicalAssetUrl(fv.formId, fv.file, fv.physicalId) && (
+        <img className="ati-fighter-img" src={romPhysicalAssetUrl(fv.formId, fv.file, fv.physicalId) ?? undefined} alt={fv.file ?? 'ROM physical frame'}
           style={{ imageRendering: 'pixelated', background: 'repeating-conic-gradient(#1a1a1a 0% 25%, #242424 0% 50%) 0 0/12px 12px' }} />
       )}
     </div>

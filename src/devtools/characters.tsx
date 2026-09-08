@@ -18,9 +18,10 @@
 // ═══════════════════════════════════════════════════════════════════════
 import { useState, useEffect, useRef, useMemo, createContext, useContext } from 'react';
 import {
-  FORMS, ROM_ORDERED_CHARACTERS, getForm, statAtLevel, sheetUrl, idleSpriteUrl, LIMIT_DEFAULTS,
+  FORMS, ROM_ORDERED_CHARACTERS, getForm, statAtLevel, sheetUrl, LIMIT_DEFAULTS,
 } from '../data/roster';
 import { spriteDirFor, spriteManifestUrl, spriteFrameUrl } from '../data/spriteManifest';
+import { romPhysicalPreviewFrame } from './romPhysicalPreview';
 import { CARDS, type CardDef, type CardType, CARD_COLORS } from '../data/cards';
 import { romCardData } from '../data/romCardData';
 import {
@@ -43,6 +44,7 @@ import { getBindingForCard, getConsumersForResource, getBindingSummary, type Rom
 import { getRomSequenceRegistry } from '../data/romSequenceRegistry';
 import { ROM_FIGHTER_FORM_IDENTITY } from '../data/generated/romFighterFormIdentity.generated';
 import { catalogAnimationBank, catalogResourceBase } from '../data/generated/romAnimationResourceBase.generated';
+import { COMBAT_POSE_ORDER } from '../battle/spriteConfig';
 
 // ═══ Escritura real a disco (middleware /__dev/write) ──────────────────
 async function frameDataUrl(rel: string): Promise<string> {
@@ -454,9 +456,27 @@ export function CharactersModule({ onOpenModule }: {
   const displayName = (id: string, fallback: string) => nameOverrides[id] ?? fallback;
   const char = ROM_ORDERED_CHARACTERS.find(c => c.id === charId) ?? ROM_ORDERED_CHARACTERS[0];
   const form = getForm(formId) ?? getForm(char.forms[0])!;
+  // The old manifest always had an `idle_00`, but that does not make it a
+  // promoted ROM action frame. Start each form on the first actual physical
+  // sequence so the main preview is useful on load; users can still inspect
+  // unsupported semantic poses and will see their explicit pending state.
+  const physicalPreviewPoses = useMemo(() => COMBAT_POSE_ORDER.filter(role =>
+    bindingsForForm(form.id).some(binding => binding.semanticRole === role
+      && (binding.romPhysicalId != null || binding.romPhysicalSourceIds.length > 0)),
+  ), [form.id]);
+  const previewFormRef = useRef<string | null>(null);
+  useEffect(() => {
+    if (previewFormRef.current === form.id) return;
+    previewFormRef.current = form.id;
+    if (physicalPreviewPoses.length > 0) {
+      setPreviewPose(physicalPreviewPoses[0]);
+    }
+  }, [form.id, physicalPreviewPoses]);
   const spriteDir = spriteDirFor(form.id);
   const manifestUrl = spriteManifestUrl(form.id);
-  const idleUrl = spriteDir ? spriteFrameUrl(form.id, `${spriteDir}_idle_00.png`) : idleSpriteUrl(form);
+  const idleBinding = bindingsForForm(form.id).find(binding => binding.semanticRole === 'idle'
+    && (binding.mapping === 'ROM_EXACT' || binding.mapping === 'ROM_PHASE' || binding.mapping === 'CANONICAL_PHYSICAL' || binding.mapping === 'SHARED_PHYSICAL'));
+  const idleUrl = idleBinding ? romPhysicalPreviewFrame(form.id, idleBinding)?.url : undefined;
   const owFallback = overworldUrl(form.id);
   const battleOwIdle = battleOverworldActorUrl(form.id, 'idle') ?? owFallback;
   const battleOwPower = battleOverworldActorUrl(form.id, 'gather_power_pose') ?? owFallback;
@@ -561,7 +581,7 @@ export function CharactersModule({ onOpenModule }: {
           {/* SECCIÓN 1 — Preview + Stats (2 columnas) */}
           <section className="dev-char-block dev-primary-block">
             <div className="dev-primary-grid">
-              <FormPreview formId={form.id} dir={spriteDir} analysis={analysis}
+              <FormPreview formId={form.id} analysis={analysis}
                 pose={previewPose} onPoseChange={setPreviewPose} />
               <div className="dev-primary-stats">
                 <div className="dev-form-preview-head">
@@ -618,7 +638,7 @@ export function CharactersModule({ onOpenModule }: {
             <div className="dev-asset-grid dev-assets-horizontal">
               <AssetCell label="Portrait" src={portrait} />
               <AssetCell label="Overworld" src={overworldUrl(form.id)} />
-              <AssetCell label="Idle (combate)" src={idleUrl} />
+              <AssetCell label="Combat frame (ROM physical)" src={idleUrl} />
               <AssetCell label="Battle OW idle" src={battleOwIdle} />
               <PowerUpCell poseSrc={battleOwPower} auraSrc={battleOwAura} />
               {form.sheet && <AssetCell label="ROM sheet ref" src={sheetUrl(form)} wide />}

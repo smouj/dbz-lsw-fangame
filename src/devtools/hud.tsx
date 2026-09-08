@@ -17,7 +17,6 @@ import { battleOverworldActorUrl } from '../data/battleOverworld';
 import { SCENARIOS, SPECIAL_ACTION_BACKGROUND } from '../data/scenarios';
 import { BATTLE_STAGES } from '../data/battleBackgrounds';
 import { getForm } from '../data/roster';
-import { spriteDirFor, spriteFrameUrl } from '../data/spriteManifest';
 import { BATTLE_PORTRAITS } from '../data/battlePortraits';
 import { storyPortraitUrlApproximate as storyPortraitUrl } from '../data/storyPortraits';
 import { resolveSpeakerPortrait } from '../data/speakerPortraits';
@@ -34,6 +33,7 @@ import { StageHudPanel } from '../components/StageHudPanel';
 import { MainMenuPresentation, type MainMenuPresentationItem } from '../components/MainMenuPresentation';
 import { resolveCharacterVisualSequence } from '../battle/characterFrameMap';
 import { runtimeActionPreview } from '../battle/actionPreviewParity';
+import { romPhysicalAssetUrl, romPhysicalPreviewSequence } from './romPhysicalPreview';
 
 // Formas de ejemplo del mockup (Goku vs Piccolo, como el Battle Lab).
 const P_FORM = 'goku_base';
@@ -167,31 +167,39 @@ export function HudModule() {
   // Action previews consume the ROM-derived form→semantic-role bindings. No
   // hand-authored PNG list is allowed here: if a role has no ROM evidence the
   // inspector stays explicit instead of drawing an invented frame.
-  const actionFrameFiles = useMemo(() => {
-    const framesFor = (role: string) => {
-      const sequence = resolveCharacterVisualSequence({ formId: P_FORM, semanticRole: role });
-      return sequence.source === 'ROM_DERIVED' || sequence.source === 'CANONICAL'
-        ? sequence.frames
-        : [];
-    };
-    switch (view) {
-      case 'MOVE_ACTION': return framesFor('move_front');
-      case 'GATHER_ACTION': return framesFor('gather_power');
-      case 'STAGE_ACTION': return framesFor('attack_fwd');
-      case 'BEAM': return [...framesFor('beam_charge'), ...framesFor('beam_fire')];
-      case 'DAMAGE': return [...framesFor('attack_fwd'), ...framesFor('hurt')];
-      default: return [];
-    }
-  }, [view]);
   // DAMAGE/BEAM use the exact physical stream emitted by BattleRuntime. The
   // legacy semantic resolver remains only for non-ROM action views.
   const runtimePreview = useMemo(() => (
     view === 'BEAM' || view === 'DAMAGE' ? runtimeActionPreview(view) : null
   ), [view]);
-  const actionFrames = useMemo(() => runtimePreview && actor === 'player'
-    ? runtimePreview.beats
-    : actionFrameFiles.map(file => ({ file, durationTicks: 10, formId: actor === 'player' ? P_FORM : E_FORM })),
-  [runtimePreview, actor, actionFrameFiles]);
+  const actionFrames = useMemo(() => {
+    // The player BEAM/DAMAGE film comes directly from the production trace.
+    if (runtimePreview && actor === 'player') {
+      return runtimePreview.beats.flatMap(beat => {
+        const url = romPhysicalAssetUrl(beat.formId, beat.file, beat.physicalId);
+        return url ? [{ ...beat, url }] : [];
+      });
+    }
+
+    const formId = actor === 'player' ? P_FORM : E_FORM;
+    const roles = view === 'MOVE_ACTION' ? ['move_front']
+      : view === 'GATHER_ACTION' ? ['gather_power']
+        : view === 'STAGE_ACTION' ? ['attack_fwd']
+          : view === 'BEAM' ? ['beam_charge', 'beam_fire']
+            : view === 'DAMAGE' ? ['attack_fwd', 'hurt']
+              : [];
+
+    // Do not manufacture a per-form file name from another fighter. A frame
+    // is visible only when the current form resolves it through the canonical
+    // ROM frame map; absent evidence stays absent in the inspector.
+    return roles.flatMap(semanticRole => {
+      const sequence = resolveCharacterVisualSequence({ formId, semanticRole });
+      return romPhysicalPreviewSequence(sequence).map(frame => ({
+        ...frame,
+        durationTicks: frame.durationTicks ?? 10,
+      }));
+    });
+  }, [runtimePreview, actor, view]);
   const [actionFrameIndex, setActionFrameIndex] = useState(0);
   useEffect(() => {
     setActionFrameIndex(0);
@@ -206,21 +214,19 @@ export function HudModule() {
 
   const player = useMemo(() => getForm(P_FORM), []);
   const enemy = useMemo(() => getForm(E_FORM), []);
-  const pDir = player ? spriteDirFor(player.id) : undefined;
-  const eDir = enemy ? spriteDirFor(enemy.id) : undefined;
-  const pIdle = battleOverworldActorUrl(P_FORM, 'idle') ?? (pDir ? spriteFrameUrl(player!.id, `${pDir}_idle_00.png`) : undefined);
-  const eIdle = battleOverworldActorUrl(E_FORM, 'idle') ?? (eDir ? spriteFrameUrl(enemy!.id, `${eDir}_idle_00.png`) : undefined);
+  const frameFor = (formId: string, semanticRole: string) => {
+    const sequence = resolveCharacterVisualSequence({ formId, semanticRole });
+    return romPhysicalPreviewSequence(sequence)[0]?.url;
+  };
+  const pIdle = battleOverworldActorUrl(P_FORM, 'idle') ?? (player ? (() => {
+    return frameFor(player.id, 'idle');
+  })() : undefined);
+  const eIdle = battleOverworldActorUrl(E_FORM, 'idle') ?? (enemy ? (() => {
+    return frameFor(enemy.id, 'idle');
+  })() : undefined);
   // Sprites de ACCIÓN (grandes, del sheet de batalla) — el character correcto
   // para el plano ACTION, como el juego (FighterSprite idle).
-  const pAction = pDir ? spriteFrameUrl(P_FORM, `${pDir}_idle_00.png`) : undefined;
-  const eAction = eDir ? spriteFrameUrl(E_FORM, `${eDir}_idle_00.png`) : undefined;
-  const actionPreviewFrameFor = (formId: string, fallback: string | undefined) => {
-    const runtimeFrame = runtimePreview && actor === 'player' ? runtimePreview.beats[actionFrameIndex] : null;
-    if (runtimeFrame) return spriteFrameUrl(runtimeFrame.formId, runtimeFrame.file);
-    if (actionFrameFiles.length === 0) return fallback;
-    const file = actionFrameFiles[actionFrameIndex].replace(/^goku_base_/, `${formId}_`);
-    return spriteFrameUrl(formId, file);
-  };
+  const actionPreviewFrame = actionFrames[actionFrameIndex];
   const pPortrait = BATTLE_PORTRAITS[P_FORM];
   const ePortrait = BATTLE_PORTRAITS[E_FORM];
   const battleBgUrl = actionSpecial
@@ -506,7 +512,9 @@ export function HudModule() {
                   <span className="hud-level">LV50</span>
                   <span className="team-reserve left in-name" data-tip={tipBlock('GOHAN', [['stats', 'HP 620 / 700']])}>
                     <span className="team-reserve-portrait">
-                      <img src="/assets/portraits/battle/gohan_teen_ssj.png" alt="" />
+                      {BATTLE_PORTRAITS.gohan_adult_ssj
+                        ? <img src={BATTLE_PORTRAITS.gohan_adult_ssj} alt="" />
+                        : <span className="dev-hud-mock-ph">?</span>}
                     </span>
                     <span className="team-reserve-name">GOHAN</span>
                     <span className="team-reserve-hp">620/700</span>
@@ -596,13 +604,13 @@ export function HudModule() {
                           la derecha (x 80) mirando a la izquierda; en el
                           plano ESPECIAL 2px más abajo (y 70) + 2px menor
                           (190px, CSS .special-actor) */}
-                      {(bgMode === 'overview' ? pIdle : (actionFrames.length > 0 && actor === 'player' ? pAction : undefined)) && (
-                        <img src={bgMode === 'overview' ? pIdle : actionPreviewFrameFor(P_FORM, pAction)} alt=""
+                      {(bgMode === 'overview' ? pIdle : (actionFrames.length > 0 && actor === 'player' ? actionPreviewFrame : undefined)) && (
+                        <img src={bgMode === 'overview' ? pIdle : actionPreviewFrame?.url} alt=""
                           className={`dev-hud-ow dev-hud-fighter-sprite dev-hud-anchored player ${bgMode === 'action' ? 'action-mode' : ''} ${bgMode === 'action' && actionSpecial ? 'special-actor' : ''}`}
                           style={bgMode === 'action' ? (() => { const aa = actionAnchorFor(actor, actionSpecial); return { left: `${aa.x}%`, top: `${aa.y}%` }; })() : { left: `${pa.x}%`, top: `${pa.y}%` }} />
                       )}
-                      {(bgMode === 'overview' ? eIdle : (actionFrames.length > 0 && actor === 'enemy' ? eAction : undefined)) && (
-                        <img src={bgMode === 'overview' ? eIdle : actionPreviewFrameFor(E_FORM, eAction)} alt=""
+                      {(bgMode === 'overview' ? eIdle : (actionFrames.length > 0 && actor === 'enemy' ? actionPreviewFrame : undefined)) && (
+                        <img src={bgMode === 'overview' ? eIdle : actionPreviewFrame?.url} alt=""
                           className={`dev-hud-ow dev-hud-fighter-sprite dev-hud-anchored enemy ${bgMode === 'action' ? 'action-mode' : ''} ${bgMode === 'action' && actionSpecial ? 'special-actor' : ''}`}
                           style={bgMode === 'action' ? (() => { const aa = actionAnchorFor(actor, actionSpecial); return { left: `${aa.x}%`, top: `${aa.y}%` }; })() : { left: `${ea.x}%`, top: `${ea.y}%` }} />
                       )}

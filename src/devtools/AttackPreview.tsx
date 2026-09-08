@@ -1,26 +1,19 @@
 // ═══════════════════════════════════════════════════════════════════════
-// AttackPreview — REMAKE MANIFEST PREVIEW de una carta (Card Database).
-// Reproduce frames del manifest asociados a la pose semántica del remake
-// cardBattlePose → resolvePoseFrameSequence) sobre un personaje compatible:
-// un "gif" hecho con frames del manifest, no una imagen estática.
+// AttackPreview — inspector ROM de la acción de una carta.
 //
-//   card → cardBattlePose (beam_charge/attack_fwd/guard/gather_power…)
-//        → resolvePoseFrameSequence (frames reales del manifest)
-//        → <img> que cicla los frames a 12 fps de preview (no timing ROM)
-//
-// Para beams se reproduce la cadena completa: charge → fire (→ ray si el
-// manifest tiene frames de proyectil separados). Fuente ÚNICA: el manifest
-// de la forma — nunca tablas locales.
+// La tarjeta no inventa una película a partir de PNGs o fallbacks del
+// manifest. Su pose semántica se resuelve para la forma seleccionada en el
+// mapa físico-ROM; si no hay un frame reconciliado, lo expone como pendiente.
 // ═══════════════════════════════════════════════════════════════════════
 
 import { useEffect, useMemo, useState } from 'react';
 import type { CardDef } from '../data/cards';
 import { cardBattlePose } from '../battle/cardPoses';
-import { resolveCombatPose, resolvePoseFrameSequence } from '../battle/spriteConfig';
-import { spriteFrameUrl, _spriteManifestInternals, spriteDirFor } from '../data/spriteManifest';
-import { getForm } from '../data/roster';
+import { romPresentationTimelineForCard } from '../battle/romPresentationForCard';
+import { spriteDirFor } from '../data/spriteManifest';
+import { FORMS, getForm } from '../data/roster';
 
-const PREVIEW_FPS = 12; // preview del manifest; no representa durationTicks ROM
+const PREVIEW_FPS = 12;
 
 interface Props {
   card: CardDef;
@@ -30,83 +23,79 @@ interface Props {
   size?: number;
 }
 
-export function AttackPreview({ card, formId, size = 96 }: Props) {
-  const [manifest, setManifest] = useState<Record<string, { frames?: unknown[] }> | null>(null);
-  const [frameIdx, setFrameIdx] = useState(0);
+type PreviewFrame = {
+  file: string;
+  url: string;
+  durationTicks: number;
+  role: string;
+  physicalId: string | null;
+};
 
-  // Personaje: el formId dado o el primer compatible del roster.
+export function AttackPreview({ card, formId, size = 96 }: Props) {
+  const [frameIdx, setFrameIdx] = useState(0);
   const resolvedForm = useMemo(() => {
     if (formId) return formId;
     const compat = card.compatible?.[0] ?? 'goku';
-    const f = getForm(compat);
-    return f?.id ?? 'goku_base';
+    // Card compatibility is stored by character family ("buu", "goku"…),
+    // whereas getForm() expects a concrete form id. Resolve that family
+    // against the ROM roster before falling back to Goku Base.
+    return getForm(compat)?.id
+      ?? Object.values(FORMS).find(form => form.character === compat)?.id
+      ?? 'goku_base';
   }, [card, formId]);
-
-  useEffect(() => {
-    let alive = true;
-    setManifest(null);
-    _spriteManifestInternals.loadManifestFor(resolvedForm).then(m => {
-      if (alive) setManifest(m as Record<string, { frames?: unknown[] }> | null);
-    });
-    return () => { alive = false; };
-  }, [resolvedForm]);
-
-  // Secuencia de frames de la pose de la carta (canon cardBattlePose).
-  // El manifest indexa por POSE (attack_fwd → frames[]); available() debe
-  // buscar el archivo en CUALQUIER pose (el mismo frame físico puede estar
-  // en varias).
-  const dir = spriteDirFor(resolvedForm);
-  const fileSet = useMemo(() => {
-    const s = new Set<string>();
-    if (!manifest) return s;
-    for (const pv of Object.values(manifest)) {
-      const frames = (pv as { frames?: Array<{ file?: string } | string> })?.frames ?? [];
-      for (const f of frames) {
-        const file = typeof f === 'string' ? f : f?.file;
-        if (file) s.add(file);
-      }
-    }
-    return s;
-  }, [manifest]);
-  const files = useMemo(() => {
-    if (!manifest || !dir) return [];
-    const pose = cardBattlePose(card);
-    const available = (file: string) => fileSet.has(file);
-    return resolvePoseFrameSequence(pose, dir, available);
-  }, [manifest, dir, card, fileSet]);
-
-  // Cadena beam: si la carta es beam, añadimos fire + ray tras el charge.
-  const allFiles = useMemo(() => {
-    if (card.type !== 'beam' || !dir) return files;
-    const avail = (f: string) => fileSet.has(f);
-    const fireFiles = resolvePoseFrameSequence('beam_fire', dir, avail);
-    return [...files, ...fireFiles];
-  }, [card.type, dir, files, fileSet]);
-
-  // Ciclo: avanza frame cada 1000/PREVIEW_FPS ms, vuelve al inicio.
-  useEffect(() => {
-    if (allFiles.length <= 1) { setFrameIdx(0); return; }
-    const id = setInterval(() => setFrameIdx(i => (i + 1) % allFiles.length), 1000 / PREVIEW_FPS);
-    return () => clearInterval(id);
-  }, [allFiles.length]);
-
-  const src = allFiles[frameIdx] ? spriteFrameUrl(resolvedForm, allFiles[frameIdx]) : undefined;
   const pose = cardBattlePose(card);
-  const resolvedPose = resolveCombatPose(pose, p => !!manifest?.[p]?.frames?.length);
+
+  const route = useMemo(
+    () => romPresentationTimelineForCard(card, 'player', resolvedForm),
+    [card, resolvedForm],
+  );
+  const frames = useMemo(() => {
+    const directory = spriteDirFor(resolvedForm);
+    if (!route || !directory) return [] as PreviewFrame[];
+    return route.timeline.entries.flatMap(entry => {
+      const cue = entry.cue;
+      if (cue.type !== 'ROM_PHYSICAL_FRAME' || cue.source === 'UNRESOLVED' || !cue.file) return [];
+      return [{
+        file: cue.file,
+        url: `/assets/sprites/${directory}/${cue.file}`,
+        durationTicks: cue.durationTicks,
+        // Card-level production cues describe a physical occurrence rather
+        // than a UI pose label; the card's declared semantic pose is the
+        // correct label for this compact preview.
+        role: pose,
+        physicalId: cue.physicalId ?? null,
+      }];
+    });
+  }, [pose, resolvedForm, route]);
+
+  useEffect(() => {
+    setFrameIdx(0);
+  }, [card.id, resolvedForm]);
+  useEffect(() => {
+    if (frames.length <= 1) return;
+    const frame = frames[frameIdx];
+    const delay = frame?.durationTicks ? Math.max(50, frame.durationTicks * (1000 / 60)) : 1000 / PREVIEW_FPS;
+    const id = window.setTimeout(() => setFrameIdx(i => (i + 1) % frames.length), delay);
+    return () => window.clearTimeout(id);
+  }, [frameIdx, frames]);
+
+  const frame = frames[frameIdx];
+  const source = frames.length > 0 ? 'ROM PHYSICAL' : route ? 'ROM PENDING' : 'NO ROM ROUTE';
+
   return (
-    <div className="dev-attack-preview" title={`${card.name} — pose ${pose}${resolvedPose && resolvedPose !== pose ? ` → ${resolvedPose}` : ''} · ${allFiles.length} frames @${PREVIEW_FPS}fps`}>
+    <div className="dev-attack-preview" title={`${card.name} — ${pose} · ${source} · ${frames.length} frames`}>
       <div className="dev-attack-preview-stage">
-        {src ? (
-          <img src={src} alt={card.name} className="dev-attack-preview-img"
+        {frame ? (
+          <img src={frame.url} alt={card.name} className="dev-attack-preview-img"
             style={{ width: size, height: size }} draggable={false} />
         ) : (
           <span className="dev-attack-preview-empty">—</span>
         )}
       </div>
       <div className="dev-attack-preview-meta">
-        <span className="dev-attack-preview-source">MANIFEST</span>
-        <span className="dev-attack-preview-pose">{pose}</span>
-        <span className="dev-attack-preview-frames">{allFiles.length} fr</span>
+        <span className="dev-attack-preview-source">{source}</span>
+        <span className="dev-attack-preview-pose">{frame?.role ?? pose}</span>
+        <span className="dev-attack-preview-frames">{frames.length} fr</span>
         {card.type === 'beam' && <span className="dev-attack-preview-beam">beam</span>}
       </div>
     </div>

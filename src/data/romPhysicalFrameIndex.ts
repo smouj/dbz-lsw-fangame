@@ -61,6 +61,10 @@ type CorpusFrame = {
 };
 
 const CONTENT_INDEX: Map<string, PhysicalCorpusFrameRef> = new Map();
+// `CONTENT_INDEX` is the authoritative coordinate join.  Dev/runtime
+// inspectors also receive a physical id directly from a reconciled binding,
+// so keep the inverse join here instead of making each UI guess a filename.
+const PHYSICAL_ID_INDEX: Map<string, PhysicalCorpusFrameRef> = new Map();
 const CONTENT_COLLISIONS: Array<{ key: string; a: string; b: string }> = [];
 
 for (const form of ROM_PHYSICAL_CORPUS_SUMMARY.forms as ReadonlyArray<{
@@ -73,6 +77,15 @@ for (const form of ROM_PHYSICAL_CORPUS_SUMMARY.forms as ReadonlyArray<{
     ...(form.stagePhysicalFrameIndex ?? []),
   ];
   for (const frame of index) {
+    const reference: PhysicalCorpusFrameRef = {
+      physicalId: frame.physicalId,
+      file: frame.file,
+      resourceId: frame.resourceId,
+      visualFrameId: frame.visualFrameId,
+      actorVisualProfileKey: frame.actorVisualProfileKey,
+      graphicsBank: frame.graphicsBank,
+    };
+    PHYSICAL_ID_INDEX.set(frame.physicalId, reference);
     const content = frame.animationBank != null && frame.resourceBase != null
       ? {
           profileKey: frame.actorVisualProfileKey,
@@ -97,14 +110,7 @@ for (const form of ROM_PHYSICAL_CORPUS_SUMMARY.forms as ReadonlyArray<{
       CONTENT_COLLISIONS.push({ key: contentKey, a: existing.physicalId, b: frame.physicalId });
       continue;
     }
-    CONTENT_INDEX.set(contentKey, {
-      physicalId: frame.physicalId,
-      file: frame.file,
-      resourceId: frame.resourceId,
-      visualFrameId: frame.visualFrameId,
-      actorVisualProfileKey: frame.actorVisualProfileKey,
-      graphicsBank: frame.graphicsBank,
-    });
+    CONTENT_INDEX.set(contentKey, reference);
   }
 }
 
@@ -158,6 +164,11 @@ export function physicalIdForFrameKey(frame: {
 /** Full corpus frame ref for a content identity. */
 export function corpusFrameForContent(content: RomPhysicalContentKey): PhysicalCorpusFrameRef | null {
   return CONTENT_INDEX.get(physicalContentKey(content)) ?? null;
+}
+
+/** Resolve the promoted physical asset for an already reconciled `rom-p...` id. */
+export function physicalFrameForId(physicalId: string): PhysicalCorpusFrameRef | null {
+  return PHYSICAL_ID_INDEX.get(physicalId) ?? null;
 }
 
 /** All `rom-p...` physicalIds promoted for a given form. */

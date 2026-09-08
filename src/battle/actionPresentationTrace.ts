@@ -47,6 +47,8 @@ export interface FighterVisualTrace {
   physicalStatus: PhysicalVisualStatus;
   mapping: FrameMapping;
   canonicalId?: string;
+  /** Promoted `rom-p...` identity when the displayed file is ROM physical. */
+  physicalId?: string;
   sourceResource?: number;
   sourceSequence?: number;
   visualFrameId?: number;
@@ -326,6 +328,7 @@ function collectRomFrames(
         sequenceIndex: cue.sequence,
         frameIndex: cue.frameIndex,
         file: cue.file ?? undefined,
+        physicalId: cue.physicalId ?? undefined,
         physicalStatus: physicalStatusOf(mapping),
         mapping,
         sourceResource: cue.resource,

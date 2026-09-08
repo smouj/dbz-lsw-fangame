@@ -27,6 +27,9 @@ const timelineUi = readFileSync('src/devtools/timeline.tsx', 'utf8');
 const battleLabUi = readFileSync('src/devtools/battlelab.tsx', 'utf8');
 const gameConfigUi = readFileSync('src/devtools/gameconfig.tsx', 'utf8');
 const attackPreviewUi = readFileSync('src/devtools/AttackPreview.tsx', 'utf8');
+const hudUi = readFileSync('src/devtools/hud.tsx', 'utf8');
+const canonBattleFieldUi = readFileSync('src/devtools/CanonBattleField.tsx', 'utf8');
+const formPreviewUi = readFileSync('src/devtools/FormPreview.tsx', 'utf8');
 const mainUi = readFileSync('src/main.tsx', 'utf8');
 const snapshot = getDevProjectSnapshot();
 
@@ -68,8 +71,22 @@ check('deployment truth matches current BattleScreen gate', BATTLE_PRESENTATION_
   && BATTLE_PRESENTATION_DEPLOYMENT.legacyCompletionFallback === true
   && mainUi.includes('isPixiField()')
   && mainUi.includes('if (romOwnsCompletion) return;'));
-check('Cards labels semantic preview as remake manifest', cardsUi.includes('REMAKE MANIFEST PREVIEW')
-  && attackPreviewUi.includes('MANIFEST') && !attackPreviewUi.includes('secuencia REAL'));
+check('Card preview renders the card production timeline from physical-ROM files', cardsUi.includes('ROM FRAME PREVIEW')
+  && attackPreviewUi.includes('romPresentationTimelineForCard')
+  && attackPreviewUi.includes('ROM PHYSICAL')
+  && !attackPreviewUi.includes('spriteFrameUrl'));
+check('HUD action preview never rewrites another form frame name or opens a legacy URL', hudUi.includes('resolveCharacterVisualSequence')
+  && hudUi.includes('romPhysicalAssetUrl')
+  && !hudUi.includes("replace(/^goku_base_")
+  && !hudUi.includes('spriteFrameUrl'));
+check('shared Dev battlefield resolves combat poses through physical ROM evidence', canonBattleFieldUi.includes('resolveCharacterVisualSequence')
+  && canonBattleFieldUi.includes('romPhysicalPreviewSequence')
+  && !canonBattleFieldUi.includes('spriteFrameUrl')
+  && !canonBattleFieldUi.includes('${dir}_${p}_00.png'));
+check('Character preview exposes only reconciled physical-ROM frames', formPreviewUi.includes('romPhysicalPreviewSequence')
+  && formPreviewUi.includes('sin frame ROM físico reconciliado')
+  && !formPreviewUi.includes('spriteFrameUrl')
+  && !formPreviewUi.includes('resolvePoseFrameSequence'));
 check('Animation Studio exposes closed sequence vs pending PNG', animationUi.includes('ROM SEQUENCE CLOSED')
   && animationUi.includes('PHYSICAL PNG:') && animationUi.includes('RENDERER PENDING'));
 check('Timeline live mode is honestly named Runtime Sandbox', timelineUi.includes('Runtime Sandbox')

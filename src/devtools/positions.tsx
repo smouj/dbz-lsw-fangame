@@ -17,7 +17,6 @@ import {
 import { FORMS, getForm } from '../data/roster';
 import { SCENARIOS } from '../data/scenarios';
 import { battleOverworldActorUrl } from '../data/battleOverworld';
-import { spriteDirFor, spriteFrameUrl } from '../data/spriteManifest';
 import { overworldUrl } from '../data/overworld';
 import { facingFlip } from '../data/facing';
 import { BATTLE_PORTRAITS } from '../data/battlePortraits';
@@ -68,8 +67,10 @@ export function PositionsModule() {
   const ePortrait = BATTLE_PORTRAITS[enemyFormId];
   // Actor overworld REAL del juego (chibi con aura si el manifest la tiene;
   // fallback al chibi *_ow.png — mismo criterio que el runtime)
-  const pOverworld = battleOverworldActorUrl(playerFormId, 'idle') ?? (playerForm ? (spriteDirFor(playerForm.id) ? spriteFrameUrl(playerForm.id, `${spriteDirFor(playerForm.id)}_idle_00.png`) : overworldUrl(playerFormId)) : undefined);
-  const eOverworld = battleOverworldActorUrl(enemyFormId, 'idle') ?? (enemyForm ? (spriteDirFor(enemyForm.id) ? spriteFrameUrl(enemyForm.id, `${spriteDirFor(enemyForm.id)}_idle_00.png`) : overworldUrl(enemyFormId)) : undefined);
+  // Position Lab is a tactical OVERWORLD view. Use its canonical form map;
+  // never substitute a battle-sheet idle whose name was assembled in the UI.
+  const pOverworld = battleOverworldActorUrl(playerFormId, 'idle') ?? overworldUrl(playerFormId);
+  const eOverworld = battleOverworldActorUrl(enemyFormId, 'idle') ?? overworldUrl(enemyFormId);
 
   function updateAnchor(axis: 'x' | 'y', value: number) {
     const next = { ...editingAnchor, [axis]: value };

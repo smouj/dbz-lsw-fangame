@@ -250,8 +250,7 @@ function CinematicCardInfo({ card }: { card: CardDef }) {
 function CardDetail({ card }: { card: CardDef }) {
   return (
     <div className="dev-card-detail">
-      {/* M8.F0 — preview animada del ataque (gif con frames reales del
-          manifest) + ficha */}
+      {/* Preview de acción: solo secuencias reconciliadas con la ROM. */}
       <div className="dev-card-hero">
         <div className="dev-card-hero-id">{String(card.id).padStart(3, '0')}</div>
         <div className="dev-card-hero-sprite">
@@ -265,7 +264,7 @@ function CardDetail({ card }: { card: CardDef }) {
         </div>
       </div>
       <div className="dev-card-attack-preview-big">
-        <span className="dev-truth-kicker">REMAKE MANIFEST PREVIEW · 12 FPS FIXED</span>
+        <span className="dev-truth-kicker">ROM FRAME PREVIEW · TICKS RECONCILIADOS</span>
         <AttackPreview card={card} size={128} />
       </div>
       <div className="dev-card-stats-big">

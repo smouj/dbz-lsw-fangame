@@ -7,20 +7,20 @@
 //   · mini-grid de TODOS los frames de la pose (exposición clara)
 //   · checkerboard de transparencia
 //   · cadena beam (charge → fire → ray → tip) cuando la pose es de beam
-// Toda la fuente es el manifest de la forma — NUNCA tablas locales.
+// El selector consume el mapa de frames reconciliado con ROM. El manifest
+// solo queda como índice físico del corpus, nunca como una lista visual
+// alternativa ni como generador de nombres de archivo.
 // ═══════════════════════════════════════════════════════════════════════
 
 import { useState, useMemo } from 'react';
-import { spriteFrameUrl } from '../data/spriteManifest';
-import { COMBAT_POSE_ORDER, resolvePoseFrameSequence } from '../battle/spriteConfig';
+import { COMBAT_POSE_ORDER } from '../battle/spriteConfig';
 import { poseSemantics } from './frameSemantics';
-import { SPRITE_CANON } from '../data/generated/spriteCanon.generated';
+import { resolveCharacterVisualSequence } from '../battle/characterFrameMap';
+import { romPhysicalPreviewSequence } from './romPhysicalPreview';
 import type { FrameAnalysis } from './frameAnalysis';
 
 interface Props {
   formId: string;
-  /** dir del manifest (para resolver archivos). */
-  dir: string | undefined;
   /** Análisis del manifest (frames reales con poses) — fuente de conteos. */
   analysis: { frames: FrameAnalysis[]; loading: boolean };
   /** Pose controlada (opcional — si se pasa, el padre controla la pose activa). */
@@ -31,7 +31,7 @@ interface Props {
 
 const BEAM_CHAIN = ['beam_charge', 'beam_fire', 'beam_ray', 'beam_ray_tip'];
 
-export function FormPreview({ formId, dir, analysis, pose: poseProp, onPoseChange }: Props) {
+export function FormPreview({ formId, analysis, pose: poseProp, onPoseChange }: Props) {
   const [poseLocal, setPoseLocal] = useState('idle');
   const pose = poseProp ?? poseLocal;
   const setPose = (p: string) => {
@@ -41,46 +41,29 @@ export function FormPreview({ formId, dir, analysis, pose: poseProp, onPoseChang
   };
   const [frameIdx, setFrameIdx] = useState(0);
 
-  // Set de archivos reales del manifest (para available()).
-  const fileSet = useMemo(() => {
-    const s = new Set<string>();
-    for (const f of analysis.frames) s.add(f.file);
-    return s;
-  }, [analysis.frames]);
+  const sequence = useMemo(
+    () => resolveCharacterVisualSequence({ formId, semanticRole: pose }),
+    [formId, pose],
+  );
+  // The visual inspector must not promote a fallback/composite PNG to ROM
+  // truth. Those cases remain visible as an explicit zero-frame state.
+  const poseFrames = useMemo(() => romPhysicalPreviewSequence(sequence), [sequence]);
+  const sequenceIsRenderable = poseFrames.length > 0;
 
-  // Frames de la pose activa con FALLBACKS (resolvePoseFrameSequence — la
-  // MISMA fuente que el runtime y el grid de poses: beam_fire sin PNG propio
-  // cae a beam_charge, knockback_down a hurt…). Antes filtraba por prefijo
-  // del archivo y las poses con fallback salían vacías en el preview.
-  const poseFiles = useMemo(() => {
-    if (!dir) return [];
-    const available = (file: string) => fileSet.has(file);
-    return resolvePoseFrameSequence(pose, dir, available);
-  }, [dir, pose, fileSet]);
-
-  // Conteo por pose (para las pills) — con los MISMOS fallbacks.
+  // Conteo por pose desde el mismo mapa ROM que el preview.
   const counts = useMemo(() => {
-    if (!dir) return new Map<string, number>();
-    const available = (file: string) => fileSet.has(file);
     const m = new Map<string, number>();
     for (const p of COMBAT_POSE_ORDER) {
-      m.set(p, resolvePoseFrameSequence(p, dir, available).length);
+      const resolved = resolveCharacterVisualSequence({ formId, semanticRole: p });
+      m.set(p, romPhysicalPreviewSequence(resolved).length);
     }
     return m;
-  }, [dir, fileSet]);
+  }, [formId]);
 
-  const idx = Math.min(frameIdx, Math.max(0, poseFiles.length - 1));
-  const current = poseFiles[idx] ?? null;
-  const src = current ? spriteFrameUrl(formId, current) : undefined;
+  const idx = Math.min(frameIdx, Math.max(0, poseFrames.length - 1));
+  const current = poseFrames[idx] ?? null;
   const sem = poseSemantics(pose);
 
-  const canonFormId = dir ?? formId;
-  const canonForm = SPRITE_CANON.forms.find(f => f.form === canonFormId);
-  const canonFrames = useMemo(
-    () => (canonForm?.frames ?? []).filter(f => f.runtimePoses.includes(pose)),
-    [canonForm, pose],
-  );
-  const canonFamilies = [...new Set(canonFrames.map(f => f.family))];
   const isBeam = pose.startsWith('beam_') || pose === 'beam_ray' || pose === 'beam_ray_tip';
 
   return (
@@ -92,17 +75,18 @@ export function FormPreview({ formId, dir, analysis, pose: poseProp, onPoseChang
       {/* Sprite grande */}
       <div className="dev-preview-stage">
         <div className="dev-checker-bg">
-          {src ? (
-            <img src={src} alt={pose} className="dev-preview-sprite" draggable={false} />
+          {current ? (
+            <img src={current.url} alt={pose} className="dev-preview-sprite" draggable={false} />
           ) : (
-            <span className="dev-preview-empty">— sin frame físico —</span>
+            <span className="dev-preview-empty">— sin frame ROM físico reconciliado —</span>
           )}
         </div>
         <div className="dev-preview-caption">
           <code>{pose}</code>
-          {current && <em>{current}</em>}
-          <span className="dev-tag">{poseFiles.length} frame{poseFiles.length !== 1 ? 's' : ''}</span>
-          {canonFamilies.length > 0 && <span className="dev-tag ok">canon: {canonFamilies.join(', ')}</span>}
+          {current && <em>{current.file}</em>}
+          <span className="dev-tag">{poseFrames.length} frame{poseFrames.length !== 1 ? 's' : ''}</span>
+          <span className={`dev-tag ${sequenceIsRenderable ? 'ok' : 'bad'}`}>{sequenceIsRenderable ? 'ROM_PHYSICAL' : 'ROM PENDING'}</span>
+          <span className="dev-tag">{sequence.classification}</span>
           {analysis.loading && <span className="dev-hint">(cargando manifest…)</span>}
         </div>
       </div>
@@ -119,13 +103,13 @@ export function FormPreview({ formId, dir, analysis, pose: poseProp, onPoseChang
       </div>
 
       {/* Frames de la pose activa (exposición) */}
-      {poseFiles.length > 1 && (
+      {poseFrames.length > 1 && (
         <div className="dev-preview-frames">
-          {poseFiles.map((f, i) => (
-            <button key={f} className={`dev-preview-frame ${i === idx ? 'active' : ''}`}
-              onClick={() => setFrameIdx(i)} title={f}>
-              <img src={spriteFrameUrl(formId, f)} alt={f} draggable={false} />
-              <span>{f.replace(/^.*?_/, '').replace('.png', '')}</span>
+          {poseFrames.map((f, i) => (
+            <button key={`${f.physicalId}-${i}`} className={`dev-preview-frame ${i === idx ? 'active' : ''}`}
+              onClick={() => setFrameIdx(i)} title={f.physicalId}>
+              <img src={f.url} alt={f.physicalId} draggable={false} />
+              <span>{f.physicalId}</span>
             </button>
           ))}
         </div>

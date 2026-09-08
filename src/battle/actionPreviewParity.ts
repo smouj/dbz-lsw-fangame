@@ -24,6 +24,7 @@ export interface RuntimeActionPreviewBeat {
   scene: string;
   formId: string;
   file: string;
+  physicalId: string | null;
   resource: number;
   sequence: number;
   frameIndex: number;
@@ -74,6 +75,7 @@ export function runtimeActionPreview(kind: ActionPreviewKind): RuntimeActionPrev
       scene: sample?.scene ?? 'FIELD',
       formId: frame.actor.formId,
       file: frame.actor.file ?? '',
+      physicalId: frame.actor.physicalId ?? null,
       resource: frame.resourceId,
       sequence: frame.sequenceIndex,
       frameIndex: frame.frameIndex,

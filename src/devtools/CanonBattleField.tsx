@@ -10,7 +10,7 @@
 // Fuentes compartidas (cero duplicación):
 //   · BATTLE_PORTRAITS (portraits de combate)
 //   · battleOverworldActorUrl (chibi overworld — mismo lookup que el HUD)
-//   · spriteFrameUrl (sprites de acción del sheet)
+//   · resolveCharacterVisualSequence (frames de acción reconciliados con ROM)
 //   · anchorFor / actionAnchorFor (Position Lab)
 //
 // Props: estado del runtime (hp/posiciones/fase) + cues del presenter
@@ -19,8 +19,9 @@
 import { anchorFor, actionAnchorFor } from '../data/positions';
 import { BattlePosition } from '../data/positions';
 import { battleOverworldActorUrl } from '../data/battleOverworld';
-import { spriteDirFor, spriteFrameUrl } from '../data/spriteManifest';
 import { BATTLE_PORTRAITS } from '../data/battlePortraits';
+import { resolveCharacterVisualSequence } from '../battle/characterFrameMap';
+import { romPhysicalPreviewSequence } from './romPhysicalPreview';
 import { useMemo } from 'react';
 import type { BattleSide } from '../battle/engine/state/BattleState';
 
@@ -74,16 +75,19 @@ function HpBar({ current, max, side }: { current: number; max: number; side: 'le
 }
 
 /** Resolución de sprites IDÉNTICA al HUD Studio:
- *  OVERVIEW → chibi overworld (battleOverworldActorUrl + fallback idle del manifest)
- *  ACTION   → sprite grande del sheet (spriteFrameUrl idle o la pose pedida). */
+ *  OVERVIEW → actor overworld canónico
+ *  ACTION   → frame de combate resuelto desde el mapa físico-ROM.
+ *  No compone nombres de archivos ni completa poses sin evidencia. */
 function useFighterSprites(playerFormId: string, enemyFormId: string, pose?: Partial<Record<BattleSide, string>>) {
   return useMemo(() => {
     const resolve = (formId: string, side: BattleSide) => {
       const ow = battleOverworldActorUrl(formId, 'idle');
-      const dir = spriteDirFor(formId);
       const p = pose?.[side] ?? 'idle';
-      const action = dir ? spriteFrameUrl(formId, `${dir}_${p}_00.png`) : undefined;
-      return { ow: ow ?? (dir ? spriteFrameUrl(formId, `${dir}_idle_00.png`) : undefined), action };
+      const actionSequence = resolveCharacterVisualSequence({ formId, semanticRole: p });
+      const idleSequence = resolveCharacterVisualSequence({ formId, semanticRole: 'idle' });
+      const action = romPhysicalPreviewSequence(actionSequence)[0]?.url;
+      const idle = romPhysicalPreviewSequence(idleSequence)[0]?.url;
+      return { ow: ow ?? idle, action };
     };
     return { player: resolve(playerFormId, 'player'), enemy: resolve(enemyFormId, 'enemy') };
   }, [playerFormId, enemyFormId, pose?.player, pose?.enemy]);
