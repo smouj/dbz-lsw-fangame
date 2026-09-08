@@ -1056,7 +1056,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 /* ─── HUD Superior (ventana GBC) ─── */
 
 .hud-top {
-  animation: hud-in 0.32s steps(3, end) both;
+  animation: hud-in .38s cubic-bezier(.2,.8,.3,1) both;
   display: flex;
   justify-content: space-between;
   align-items: stretch;
@@ -1649,8 +1649,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 /* Entrada del HUD de batalla (tras la intro VS) */
 @keyframes hud-in {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(-12px) scale(.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 /* ─── Números de daño ─── */
@@ -1672,11 +1672,11 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .damage-number.guard { color: var(--def-color); }
 
 @keyframes dmg-float {
-  0% { opacity: 0; transform: translateY(4px) scale(0.5); }
-  12% { opacity: 1; transform: translateY(0) scale(1.5); }
-  30% { opacity: 1; transform: translateY(-10px) scale(1.05); }
-  70% { opacity: 0.9; transform: translateY(-26px) scale(0.95); }
-  100% { opacity: 0; transform: translateY(-44px) scale(0.8); }
+  0%   { opacity: 0; transform: translateY(6px) scale(.4); }
+  10%  { opacity: 1; transform: translateY(-2px) scale(1.4); }
+  28%  { opacity: 1; transform: translateY(-14px) scale(1.05); }
+  65%  { opacity: .85; transform: translateY(-30px) scale(.95); }
+  100% { opacity: 0; transform: translateY(-50px) scale(.75); }
 }
 
 /* ─── Barra de fase ─── */
@@ -4764,10 +4764,10 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   z-index: 9;
   pointer-events: none;
   overflow: hidden;
-  /* Entrada suave de la vista ACTION: fade + leve zoom (no steps bruscos) */
-  animation: fx-scene-in .3s ease-out both;
+  /* Entrada suave de la vista ACTION: fade + leve zoom con cubic-bezier GBC feel */
+  animation: fx-scene-in .36s cubic-bezier(.2,.8,.3,1) both;
 }
-.card-fx.scene-return { animation: fx-scene-out .26s ease-in both; }
+.card-fx.scene-return { animation: fx-scene-out .3s ease-in both; }
 .battle-screen.pixi-presentation-active .card-fx {
   display: none;
 }
@@ -4796,8 +4796,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .card-fx.scene-attacker.enemy .fx-actor { animation: fx-actor-center-enemy .8s ease-out both; }
 .card-fx.scene-travel.player .fx-actor { left: 8vw; animation: fx-actor-hold-player .7s ease both; }
 .card-fx.scene-travel.enemy .fx-actor { right: 8vw; animation: fx-actor-hold-enemy .7s ease both; }
-@keyframes fx-scene-in { from { opacity: 0; filter: brightness(1.2); transform: scale(.985); } to { opacity: 1; filter: brightness(1); transform: scale(1); } }
-@keyframes fx-scene-out { from { opacity: 1; filter: brightness(1); } to { opacity: 0; filter: brightness(.85); } }
+@keyframes fx-scene-in { from { opacity: 0; filter: brightness(1.15); transform: scale(.98); } to { opacity: 1; filter: brightness(1); transform: scale(1); } }
+@keyframes fx-scene-out { from { opacity: 1; filter: brightness(1); } to { opacity: 0; filter: brightness(.8); } }
 @keyframes fx-zoom-in { from { transform: translateY(14px) scale(.94); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }
 @keyframes fx-actor-center-player {
   0% { left: 8vw; transform: translateX(0) translateY(10px) scale(.9); opacity: 0; }
@@ -5194,7 +5194,7 @@ button:focus-visible, .chapter-node:focus-visible {
   position: relative;
   user-select: none;
   overflow: hidden;
-  transition: opacity .18s ease-out, transform .18s ease-out;
+  transition: opacity .28s cubic-bezier(.2,.8,.3,1), transform .28s cubic-bezier(.2,.8,.3,1);
 }
 
 .scene-exiting { opacity: 0; transform: scale(1.03); }
@@ -5268,9 +5268,9 @@ button:focus-visible, .chapter-node:focus-visible {
   z-index: 3;
   text-align: center;
   text-shadow: 3px 3px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
-  animation: storyTitleIn 1.15s cubic-bezier(.18,.8,.28,1) both;
+  animation: storyTitleIn 1.3s cubic-bezier(.18,.8,.28,1) both;
 }
-.story-panel-title p { animation: storySubIn .85s ease .4s both; }
+.story-panel-title p { animation: storySubIn .9s ease .45s both; }
 @keyframes storyTitleIn {
   from { opacity: 0; transform: scale(1.4); letter-spacing: 18px; filter: blur(3px); }
   55%  { opacity: 1; }
