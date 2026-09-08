@@ -117,6 +117,7 @@
     "verify:frame-provenance": "npx tsx scripts/verify-frame-provenance.ts",
     "verify:animation-studio": "npx tsx scripts/verify-animation-studio.ts",
     "build:rom-physical-corpus": "npx tsx scripts/build-rom-physical-corpus.ts",
+    "sync:rom-physical-public-assets": "npx tsx scripts/sync-rom-physical-public-assets.ts",
     "build:rom-fx-corpus": "npx tsx scripts/build-rom-fx-corpus.ts",
     "build:rom-fx-runtime-cutover": "npx tsx scripts/build-rom-fx-runtime-cutover.ts",
     "build:rom-fx-film-contract": "npx tsx scripts/build-rom-fx-film-contract.ts",

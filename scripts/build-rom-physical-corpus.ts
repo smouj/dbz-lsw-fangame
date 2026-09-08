@@ -16,15 +16,15 @@ import { ROM_BANK61_ANIMATION_CORE_RESOURCE_BASES } from '../src/data/generated/
 
 const ROOT = process.cwd();
 function runTsx(args: string[]): void {
-  // cmd.exe must receive tokens after /c (without /s): /s can discard child
-  // arguments when invoked from tsx, leaving a physical corpus stale. The
-  // tokens are fixed repository paths and hexadecimal selectors built here,
-  // so no shell interpolation is involved.
-  const command = process.platform === 'win32' ? (process.env.ComSpec ?? 'cmd.exe') : 'npx';
-  const commandArgs = process.platform === 'win32'
-    ? ['/d', '/c', 'npx.cmd', 'tsx', ...args]
-    : ['tsx', ...args];
-  execFileSync(command, commandArgs, { cwd: ROOT, stdio: 'pipe' });
+  // Execute the installed tsx CLI through Node itself. Nested cmd/npx calls
+  // on Windows may return before their node renderer has finished, which can
+  // leave a provenance entry pointing at a not-yet-promoted physical PNG.
+  const localTsx = join(ROOT, 'node_modules', 'tsx', 'dist', 'cli.mjs');
+  if (existsSync(localTsx)) {
+    execFileSync(process.execPath, [localTsx, ...args], { cwd: ROOT, stdio: 'pipe' });
+    return;
+  }
+  execFileSync('npx', ['tsx', ...args], { cwd: ROOT, stdio: 'pipe' });
 }
 const FIGHTERS = join(ROOT, 'docs/rom/generated/fighters');
 const PROFILES = join(ROOT, 'docs/rom/generated/sprite-mapping/rom-form-profiles.json');

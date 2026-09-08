@@ -2,10 +2,11 @@
 // semantic/manifest frame. It only inspects ROM_PHYSICAL_FRAME cues emitted
 // by the same route consumed by AttackPreview.
 
-import { readFileSync } from 'fs';
+import { existsSync, readFileSync } from 'fs';
 import { join } from 'path';
 import { CARDS, type CardDef } from '../src/data/cards';
 import { getForm } from '../src/data/roster';
+import { spriteDirFor } from '../src/data/spriteManifest';
 import { romPresentationTimelineForCard } from '../src/battle/romPresentationForCard';
 
 let passed = 0;
@@ -43,11 +44,31 @@ const nonPhysical = physical.filter(({ cue }) =>
   cue.source !== 'ROM_PHYSICAL' || !cue.physicalId || !cue.file || !cue.file.startsWith('physical/'));
 check('every displayed Vegito card frame is a promoted ROM physical asset', nonPhysical.length === 0,
   nonPhysical.map(({ card, cue }) => `#${card.id}:${cue.source}:${cue.file ?? 'none'}`).join(', '));
+const vegitoDirectory = spriteDirFor('vegito_ssj');
+const missingFiles = physical.filter(({ cue }) => !vegitoDirectory || !cue.file
+  || !existsSync(join(process.cwd(), 'public/assets/sprites', vegitoDirectory, cue.file)));
+check('every displayed Vegito card frame exists in the public physical corpus', missingFiles.length === 0,
+  missingFiles.map(({ card, cue }) => `#${card.id}:${cue.file ?? 'none'}`).join(', '));
 
 const previewSource = readFileSync(join(process.cwd(), 'src/devtools/AttackPreview.tsx'), 'utf8');
 check('Cards preview has no semantic sprite URL dependency',
   !previewSource.includes('spriteFrameUrl') && previewSource.includes("cue.type !== 'ROM_PHYSICAL_FRAME'"));
-check('Cards preview rejects non-physical frame files', previewSource.includes("!cue.file"));
+check('Cards preview accepts only promoted ROM physical frame cues',
+  previewSource.includes("cue.source !== 'ROM_PHYSICAL'")
+  && previewSource.includes("!cue.file?.startsWith('physical/')")
+  && previewSource.includes('!cue.physicalId'));
+
+const charactersSource = readFileSync(join(process.cwd(), 'src/devtools/characters.tsx'), 'utf8');
+const formPreviewSource = readFileSync(join(process.cwd(), 'src/devtools/FormPreview.tsx'), 'utf8');
+check('Characters has no active legacy manifest frame browser',
+  !charactersSource.includes('spriteFrameUrl')
+  && !charactersSource.includes('useSheetAnalysis')
+  && !charactersSource.includes('FrameBrowser')
+  && !charactersSource.includes('Legacy User Manifest'));
+check('Character central preview resolves only the physical ROM sequence',
+  !formPreviewSource.includes('FrameAnalysis')
+  && !formPreviewSource.includes('analysis:')
+  && formPreviewSource.includes('romPhysicalPreviewSequence'));
 
 const studioSource = readFileSync(join(process.cwd(), 'src/devtools/animationStudio.tsx'), 'utf8');
 const devStudioSource = readFileSync(join(process.cwd(), 'src/devtools/DevStudio.tsx'), 'utf8');
@@ -57,7 +78,8 @@ check('Animation Studio does not render legacy or remake manifest thumbnails',
   !studioSource.includes('CURRENT MANIFEST') && !studioSource.includes('REMAKE MANIFEST'));
 check('both animation routes use the physical ROM inspector',
   !devStudioSource.includes("import { AnimationModule }")
-  && devStudioSource.includes("module === 'animation' || module === 'animation-studio'"));
+  && devStudioSource.includes("module === 'animation' && <AnimationStudioModule />")
+  && devStudioSource.includes("module === 'animation-studio' && <AnimationStudioModule />"));
 
 console.log(`\nDEV VEGITO PHYSICAL PREVIEW: ${passed}/${passed + failed} ${failed === 0 ? 'PASS' : 'FAIL'} · ${physical.length} ROM frame cues`);
 if (failed > 0) process.exit(1);

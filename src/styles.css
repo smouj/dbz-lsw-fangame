@@ -9569,13 +9569,15 @@ button:focus-visible, .chapter-node:focus-visible {
 }
 .dev-attack-preview-stage {
   display: flex; align-items: center; justify-content: center;
+  box-sizing: border-box; padding: 4px;
   background: repeating-conic-gradient(var(--dev-check-a) 0% 25%, var(--dev-check-b) 0% 50%) 0 0/10px 10px;
   border: 1px solid var(--dev-border-hi); border-radius: var(--dev-r-md);
   overflow: hidden;
 }
 .dev-attack-preview-img {
   image-rendering: pixelated; image-rendering: crisp-edges;
-  object-fit: contain;
+  display: block; max-width: 100%; max-height: 100%;
+  width: auto; height: auto; object-fit: contain;
 }
 .dev-attack-preview-empty { color: var(--dev-ghost); font-size: 10px; padding: 8px; }
 .dev-attack-preview-meta {

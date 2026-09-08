@@ -29,6 +29,8 @@ type PreviewFrame = {
   durationTicks: number;
   role: string;
   physicalId: string | null;
+  offsetX: number | null;
+  offsetY: number | null;
 };
 
 export function AttackPreview({ card, formId, size = 96 }: Props) {
@@ -54,7 +56,12 @@ export function AttackPreview({ card, formId, size = 96 }: Props) {
     if (!route || !directory) return [] as PreviewFrame[];
     return route.timeline.entries.flatMap(entry => {
       const cue = entry.cue;
-      if (cue.type !== 'ROM_PHYSICAL_FRAME' || cue.source === 'UNRESOLVED' || !cue.file) return [];
+      if (
+        cue.type !== 'ROM_PHYSICAL_FRAME'
+        || cue.source !== 'ROM_PHYSICAL'
+        || !cue.physicalId
+        || !cue.file?.startsWith('physical/')
+      ) return [];
       return [{
         file: cue.file,
         url: `/assets/sprites/${directory}/${cue.file}`,
@@ -63,7 +70,9 @@ export function AttackPreview({ card, formId, size = 96 }: Props) {
         // than a UI pose label; the card's declared semantic pose is the
         // correct label for this compact preview.
         role: pose,
-        physicalId: cue.physicalId ?? null,
+        physicalId: cue.physicalId,
+        offsetX: cue.offsetX,
+        offsetY: cue.offsetY,
       }];
     });
   }, [pose, resolvedForm, route]);
@@ -84,10 +93,11 @@ export function AttackPreview({ card, formId, size = 96 }: Props) {
 
   return (
     <div className="dev-attack-preview" title={`${card.name} — ${pose} · ${source} · ${frames.length} frames`}>
-      <div className="dev-attack-preview-stage">
+      <div className="dev-attack-preview-stage" style={{ width: size, height: size }}>
         {frame ? (
           <img src={frame.url} alt={card.name} className="dev-attack-preview-img"
-            style={{ width: size, height: size }} draggable={false} />
+            title={`${frame.physicalId} · dx ${frame.offsetX ?? '—'} · dy ${frame.offsetY ?? '—'}`}
+            draggable={false} decoding="async" />
         ) : (
           <span className="dev-attack-preview-empty">—</span>
         )}

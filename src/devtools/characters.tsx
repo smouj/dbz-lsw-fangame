@@ -18,9 +18,9 @@
 // ═══════════════════════════════════════════════════════════════════════
 import { useState, useEffect, useRef, useMemo, createContext, useContext } from 'react';
 import {
-  FORMS, ROM_ORDERED_CHARACTERS, getForm, statAtLevel, sheetUrl, LIMIT_DEFAULTS,
+  ROM_ORDERED_CHARACTERS, getForm, statAtLevel, sheetUrl, LIMIT_DEFAULTS,
 } from '../data/roster';
-import { spriteDirFor, spriteManifestUrl, spriteFrameUrl } from '../data/spriteManifest';
+import { spriteDirFor } from '../data/spriteManifest';
 import { romPhysicalNeutralPreview, romPhysicalPreviewFrame } from './romPhysicalPreview';
 import { CARDS, type CardDef, type CardType, CARD_COLORS } from '../data/cards';
 import { romCardData } from '../data/romCardData';
@@ -35,8 +35,6 @@ import { STORY_PORTRAITS, storyPortraitUrlApproximate as storyPortraitUrl } from
 import { overworldUrl } from '../data/overworld';
 import { battleOverworldActorUrl, battleOverworldAuraUrlAsync } from '../data/battleOverworld';
 import { characterName } from '../data/storyPanels';
-import { useSheetAnalysis, groupFramesByPose, type FrameAnalysis } from './frameAnalysis';
-import { poseSemantics, parseFrameName } from './frameSemantics';
 import { FormPreview } from './FormPreview';
 import type { DevLinkedTarget, DevModuleId } from './DevStudio';
 import { romBeamConsumersForFormResource } from '../battle/romSequenceSelectors';
@@ -45,28 +43,6 @@ import { getRomSequenceRegistry } from '../data/romSequenceRegistry';
 import { ROM_FIGHTER_FORM_IDENTITY } from '../data/generated/romFighterFormIdentity.generated';
 import { catalogAnimationBank, catalogResourceBase } from '../data/generated/romAnimationResourceBase.generated';
 import { COMBAT_POSE_ORDER } from '../battle/spriteConfig';
-
-// ═══ Escritura real a disco (middleware /__dev/write) ──────────────────
-async function frameDataUrl(rel: string): Promise<string> {
-  const r = await fetch(`/assets/${rel}`, { cache: 'no-store' });
-  if (!r.ok) throw new Error(`lectura ${rel}: HTTP ${r.status}`);
-  const blob = await r.blob();
-  return new Promise((resolve, reject) => {
-    const fr = new FileReader();
-    fr.onload = () => resolve(String(fr.result));
-    fr.onerror = () => reject(fr.error);
-    fr.readAsDataURL(blob);
-  });
-}
-
-async function writeAssetToDisk(rel: string, dataUrl: string): Promise<void> {
-  const r = await fetch('/__dev/write', {
-    method: 'POST',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ rel, data: dataUrl.split(',')[1] ?? dataUrl }),
-  });
-  if (!r.ok) throw new Error(`escritura ${rel}: HTTP ${r.status} ${await r.text()}`);
-}
 
 // ═══ Constantes ─────────────────────────────────────────────────────────
 const STATS: { key: 'hp' | 'str' | 'ki' | 'spd'; label: string; color: string }[] = [
@@ -473,7 +449,6 @@ export function CharactersModule({ onOpenModule }: {
     }
   }, [form.id, physicalPreviewPoses]);
   const spriteDir = spriteDirFor(form.id);
-  const manifestUrl = spriteManifestUrl(form.id);
   const idleBinding = bindingsForForm(form.id).find(binding => binding.semanticRole === 'idle'
     && (binding.mapping === 'ROM_EXACT' || binding.mapping === 'ROM_PHASE' || binding.mapping === 'CANONICAL_PHYSICAL' || binding.mapping === 'SHARED_PHYSICAL'));
   const idleUrl = neutralPreview?.url ?? (idleBinding ? romPhysicalPreviewFrame(form.id, idleBinding)?.url : undefined);
@@ -489,7 +464,6 @@ export function CharactersModule({ onOpenModule }: {
   }, [form.id]);
 
   const portrait = BATTLE_PORTRAITS[form.id];
-  const analysis = useSheetAnalysis(form.id, spriteDir);
 
   const selectChar = (id: string) => {
     setCharId(id);
@@ -503,7 +477,7 @@ export function CharactersModule({ onOpenModule }: {
       <header className="dev-header">
         <h1>Character Studio</h1>
         <p className="dev-sub">
-          Stats ROM · assets · poses de combate · ROM physical corpus · legacy assets de referencia.
+          Stats ROM · assets identificados · poses de combate y corpus físico ROM por forma.
         </p>
       </header>
 
@@ -581,7 +555,7 @@ export function CharactersModule({ onOpenModule }: {
           {/* SECCIÓN 1 — Preview + Stats (2 columnas) */}
           <section className="dev-char-block dev-primary-block">
             <div className="dev-primary-grid">
-              <FormPreview formId={form.id} analysis={analysis}
+              <FormPreview formId={form.id}
                 pose={previewPose} onPoseChange={setPreviewPose} />
               <div className="dev-primary-stats">
                 <div className="dev-form-preview-head">
@@ -592,11 +566,8 @@ export function CharactersModule({ onOpenModule }: {
                   <code>{form.id}</code>
                   {form.tier && <span className="dev-tag">tier {form.tier}</span>}
                   {form.sheet && <span className="dev-tag">{form.sheet}</span>}
-                  <span className={`dev-tag ${spriteDir ? 'ok' : 'bad'}`}>{spriteDir ? 'manifest ✓' : 'sin manifest'}</span>
+                  <span className={`dev-tag ${spriteDir ? 'ok' : 'bad'}`}>{spriteDir ? 'ROM physical dir ✓' : 'sin directorio ROM físico'}</span>
                   <span className={`dev-tag ${portrait ? 'ok' : 'bad'}`}>{portrait ? 'portrait ✓' : 'sin portrait'}</span>
-                  {manifestUrl && (
-                    <a className="dev-manifest-link" href={manifestUrl} target="_blank" rel="noreferrer">manifest.json ↗</a>
-                  )}
                   {spriteDir && (
                     <button className="dev-btn dev-btn-mini"
                       title="Abrir la carpeta física del sprite en Asset Explorer"
@@ -661,23 +632,7 @@ export function CharactersModule({ onOpenModule }: {
           {/* SECCIÓN 2.7 — ROM Canon Manifest: action → physicalId mapping */}
           <RomCanonManifestPanel formId={form.id} />
 
-          {/* SECCIÓN 3 — Legacy User Manifest (REFERENCE ONLY, not ROM authority) */}
-          <section className="dev-char-block dev-legacy-section">
-            <h3 className="dev-char-block-title">
-              Legacy User Manifest
-              <span className="dev-tag warn">REFERENCE ONLY · NOT ROM PHYSICAL</span>
-              <span className="dev-sheets-count">{analysis.frames.length} frames · {analysis.problemCount} avisos</span>
-            </h3>
-            {analysis.overridden && (
-              <div className="dev-wip-banner">
-                Overrides locales activos — los frames pueden diferir de los manifests OUT_frames.{' '}
-                <button className="dev-btn" onClick={analysis.clearOverrideLocal}>Limpiar override</button>
-              </div>
-            )}
-            <FrameBrowser formId={form.id} analysis={analysis} dir={spriteDir} />
-          </section>
-
-          {/* SECCIÓN 4 — Physical Map (F-MAP: ROM + canonical + manifest) */}
+          {/* Physical map: relaciones ROM y diagnóstico; no renderiza PNGs de manifest. */}
           <CharacterPhysicalMap formId={form.id} />
         </div>
       </div>
@@ -1133,406 +1088,6 @@ function RomActionsPanel({ formId }: { formId: string }) {
   );
 }
 
-// ═══ FrameBrowser — pose → grid de frames → inspector + reemplazo ──────
-const FRAME_OVERRIDES_KEY = 'dbzlsw-frame-overrides-v2';
-
-function loadOverrides(): Record<string, string> {
-  try {
-    const raw = localStorage.getItem(FRAME_OVERRIDES_KEY);
-    return raw ? JSON.parse(raw) as Record<string, string> : {};
-  } catch { return {}; }
-}
-
-// ═══ RomCanonManifestPanel — ROM Canon Manifest: action → sequence → frame → physicalId ═══
-// This panel shows the ROM-derived semantic mapping for the selected form.
-// It consumes ONLY RomFighterIdentityRegistry + RomSequenceRegistry + RomActionSequenceBinding.
-// No useSheetAnalysis, no spriteFrameUrl, no legacy manifest.
-
-function RomCanonManifestPanel({ formId }: { formId: string }) {
-  const identity = ROM_FIGHTER_FORM_IDENTITY.find(row => row.formId === formId);
-  const profileKey = identity?.actorVisualProfileKey ?? -1;
-  const graphicsBank = identity?.graphicsBank ?? -1;
-
-  const registry = useMemo(() => getRomSequenceRegistry(), []);
-
-  // Get the rom-physical manifest for this form to map ROM sequence instances to physical frames.
-  const dir = spriteDirFor(formId);
-  const [physManifest, setPhysManifest] = useState<RomPhysicalManifest | null>(null);
-  useEffect(() => {
-    let cancelled = false;
-    if (!dir) { setPhysManifest(null); return; }
-    fetch(`/assets/sprites/${dir}/rom-physical.manifest.json`, { cache: 'no-store' })
-      .then(r => r.ok ? r.json() : null)
-      .then(data => { if (!cancelled && data) setPhysManifest(data as RomPhysicalManifest); })
-      .catch(() => { if (!cancelled) setPhysManifest(null); });
-    return () => { cancelled = true; };
-  }, [dir]);
-
-  // Build resource/sequence/frame → frame details lookup from rom-physical manifest.
-  const physFrameMap = useMemo(() => {
-    const map = new Map<string, { physicalId: string; file: string; visualFrameId: number }>();
-    if (!physManifest) return map;
-    for (const seq of Object.values(physManifest.sequences)) {
-      for (const frame of seq.frames) {
-        map.set(`${seq.resource}:${seq.sequence}:${frame.frameIndex}`, {
-          physicalId: frame.physicalId,
-          file: frame.file,
-          visualFrameId: frame.visualFrameId,
-        });
-      }
-    }
-    return map;
-  }, [physManifest]);
-
-  // Collect unique actions for this form from bindings
-  const actionsForForm = useMemo(() => {
-    const seen = new Map<string, { cardName: string; handlerFamily: string; resourceId: number | null; trackId: string }>();
-    const formCards = CARDS.filter(c => {
-      const compatible = c.compatible ?? c.notCompatible;
-      return compatible?.includes(formId);
-    });
-    for (const card of formCards) {
-      const binding = getBindingForCard(card.id);
-      if (!binding) continue;
-      for (const track of binding.tracks) {
-        const key = `${track.resourceId ?? 'none'}:${track.trackId}`;
-        if (!seen.has(key)) {
-          seen.set(key, {
-            cardName: card.name,
-            handlerFamily: binding.execution.family,
-            resourceId: track.resourceId,
-            trackId: track.trackId,
-          });
-        }
-      }
-    }
-    return [...seen.values()];
-  }, [formId]);
-
-  const [expandedAction, setExpandedAction] = useState<string | null>(null);
-
-  if (!identity) {
-    return <section className="dev-char-block dev-rom-physical-panel">
-      <h3 className="dev-char-block-title">ROM Canon Manifest</h3>
-      <div className="dev-wip-banner">No ROM identity for {formId}</div>
-    </section>;
-  }
-
-  return (
-    <section className="dev-char-block dev-rom-physical-panel">
-      <div className="dev-fmap-head">
-        <h3 className="dev-char-block-title">
-          ROM Canon Manifest
-          <span className="dev-tag ok">ROM_DERIVED</span>
-          <span className="dev-sheets-count">
-            {actionsForForm.length} actions · profile 0x{hex(profileKey)} · bank 0x{hex(graphicsBank)}
-          </span>
-        </h3>
-      </div>
-      <div className="dev-rom-identity-grid">
-        <div><strong>FORM</strong><code>{formId}</code></div>
-        <div><strong>profileKey</strong><code>0x{hex(profileKey)}</code></div>
-        <div><strong>graphicsBank</strong><code>0x{hex(graphicsBank)}</code></div>
-        <div><strong>identity</strong><code>{identity.mappingStatus}</code></div>
-      </div>
-
-      <h4 className="dev-rom-subtitle">Actions → Sequences → Physical Frames</h4>
-      <div className="dev-rom-action-list">
-        {actionsForForm.map(action => {
-          const resourceEntry = registry.find(e => e.resourceId === action.resourceId);
-          const status = resourceEntry?.status ?? 'NO_ANIMATION_RESOURCE';
-          const sequences = resourceEntry?.sequences ?? [];
-          const isExpanded = expandedAction === `${action.resourceId ?? 'none'}:${action.trackId}`;
-
-          return (
-            <div key={`${action.resourceId ?? 'none'}:${action.trackId}`} className="dev-rom-sequence">
-              <button className="dev-rom-sequence-head" onClick={() => setExpandedAction(isExpanded ? null : `${action.resourceId ?? 'none'}:${action.trackId}`)}>
-                <code>{action.cardName}</code>
-                <span>{action.handlerFamily} · {action.trackId} · ${hex(action.resourceId ?? 0xFF)}</span>
-                <span className={`dev-tag ${status === 'PHYSICAL_RESOURCE_FULLY_CLOSED' ? 'ok' : status === 'FRAME_STREAM_CLOSED' ? 'warn' : 'err'}`}>
-                  {status}
-                </span>
-              </button>
-              {isExpanded && (
-                <div className="dev-rom-sequence-frames">
-                  {sequences.map((seq, seqIndex) => (
-                    <div key={`seq-${seq.address}`} className="dev-rom-frame-card compact">
-                      <div><strong>Seq {seqIndex} · addr 0x{seq.address.toString(16)} ({seq.frames.length} frames, {seq.totalTicks} ticks)</strong></div>
-                      {seq.frames.map(frame => {
-                        const phys = physFrameMap.get(`${action.resourceId}:${seqIndex}:${frame.frameIndex}`);
-                        return (
-                          <div key={`f-${frame.frameIndex}`} className="dev-rom-frame-mini">
-                            {phys ? (
-                              <img
-                                src={`/assets/sprites/${dir}/${phys.file}`}
-                                alt={`vf${frame.visualFrameId}`}
-                                loading="lazy"
-                                style={{ imageRendering: 'pixelated', width: 48, height: 48, objectFit: 'contain' }}
-                              />
-                            ) : (
-                              <span className="dev-tag err">UNRESOLVED</span>
-                            )}
-                            <span className="dev-rom-frame-label">
-                              f{frame.frameIndex} · vf${hex(frame.visualFrameId)} · {frame.durationTicks}t
-                              {phys && <code className="dev-rom-pid">{phys.physicalId}</code>}
-                            </span>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          );
-        })}
-      </div>
-
-      <div className="dev-rom-physical-actions" style={{ marginTop: 8 }}>
-        <span className="dev-tag">SOURCE: RomFighterIdentityRegistry + RomSequenceRegistry + RomActionSequenceBinding</span>
-        <span className="dev-tag">NO useSheetAnalysis · NO spriteFrameUrl · NO legacy manifest</span>
-      </div>
-    </section>
-  );
-}
-
-function FrameBrowser({ formId, analysis, dir }: {
-  formId: string;
-  analysis: ReturnType<typeof useSheetAnalysis>;
-  dir: string | undefined;
-}) {
-  const [pose, setPose] = useState('idle');
-  const [selected, setSelected] = useState<string | null>(null);
-  const [zoom, setZoom] = useState(6);
-  const [overrides, setOverrides] = useState<Record<string, string>>(loadOverrides);
-  const [replacing, setReplacing] = useState<string | null>(null);
-  const [candidate, setCandidate] = useState<string | null>(null);
-
-  useEffect(() => {
-    try { localStorage.setItem(FRAME_OVERRIDES_KEY, JSON.stringify(overrides)); } catch { /* noop */ }
-  }, [overrides]);
-
-  const groups = groupFramesByPose(analysis.frames, dir, analysis.usages);
-  const activeGroup = groups.find(g => g.pose === pose) ?? groups[0];
-
-  useEffect(() => {
-    if (groups.length > 0 && !groups.some(g => g.pose === pose)) setPose('idle');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [analysis.frames]);
-
-  const selFrame = analysis.frames.find(f => f.file === selected) ?? null;
-  const selUsages = selFrame ? (analysis.usages[selFrame.file] ?? []) : [];
-
-  // Todos los archivos del manifest (para el picker de reemplazo)
-  const allFiles = useMemo(() => {
-    const seen = new Set<string>();
-    for (const f of analysis.frames) {
-      if (!seen.has(f.file)) seen.add(f.file);
-    }
-    return [...seen];
-  }, [analysis.frames]);
-
-  const appliedFile = (file: string) => overrides[file] ?? file;
-  const hasOverride = selFrame ? overrides[selFrame.file] !== undefined : false;
-
-  const applyReplacement = () => {
-    if (!selFrame || !candidate) return;
-    setOverrides(o => ({ ...o, [selFrame.file]: candidate }));
-    setReplacing(null);
-    setCandidate(null);
-  };
-
-  const clearReplacement = () => {
-    if (!selFrame) return;
-    setOverrides(o => {
-      const n = { ...o };
-      delete n[selFrame.file];
-      return n;
-    });
-    setReplacing(null);
-    setCandidate(null);
-  };
-
-  const saveToDisk = async () => {
-    if (!selFrame || !dir) return;
-    const original = selFrame.file;
-    const replacement = overrides[original];
-    if (!replacement || replacement === original) return;
-    if (!confirm(`Sobrescribir en disco:\nsprites/${dir}/${original}\ncon el contenido de:\nsprites/${dir}/${replacement}\n\nEsto afecta a TODAS las poses que usan ese frame.`)) return;
-    try {
-      const dataUrl = await frameDataUrl(`sprites/${dir}/${replacement}`);
-      await writeAssetToDisk(`sprites/${dir}/${original}`, dataUrl);
-      clearReplacement();
-      alert('✓ Guardado en disco. Recarga el juego para ver el cambio (el manifest no cambia).');
-    } catch (e) {
-      alert(`Error: ${e}`);
-    }
-  };
-
-  return (
-    <div className="dev-frames">
-      {/* Pose pills con conteo */}
-      <div className="dev-pose-pills dev-frames-pills">
-        {groups.map(g => (
-          <button key={g.pose} className={`dev-pose-pill ${g.pose === pose ? 'active' : ''}`}
-            onClick={() => { setPose(g.pose); setSelected(g.frames[0]?.file ?? null); }}
-            title={`${g.sem.meaning} — ${g.frames.length} frames`}>
-            {g.pose} <em>{g.frames.length}</em>
-          </button>
-        ))}
-        {groups.length === 0 && <span className="dev-hint">Sin frames en el manifest (carga…)</span>}
-      </div>
-
-      {/* Grid de frames de la pose activa */}
-      {activeGroup && (
-        <div className="dev-pose-group">
-          <div className={`dev-pose-group-head cat-${activeGroup.sem.category.toLowerCase()}`}>
-            <span className="dev-pose-group-name">{activeGroup.pose}</span>
-            <span className="dev-pose-group-cat">{activeGroup.sem.category}</span>
-            <span className="dev-pose-group-meaning">{activeGroup.sem.meaning}</span>
-          </div>
-          <div className="dev-sheets-grid" role="list" aria-label={`${activeGroup.pose} sprite frames`}>
-            {activeGroup.frames.map(f => {
-              const overridden = overrides[f.file] !== undefined;
-              return (
-                <button key={f.file}
-                  className={`dev-sheet-cell ${selected === f.file ? 'active' : ''} ${f.touchesEdge && f.touchTop > 3 ? 'edge' : ''} ${f.bgSpecks > 0 ? 'speck' : ''} ${f.dupeOf ? 'dupe' : ''} ${overridden ? 'has-override' : ''}`}
-                  onClick={() => setSelected(f.file)}
-                  title={`${f.file}${overridden ? `\n⚠ reemplazado por ${overrides[f.file]}` : ''}\n${f.w}×${f.h} · ${activeGroup.sem.meaning}\n${f.touchesEdge ? '⚠ toca borde' : ''}${f.bgSpecks ? `\n${f.bgSpecks} specks` : ''}${f.dupeOf ? `\n⧉ duplicado de ${f.dupeOf}` : ''}`}>
-                  <span className="dev-sheet-thumb">
-                    <img src={spriteFrameUrl(formId, appliedFile(f.file))} alt={f.file} loading="lazy" decoding="async"
-                      width={f.w} height={f.h} style={{ width: f.w * 2, height: f.h * 2, imageRendering: 'pixelated' }} />
-                  </span>
-                  <span className="dev-sheet-name">{f.file.replace(`${dir ?? ''}_`, '').replace('.png', '')}</span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
-      {/* Inspector */}
-      {selFrame ? (() => {
-        const { pose: fpose } = parseFrameName(selFrame.file, dir ?? '');
-        const sem = poseSemantics(fpose);
-        const shownFile = appliedFile(selFrame.file);
-        return (
-          <div className="dev-sheets-inspector dev-frames-inspector">
-            <div className="dev-sheets-zoom">
-              <label>Zoom</label>
-              <div className="dev-zoom-row">
-                {[2, 4, 6, 8, 12].map(z => (
-                  <button key={z} className={`dev-zoom-btn ${zoom === z ? 'active' : ''}`} onClick={() => setZoom(z)}>x{z}</button>
-                ))}
-              </div>
-            </div>
-            <h3>{shownFile} <small>{selFrame.w}×{selFrame.h}px · {selFrame.alphaPct}% alpha</small></h3>
-            <div className={`dev-pose-group-head cat-${sem.category.toLowerCase()}`}>
-              <span className="dev-pose-group-name">{fpose}</span>
-              <span className="dev-pose-group-cat">{sem.category}</span>
-            </div>
-            <p className="dev-sheet-sem-meaning">{sem.meaning}</p>
-            <div className="dev-checker-bg">
-              <FrameZoom imgSrc={spriteFrameUrl(formId, shownFile)} w={selFrame.w} h={selFrame.h} zoom={zoom} bbox={selFrame.opaque} />
-            </div>
-            <div className="dev-sheet-details">
-              <div className={selFrame.touchesEdge && selFrame.touchTop > 3 ? 'warn' : 'ok'}>
-                {selFrame.touchesEdge && selFrame.touchTop > 3
-                  ? `⚠ Contenido tocando el borde superior (${selFrame.touchTop} px) — posible cabeza cortada`
-                  : '✓ Sin contenido pegado al borde superior'}
-              </div>
-              <div className={selFrame.bgSpecks > 0 ? 'warn' : 'ok'}>
-                {selFrame.bgSpecks > 0 ? `${selFrame.bgSpecks} specks de color de fondo` : '✓ Sin specks'}
-              </div>
-              <div className={selFrame.dupeOf ? 'info' : 'ok'}>
-                {selFrame.dupeOf ? `⧉ Contenido idéntico a ${selFrame.dupeOf}` : '✓ Frame único'}
-              </div>
-            </div>
-            {selUsages.length > 0 && (
-              <div className="dev-sheet-sem-used">
-                <strong>Usos reales en manifest:</strong>
-                <ul>
-                  {selUsages.map(u => (
-                    <li key={`${u.pose}-${u.index}`}><code>{u.pose}[{u.index}]</code> · {u.semantic}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            <code className="dev-manifest-path">sprites/{dir}/{shownFile}</code>
-
-            {/* Acciones de reemplazo */}
-            <div className="dev-frame-actions">
-              {hasOverride ? (
-                <>
-                  <button className="dev-btn dev-btn-mini dev-btn-danger" onClick={clearReplacement}>↩ Restaurar original</button>
-                  <button className="dev-btn dev-btn-mini" onClick={saveToDisk}>💾 Guardar en disco</button>
-                </>
-              ) : (
-                <button className="dev-btn dev-btn-mini"
-                  onClick={() => { setReplacing(selFrame.file); setCandidate(null); }}>⇄ Reemplazar frame…</button>
-              )}
-            </div>
-
-            {/* Picker de reemplazo */}
-            {replacing === selFrame.file && (
-              <div className="dev-replace-inline">
-                <div className="dev-replace-picker-title">
-                  Todos los frames del manifest ({allFiles.length})
-                  <span className="dev-hint"> elige uno para {selFrame.file}</span>
-                </div>
-                <div className="dev-replace-grid">
-                  {allFiles.map(file => (
-                    <button key={file} className={`dev-replace-opt ${candidate === file ? 'selected' : ''} ${file === selFrame.file ? 'current' : ''}`}
-                      onClick={() => setCandidate(file)}
-                      title={`${file} (reemplaza a ${selFrame.file})`}>
-                      <img src={spriteFrameUrl(formId, file)} alt={file} loading="lazy" decoding="async" style={{ imageRendering: 'pixelated' }} />
-                      <span>{file.replace(/^.*?_/, '').replace('.png', '')}</span>
-                    </button>
-                  ))}
-                </div>
-                <div className="dev-replace-actions">
-                  <button className="dev-btn dev-btn-mini" disabled={!candidate} onClick={applyReplacement}>✓ Aplicar reemplazo</button>
-                  <button className="dev-btn dev-btn-mini" onClick={() => setReplacing(null)}>Cancelar</button>
-                </div>
-              </div>
-            )}
-          </div>
-        );
-      })() : (
-        <div className="dev-empty">Selecciona un frame para inspeccionarlo</div>
-      )}
-    </div>
-  );
-}
-
-// ═══ FrameZoom — canvas ampliado con bbox dorado ────────────────────────
-function FrameZoom({ imgSrc, w, h, zoom, bbox }: {
-  imgSrc: string; w: number; h: number; zoom: number; bbox: FrameAnalysis['opaque'];
-}) {
-  const ref = useRef<HTMLCanvasElement>(null);
-  useEffect(() => {
-    const cv = ref.current;
-    if (!cv) return;
-    const img = new Image();
-    img.onload = () => {
-      cv.width = w * zoom;
-      cv.height = h * zoom;
-      const ctx = cv.getContext('2d');
-      if (!ctx) return;
-      ctx.imageSmoothingEnabled = false;
-      ctx.drawImage(img, 0, 0, cv.width, cv.height);
-      if (bbox) {
-        ctx.strokeStyle = '#ffd700';
-        ctx.lineWidth = 1;
-        ctx.strokeRect(bbox.x * zoom, bbox.y * zoom, bbox.w * zoom, bbox.h * zoom);
-      }
-    };
-    img.src = imgSrc;
-  }, [imgSrc, w, h, zoom, bbox]);
-  return <canvas ref={ref} className="dev-sprite-canvas" />;
-}
-
-// ═══ Assets ════════════════════════════════════════════════════════════
 function AssetCell({ label, src, wide, small }: { label: string; src?: string; wide?: boolean; small?: boolean }) {
   return (
     <div className={`dev-asset-cell ${wide ? 'wide' : ''} ${small ? 'small' : ''}`}>

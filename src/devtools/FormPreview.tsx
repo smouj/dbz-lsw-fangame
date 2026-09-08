@@ -1,8 +1,7 @@
 // ═══════════════════════════════════════════════════════════════════════
 // FormPreview — PREVIEW CENTRAL del Character Studio (M8.F0).
 // Sprite grande de la forma en la pose seleccionada, con:
-//   · pills de poses (COMBAT_POSE_ORDER) + nº de frames físicos reales
-//     (del análisis del manifest — misma fuente que el FrameBrowser)
+//   · pills de poses (COMBAT_POSE_ORDER) + nº de frames físicos ROM
 //   · selector de frame dentro de la pose (si tiene varios)
 //   · mini-grid de TODOS los frames de la pose (exposición clara)
 //   · checkerboard de transparencia
@@ -17,12 +16,8 @@ import { COMBAT_POSE_ORDER } from '../battle/spriteConfig';
 import { poseSemantics } from './frameSemantics';
 import { resolveCharacterVisualSequence } from '../battle/characterFrameMap';
 import { romPhysicalNeutralPreview, romPhysicalPreviewSequence } from './romPhysicalPreview';
-import type { FrameAnalysis } from './frameAnalysis';
-
 interface Props {
   formId: string;
-  /** Análisis del manifest (frames reales con poses) — fuente de conteos. */
-  analysis: { frames: FrameAnalysis[]; loading: boolean };
   /** Pose controlada (opcional — si se pasa, el padre controla la pose activa). */
   pose?: string;
   /** Callback al cambiar de pose (pills / beam chain). */
@@ -31,7 +26,7 @@ interface Props {
 
 const BEAM_CHAIN = ['beam_charge', 'beam_fire', 'beam_ray', 'beam_ray_tip'];
 
-export function FormPreview({ formId, analysis, pose: poseProp, onPoseChange }: Props) {
+export function FormPreview({ formId, pose: poseProp, onPoseChange }: Props) {
   const [poseLocal, setPoseLocal] = useState('idle');
   const pose = poseProp ?? poseLocal;
   const setPose = (p: string) => {
@@ -97,7 +92,6 @@ export function FormPreview({ formId, analysis, pose: poseProp, onPoseChange }: 
           <span className="dev-tag">{poseFrames.length} frame{poseFrames.length !== 1 ? 's' : ''}</span>
           <span className={`dev-tag ${sequenceIsRenderable ? 'ok' : 'bad'}`}>{sequenceIsRenderable ? 'ROM_PHYSICAL' : 'ROM PENDING'}</span>
           <span className="dev-tag">{current?.provenance === 'ROM_NEUTRAL_STATIC' ? 'ROM_STATIC_HIGH_CONFIDENCE' : sequence.classification}</span>
-          {analysis.loading && <span className="dev-hint">(cargando manifest…)</span>}
         </div>
       </div>
 
