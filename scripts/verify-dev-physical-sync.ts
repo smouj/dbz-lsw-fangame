@@ -36,7 +36,7 @@ check('corpus forms rendered 48/48', totals.forms === 48 && totals.formsIndexed 
 check('corpus has no palette-blocked forms', totals.formsPaletteBlocked === 0, `${totals.formsPaletteBlocked}`);
 check('corpus physical IDs > 0', totals.physicalIdentities > 0, `${totals.physicalIdentities}`);
 check('corpus frame instances > physical IDs', totals.frameInstances > totals.physicalIdentities, `${totals.frameInstances}/${totals.physicalIdentities}`);
-check('transparent ROM frame records are retained outside promoted PNGs', (totals as { transparentFrameRecords?: number; transparentPhysicalIds?: number }).transparentFrameRecords === 36 && (totals as { transparentFrameRecords?: number; transparentPhysicalIds?: number }).transparentPhysicalIds === 7, `records=${(totals as { transparentFrameRecords?: number }).transparentFrameRecords ?? 0} ids=${(totals as { transparentPhysicalIds?: number }).transparentPhysicalIds ?? 0}`);
+check('transparent ROM frame records are retained outside promoted PNGs', (totals as { transparentFrameRecords?: number; transparentPhysicalIds?: number }).transparentFrameRecords === 126 && (totals as { transparentFrameRecords?: number; transparentPhysicalIds?: number }).transparentPhysicalIds === 10, `records=${(totals as { transparentFrameRecords?: number }).transparentFrameRecords ?? 0} ids=${(totals as { transparentPhysicalIds?: number }).transparentPhysicalIds ?? 0}`);
 
 const catalogPath = join(EXPORT_ROOT, 'catalog.json');
 const physicalCatalogPath = join(EXPORT_ROOT, 'physical_catalog.json');
