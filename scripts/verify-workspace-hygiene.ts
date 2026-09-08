@@ -86,8 +86,8 @@ const physicalCorpusGenerated = readFileSync(join(ROOT, 'src/data/generated/romP
 check('current generated corpus exposes fighter and Stage-promoted totals',
   physicalCorpusGenerated.includes('"fighterPhysicalIdentities": 1193') &&
   physicalCorpusGenerated.includes('"fighterFrameInstances": 9463') &&
-  physicalCorpusGenerated.includes('"physicalIdentities": 3641') &&
-  physicalCorpusGenerated.includes('"frameInstances": 24775') &&
+  physicalCorpusGenerated.includes('"physicalIdentities": 3689') &&
+  physicalCorpusGenerated.includes('"frameInstances": 24823') &&
   physicalCorpusGenerated.includes('"transparentPhysicalIds": 7') &&
   physicalCorpusGenerated.includes('"transparentFrameRecords": 36'));
 
