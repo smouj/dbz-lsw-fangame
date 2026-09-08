@@ -4,8 +4,6 @@
 > (bindings · profiles · runtime_cutover.json · FX corpus). NO editar a mano.
 > Gate: `npm run verify:dynamic-film-tracker` (en verify:ci). Fuente única: `scripts/dynamicFilmTrackerCore.ts`.
 
-HEAD: `596fa97906927bddf8ce422779abea754c8d6f96`
-
 ## Invariantes
 
 - Cada **occurrence** (selector track `DYNAMIC_PENDING`) cae EXACTAMENTE en una causa A-G.

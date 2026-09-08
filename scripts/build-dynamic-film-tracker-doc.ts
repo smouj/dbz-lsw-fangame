@@ -21,11 +21,11 @@ function csvCell(value: string | number | null): string {
 
 export interface GeneratedDoc { md: string; csv: string; }
 
-export function buildGenerator(commit: string): GeneratedDoc {
+export function buildGenerator(): GeneratedDoc {
   const occurrences = buildOccurrenceRows();
   const films = buildFilmRows();
   const totals = trackerTotals(occurrences, films);
-  const md = markdown(commit, occurrences, films, totals);
+  const md = markdown(occurrences, films, totals);
   const csv = csvContent(occurrences, films);
   return { md, csv };
 }
@@ -54,7 +54,7 @@ function blockerShort(code: string): string {
   }
 }
 
-function markdown(commit: string, occurrences: OccurrenceRow[], films: FilmRow[], totals: ReturnType<typeof trackerTotals>): string {
+function markdown(occurrences: OccurrenceRow[], films: FilmRow[], totals: ReturnType<typeof trackerTotals>): string {
   const causes = CAUSE_DEFS.map(def => ({
     def,
     occCount: totals.occurrencesByCause[def.code] ?? 0,
@@ -67,8 +67,6 @@ function markdown(commit: string, occurrences: OccurrenceRow[], films: FilmRow[]
   lines.push('> Archivo GENERADO por `scripts/build-dynamic-film-tracker-doc.ts` sobre datos vivos');
   lines.push('> (bindings · profiles · runtime_cutover.json · FX corpus). NO editar a mano.');
   lines.push('> Gate: `npm run verify:dynamic-film-tracker` (en verify:ci). Fuente única: `scripts/dynamicFilmTrackerCore.ts`.');
-  lines.push('');
-  lines.push(`HEAD: \`${commit}\``);
   lines.push('');
   lines.push('## Invariantes');
   lines.push('');
@@ -161,8 +159,8 @@ function csvContent(occurrences: OccurrenceRow[], films: FilmRow[]): string {
   return rows.map(line => line.map(csvCell).join(',')).join('\n') + '\n';
 }
 
-export function writeDoc(head: string): GeneratedDoc {
-  const doc = buildGenerator(head);
+export function writeDoc(): GeneratedDoc {
+  const doc = buildGenerator();
   mkdirSync(dirname(join(process.cwd(), TRACKER_DOC_MD)), { recursive: true });
   writeFileSync(join(process.cwd(), TRACKER_DOC_MD), doc.md, 'utf8');
   writeFileSync(join(process.cwd(), TRACKER_DOC_CSV), doc.csv, 'utf8');

@@ -14,7 +14,6 @@
 // Uso: npm run verify:dynamic-film-tracker
 // ═══════════════════════════════════════════════════════════════════════
 
-import { execSync } from 'child_process';
 import { readFileSync, existsSync } from 'fs';
 import { join } from 'path';
 import { getRomActionSequenceBindings } from '../src/data/romActionSequenceBinding';
@@ -33,17 +32,8 @@ function check(label: string, ok: boolean, detail = ''): void {
   console.log(`${ok ? 'PASS' : 'FAIL'}  ${label}${detail ? ` — ${detail}` : ''}`);
 }
 
-function gitHead(): string {
-  try {
-    return execSync('git rev-parse HEAD', { encoding: 'utf8' }).trim();
-  } catch {
-    return 'no-git';
-  }
-}
-
 function main(): void {
-  const head = gitHead();
-  console.log(`verify:dynamic-film-tracker @ ${head}\n`);
+  console.log('verify:dynamic-film-tracker\n');
 
   // ── Datos vivos ─────────────────────────────────────────────────────
   const livePending = getRomActionSequenceBindings().flatMap(b =>
@@ -116,7 +106,7 @@ function main(): void {
   } else {
     const currentMd = readFileSync(mdPath, 'utf8');
     const currentCsv = readFileSync(csvPath, 'utf8');
-    const generated = buildGenerator(head);
+    const generated = buildGenerator();
     check('invariante 4: dynamic-film-tracker.md byte-idéntico al generado', currentMd === generated.md,
       currentMd === generated.md ? '' : 'doc desactualizado — regenerar con scripts/build-dynamic-film-tracker-doc.ts');
     check('invariante 4: dynamic-film-tracker.csv byte-idéntico al generado', currentCsv === generated.csv,
