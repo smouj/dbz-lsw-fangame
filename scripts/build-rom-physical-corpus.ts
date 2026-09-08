@@ -35,8 +35,16 @@ const SCHEMA_VERSION = 2;
 const PHYSICAL_RENDERER_SCHEMA = 3;
 const OFFSET_ENCODING = 's8';
 const FIGHTER_PHYSICAL_RESOURCE_IDS = new Set([0x00, 0x01, 0x03, 0x04, 0x05, 0x08, 0x09, 0x0b, 0x0c, 0x0f, 0x12, 0x16, 0x22, 0x2c, 0x2d, 0x3f]);
+// The incremental mode is deliberately narrow: it re-renders only the newly
+// requested neutral candidate, then rebuilds and validates the complete
+// manifest from the existing certified render inputs.  Full remains default.
+const RENDER_BANK61_NEUTRAL_ONLY = process.env.ROM_PHYSICAL_RENDER_MODE === 'bank61-neutral';
 const STAGE_BANK61_RENDER_TARGETS = [
-  { resourceIndex: 0, sequences: [0x0a, 0x0b, 0x0d, 0x0f, 0x10, 0x17] },
+  // Selector 0 is the static neutral candidate: a single physical frame with
+  // zero offsets that is the recovery target for Bank $61 animations.  It is
+  // promoted as static ROM evidence; a live ActionObject capture remains the
+  // separate gate for calling it dynamically verified idle.
+  { resourceIndex: 0, sequences: [0x00, 0x0a, 0x0b, 0x0d, 0x0f, 0x10, 0x17] },
   { resourceIndex: 1, sequences: null },
   { resourceIndex: 2, sequences: null },
   { resourceIndex: 3, sequences: null },
@@ -363,6 +371,7 @@ function renderStageBank61Resources(profiles: RomFormProfile[]): void {
     .join(',');
 
   for (const target of STAGE_BANK61_RENDER_TARGETS) {
+    if (RENDER_BANK61_NEUTRAL_ONLY && target.resourceIndex !== 0) continue;
     const base = ROM_BANK61_ANIMATION_CORE_RESOURCE_BASES[target.resourceIndex];
     if (base == null) throw new Error(`Bank $61 resourceIndex ${target.resourceIndex} has no resource base`);
     const commonArgs = [
@@ -375,11 +384,12 @@ function renderStageBank61Resources(profiles: RomFormProfile[]): void {
       '--keys',
       keys,
     ];
-    if (target.sequences == null) {
+    const selectors = RENDER_BANK61_NEUTRAL_ONLY ? [0x00] : target.sequences;
+    if (selectors == null) {
       runTsx(commonArgs.slice(1));
       continue;
     }
-    for (const selector of target.sequences) {
+    for (const selector of selectors) {
       runTsx([...commonArgs.slice(1), '--selector', String(selector)]);
     }
   }
@@ -832,7 +842,7 @@ const profilesByResource = new Map(resources.map(resource => [
 const corpusProfiles = physicalProfiles.filter(profile =>
   resources.some(resource => (profilesByResource.get(resource.resourceId) ?? []).some(candidate => candidate.formId === profile.formId)));
 const resourceBlockedProfiles = physicalProfiles.filter(profile => !corpusProfiles.some(candidate => candidate.formId === profile.formId));
-renderReachableResources(resources, profilesByResource);
+if (!RENDER_BANK61_NEUTRAL_ONLY) renderReachableResources(resources, profilesByResource);
 renderStageBank61Resources(physicalProfiles);
 for (const profile of [...paletteBlockedProfiles, ...resourceBlockedProfiles]) clearGeneratedPhysical(profile.formId);
 

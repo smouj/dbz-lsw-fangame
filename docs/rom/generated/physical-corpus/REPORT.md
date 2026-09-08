@@ -13,8 +13,8 @@ Resource-blocked palette-ready profiles: 0.
 
 Generated via fresh ROM re-render before runtime promotion. Legacy/canonical PNGs are not a source for this corpus.
 
-Physical identities: 3641
-Frame instances: 24775
+Physical identities: 3689
+Frame instances: 24823
 Signed-negative frame instances: 20146
 Resource/profile blocked pairs: 0
 Offset range: -20..6

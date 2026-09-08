@@ -16,7 +16,7 @@ import { useState, useMemo } from 'react';
 import { COMBAT_POSE_ORDER } from '../battle/spriteConfig';
 import { poseSemantics } from './frameSemantics';
 import { resolveCharacterVisualSequence } from '../battle/characterFrameMap';
-import { romPhysicalPreviewSequence } from './romPhysicalPreview';
+import { romPhysicalNeutralPreview, romPhysicalPreviewSequence } from './romPhysicalPreview';
 import type { FrameAnalysis } from './frameAnalysis';
 
 interface Props {
@@ -47,13 +47,23 @@ export function FormPreview({ formId, analysis, pose: poseProp, onPoseChange }: 
   );
   // The visual inspector must not promote a fallback/composite PNG to ROM
   // truth. Those cases remain visible as an explicit zero-frame state.
-  const poseFrames = useMemo(() => romPhysicalPreviewSequence(sequence), [sequence]);
+  const poseFrames = useMemo(() => {
+    if (pose === 'idle') {
+      const neutral = romPhysicalNeutralPreview(formId);
+      if (neutral) return [neutral];
+    }
+    return romPhysicalPreviewSequence(sequence);
+  }, [formId, pose, sequence]);
   const sequenceIsRenderable = poseFrames.length > 0;
 
   // Conteo por pose desde el mismo mapa ROM que el preview.
   const counts = useMemo(() => {
     const m = new Map<string, number>();
     for (const p of COMBAT_POSE_ORDER) {
+      if (p === 'idle' && romPhysicalNeutralPreview(formId)) {
+        m.set(p, 1);
+        continue;
+      }
       const resolved = resolveCharacterVisualSequence({ formId, semanticRole: p });
       m.set(p, romPhysicalPreviewSequence(resolved).length);
     }
@@ -86,7 +96,7 @@ export function FormPreview({ formId, analysis, pose: poseProp, onPoseChange }: 
           {current && <em>{current.file}</em>}
           <span className="dev-tag">{poseFrames.length} frame{poseFrames.length !== 1 ? 's' : ''}</span>
           <span className={`dev-tag ${sequenceIsRenderable ? 'ok' : 'bad'}`}>{sequenceIsRenderable ? 'ROM_PHYSICAL' : 'ROM PENDING'}</span>
-          <span className="dev-tag">{sequence.classification}</span>
+          <span className="dev-tag">{current?.provenance === 'ROM_NEUTRAL_STATIC' ? 'ROM_STATIC_HIGH_CONFIDENCE' : sequence.classification}</span>
           {analysis.loading && <span className="dev-hint">(cargando manifest…)</span>}
         </div>
       </div>

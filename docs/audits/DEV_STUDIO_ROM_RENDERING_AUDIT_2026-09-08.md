@@ -17,6 +17,16 @@ physical URL bridge resolves a promoted `rom-p...` identity to the matching
 `physical/` corpus file. Missing evidence is rendered as an explicit
 pending/empty state.
 
+### Neutral base pose
+
+The large Character Studio `idle` preview has one additional, explicitly
+bounded source: Bank `$61`, resource `0`, selector `0`, physical frame `0`.
+The ROM decode proves a single full-body frame of 3 ticks with `dx=0, dy=0`,
+and it is now physically rendered per form through that form's verified
+graphics bank and palette. The UI labels it `ROM_STATIC_HIGH_CONFIDENCE`:
+it is not promoted to `ROM_DYNAMIC_VERIFIED_IDLE` until a live ActionObject
+trace records the quiet state. No `idle_00.png` legacy fallback is used.
+
 ## Applied surfaces
 
 | Surface | Frame source |
@@ -45,5 +55,6 @@ Validation at this checkpoint:
 - `verify:dev-routes` — 22/22 modules;
 - `verify:dev-studio` — 58 checks;
 - `verify:dev-rom-truth` — 27 checks;
-- `verify:dev-physical-sync` — 48 forms, 3,641 physical IDs, 24,775 instances;
+- `verify:dev-physical-sync` — 48 forms, 3,689 physical IDs, 24,823 instances;
+- `verify:rom-fighter-neutral` — 100 checks across all 48 forms;
 - action-preview runtime parity and frame-form identity gates.

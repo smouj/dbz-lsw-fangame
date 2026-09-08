@@ -21,7 +21,7 @@ import {
   FORMS, ROM_ORDERED_CHARACTERS, getForm, statAtLevel, sheetUrl, LIMIT_DEFAULTS,
 } from '../data/roster';
 import { spriteDirFor, spriteManifestUrl, spriteFrameUrl } from '../data/spriteManifest';
-import { romPhysicalPreviewFrame } from './romPhysicalPreview';
+import { romPhysicalNeutralPreview, romPhysicalPreviewFrame } from './romPhysicalPreview';
 import { CARDS, type CardDef, type CardType, CARD_COLORS } from '../data/cards';
 import { romCardData } from '../data/romCardData';
 import {
@@ -456,14 +456,14 @@ export function CharactersModule({ onOpenModule }: {
   const displayName = (id: string, fallback: string) => nameOverrides[id] ?? fallback;
   const char = ROM_ORDERED_CHARACTERS.find(c => c.id === charId) ?? ROM_ORDERED_CHARACTERS[0];
   const form = getForm(formId) ?? getForm(char.forms[0])!;
-  // The old manifest always had an `idle_00`, but that does not make it a
-  // promoted ROM action frame. Start each form on the first actual physical
-  // sequence so the main preview is useful on load; users can still inspect
-  // unsupported semantic poses and will see their explicit pending state.
+  // Bank $61/resource 0/selector 0 is a static neutral candidate. It is a
+  // real physical ROM frame, but remains explicitly short of dynamic proof.
+  const neutralPreview = useMemo(() => romPhysicalNeutralPreview(form.id), [form.id]);
   const physicalPreviewPoses = useMemo(() => COMBAT_POSE_ORDER.filter(role =>
+    (role === 'idle' && neutralPreview != null) ||
     bindingsForForm(form.id).some(binding => binding.semanticRole === role
       && (binding.romPhysicalId != null || binding.romPhysicalSourceIds.length > 0)),
-  ), [form.id]);
+  ), [form.id, neutralPreview]);
   const previewFormRef = useRef<string | null>(null);
   useEffect(() => {
     if (previewFormRef.current === form.id) return;
@@ -476,7 +476,7 @@ export function CharactersModule({ onOpenModule }: {
   const manifestUrl = spriteManifestUrl(form.id);
   const idleBinding = bindingsForForm(form.id).find(binding => binding.semanticRole === 'idle'
     && (binding.mapping === 'ROM_EXACT' || binding.mapping === 'ROM_PHASE' || binding.mapping === 'CANONICAL_PHYSICAL' || binding.mapping === 'SHARED_PHYSICAL'));
-  const idleUrl = idleBinding ? romPhysicalPreviewFrame(form.id, idleBinding)?.url : undefined;
+  const idleUrl = neutralPreview?.url ?? (idleBinding ? romPhysicalPreviewFrame(form.id, idleBinding)?.url : undefined);
   const owFallback = overworldUrl(form.id);
   const battleOwIdle = battleOverworldActorUrl(form.id, 'idle') ?? owFallback;
   const battleOwPower = battleOverworldActorUrl(form.id, 'gather_power_pose') ?? owFallback;

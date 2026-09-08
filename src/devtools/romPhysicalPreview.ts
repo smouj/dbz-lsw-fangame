@@ -9,6 +9,8 @@
 // ═══════════════════════════════════════════════════════════════════════
 
 import type { CharacterFrameBinding, ResolvedVisualSequence } from '../battle/characterFrameMap';
+import { resolveStageProductionFrame } from '../battle/productionFrameResolver';
+import { ROM_BANK61_ANIMATION_CORE } from '../data/generated/romAnimationCore.generated';
 import { physicalFrameForId } from '../data/romPhysicalFrameIndex';
 import { spriteDirFor } from '../data/spriteManifest';
 
@@ -19,7 +21,7 @@ export interface RomPhysicalPreviewFrame {
   url: string;
   durationTicks: number | null;
   semanticRole: string;
-  provenance: 'ROM_EXACT' | 'ROM_PHASE';
+  provenance: 'ROM_EXACT' | 'ROM_PHASE' | 'ROM_NEUTRAL_STATIC';
 }
 
 /** URL only when it resolves into the promoted physical ROM corpus. */
@@ -64,4 +66,42 @@ export function romPhysicalPreviewSequence(sequence: ResolvedVisualSequence): Ro
   return sequence.bindings
     .map(binding => romPhysicalPreviewFrame(sequence.formId, binding))
     .filter((frame): frame is RomPhysicalPreviewFrame => frame != null);
+}
+
+/**
+ * Bank $61 / resource 0 / selector 0 is the ROM's static neutral candidate:
+ * one full-body frame, 3 ticks, with zero offsets.  It is intentionally
+ * labelled static until a live ActionObject trace promotes it to dynamic
+ * verification; it never falls back to `idle_00.png`.
+ */
+export function romPhysicalNeutralPreview(formId: string): RomPhysicalPreviewFrame | null {
+  const resource = ROM_BANK61_ANIMATION_CORE[0];
+  const sequence = resource?.sequences[0];
+  const frame = sequence?.frames[0];
+  if (!resource || !sequence || !frame) return null;
+
+  const resolved = resolveStageProductionFrame({
+    formId,
+    resourceIndex: 0,
+    animationBank: 0x61,
+    resourceBase: resource.resourceBase,
+    sequenceSelector: 0,
+    frameIndex: frame.frameIndex,
+    visualFrameId: frame.visualFrameId,
+    durationTicks: frame.durationTicks,
+    offsetX: frame.offsetX,
+    offsetY: frame.offsetY,
+  });
+  if (resolved.source !== 'ROM_PHYSICAL' || !resolved.physicalId || !resolved.file) return null;
+  const url = romPhysicalAssetUrl(formId, resolved.file, resolved.physicalId);
+  if (!url) return null;
+  return {
+    formId,
+    physicalId: resolved.physicalId,
+    file: resolved.file,
+    url,
+    durationTicks: resolved.durationTicks,
+    semanticRole: 'idle',
+    provenance: 'ROM_NEUTRAL_STATIC',
+  };
 }

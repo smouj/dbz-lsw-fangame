@@ -1908,10 +1908,10 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
     "resourcesRendererPending": 46,
     "fighterPhysicalIdentities": 1193,
     "fighterFrameInstances": 9463,
-    "stagePhysicalIdentities": 2448,
-    "stageFrameInstances": 15312,
-    "physicalIdentities": 3641,
-    "frameInstances": 24775,
+    "stagePhysicalIdentities": 2496,
+    "stageFrameInstances": 15360,
+    "physicalIdentities": 3689,
+    "frameInstances": 24823,
     "signedNegativeInstances": 20146,
     "minOffset": -20,
     "maxOffset": 6,
@@ -1926,11 +1926,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "gohan_young",
       "actorVisualProfileKey": 0,
       "physicalFrames": 35,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 241,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 18,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x03",
@@ -2416,6 +2416,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p00-g31-ab61-b4030-vf00-ms5670f093-gfx26db5e4d",
+          "file": "physical/rom-p00-g31-ab61-b4030-vf00-ms5670f093-gfx26db5e4d.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 0,
+          "graphicsBank": 49,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "26db5e4d0e35e1e0",
+          "sourceProvenanceHash": "79cab031f82f740f",
+          "trimmedPixelHash": "bb52ccefd71c6eb3"
+        },
         {
           "physicalId": "rom-p00-g31-ab61-b4030-vf07-mse987e42c-gfxaee69fac",
           "file": "physical/rom-p00-g31-ab61-b4030-vf07-mse987e42c-gfxaee69fac.png",
@@ -3195,11 +3210,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "gohan_young_ssj",
       "actorVisualProfileKey": 1,
       "physicalFrames": 35,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 241,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 18,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x03",
@@ -3685,6 +3700,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p01-g32-ab61-b4030-vf00-ms5670f093-gfx4b70681c",
+          "file": "physical/rom-p01-g32-ab61-b4030-vf00-ms5670f093-gfx4b70681c.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 1,
+          "graphicsBank": 50,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "4b70681cfd1191b8",
+          "sourceProvenanceHash": "66d7b740877f9c76",
+          "trimmedPixelHash": "20e3be8b98a51a38"
+        },
         {
           "physicalId": "rom-p01-g32-ab61-b4030-vf07-mse987e42c-gfxd24ae1b1",
           "file": "physical/rom-p01-g32-ab61-b4030-vf07-mse987e42c-gfxd24ae1b1.png",
@@ -4464,11 +4494,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "gohan_young_ssj2",
       "actorVisualProfileKey": 2,
       "physicalFrames": 35,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 241,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 18,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x03",
@@ -4954,6 +4984,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p02-g33-ab61-b4030-vf00-ms5670f093-gfxfa3a241a",
+          "file": "physical/rom-p02-g33-ab61-b4030-vf00-ms5670f093-gfxfa3a241a.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 2,
+          "graphicsBank": 51,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "fa3a241a6e9ade50",
+          "sourceProvenanceHash": "1109afbc4c5dc960",
+          "trimmedPixelHash": "f3c0286ad13e0aa0"
+        },
         {
           "physicalId": "rom-p02-g33-ab61-b4030-vf07-mse987e42c-gfxc8dd4eec",
           "file": "physical/rom-p02-g33-ab61-b4030-vf07-mse987e42c-gfxc8dd4eec.png",
@@ -5733,11 +5778,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "piccolo_evil",
       "actorVisualProfileKey": 3,
       "physicalFrames": 24,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 183,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 12,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x04",
@@ -6078,6 +6123,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p03-g34-ab61-b4030-vf00-ms5670f093-gfx51f4fab7",
+          "file": "physical/rom-p03-g34-ab61-b4030-vf00-ms5670f093-gfx51f4fab7.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 3,
+          "graphicsBank": 52,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "51f4fab773eb9c7b",
+          "sourceProvenanceHash": "dc7b37180aa482e0",
+          "trimmedPixelHash": "0201bebe3c525cd2"
+        },
         {
           "physicalId": "rom-p03-g34-ab61-b4030-vf07-mse987e42c-gfxa8dfaf59",
           "file": "physical/rom-p03-g34-ab61-b4030-vf07-mse987e42c-gfxa8dfaf59.png",
@@ -6857,11 +6917,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "piccolo_base",
       "actorVisualProfileKey": 3,
       "physicalFrames": 24,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 183,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 12,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x04",
@@ -7202,6 +7262,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p03-g34-ab61-b4030-vf00-ms5670f093-gfx51f4fab7",
+          "file": "physical/rom-p03-g34-ab61-b4030-vf00-ms5670f093-gfx51f4fab7.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 3,
+          "graphicsBank": 52,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "51f4fab773eb9c7b",
+          "sourceProvenanceHash": "dc7b37180aa482e0",
+          "trimmedPixelHash": "0201bebe3c525cd2"
+        },
         {
           "physicalId": "rom-p03-g34-ab61-b4030-vf07-mse987e42c-gfxa8dfaf59",
           "file": "physical/rom-p03-g34-ab61-b4030-vf07-mse987e42c-gfxa8dfaf59.png",
@@ -7981,11 +8056,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "piccolo_kami",
       "actorVisualProfileKey": 3,
       "physicalFrames": 24,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 183,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 12,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x04",
@@ -8326,6 +8401,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p03-g34-ab61-b4030-vf00-ms5670f093-gfx51f4fab7",
+          "file": "physical/rom-p03-g34-ab61-b4030-vf00-ms5670f093-gfx51f4fab7.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 3,
+          "graphicsBank": 52,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "51f4fab773eb9c7b",
+          "sourceProvenanceHash": "dc7b37180aa482e0",
+          "trimmedPixelHash": "0201bebe3c525cd2"
+        },
         {
           "physicalId": "rom-p03-g34-ab61-b4030-vf07-mse987e42c-gfxa8dfaf59",
           "file": "physical/rom-p03-g34-ab61-b4030-vf07-mse987e42c-gfxa8dfaf59.png",
@@ -9105,11 +9195,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "krillin_base",
       "actorVisualProfileKey": 4,
       "physicalFrames": 34,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 245,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 19,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x03",
@@ -9582,6 +9672,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p04-g35-ab61-b4030-vf00-ms5670f093-gfxa994b0dd",
+          "file": "physical/rom-p04-g35-ab61-b4030-vf00-ms5670f093-gfxa994b0dd.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 4,
+          "graphicsBank": 53,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "a994b0dd9ba275b5",
+          "sourceProvenanceHash": "2ea835cf8813d2f1",
+          "trimmedPixelHash": "69081facf97fe92a"
+        },
         {
           "physicalId": "rom-p04-g35-ab61-b4030-vf07-mse987e42c-gfxa22e90c2",
           "file": "physical/rom-p04-g35-ab61-b4030-vf07-mse987e42c-gfxa22e90c2.png",
@@ -10361,11 +10466,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "goku_base",
       "actorVisualProfileKey": 5,
       "physicalFrames": 29,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 211,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 15,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x03",
@@ -10771,6 +10876,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p05-g36-ab61-b4030-vf00-ms5670f093-gfxc827ccb7",
+          "file": "physical/rom-p05-g36-ab61-b4030-vf00-ms5670f093-gfxc827ccb7.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 5,
+          "graphicsBank": 54,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "c827ccb74c6f2bca",
+          "sourceProvenanceHash": "1f879dc83005ed6f",
+          "trimmedPixelHash": "22c7bf17d9eb8613"
+        },
         {
           "physicalId": "rom-p05-g36-ab61-b4030-vf07-mse987e42c-gfx2e785d96",
           "file": "physical/rom-p05-g36-ab61-b4030-vf07-mse987e42c-gfx2e785d96.png",
@@ -11550,11 +11670,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "goku_ssj",
       "actorVisualProfileKey": 6,
       "physicalFrames": 29,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 211,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 15,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x03",
@@ -11960,6 +12080,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p06-g37-ab61-b4030-vf00-ms5670f093-gfxc10e9a93",
+          "file": "physical/rom-p06-g37-ab61-b4030-vf00-ms5670f093-gfxc10e9a93.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 6,
+          "graphicsBank": 55,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "c10e9a937ba31472",
+          "sourceProvenanceHash": "77ea43a11bca9f2c",
+          "trimmedPixelHash": "7e8ea996e8930141"
+        },
         {
           "physicalId": "rom-p06-g37-ab61-b4030-vf07-mse987e42c-gfx80e92264",
           "file": "physical/rom-p06-g37-ab61-b4030-vf07-mse987e42c-gfx80e92264.png",
@@ -12739,11 +12874,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "goku_ssj2",
       "actorVisualProfileKey": 7,
       "physicalFrames": 29,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 211,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 15,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x03",
@@ -13149,6 +13284,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p07-g38-ab61-b4030-vf00-ms5670f093-gfx4a743d0b",
+          "file": "physical/rom-p07-g38-ab61-b4030-vf00-ms5670f093-gfx4a743d0b.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 7,
+          "graphicsBank": 56,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "4a743d0ba673c90c",
+          "sourceProvenanceHash": "ecdc861e28c60822",
+          "trimmedPixelHash": "f0bb24fbebd88351"
+        },
         {
           "physicalId": "rom-p07-g38-ab61-b4030-vf07-mse987e42c-gfx9243afd7",
           "file": "physical/rom-p07-g38-ab61-b4030-vf07-mse987e42c-gfx9243afd7.png",
@@ -13928,11 +14078,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "goku_ssj3",
       "actorVisualProfileKey": 8,
       "physicalFrames": 29,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 211,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 15,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x03",
@@ -14338,6 +14488,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p08-g39-ab61-b4030-vf00-ms5670f093-gfxf71ce920",
+          "file": "physical/rom-p08-g39-ab61-b4030-vf00-ms5670f093-gfxf71ce920.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 8,
+          "graphicsBank": 57,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "f71ce9200526e0aa",
+          "sourceProvenanceHash": "29b49ced72da2963",
+          "trimmedPixelHash": "b469e281a2b45c72"
+        },
         {
           "physicalId": "rom-p08-g39-ab61-b4030-vf07-mse987e42c-gfx7094d5c5",
           "file": "physical/rom-p08-g39-ab61-b4030-vf07-mse987e42c-gfx7094d5c5.png",
@@ -15117,11 +15282,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "vegeta_base",
       "actorVisualProfileKey": 9,
       "physicalFrames": 32,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 239,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 18,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x05",
@@ -15570,6 +15735,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p09-g3a-ab61-b4030-vf00-ms5670f093-gfx79c502f9",
+          "file": "physical/rom-p09-g3a-ab61-b4030-vf00-ms5670f093-gfx79c502f9.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 9,
+          "graphicsBank": 58,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "79c502f9fd1482df",
+          "sourceProvenanceHash": "58faef43a501ec69",
+          "trimmedPixelHash": "52f9f242ebfc9d32"
+        },
         {
           "physicalId": "rom-p09-g3a-ab61-b4030-vf07-mse987e42c-gfx2ee9f59b",
           "file": "physical/rom-p09-g3a-ab61-b4030-vf07-mse987e42c-gfx2ee9f59b.png",
@@ -16349,11 +16529,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "vegeta_ssj",
       "actorVisualProfileKey": 10,
       "physicalFrames": 32,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 239,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 18,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x05",
@@ -16802,6 +16982,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p0a-g3b-ab61-b4030-vf00-ms5670f093-gfxec27c0f3",
+          "file": "physical/rom-p0a-g3b-ab61-b4030-vf00-ms5670f093-gfxec27c0f3.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 10,
+          "graphicsBank": 59,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "ec27c0f30f8f4ed9",
+          "sourceProvenanceHash": "7e4a8b3223e11119",
+          "trimmedPixelHash": "f6683b66372dc1b2"
+        },
         {
           "physicalId": "rom-p0a-g3b-ab61-b4030-vf07-mse987e42c-gfxe061cefa",
           "file": "physical/rom-p0a-g3b-ab61-b4030-vf07-mse987e42c-gfxe061cefa.png",
@@ -17581,11 +17776,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "vegeta_majin",
       "actorVisualProfileKey": 10,
       "physicalFrames": 32,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 239,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 18,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x05",
@@ -18034,6 +18229,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p0a-g3b-ab61-b4030-vf00-ms5670f093-gfxec27c0f3",
+          "file": "physical/rom-p0a-g3b-ab61-b4030-vf00-ms5670f093-gfxec27c0f3.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 10,
+          "graphicsBank": 59,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "ec27c0f30f8f4ed9",
+          "sourceProvenanceHash": "7e4a8b3223e11119",
+          "trimmedPixelHash": "f6683b66372dc1b2"
+        },
         {
           "physicalId": "rom-p0a-g3b-ab61-b4030-vf07-mse987e42c-gfxe061cefa",
           "file": "physical/rom-p0a-g3b-ab61-b4030-vf07-mse987e42c-gfxe061cefa.png",
@@ -18813,11 +19023,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "gohan_adult_ssj",
       "actorVisualProfileKey": 12,
       "physicalFrames": 29,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 215,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 16,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x03",
@@ -19223,6 +19433,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p0c-g3d-ab61-b4030-vf00-ms5670f093-gfxcd3ab8f3",
+          "file": "physical/rom-p0c-g3d-ab61-b4030-vf00-ms5670f093-gfxcd3ab8f3.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 12,
+          "graphicsBank": 61,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "cd3ab8f3e87bc114",
+          "sourceProvenanceHash": "5138b11bf7b6e99e",
+          "trimmedPixelHash": "16109e772b71039d"
+        },
         {
           "physicalId": "rom-p0c-g3d-ab61-b4030-vf07-mse987e42c-gfx89e5c7e4",
           "file": "physical/rom-p0c-g3d-ab61-b4030-vf07-mse987e42c-gfx89e5c7e4.png",
@@ -20002,11 +20227,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "gohan_adult_ssj2",
       "actorVisualProfileKey": 12,
       "physicalFrames": 29,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 215,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 16,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x03",
@@ -20412,6 +20637,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p0c-g3d-ab61-b4030-vf00-ms5670f093-gfxcd3ab8f3",
+          "file": "physical/rom-p0c-g3d-ab61-b4030-vf00-ms5670f093-gfxcd3ab8f3.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 12,
+          "graphicsBank": 61,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "cd3ab8f3e87bc114",
+          "sourceProvenanceHash": "5138b11bf7b6e99e",
+          "trimmedPixelHash": "16109e772b71039d"
+        },
         {
           "physicalId": "rom-p0c-g3d-ab61-b4030-vf07-mse987e42c-gfx89e5c7e4",
           "file": "physical/rom-p0c-g3d-ab61-b4030-vf07-mse987e42c-gfx89e5c7e4.png",
@@ -21191,11 +21431,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "gohan_adult_ultimate",
       "actorVisualProfileKey": 11,
       "physicalFrames": 28,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 211,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 16,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x03",
@@ -21677,6 +21917,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p0b-g3c-ab61-b4030-vf00-ms5670f093-gfx8ce2e27f",
+          "file": "physical/rom-p0b-g3c-ab61-b4030-vf00-ms5670f093-gfx8ce2e27f.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 11,
+          "graphicsBank": 60,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "8ce2e27fc38c9bdb",
+          "sourceProvenanceHash": "2c8404c30eab5717",
+          "trimmedPixelHash": "4b1506ef938e0f3d"
+        },
         {
           "physicalId": "rom-p0b-g3c-ab61-b4030-vf07-mse987e42c-gfxc6f77fc5",
           "file": "physical/rom-p0b-g3c-ab61-b4030-vf07-mse987e42c-gfxc6f77fc5.png",
@@ -22456,11 +22711,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "trunks_future",
       "actorVisualProfileKey": 13,
       "physicalFrames": 19,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 167,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 10,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x04",
@@ -22734,6 +22989,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p0d-g3e-ab61-b4030-vf00-ms5670f093-gfxcbc44767",
+          "file": "physical/rom-p0d-g3e-ab61-b4030-vf00-ms5670f093-gfxcbc44767.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 13,
+          "graphicsBank": 62,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "cbc44767d4df0d9d",
+          "sourceProvenanceHash": "2c187d87c00bed1b",
+          "trimmedPixelHash": "d6124be4bf075ba7"
+        },
         {
           "physicalId": "rom-p0d-g3e-ab61-b4030-vf07-mse987e42c-gfxda7c07c3",
           "file": "physical/rom-p0d-g3e-ab61-b4030-vf07-mse987e42c-gfxda7c07c3.png",
@@ -23513,11 +23783,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "trunks_ssj",
       "actorVisualProfileKey": 14,
       "physicalFrames": 19,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 167,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 10,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x04",
@@ -23791,6 +24061,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p0e-g3f-ab61-b4030-vf00-ms5670f093-gfxe1f74c13",
+          "file": "physical/rom-p0e-g3f-ab61-b4030-vf00-ms5670f093-gfxe1f74c13.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 14,
+          "graphicsBank": 63,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "e1f74c13d3b77892",
+          "sourceProvenanceHash": "4d81d369f4f21263",
+          "trimmedPixelHash": "50118f7e9ae2fd85"
+        },
         {
           "physicalId": "rom-p0e-g3f-ab61-b4030-vf07-mse987e42c-gfxdc1f493e",
           "file": "physical/rom-p0e-g3f-ab61-b4030-vf07-mse987e42c-gfxdc1f493e.png",
@@ -24570,11 +24855,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "goten_base",
       "actorVisualProfileKey": 15,
       "physicalFrames": 21,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 181,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 13,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x03",
@@ -25315,6 +25600,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p0f-g40-ab61-b4030-vf00-ms5670f093-gfxdbc50c94",
+          "file": "physical/rom-p0f-g40-ab61-b4030-vf00-ms5670f093-gfxdbc50c94.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 15,
+          "graphicsBank": 64,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "dbc50c940a4b8fca",
+          "sourceProvenanceHash": "cc1d1add4059dbd8",
+          "trimmedPixelHash": "63575299e47a68c0"
+        },
         {
           "physicalId": "rom-p0f-g40-ab61-b4030-vf07-mse987e42c-gfxdff84ddd",
           "file": "physical/rom-p0f-g40-ab61-b4030-vf07-mse987e42c-gfxdff84ddd.png",
@@ -26094,11 +26394,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "goten_ssj",
       "actorVisualProfileKey": 16,
       "physicalFrames": 23,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 189,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 14,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x03",
@@ -26689,6 +26989,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p10-g41-ab61-b4030-vf00-ms5670f093-gfx03ae7364",
+          "file": "physical/rom-p10-g41-ab61-b4030-vf00-ms5670f093-gfx03ae7364.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 16,
+          "graphicsBank": 65,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "03ae73647df0f5a4",
+          "sourceProvenanceHash": "8b92e6511281762f",
+          "trimmedPixelHash": "f993cd06723849a5"
+        },
         {
           "physicalId": "rom-p10-g41-ab61-b4030-vf07-mse987e42c-gfxe8be99df",
           "file": "physical/rom-p10-g41-ab61-b4030-vf07-mse987e42c-gfxe8be99df.png",
@@ -27468,11 +27783,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "trunks_kid",
       "actorVisualProfileKey": 17,
       "physicalFrames": 15,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 153,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 8,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x0c",
@@ -27692,6 +28007,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p11-g42-ab61-b4030-vf00-ms5670f093-gfx0cce8461",
+          "file": "physical/rom-p11-g42-ab61-b4030-vf00-ms5670f093-gfx0cce8461.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 17,
+          "graphicsBank": 66,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "0cce84611cfb7583",
+          "sourceProvenanceHash": "b1ff202a6f6b381d",
+          "trimmedPixelHash": "29ac8dcefe748c74"
+        },
         {
           "physicalId": "rom-p11-g42-ab61-b4030-vf07-mse987e42c-gfx3024287a",
           "file": "physical/rom-p11-g42-ab61-b4030-vf07-mse987e42c-gfx3024287a.png",
@@ -28471,11 +28801,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "trunks_kid_ssj",
       "actorVisualProfileKey": 18,
       "physicalFrames": 15,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 153,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 8,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x0c",
@@ -28695,6 +29025,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p12-g43-ab61-b4030-vf00-ms5670f093-gfxfb384105",
+          "file": "physical/rom-p12-g43-ab61-b4030-vf00-ms5670f093-gfxfb384105.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 18,
+          "graphicsBank": 67,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "fb3841054276883c",
+          "sourceProvenanceHash": "fd0a143012cc07a2",
+          "trimmedPixelHash": "67a12d46498b060b"
+        },
         {
           "physicalId": "rom-p12-g43-ab61-b4030-vf07-mse987e42c-gfxac3a9493",
           "file": "physical/rom-p12-g43-ab61-b4030-vf07-mse987e42c-gfxac3a9493.png",
@@ -29474,11 +29819,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "gotenks_ssj",
       "actorVisualProfileKey": 19,
       "physicalFrames": 25,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 201,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 14,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x03",
@@ -29830,6 +30175,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p13-g44-ab61-b4030-vf00-ms5670f093-gfx0a544ad6",
+          "file": "physical/rom-p13-g44-ab61-b4030-vf00-ms5670f093-gfx0a544ad6.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 19,
+          "graphicsBank": 68,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "0a544ad605b576ab",
+          "sourceProvenanceHash": "0bbdc908e39a1548",
+          "trimmedPixelHash": "845e9a486aba331b"
+        },
         {
           "physicalId": "rom-p13-g44-ab61-b4030-vf07-mse987e42c-gfx9d8b14f8",
           "file": "physical/rom-p13-g44-ab61-b4030-vf07-mse987e42c-gfx9d8b14f8.png",
@@ -30609,11 +30969,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "gotenks_ssj3",
       "actorVisualProfileKey": 20,
       "physicalFrames": 25,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 201,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 14,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x03",
@@ -30965,6 +31325,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p14-g45-ab61-b4030-vf00-ms5670f093-gfxf2f4ad34",
+          "file": "physical/rom-p14-g45-ab61-b4030-vf00-ms5670f093-gfxf2f4ad34.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 20,
+          "graphicsBank": 69,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "f2f4ad34d90ded18",
+          "sourceProvenanceHash": "7b6d6e77f6129438",
+          "trimmedPixelHash": "2bae7c6397d74a07"
+        },
         {
           "physicalId": "rom-p14-g45-ab61-b4030-vf07-mse987e42c-gfx82d36e30",
           "file": "physical/rom-p14-g45-ab61-b4030-vf07-mse987e42c-gfx82d36e30.png",
@@ -31744,11 +32119,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "vegito_ssj",
       "actorVisualProfileKey": 21,
       "physicalFrames": 38,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 271,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 22,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x03",
@@ -32275,6 +32650,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p15-g46-ab61-b4030-vf00-ms5670f093-gfxa38ee5d4",
+          "file": "physical/rom-p15-g46-ab61-b4030-vf00-ms5670f093-gfxa38ee5d4.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 21,
+          "graphicsBank": 70,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "a38ee5d402d30c54",
+          "sourceProvenanceHash": "f87bd89bbe07353a",
+          "trimmedPixelHash": "5cbf3168899cd916"
+        },
         {
           "physicalId": "rom-p15-g46-ab61-b4030-vf07-mse987e42c-gfx0866194a",
           "file": "physical/rom-p15-g46-ab61-b4030-vf07-mse987e42c-gfx0866194a.png",
@@ -33054,11 +33444,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "nappa",
       "actorVisualProfileKey": 22,
       "physicalFrames": 15,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 153,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 8,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x0c",
@@ -33278,6 +33668,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p16-g47-ab61-b4030-vf00-ms5670f093-gfx4dc9ba87",
+          "file": "physical/rom-p16-g47-ab61-b4030-vf00-ms5670f093-gfx4dc9ba87.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 22,
+          "graphicsBank": 71,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "4dc9ba87c93c5471",
+          "sourceProvenanceHash": "1c714485728b3068",
+          "trimmedPixelHash": "7a9436fd231446c6"
+        },
         {
           "physicalId": "rom-p16-g47-ab61-b4030-vf07-mse987e42c-gfxf9833d94",
           "file": "physical/rom-p16-g47-ab61-b4030-vf07-mse987e42c-gfxf9833d94.png",
@@ -34057,11 +34462,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "guldo",
       "actorVisualProfileKey": 23,
       "physicalFrames": 15,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 153,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 8,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x0c",
@@ -34281,6 +34686,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p17-g48-ab61-b4030-vf00-ms5670f093-gfxb8ae8c6b",
+          "file": "physical/rom-p17-g48-ab61-b4030-vf00-ms5670f093-gfxb8ae8c6b.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 23,
+          "graphicsBank": 72,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "b8ae8c6b9b6585a3",
+          "sourceProvenanceHash": "b3ad415d65b0d9ae",
+          "trimmedPixelHash": "4b784dec92716f1d"
+        },
         {
           "physicalId": "rom-p17-g48-ab61-b4030-vf07-mse987e42c-gfx91d7e681",
           "file": "physical/rom-p17-g48-ab61-b4030-vf07-mse987e42c-gfx91d7e681.png",
@@ -35060,11 +35480,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "recoome",
       "actorVisualProfileKey": 24,
       "physicalFrames": 15,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 153,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 8,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x0c",
@@ -35284,6 +35704,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p18-g49-ab61-b4030-vf00-ms5670f093-gfx6f54c527",
+          "file": "physical/rom-p18-g49-ab61-b4030-vf00-ms5670f093-gfx6f54c527.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 24,
+          "graphicsBank": 73,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "6f54c527fb8719a7",
+          "sourceProvenanceHash": "9468e91d5f6b216e",
+          "trimmedPixelHash": "89518e4bef36a8a1"
+        },
         {
           "physicalId": "rom-p18-g49-ab61-b4030-vf07-mse987e42c-gfxf90b6c63",
           "file": "physical/rom-p18-g49-ab61-b4030-vf07-mse987e42c-gfxf90b6c63.png",
@@ -36063,11 +36498,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "jeice",
       "actorVisualProfileKey": 25,
       "physicalFrames": 15,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 153,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 8,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x0c",
@@ -36287,6 +36722,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p19-g4a-ab61-b4030-vf00-ms5670f093-gfx40b3d3fe",
+          "file": "physical/rom-p19-g4a-ab61-b4030-vf00-ms5670f093-gfx40b3d3fe.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 25,
+          "graphicsBank": 74,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "40b3d3fe8d7415d8",
+          "sourceProvenanceHash": "6132efc6eaaa2b38",
+          "trimmedPixelHash": "c21f867ee659a0de"
+        },
         {
           "physicalId": "rom-p19-g4a-ab61-b4030-vf07-mse987e42c-gfxc1dd0ffd",
           "file": "physical/rom-p19-g4a-ab61-b4030-vf07-mse987e42c-gfxc1dd0ffd.png",
@@ -37066,11 +37516,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "burter",
       "actorVisualProfileKey": 26,
       "physicalFrames": 15,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 153,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 8,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x0c",
@@ -37290,6 +37740,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p1a-g4b-ab61-b4030-vf00-ms5670f093-gfx5a655af8",
+          "file": "physical/rom-p1a-g4b-ab61-b4030-vf00-ms5670f093-gfx5a655af8.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 26,
+          "graphicsBank": 75,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "5a655af81e27fe68",
+          "sourceProvenanceHash": "962c7b9f039aeedb",
+          "trimmedPixelHash": "259fdd7e370a3a6a"
+        },
         {
           "physicalId": "rom-p1a-g4b-ab61-b4030-vf07-mse987e42c-gfxfdd8fd79",
           "file": "physical/rom-p1a-g4b-ab61-b4030-vf07-mse987e42c-gfxfdd8fd79.png",
@@ -38069,11 +38534,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "ginyu",
       "actorVisualProfileKey": 27,
       "physicalFrames": 25,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 201,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 14,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x03",
@@ -38425,6 +38890,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p1b-g4c-ab61-b4030-vf00-ms5670f093-gfx21f20685",
+          "file": "physical/rom-p1b-g4c-ab61-b4030-vf00-ms5670f093-gfx21f20685.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 27,
+          "graphicsBank": 76,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "21f206850cb86052",
+          "sourceProvenanceHash": "a8cb525a371dd011",
+          "trimmedPixelHash": "ebbd8373f6e12571"
+        },
         {
           "physicalId": "rom-p1b-g4c-ab61-b4030-vf07-mse987e42c-gfx9e0d3306",
           "file": "physical/rom-p1b-g4c-ab61-b4030-vf07-mse987e42c-gfx9e0d3306.png",
@@ -39204,11 +39684,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "frieza_final",
       "actorVisualProfileKey": 28,
       "physicalFrames": 23,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 201,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 14,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x01",
@@ -39536,6 +40016,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p1c-g4d-ab61-b4030-vf00-ms5670f093-gfx2da9aa92",
+          "file": "physical/rom-p1c-g4d-ab61-b4030-vf00-ms5670f093-gfx2da9aa92.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 28,
+          "graphicsBank": 77,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "2da9aa927ffe6e94",
+          "sourceProvenanceHash": "dbe24589066e64f4",
+          "trimmedPixelHash": "a93ea1e35eebfece"
+        },
         {
           "physicalId": "rom-p1c-g4d-ab61-b4030-vf07-mse987e42c-gfx667f8ae0",
           "file": "physical/rom-p1c-g4d-ab61-b4030-vf07-mse987e42c-gfx667f8ae0.png",
@@ -40315,11 +40810,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "android_16",
       "actorVisualProfileKey": 29,
       "physicalFrames": 19,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 160,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 9,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x0b",
@@ -40593,6 +41088,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p1d-g4e-ab61-b4030-vf00-ms5670f093-gfxbd9a4b7f",
+          "file": "physical/rom-p1d-g4e-ab61-b4030-vf00-ms5670f093-gfxbd9a4b7f.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 29,
+          "graphicsBank": 78,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "bd9a4b7fbd21ee24",
+          "sourceProvenanceHash": "89127921420e0358",
+          "trimmedPixelHash": "9edea3045b9e1be9"
+        },
         {
           "physicalId": "rom-p1d-g4e-ab61-b4030-vf07-mse987e42c-gfx280bb1ed",
           "file": "physical/rom-p1d-g4e-ab61-b4030-vf07-mse987e42c-gfx280bb1ed.png",
@@ -41372,11 +41882,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "android_17",
       "actorVisualProfileKey": 30,
       "physicalFrames": 15,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 153,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 8,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x0c",
@@ -41596,6 +42106,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p1e-g4f-ab61-b4030-vf00-ms5670f093-gfxd71a129b",
+          "file": "physical/rom-p1e-g4f-ab61-b4030-vf00-ms5670f093-gfxd71a129b.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 30,
+          "graphicsBank": 79,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "d71a129bbe4b4da1",
+          "sourceProvenanceHash": "94e39be7c2bd0545",
+          "trimmedPixelHash": "2e2e8975dce41b67"
+        },
         {
           "physicalId": "rom-p1e-g4f-ab61-b4030-vf07-mse987e42c-gfx9a878729",
           "file": "physical/rom-p1e-g4f-ab61-b4030-vf07-mse987e42c-gfx9a878729.png",
@@ -42375,11 +42900,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "android_18",
       "actorVisualProfileKey": 31,
       "physicalFrames": 15,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 153,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 8,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x0c",
@@ -42599,6 +43124,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p1f-g50-ab61-b4030-vf00-ms5670f093-gfx97efff5a",
+          "file": "physical/rom-p1f-g50-ab61-b4030-vf00-ms5670f093-gfx97efff5a.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 31,
+          "graphicsBank": 80,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "97efff5a10edbfd6",
+          "sourceProvenanceHash": "d23886aedaec3a58",
+          "trimmedPixelHash": "fb5ff1890dd84436"
+        },
         {
           "physicalId": "rom-p1f-g50-ab61-b4030-vf07-mse987e42c-gfxf1211747",
           "file": "physical/rom-p1f-g50-ab61-b4030-vf07-mse987e42c-gfxf1211747.png",
@@ -43378,11 +43918,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "android_19",
       "actorVisualProfileKey": 32,
       "physicalFrames": 15,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 153,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 8,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x0c",
@@ -43602,6 +44142,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p20-g51-ab61-b4030-vf00-ms5670f093-gfx4bb6034d",
+          "file": "physical/rom-p20-g51-ab61-b4030-vf00-ms5670f093-gfx4bb6034d.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 32,
+          "graphicsBank": 81,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "4bb6034d0807412a",
+          "sourceProvenanceHash": "2f261adf9ad934d1",
+          "trimmedPixelHash": "be4e426fbe5da22f"
+        },
         {
           "physicalId": "rom-p20-g51-ab61-b4030-vf07-mse987e42c-gfx36308079",
           "file": "physical/rom-p20-g51-ab61-b4030-vf07-mse987e42c-gfx36308079.png",
@@ -44381,11 +44936,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "android_20",
       "actorVisualProfileKey": 33,
       "physicalFrames": 15,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 153,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 8,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x0c",
@@ -44605,6 +45160,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p21-g52-ab61-b4030-vf00-ms5670f093-gfx6e9e35f8",
+          "file": "physical/rom-p21-g52-ab61-b4030-vf00-ms5670f093-gfx6e9e35f8.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 33,
+          "graphicsBank": 82,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "6e9e35f8a0c27044",
+          "sourceProvenanceHash": "961e2e035feb0dea",
+          "trimmedPixelHash": "e0a3a7997c557553"
+        },
         {
           "physicalId": "rom-p21-g52-ab61-b4030-vf07-mse987e42c-gfx42b15d67",
           "file": "physical/rom-p21-g52-ab61-b4030-vf07-mse987e42c-gfx42b15d67.png",
@@ -45384,11 +45954,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "cell_imperfect",
       "actorVisualProfileKey": 34,
       "physicalFrames": 33,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 229,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 18,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x01",
@@ -45848,6 +46418,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p22-g53-ab61-b4030-vf00-ms5670f093-gfx808009ee",
+          "file": "physical/rom-p22-g53-ab61-b4030-vf00-ms5670f093-gfx808009ee.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 34,
+          "graphicsBank": 83,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "808009ee362bada9",
+          "sourceProvenanceHash": "8d5ca167944d1a2f",
+          "trimmedPixelHash": "5ec9e8ce8203f44c"
+        },
         {
           "physicalId": "rom-p22-g53-ab61-b4030-vf07-mse987e42c-gfx74cf7312",
           "file": "physical/rom-p22-g53-ab61-b4030-vf07-mse987e42c-gfx74cf7312.png",
@@ -46627,11 +47212,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "cell_semi",
       "actorVisualProfileKey": 35,
       "physicalFrames": 33,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 229,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 18,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x01",
@@ -47091,6 +47676,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p23-g54-ab61-b4030-vf00-ms5670f093-gfxea426acb",
+          "file": "physical/rom-p23-g54-ab61-b4030-vf00-ms5670f093-gfxea426acb.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 35,
+          "graphicsBank": 84,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "ea426acb52fb7aa9",
+          "sourceProvenanceHash": "f078ea243d99849e",
+          "trimmedPixelHash": "b57c3c28ebcc0dd3"
+        },
         {
           "physicalId": "rom-p23-g54-ab61-b4030-vf07-mse987e42c-gfxccfd49a5",
           "file": "physical/rom-p23-g54-ab61-b4030-vf07-mse987e42c-gfxccfd49a5.png",
@@ -47870,11 +48470,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "cell_perfect",
       "actorVisualProfileKey": 36,
       "physicalFrames": 33,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 229,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 18,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x01",
@@ -48334,6 +48934,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p24-g55-ab61-b4030-vf00-ms5670f093-gfxc136668d",
+          "file": "physical/rom-p24-g55-ab61-b4030-vf00-ms5670f093-gfxc136668d.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 36,
+          "graphicsBank": 85,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "c136668dfd2aee21",
+          "sourceProvenanceHash": "9f04f72eb5d1e167",
+          "trimmedPixelHash": "03f58a25f040b4c0"
+        },
         {
           "physicalId": "rom-p24-g55-ab61-b4030-vf07-mse987e42c-gfxe823958f",
           "file": "physical/rom-p24-g55-ab61-b4030-vf07-mse987e42c-gfxe823958f.png",
@@ -49113,11 +49728,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "cell_jr",
       "actorVisualProfileKey": 37,
       "physicalFrames": 33,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 229,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 18,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x01",
@@ -49577,6 +50192,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p25-g56-ab61-b4030-vf00-ms5670f093-gfxb107aff5",
+          "file": "physical/rom-p25-g56-ab61-b4030-vf00-ms5670f093-gfxb107aff5.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 37,
+          "graphicsBank": 86,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "b107aff571d47b29",
+          "sourceProvenanceHash": "bbd6cc4e5d682790",
+          "trimmedPixelHash": "f35021077085280e"
+        },
         {
           "physicalId": "rom-p25-g56-ab61-b4030-vf07-mse987e42c-gfx9597c1aa",
           "file": "physical/rom-p25-g56-ab61-b4030-vf07-mse987e42c-gfx9597c1aa.png",
@@ -50356,11 +50986,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "buu_base",
       "actorVisualProfileKey": 38,
       "physicalFrames": 25,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 201,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 14,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x03",
@@ -50712,6 +51342,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p26-g57-ab61-b4030-vf00-ms5670f093-gfx534041fe",
+          "file": "physical/rom-p26-g57-ab61-b4030-vf00-ms5670f093-gfx534041fe.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 38,
+          "graphicsBank": 87,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "534041fedea885b1",
+          "sourceProvenanceHash": "001091c2afa7d828",
+          "trimmedPixelHash": "f70bee3d3b3d5693"
+        },
         {
           "physicalId": "rom-p26-g57-ab61-b4030-vf07-mse987e42c-gfxbc51ba87",
           "file": "physical/rom-p26-g57-ab61-b4030-vf07-mse987e42c-gfxbc51ba87.png",
@@ -51491,11 +52136,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "buu_super",
       "actorVisualProfileKey": 39,
       "physicalFrames": 25,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 201,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 14,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x03",
@@ -51847,6 +52492,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p27-g58-ab61-b4030-vf00-ms5670f093-gfx4a4ab049",
+          "file": "physical/rom-p27-g58-ab61-b4030-vf00-ms5670f093-gfx4a4ab049.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 39,
+          "graphicsBank": 88,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "4a4ab04936ab7420",
+          "sourceProvenanceHash": "83c4451902e5b241",
+          "trimmedPixelHash": "280329ff10deb0b8"
+        },
         {
           "physicalId": "rom-p27-g58-ab61-b4030-vf07-mse987e42c-gfxd01133fc",
           "file": "physical/rom-p27-g58-ab61-b4030-vf07-mse987e42c-gfxd01133fc.png",
@@ -52626,11 +53286,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "buu_gotenks",
       "actorVisualProfileKey": 40,
       "physicalFrames": 25,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 201,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 14,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x03",
@@ -52982,6 +53642,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p28-g59-ab61-b4030-vf00-ms5670f093-gfx212b261e",
+          "file": "physical/rom-p28-g59-ab61-b4030-vf00-ms5670f093-gfx212b261e.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 40,
+          "graphicsBank": 89,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "212b261e7f50e51a",
+          "sourceProvenanceHash": "6bf7a5b57524ff66",
+          "trimmedPixelHash": "208bd11a7844f9ac"
+        },
         {
           "physicalId": "rom-p28-g59-ab61-b4030-vf07-mse987e42c-gfx2a028782",
           "file": "physical/rom-p28-g59-ab61-b4030-vf07-mse987e42c-gfx2a028782.png",
@@ -53761,11 +54436,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "buu_gohan",
       "actorVisualProfileKey": 41,
       "physicalFrames": 25,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 201,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 14,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x03",
@@ -54117,6 +54792,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p29-g5a-ab61-b4030-vf00-ms5670f093-gfxa5c5b6bf",
+          "file": "physical/rom-p29-g5a-ab61-b4030-vf00-ms5670f093-gfxa5c5b6bf.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 41,
+          "graphicsBank": 90,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "a5c5b6bf136be0d5",
+          "sourceProvenanceHash": "adba04f33ddbbd02",
+          "trimmedPixelHash": "9d4319edf85db3c8"
+        },
         {
           "physicalId": "rom-p29-g5a-ab61-b4030-vf07-mse987e42c-gfx39b5d65a",
           "file": "physical/rom-p29-g5a-ab61-b4030-vf07-mse987e42c-gfx39b5d65a.png",
@@ -54896,11 +55586,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "buu_kid",
       "actorVisualProfileKey": 42,
       "physicalFrames": 25,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 201,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 14,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x03",
@@ -55252,6 +55942,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p2a-g5b-ab61-b4030-vf00-ms5670f093-gfx393b2360",
+          "file": "physical/rom-p2a-g5b-ab61-b4030-vf00-ms5670f093-gfx393b2360.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 42,
+          "graphicsBank": 91,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "393b23603a8fe3a8",
+          "sourceProvenanceHash": "65e4885d75751d55",
+          "trimmedPixelHash": "467e211f48b9eb66"
+        },
         {
           "physicalId": "rom-p2a-g5b-ab61-b4030-vf07-mse987e42c-gfxd6034995",
           "file": "physical/rom-p2a-g5b-ab61-b4030-vf07-mse987e42c-gfxd6034995.png",
@@ -56031,11 +56736,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       "formId": "ginyu_goku",
       "actorVisualProfileKey": 43,
       "physicalFrames": 25,
-      "stagePhysicalFrames": 51,
+      "stagePhysicalFrames": 52,
       "frameInstances": 201,
-      "stageFrameInstances": 319,
+      "stageFrameInstances": 320,
       "sequences": 14,
-      "stageSequences": 48,
+      "stageSequences": 49,
       "resources": [
         "0x00",
         "0x03",
@@ -56387,6 +57092,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         }
       ],
       "stagePhysicalFrameIndex": [
+        {
+          "physicalId": "rom-p2b-g5c-ab61-b4030-vf00-ms5670f093-gfx712b2649",
+          "file": "physical/rom-p2b-g5c-ab61-b4030-vf00-ms5670f093-gfx712b2649.png",
+          "resourceId": null,
+          "animationBank": 97,
+          "resourceBase": 16432,
+          "resourceHex": "ab61-b4030",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 43,
+          "graphicsBank": 92,
+          "metaspriteHash": "5670f09342b04349",
+          "graphicsHash": "712b2649d43a549b",
+          "sourceProvenanceHash": "6ff17a69c218a44d",
+          "trimmedPixelHash": "6aa727bec8958b35"
+        },
         {
           "physicalId": "rom-p2b-g5c-ab61-b4030-vf07-mse987e42c-gfxb26602c2",
           "file": "physical/rom-p2b-g5c-ab61-b4030-vf07-mse987e42c-gfxb26602c2.png",
