@@ -7,7 +7,7 @@
 // 3. RomPhysicalFighterPanel does NOT call spriteManifestUrl()
 // 4. RomCanonManifestPanel does NOT call useSheetAnalysis()
 // 5. RomCanonManifestPanel does NOT call spriteFrameUrl()
-// 6. Legacy section labeled REFERENCE ONLY · NOT ROM PHYSICAL
+// 6. No legacy FrameBrowser section remains in Character Studio (2026-09-08 ROM-rendering pass removed it; sibling gate verify:dev-vegito-physical-preview enforces the same absence)
 // 7. ROM Physical panel labeled ROM CANON
 // 8. RomSequenceRegistry has no module-level fs import
 // 9. RomActionSequenceBinding does NOT reference spriteManifest
@@ -81,14 +81,20 @@ for (const [label, regex] of callPatterns) {
     hits.length > 0 ? hits.join('; ') : undefined);
 }
 
-// ═══ 6. Legacy section labeled REFERENCE ONLY ═══
-check('Legacy section labeled REFERENCE ONLY',
-  CHARACTERS_TSX.includes('REFERENCE ONLY'),
-  CHARACTERS_TSX.includes('REFERENCE ONLY') ? undefined : 'missing REFERENCE ONLY label');
+// ═══ 6. No legacy FrameBrowser section remains in Character Studio ═══
+// The 2026-09-08 ROM-rendering pass removed the legacy sheet browser
+// ("REFERENCE ONLY · NOT ROM PHYSICAL") from characters.tsx entirely; the
+// Character Studio now renders only physical-ROM panels. The sibling gate
+// verify:dev-vegito-physical-preview enforces the same absence (FrameBrowser,
+// useSheetAnalysis, spriteFrameUrl). Asserting the legacy labels are GONE is
+// the new invariant — a legacy section must never come back unlabeled.
+check('Legacy FrameBrowser section removed from Character Studio',
+  !CHARACTERS_TSX.includes('FrameBrowser'),
+  CHARACTERS_TSX.includes('FrameBrowser') ? 'FrameBrowser still present' : undefined);
 
-check('Legacy section labeled NOT ROM PHYSICAL',
-  CHARACTERS_TSX.includes('NOT ROM PHYSICAL'),
-  CHARACTERS_TSX.includes('NOT ROM PHYSICAL') ? undefined : 'missing NOT ROM PHYSICAL label');
+check('No legacy-only sheet labels remain in Character Studio',
+  !CHARACTERS_TSX.includes('REFERENCE ONLY') && !CHARACTERS_TSX.includes('NOT ROM PHYSICAL'),
+  undefined);
 
 // ═══ 7. ROM Physical panel labeled ROM CANON ═══
 check('ROM Physical panel labeled ROM CANON',
