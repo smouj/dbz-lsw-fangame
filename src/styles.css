@@ -1985,19 +1985,19 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   bottom: 8px;
   z-index: 60;
   pointer-events: none;
-  animation: draw-card-fly 0.46s cubic-bezier(.22,.9,.3,1) forwards;
+  animation: draw-card-fly .52s cubic-bezier(.22,.9,.3,1) forwards;
   transform-origin: 50% 50%;
 }
 
 @keyframes draw-card-fly {
   0%   { transform: translateX(120px) translateY(10px) rotateZ(8deg) rotateY(70deg); opacity: 0; }
-  22%  { opacity: 1; }
+  18%  { opacity: 1; }
   100% { transform: translateX(0) translateY(0) rotateZ(0deg) rotateY(0deg); opacity: 1; }
 }
 
 /* la carta interior recibe el drop-in al aterrizar */
 .draw-fx .card {
-  animation: draw-card-land 0.18s ease-out 0.34s both;
+  animation: draw-card-land .22s ease-out .36s both;
 }
 
 /* La carta robada comparte el frame-máscara y el hueco de arte con la mano.
@@ -2014,7 +2014,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 
 @keyframes draw-card-land {
-  0%   { transform: translateY(-4px); filter: brightness(1.35) saturate(1.2); }
+  0%   { transform: translateY(-6px); filter: brightness(1.35) saturate(1.2); }
   100% { transform: translateY(0); filter: brightness(1) saturate(1); }
 }
 
