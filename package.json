@@ -141,6 +141,7 @@
     "verify:rom-physical-key-bridge": "npx tsx scripts/verify-rom-physical-key-bridge.ts",
     "export:rom-fighter-assets": "npx tsx scripts/export-rom-fighter-assets.ts",
     "verify:dev-physical-sync": "npx tsx scripts/verify-dev-physical-sync.ts",
+    "verify:action-object-visibility": "npx tsx scripts/verify-action-object-visibility.ts",
     "verify:dev-vegito-physical-preview": "npx tsx scripts/verify-dev-vegito-physical-preview.ts",
     "verify:production-frame-resolver": "npx tsx scripts/verify-production-frame-resolver.ts",
     "verify:rom-fighter-canon": "npx tsx scripts/verify-rom-fighter-canon.ts",

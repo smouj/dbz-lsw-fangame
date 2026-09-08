@@ -19,6 +19,7 @@ import { ImpactSystem } from '../systems/ImpactSystem';
 import type { FormAtlas } from '../assets/AtlasLoader';
 import { BattlePosition } from '../../../data/positions';
 import { ACTION_LEFT_X, ACTION_RIGHT_X, ACTION_SPECIAL_LEFT_X, ACTION_SPECIAL_RIGHT_X } from '../scenes/ActionScene';
+import { ActionObjectRuntime } from '../../../battle/runtime/ActionObjectRuntime';
 
 function fakeAtlas(): FormAtlas {
   return { formId: 'gohan_young', dir: '', anims: new Map(), textures: new Map(), maxW: 16, maxH: 16 };
@@ -104,6 +105,43 @@ describe('SPECIAL_ACTION optical anchors', () => {
 });
 
 describe('ActionObject slot mapping por ROL (P0.4/P0.7)', () => {
+  it('runtime binding supports offense, defense, rebind and unbind without fixed slot sides', () => {
+    const runtime = new ActionObjectRuntime();
+    expect(runtime.resolve(0)?.role).toBe('ACTOR');
+    expect(runtime.resolve(1)?.role).toBe('TARGET');
+    runtime.bind(0, { role: 'TARGET', fighterSide: 'PLAYER' });
+    expect(runtime.resolve(0)).toEqual({ role: 'TARGET', fighterSide: 'PLAYER' });
+    runtime.stop(0);
+    expect(runtime.state(0)).toMatchObject({ active: false, visible: false });
+    runtime.bind(0, { role: 'ACTOR', fighterSide: 'ENEMY' });
+    expect(runtime.state(0)).toMatchObject({ active: true, visible: true });
+    expect(runtime.resolve(0)?.role).toBe('ACTOR');
+    runtime.unbind(0);
+    expect(runtime.resolve(0)).toBeNull();
+    expect(runtime.state(0)).toMatchObject({ active: false, visible: false });
+  });
+
+  it('adapter bind/unbind changes the real slot target and stop hides the rebound fighter', () => {
+    const renderer = rendererFixture();
+    const pres = presentationWith(renderer);
+    const left = new FighterActor(fakeAtlas(), 'gohan_young', 'left');
+    const right = new FighterActor(fakeAtlas(), 'piccolo_evil', 'right');
+    (pres as any).leftActor = left;
+    (pres as any).rightActor = right;
+    pres.setAttacker('left');
+    const adapter = new ProductionRomPresentationAdapter(pres);
+    adapter.consume({ type: 'ACTION_OBJECT_BIND', tick: 0, slot: 0, role: 'TARGET' } as never);
+    pres.setRomSequenceForSlot(0, 44, 1);
+    expect(right.currentRomSequence).toEqual({ resource: 44, sequence: 1 });
+    adapter.consume({ type: 'ACTION_OBJECT_STOP', tick: 1, slot: 0 } as never);
+    expect(right.isPlaybackEnabled).toBe(false);
+    expect(pres.actionObjectSnapshot[0]).toMatchObject({ active: false, visible: false });
+    adapter.consume({ type: 'ACTION_OBJECT_BIND', tick: 2, slot: 0, role: 'ACTOR' } as never);
+    expect(pres.actionObjectSnapshot[0]).toMatchObject({ active: true, visible: true });
+    adapter.consume({ type: 'ACTION_OBJECT_UNBIND', tick: 3, slot: 0 } as never);
+    expect(pres.actionObjectSnapshot[0]).toMatchObject({ binding: null, active: false, visible: false });
+  });
+
   function rig(attackerSide: 'left' | 'right') {
     const renderer = rendererFixture();
     const pres = presentationWith(renderer);

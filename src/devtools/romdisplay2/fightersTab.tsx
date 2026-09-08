@@ -67,7 +67,7 @@ interface PhysicalProvenance {
   frames: PhysicalProvenanceFrame[];
 }
 
-const FORM_IDS = ROM_FIGHTER_FORM_IDENTITY.map((row) => row.formId);
+const FORM_IDS: string[] = ROM_FIGHTER_FORM_IDENTITY.map((row) => row.formId);
 const RESOURCE_IDS = ANIMATION_RESOURCE_CATALOG.map((e) => e.resourceId).sort((a, b) => a - b);
 const TICK_MS = 1000 / 59.7275; // ≈ 16.7427 ms/tick — reloj GBC real
 

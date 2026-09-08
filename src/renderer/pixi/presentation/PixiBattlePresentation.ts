@@ -22,6 +22,7 @@ import { resolveProjectileVisualMode, type ProjectileVisualMode } from './projec
 import { RomDisplayPresenter } from '../../../battle/romDisplay/RomDisplayPresenter';
 import { RomDisplayLayer } from '../../../battle/romDisplay/RomDisplayLayer';
 import { CameraPresenter } from './CameraPresenter';
+import { ActionObjectRuntime, type ActionObjectBinding, type ActionObjectSlot } from '../../../battle/runtime/ActionObjectRuntime';
 
 export interface PixiPresentationConfig {
   playerFormId: string;
@@ -46,6 +47,30 @@ export class PixiBattlePresentation implements BattlePresentation {
   private leftActor: FighterActor | null = null;
   private rightActor: FighterActor | null = null;
   private specialActionActive = false;
+  /** Única autoridad slot lógico → participante físico durante una película. */
+  private readonly actionObjects = new ActionObjectRuntime();
+
+  get actionObjectSnapshot() {
+    return this.actionObjects.snapshot();
+  }
+
+  bindActionObject(slot: ActionObjectSlot, binding: ActionObjectBinding): void {
+    this.actionObjects.bind(slot, binding);
+  }
+
+  unbindActionObject(slot: ActionObjectSlot): void {
+    this.actionObjects.unbind(slot);
+  }
+
+  private actionObject(slot: ActionObjectSlot): FighterActor | null {
+    const binding = this.actionObjects.resolve(slot);
+    if (!binding) return null;
+    if (binding.role === 'TARGET') return this.target;
+    if (binding.role === 'ACTOR' || binding.role === 'ACTOR_PRIMARY') return this.actor;
+    if (binding.fighterSide === 'PLAYER') return this.leftActor;
+    if (binding.fighterSide === 'ENEMY') return this.rightActor;
+    return this.actor;
+  }
 
   /** P0 ROM TICKS: devuelve el estado actual de ambos actores para diagnóstico. */
   inspectActors(): { left: FighterActor | null; right: FighterActor | null } {
@@ -58,7 +83,7 @@ export class PixiBattlePresentation implements BattlePresentation {
     // applyFrameOffset. El mapping fijo slot0→left/slot1→right rompía TODAS
     // las acciones del enemigo: la secuencia del actor (slot0) se aplicaba al
     // FighterActor del jugador y la del target (slot1) al del enemigo.
-    const actor = slot === 0 ? this.actor : this.target;
+    const actor = this.actionObject(slot);
     if (actor && typeof (actor as any).setRomSequence === 'function') {
       (actor as any).setRomSequence(resource, sequence);
     }
@@ -66,7 +91,7 @@ export class PixiBattlePresentation implements BattlePresentation {
 
   setPhysicalFrameForSlot(slot: 0 | 1, cue: any): void {
     // Mismo mapeo por ROL que setRomSequenceForSlot (ver arriba).
-    const actor = slot === 0 ? this.actor : this.target;
+    const actor = this.actionObject(slot);
     if (actor && typeof (actor as any).setPhysicalFrame === 'function') {
       (actor as any).setPhysicalFrame(cue);
     }
@@ -74,10 +99,11 @@ export class PixiBattlePresentation implements BattlePresentation {
 
   /** P0 ANIMATION OWNERSHIP — ROM $08: congela el track del slot (sin ocultar). */
   stopActionObject(slot: 0 | 1): void {
-    const fighter = slot === 0 ? this.actor : this.target;
+    const fighter = this.actionObject(slot);
     if (fighter && typeof (fighter as any).freezeTrack === 'function') {
       (fighter as any).freezeTrack();
     }
+    this.actionObjects.stop(slot);
   }
   private attacker: BattleSide = 'left';
   private projectile: Graphics | null = null;
@@ -232,16 +258,16 @@ export class PixiBattlePresentation implements BattlePresentation {
   }
 
   setActionObjectPosition(slot: 0 | 1, x: number, y: number): void {
-    const fighter = slot === 0 ? this.actor : this.target;
+    const fighter = this.actionObject(slot);
     fighter?.setPos(x, y);
   }
 
   moveActionObject(slot: 0 | 1, dxPerTick: number, dyPerTick: number, durationTicks: number): void {
     this.cancelRush();
-    const fighter = slot === 0 ? this.actor : this.target;
+    const fighter = this.actionObject(slot);
     if (!fighter) return;
     this.romMotionActive = true;
-    this.romMotionTargetActor = slot === 0;
+    this.romMotionTargetActor = this.actionObjects.resolve(slot)?.role !== 'TARGET';
     this.romMotionStartTick = this.renderer.currentTick;
     this.romMotionFromX = fighter.x;
     this.romMotionFromY = fighter.y;

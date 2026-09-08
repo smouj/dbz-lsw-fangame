@@ -29,6 +29,7 @@
 import type { BattlePresentation, BattleScene } from './BattlePresentation';
 import type { PresentationCue } from '../../../battle/engine/presentation/PresentationCue';
 import type { RomDisplayPresenter } from '../../../battle/romDisplay/RomDisplayPresenter';
+import type { ActionObjectBinding, ActionObjectSlot } from '../../../battle/runtime/ActionObjectRuntime';
 
 export type ProductionPresentationSource = 'ROM' | 'LEGACY' | 'NONE';
 
@@ -439,6 +440,31 @@ export class ProductionRomPresentationAdapter {
         } else {
           this.stats.pendingCues++;
           this.stats.pendingReasons.push('BattlePresentation.stopActionObject missing');
+        }
+        break;
+      }
+      case 'ACTION_OBJECT_BIND': {
+        const bind = (this.pres as Partial<Pick<BattlePresentation, 'bindActionObject'>>).bindActionObject;
+        if (typeof bind === 'function') {
+          bind.call(this.pres, cue.slot as ActionObjectSlot, {
+            role: cue.role,
+            fighterSide: cue.fighterSide,
+          } as ActionObjectBinding);
+          visible = true;
+        } else {
+          this.stats.pendingCues++;
+          this.stats.pendingReasons.push('BattlePresentation.bindActionObject missing');
+        }
+        break;
+      }
+      case 'ACTION_OBJECT_UNBIND': {
+        const unbind = (this.pres as Partial<Pick<BattlePresentation, 'unbindActionObject'>>).unbindActionObject;
+        if (typeof unbind === 'function') {
+          unbind.call(this.pres, cue.slot as ActionObjectSlot);
+          visible = true;
+        } else {
+          this.stats.pendingCues++;
+          this.stats.pendingReasons.push('BattlePresentation.unbindActionObject missing');
         }
         break;
       }

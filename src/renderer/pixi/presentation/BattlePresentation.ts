@@ -14,6 +14,7 @@
 
 import type { RomMotionSegment } from '../../../battle/romMotionMath';
 import type { BattlePosition } from '../../../data/positions';
+import type { ActionObjectBinding, ActionObjectSlot } from '../../../battle/runtime/ActionObjectRuntime';
 
 export type { RomMotionSegment };
 
@@ -29,6 +30,10 @@ export type BattleScene =
   | 'IMPACT';      // golpe/explosión/block (plano corto)
 
 export interface BattlePresentation {
+  /** Aplica el binding ROM actual a un ActionObject lógico. */
+  bindActionObject?(slot: ActionObjectSlot, binding: ActionObjectBinding): void;
+  /** Libera el binding ROM actual sin asumir un lado físico. */
+  unbindActionObject?(slot: ActionObjectSlot): void;
   /** Cambia el plano cinematográfico (mapea SHOT). */
   setScene(scene: BattleScene, background?: string): void;
 
