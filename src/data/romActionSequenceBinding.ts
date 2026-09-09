@@ -130,7 +130,7 @@ function selectorFor(card: CardDef, rom: RomCardData, resource: RomSequenceEntry
     };
   }
 
-  if ([0x02, 0x03, 0x04, 0x05, 0x06].includes(rom.exec)) {
+  if ([0x02, 0x03, 0x04, 0x05, 0x06, 0x07].includes(rom.exec)) {
     const selectors = ROM_BEAM_SEQUENCE_SELECTORS.filter(
       (selector) => selector.animationResource === resource.resourceId && selector.cardId === card.id,
     );
@@ -138,7 +138,7 @@ function selectorFor(card: CardDef, rom: RomCardData, resource: RomSequenceEntry
       kind: 'ACTOR_PROFILE',
       value: resource.sequences.length === 1 ? 0 : null,
       evidence: selectors.length > 0
-        ? `BEAM actor selector table: ${selectors.length} profile->sequence mappings.`
+        ? `Offensive actor selector table: ${selectors.length} profile->sequence mappings for handler ${hex(rom.exec)}.`
         : resource.sequences.length === 1
           ? 'Single physical sequence; selector resolves to sequence 0.'
           : 'Multiple physical sequences are closed; actor-profile selector rows remain the semantic authority.',

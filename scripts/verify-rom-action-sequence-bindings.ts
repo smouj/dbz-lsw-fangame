@@ -164,6 +164,9 @@ const dynamicTracks = bindings.flatMap((binding) => binding.tracks.filter((track
 check('fx display:all tracks are non-sequence resources', fxTracks.every((track) => track.selector.kind === 'NON_SEQUENCE_DISPLAY'), `${fxTracks.filter((track) => track.selector.kind !== 'NON_SEQUENCE_DISPLAY').length} invalid`);
 check('fx display:no false dynamic sequence selectors', fxTracks.every((track) => track.selector.kind !== 'DYNAMIC_PENDING'));
 check('dynamic selectors:actor tracks only', dynamicTracks.every((track) => track.trackId.startsWith('actor')), `${dynamicTracks.filter((track) => !track.trackId.startsWith('actor')).length} non-actor`);
+const handler07Bindings = bindings.filter((binding) => binding.execution.handler === 0x07);
+check('handler $07:all actor selectors use the ROM profile table', handler07Bindings.every((binding) => binding.tracks.find((track) => track.trackId === 'actor')?.selector.kind === 'ACTOR_PROFILE'), `${handler07Bindings.filter((binding) => binding.tracks.find((track) => track.trackId === 'actor')?.selector.kind !== 'ACTOR_PROFILE').length} invalid`);
+check('handler $07:no dynamic actor selector remains', handler07Bindings.every((binding) => binding.tracks.every((track) => track.selector.kind !== 'DYNAMIC_PENDING')));
 
 const standardDamageCardIds = CARDS
   .filter((card) => romCardData(card.name)?.exec === 0x0a)

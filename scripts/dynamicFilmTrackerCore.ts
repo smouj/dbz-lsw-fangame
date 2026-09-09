@@ -171,6 +171,7 @@ const BLOCKERS: Record<string, string> = {
   A: 'SFX-V4-05 per-scanline capture (LY 23-95): probar SCY=low($C407)+C405 / SCX=low($C409)+C406 en vivo; RIGHT/side2 mirror (C406=0xA9); handler $07 ventana rows 3-10; FIRST/LAST_SCROLL_CHANGE + RESTORE_TICK. Después: cablear loadBeamBgOffsets/getBeamFrameDeltas a consumidores y quitar PENDING_ROM_TRACE.',
   B: 'Trace FSM/runtime del worker MULTI_ACTOR_SCRIPT (Bank3:$5C04 / Bank3:$5D0C): quién es dueño del actor/helper, ancla espacial y coreografía frente al target; solo entonces cerrar result-branch HIT/MISS/GUARD de la familia $0D/$0E.',
   D_ACTOR: 'Trace FSM del handler: qué estado/branch selecciona la secuencia entre las N físicas cerradas (result macros $2F/$30/$31 u operación interna del worker); evidencia dinámica por worker antes de promover selector.',
+  D_DEFENSE: 'Capturar el consumo real de AnimationSlot8 en 03:$60AE (Taiyoken) y 03:$59F9 (Barrier/Breath): cardId, atacante/defensor, CA83, CA53, slot, $C3C7, resource y sequence desde el start hasta STOP. La selección de la defensa solo precarga; no promover sequence 0 por defecto.',
   D_FILM: 'Trace del film SPECIAL_HANDLER (worker Bank3:$61C5 / Bank3:$5E67 / Bank3:$62D4): result-branch HIT/MISS/GUARD + transiciones inter-fase; el FX del film se cierra con el mismo trace.',
   F: 'Resolver el dominio FX de soporte/categoría en el corpus: supportVisuals SEPARATE_DOMAIN, supportAuraBlue/gatherPowerAuraOrange UNRESOLVED; exportar bundles (fx,palette) no-ofensivos o declarar su grammar por categoría.',
 };
@@ -179,6 +180,7 @@ const REASON_CODES: Record<string, string> = {
   A: 'BEAM_WINDOW_SCX_SCY_TIMING_OPEN',
   B: 'MULTI_ACTOR_HELPER_OWNERSHIP_OPEN',
   D_ACTOR: 'ACTOR_SEQ_RUNTIME_SELECTION_OPEN',
+  D_DEFENSE: 'DEFENSE_SLOT8_SEQUENCE_SELECTION_OPEN',
   D_FILM: 'SPECIAL_FILM_FX_FSM_OPEN',
   D_FILM_ROW: 'SPECIAL_RESULT_BRANCH_FSM_OPEN',
   F: 'SUPPORT_FX_DOMAIN_CORPUS_OPEN',
@@ -220,8 +222,9 @@ export function buildOccurrenceRows(): OccurrenceRow[] {
     for (const track of binding.tracks) {
       if (track.selector.kind !== 'DYNAMIC_PENDING') continue;
       const cause = 'D' as const;
-      const reasonCode = REASON_CODES.D_ACTOR;
-      const blocker = BLOCKERS.D_ACTOR;
+      const isDefenseSlot8 = binding.card.category === 'defense' && binding.execution.handler === 0x00;
+      const reasonCode = isDefenseSlot8 ? REASON_CODES.D_DEFENSE : REASON_CODES.D_ACTOR;
+      const blocker = isDefenseSlot8 ? BLOCKERS.D_DEFENSE : BLOCKERS.D_ACTOR;
       const resourceHex = track.resourceId != null ? track.resourceId.toString(16).padStart(2, '0') : null;
       rows.push({
         key: `${binding.card.id}|${track.trackId}|${resourceHex ?? '—'}`,

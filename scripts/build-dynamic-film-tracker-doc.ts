@@ -35,7 +35,7 @@ function handlerWorkerSummary(code: string): { handler: string; resource: string
     case 'A': return { handler: '$02-$07 beams/proyectiles (B3:$5776/$5B38/$5AC7/$5B9E/$5DFE)', resource: 'fx windows (tilebank BG $9800)', sequence: '—' };
     case 'B': return { handler: '$0D/$0E MULTI_ACTOR_SCRIPT (B3:$5C04/$5D0C)', resource: 'fx $01/$04/$27/$6F helper', sequence: '—' };
     case 'C': return { handler: '$0A standard damage (cerrado P0.1)', resource: '—', sequence: '—' };
-    case 'D': return { handler: 'filas actor $00/$07 + films $0B/$08/$0C (B3:$61C5/$5E67/$62D4)', resource: 'actor $62-$64 ($12/$18/$21/$24/$26/$27/$33...) + fx films', sequence: '0-N cerradas' };
+    case 'D': return { handler: 'filas actor Defense $00 + films $0B/$08/$0C (B3:$61C5/$5E67/$62D4)', resource: 'actor slot8 $24/$26/$27 + fx films', sequence: '0-N cerradas' };
     case 'E': return { handler: 'SCREEN_PATH/motion workers', resource: '—', sequence: '—' };
     case 'F': return { handler: '$00 STAGE_OR_RULE + soportes/items $02-utility (SUPPORT/DEFENSE)', resource: 'fx $01/$02/$04/$06/$08 no-ofensivos', sequence: '—' };
     default: return { handler: '—', resource: '—', sequence: '—' };
