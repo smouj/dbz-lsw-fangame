@@ -20,12 +20,12 @@
 | **A** | Beam/window SCX/SCY + tick timing | $02-$07 beams/proyectiles (B3:$5776/$5B38/$5AC7/$5B9E/$5DFE) | fx windows (tilebank BG $9800) | — | SFX-V4-05 per-scanline (LY 23-95) → cablear scroll | 0 | 38 |
 | **B** | Multi-actor ownership/spatial choreography | $0D/$0E MULTI_ACTOR_SCRIPT (B3:$5C04/$5D0C) | fx $01/$04/$27/$6F helper | — | Trace FSM worker $5C04/$5D0C (ownership helper) | 15 | 0 |
 | **C** | Contact/anchors rush-impact-defender | $0A standard damage (cerrado P0.1) | — | — | — | 0 | 0 |
-| **D** | Dynamic branch runtime (result-branch/FSM + selección de secuencia del actor) | filas actor Defense $00 + films $0B/$08/$0C (B3:$61C5/$5E67/$62D4) | actor slot8 $24/$26/$27 + fx films | 0-N cerradas | Trace FSM/branch por worker → promover selector | 11 | 3 |
+| **D** | Dynamic branch runtime (result-branch/FSM + selección de secuencia del actor) | filas actor Defense $00 + films $0B/$08/$0C (B3:$61C5/$5E67/$62D4) | actor slot8 $24/$26/$27 + fx films | 0-N cerradas | Trace FSM/branch por worker → promover selector | 11 | 1 |
 | **E** | Screen path/motion workers ROM | SCREEN_PATH/motion workers | — | — | — | 0 | 0 |
 | **F** | Palette/FX timing — dominio FX de soporte/categoría | $00 STAGE_OR_RULE + soportes/items $02-utility (SUPPORT/DEFENSE) | fx $01/$02/$04/$06/$08 no-ofensivos | — | Corpus FX soporte: SEPARATE_DOMAIN/UNRESOLVED | 0 | 0 |
 | **G** | Unknown genuine (sin evidencia clasificatoria) | — | — | — | — | 0 | 0 |
 
-**Totales: 41 occurrences · 26 films.**
+**Totales: 39 occurrences · 26 films.**
 
 ## Causas — descripción y provenance de evidencia
 
@@ -112,18 +112,18 @@ C/E/F sin occurrences en este slice; G = 0 (todo clasificado con evidencia).
 | 115 | Sandglass | $0d | Bank3:$5C04 | MULTI_ACTOR_SCRIPT | **B** | `MULTI_ACTOR_HELPER_OWNERSHIP_OPEN` |
 | 116 | Naughty Book | $0b | Bank3:$61C5 | TAIL | **D** | `SPECIAL_RESULT_BRANCH_FSM_OPEN` |
 
-## Occurrences (41) — resumen por causa
+## Occurrences (39) — resumen por causa
 
 ### A — 38 occurrences
 
 7 Energy Wave (fx-window) · 8 Energy Bomb (fx-window) · 10 Masenko (fx-window) · 12 Kamehameha (fx-window) · 13 S.Kamehameha (fx-window) · 14 F.Kamehameha (fx-window) · 17 S.Beam Can. (fx-window) · 18 F.Lightbomb (fx-window) · 20 Misty KiWave (fx-window) · 21 Destruct-Disk (fx-window) · 22 S.Destruc-D. (fx-window) · 24 Spirit Bomb (fx-window) · 30 Galick-Ho (fx-window) · 31 Big Bang Atk (fx-window) · 32 Final Flash (fx-window) · 35 Burning Atk. (fx-window) · 36 Fin.Buster (fx-window) · 38 Kamekameha (fx-window) · 39 Galactica D. (fx-window) · 40 S.G.K.Atk. (fx-window) · 44 Flash.Sword (fx-window) · 47 KiBlast Bomb (fx-window) · 48 Lightning C. (fx-window) · 49 Telekinesis (fx-window) · 50 M.Soundwave (fx-window) · 54 Eraser Can. (fx-window) · 56 Crasher Ball (fx-window) · 62 Body Change (fx-window) · 63 Finger Beam (fx-window) · 64 Super E-Ball (fx-window) · 65 Grand Wave (fx-window) · 67 Eye Beam (fx-window) · 69 Rocket Punch (fx-window) · 70 Hell Flash (fx-window) · 72 Energy Slash (fx-window) · 73 Energy Slice (fx-window) · 80 Potbelly Atk (fx-window) · 82 Sweet Beam (fx-window)
 
-### D — 3 occurrences
+### D — 1 occurrences
 
-19 Taiyoken (actor) · 45 Barrier (actor) · 53 Breath (actor)
+19 Taiyoken (actor)
 
 Detalle fila a fila (cardId · handler · resource · sequence · reasonCode · evidenceStatus · blocker · evidence):
-ver `dynamic-film-tracker.csv` (41 filas occurrence + 26 filas film) — columnas como exige el gate.
+ver `dynamic-film-tracker.csv` (39 filas occurrence + 26 filas film) — columnas como exige el gate.
 
 ## Hallazgo causa A (SFX-V4-05 → siguiente paso SFX-V4-06)
 

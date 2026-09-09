@@ -7,6 +7,7 @@
 import { CARDS, type CardDef } from './cards';
 import { romCardData, type RomCardData } from './romCardData';
 import { ROM_BEAM_SEQUENCE_SELECTORS } from './generated/romBeamSequenceSelectors.generated';
+import { ROM_DEFENSE_SLOT8_SEQUENCE_SELECTORS, ROM_DEFENSE_SLOT8_UNRESOLVED } from './generated/romDefenseSlot8SequenceSelectors.generated';
 import { romSpecialHandlerBinding } from './generated/romSpecialHandlerSequenceBindings.generated';
 import {
   getRomSequenceRegistry,
@@ -17,6 +18,7 @@ import {
 export type RomSequenceSelectorKind =
   | 'FIXED'
   | 'ACTOR_PROFILE'
+  | 'DEFENSE_SLOT8_PROFILE'
   | 'HANDLER_SELECTED'
   | 'RESULT_BRANCH'
   | 'NON_SEQUENCE_DISPLAY'
@@ -127,6 +129,23 @@ function selectorFor(card: CardDef, rom: RomCardData, resource: RomSequenceEntry
       kind: 'FIXED',
       value: null,
       evidence: `ROM catalog slot ${resource.resourceHex} has length=0; handler owns the visible behavior and no actor sequence may be fabricated.`,
+    };
+  }
+
+  const slot8Rows = ROM_DEFENSE_SLOT8_SEQUENCE_SELECTORS.filter(row => row.cardId === card.id && row.resource === resource.resourceId);
+  const slot8Unresolved = ROM_DEFENSE_SLOT8_UNRESOLVED.filter(row => row.cardId === card.id && row.resource === resource.resourceId);
+  if (slot8Rows.length > 0 && slot8Unresolved.length === 0) {
+    return {
+      kind: 'DEFENSE_SLOT8_PROFILE',
+      value: null,
+      evidence: `Bank00:$3966 / Bank30:$6900: ${slot8Rows.length} actorVisualProfileKey->sequence rows; AnimationSlot8 start is Bank03:${card.id === 19 ? '$60B2' : '$59FD'}.`,
+    };
+  }
+  if (slot8Rows.length > 0 && slot8Unresolved.length > 0) {
+    return {
+      kind: 'DYNAMIC_PENDING',
+      value: null,
+      evidence: `Bank00:$3966 table resolves ${slot8Rows.length} profiles, but ${slot8Unresolved.map(row => `${row.formId}/$${row.actorVisualProfileKey.toString(16)}`).join(', ')} has no proven selector row.`,
     };
   }
 
@@ -377,7 +396,7 @@ export function getBindingSummary(): RomActionSequenceBindingSummary {
     NO_ANIMATION_RESOURCE: 0,
   };
   const bySelectorKind: Record<RomSequenceSelectorKind, number> = {
-    FIXED: 0, ACTOR_PROFILE: 0, HANDLER_SELECTED: 0, RESULT_BRANCH: 0, NON_SEQUENCE_DISPLAY: 0, DYNAMIC_PENDING: 0,
+    FIXED: 0, ACTOR_PROFILE: 0, DEFENSE_SLOT8_PROFILE: 0, HANDLER_SELECTED: 0, RESULT_BRANCH: 0, NON_SEQUENCE_DISPLAY: 0, DYNAMIC_PENDING: 0,
   };
   const fullyClosed = new Set<string>();
   const frameStreamOnly = new Set<string>();

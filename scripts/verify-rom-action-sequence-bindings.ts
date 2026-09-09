@@ -168,6 +168,14 @@ const handler07Bindings = bindings.filter((binding) => binding.execution.handler
 check('handler $07:all actor selectors use the ROM profile table', handler07Bindings.every((binding) => binding.tracks.find((track) => track.trackId === 'actor')?.selector.kind === 'ACTOR_PROFILE'), `${handler07Bindings.filter((binding) => binding.tracks.find((track) => track.trackId === 'actor')?.selector.kind !== 'ACTOR_PROFILE').length} invalid`);
 check('handler $07:no dynamic actor selector remains', handler07Bindings.every((binding) => binding.tracks.every((track) => track.selector.kind !== 'DYNAMIC_PENDING')));
 
+const barrierTrack = byCard.get(45)?.tracks.find((track) => track.trackId === 'actor');
+const breathTrack = byCard.get(53)?.tracks.find((track) => track.trackId === 'actor');
+const taiyokenTrack = byCard.get(19)?.tracks.find((track) => track.trackId === 'actor');
+check('AnimationSlot8:Barrier selector is ROM profile table', barrierTrack?.selector.kind === 'DEFENSE_SLOT8_PROFILE', barrierTrack?.selector.kind);
+check('AnimationSlot8:Breath selector is ROM profile table', breathTrack?.selector.kind === 'DEFENSE_SLOT8_PROFILE', breathTrack?.selector.kind);
+check('AnimationSlot8:Taiyoken remains pending for profile $1B', taiyokenTrack?.selector.kind === 'DYNAMIC_PENDING' && taiyokenTrack.selector.evidence.includes('ginyu/$1b'), taiyokenTrack?.selector.evidence);
+check('AnimationSlot8:exactly one actor selector remains', dynamicTracks.length === 1 && dynamicTracks[0] === taiyokenTrack, `${dynamicTracks.length}`);
+
 const standardDamageCardIds = CARDS
   .filter((card) => romCardData(card.name)?.exec === 0x0a)
   .map((card) => card.id);

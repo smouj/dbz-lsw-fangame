@@ -7,10 +7,12 @@
 // ═══════════════════════════════════════════════════════════════════════
 
 import { ROM_BEAM_SEQUENCE_SELECTORS } from '../data/generated/romBeamSequenceSelectors.generated';
+import { ROM_DEFENSE_SLOT8_SEQUENCE_SELECTORS } from '../data/generated/romDefenseSlot8SequenceSelectors.generated';
 import { ROM_PHYSICAL_CORPUS_SUMMARY } from '../data/generated/romPhysicalCorpus.generated';
 
 export type RomSequenceSelectorEvidence =
   | 'BEAM_ACTOR_SELECTOR_TABLE_V4'
+  | 'DEFENSE_SLOT8_SELECTOR_TABLE_ROM'
   | 'UNRESOLVED';
 
 export interface RomSequenceSelectorResult {
@@ -50,6 +52,19 @@ export function resolveRomSequenceSelector(input: {
       actorVisualProfileKey: key,
       evidence: 'BEAM_ACTOR_SELECTOR_TABLE_V4',
       detail: `card ${input.cardId} profile 0x${key.toString(16).padStart(2, '0')} -> seq ${row.sequence}`,
+    };
+  }
+
+  const defenseRow = ROM_DEFENSE_SLOT8_SEQUENCE_SELECTORS.find(selector =>
+    selector.cardId === input.cardId &&
+    selector.actorVisualProfileKey === key &&
+    selector.resource === input.animationResource);
+  if (defenseRow) {
+    return {
+      sequence: defenseRow.sequence,
+      actorVisualProfileKey: key,
+      evidence: 'DEFENSE_SLOT8_SELECTOR_TABLE_ROM',
+      detail: `AnimationSlot8 card ${input.cardId} profile 0x${key.toString(16).padStart(2, '0')} -> seq ${defenseRow.sequence} (${defenseRow.rowAddress})`,
     };
   }
 
