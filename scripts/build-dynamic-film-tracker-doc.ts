@@ -70,7 +70,8 @@ function markdown(occurrences: OccurrenceRow[], films: FilmRow[], totals: Return
   lines.push('');
   lines.push('## Invariantes');
   lines.push('');
-  lines.push('- Cada **occurrence** (selector track `DYNAMIC_PENDING`) cae EXACTAMENTE en una causa A-G.');
+  lines.push('- Cada **occurrence** (selector de actor o ventana FX realmente pendiente) cae EXACTAMENTE en una causa A-G.');
+  lines.push('- Las pistas `NON_SEQUENCE_DISPLAY` no cuentan como selección dinámica: pertenecen a la gramática de display/FX.');
   lines.push('- Cada **film** (profile `completion.dynamic === PENDING_ROM_TRACE`) cae EXACTAMENTE en una causa A-G.');
   lines.push('- `UNKNOWN_REASON == 0` (cause G): 0 pendientes SIN explicación. Una fila sin evidencia');
   lines.push('  clasificatoria sería G genuino — nunca un pendiente genérico sin documentar.');
@@ -100,13 +101,11 @@ function markdown(occurrences: OccurrenceRow[], films: FilmRow[], totals: Return
   lines.push('## Regla de clasificación (determinista, en el core)');
   lines.push('');
   lines.push('```');
-  lines.push('fx row   + card con ROM_FX_WINDOW en runtime_cutover.json → A');
+  lines.push('ROM_FX_WINDOW con scroll/timing PENDING_ROM_TRACE          → A');
   lines.push('actor row (N seqs físicas cerradas, selección por handler) → D');
-  lines.push('fx row   + fuera del runtime cutover:');
-  lines.push('    card ∈ films (26) y worker MULTI_ACTOR_SCRIPT $5C04/$5D0C → B');
-  lines.push('    card ∈ films y worker TAIL $61C5 / SPECIAL $5E67 / BUU_BALL $62D4 → D');
-  lines.push('    card ∉ films (SUPPORT_OR_FIELD_EFFECT/DEFENSE_RULE/...)     → F');
-  lines.push('C/E sin occurrences en este slice; G = 0 (todo clasificado con evidencia).');
+  lines.push('films SPECIAL_HANDLER: MULTI_ACTOR_SCRIPT → B; restantes → D');
+  lines.push('Las pistas FX/display no son selectores de secuencia y no crean occurrences.');
+  lines.push('C/E/F sin occurrences en este slice; G = 0 (todo clasificado con evidencia).');
   lines.push('```');
   lines.push('');
   lines.push('## Films dinámicos (26)');
@@ -117,7 +116,7 @@ function markdown(occurrences: OccurrenceRow[], films: FilmRow[], totals: Return
     lines.push(`| ${f.cardId} | ${f.cardName} | ${f.handlerHex} | ${f.worker ?? '—'} | ${f.family} | **${f.cause}** | \`${f.reasonCode}\` |`);
   }
   lines.push('');
-  lines.push('## Occurrences (106) — resumen por causa');
+  lines.push(`## Occurrences (${occurrences.length}) — resumen por causa`);
   lines.push('');
   for (const { def, occCount } of causes) {
     if (occCount === 0) continue;

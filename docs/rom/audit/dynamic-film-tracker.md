@@ -6,7 +6,8 @@
 
 ## Invariantes
 
-- Cada **occurrence** (selector track `DYNAMIC_PENDING`) cae EXACTAMENTE en una causa A-G.
+- Cada **occurrence** (selector de actor o ventana FX realmente pendiente) cae EXACTAMENTE en una causa A-G.
+- Las pistas `NON_SEQUENCE_DISPLAY` no cuentan como selección dinámica: pertenecen a la gramática de display/FX.
 - Cada **film** (profile `completion.dynamic === PENDING_ROM_TRACE`) cae EXACTAMENTE en una causa A-G.
 - `UNKNOWN_REASON == 0` (cause G): 0 pendientes SIN explicación. Una fila sin evidencia
   clasificatoria sería G genuino — nunca un pendiente genérico sin documentar.
@@ -17,14 +18,14 @@
 | Causa | Nombre | Handler/worker implicado | Resource | Sequence | Blocker (qué cierra) | Films | Occurrences |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **A** | Beam/window SCX/SCY + tick timing | $02-$07 beams/proyectiles (B3:$5776/$5B38/$5AC7/$5B9E/$5DFE) | fx windows (tilebank BG $9800) | — | SFX-V4-05 per-scanline (LY 23-95) → cablear scroll | 0 | 38 |
-| **B** | Multi-actor ownership/spatial choreography | $0D/$0E MULTI_ACTOR_SCRIPT (B3:$5C04/$5D0C) | fx $01/$04/$27/$6F helper | — | Trace FSM worker $5C04/$5D0C (ownership helper) | 15 | 15 |
+| **B** | Multi-actor ownership/spatial choreography | $0D/$0E MULTI_ACTOR_SCRIPT (B3:$5C04/$5D0C) | fx $01/$04/$27/$6F helper | — | Trace FSM worker $5C04/$5D0C (ownership helper) | 15 | 0 |
 | **C** | Contact/anchors rush-impact-defender | $0A standard damage (cerrado P0.1) | — | — | — | 0 | 0 |
-| **D** | Dynamic branch runtime (result-branch/FSM + selección de secuencia del actor) | filas actor $00/$07 + films $0B/$08/$0C (B3:$61C5/$5E67/$62D4) | actor $62-$64 ($12/$18/$21/$24/$26/$27/$33...) + fx films | 0-N cerradas | Trace FSM/branch por worker → promover selector | 11 | 16 |
+| **D** | Dynamic branch runtime (result-branch/FSM + selección de secuencia del actor) | filas actor $00/$07 + films $0B/$08/$0C (B3:$61C5/$5E67/$62D4) | actor $62-$64 ($12/$18/$21/$24/$26/$27/$33...) + fx films | 0-N cerradas | Trace FSM/branch por worker → promover selector | 11 | 7 |
 | **E** | Screen path/motion workers ROM | SCREEN_PATH/motion workers | — | — | — | 0 | 0 |
-| **F** | Palette/FX timing — dominio FX de soporte/categoría | $00 STAGE_OR_RULE + soportes/items $02-utility (SUPPORT/DEFENSE) | fx $01/$02/$04/$06/$08 no-ofensivos | — | Corpus FX soporte: SEPARATE_DOMAIN/UNRESOLVED | 0 | 37 |
+| **F** | Palette/FX timing — dominio FX de soporte/categoría | $00 STAGE_OR_RULE + soportes/items $02-utility (SUPPORT/DEFENSE) | fx $01/$02/$04/$06/$08 no-ofensivos | — | Corpus FX soporte: SEPARATE_DOMAIN/UNRESOLVED | 0 | 0 |
 | **G** | Unknown genuine (sin evidencia clasificatoria) | — | — | — | — | 0 | 0 |
 
-**Totales: 106 occurrences · 26 films.**
+**Totales: 45 occurrences · 26 films.**
 
 ## Causas — descripción y provenance de evidencia
 
@@ -73,13 +74,11 @@ Solo si una fila no se puede clasificar con evidencia. HOY: 0 — toda fila traz
 ## Regla de clasificación (determinista, en el core)
 
 ```
-fx row   + card con ROM_FX_WINDOW en runtime_cutover.json → A
+ROM_FX_WINDOW con scroll/timing PENDING_ROM_TRACE          → A
 actor row (N seqs físicas cerradas, selección por handler) → D
-fx row   + fuera del runtime cutover:
-    card ∈ films (26) y worker MULTI_ACTOR_SCRIPT $5C04/$5D0C → B
-    card ∈ films y worker TAIL $61C5 / SPECIAL $5E67 / BUU_BALL $62D4 → D
-    card ∉ films (SUPPORT_OR_FIELD_EFFECT/DEFENSE_RULE/...)     → F
-C/E sin occurrences en este slice; G = 0 (todo clasificado con evidencia).
+films SPECIAL_HANDLER: MULTI_ACTOR_SCRIPT → B; restantes → D
+Las pistas FX/display no son selectores de secuencia y no crean occurrences.
+C/E/F sin occurrences en este slice; G = 0 (todo clasificado con evidencia).
 ```
 
 ## Films dinámicos (26)
@@ -113,26 +112,18 @@ C/E sin occurrences en este slice; G = 0 (todo clasificado con evidencia).
 | 115 | Sandglass | $0d | Bank3:$5C04 | MULTI_ACTOR_SCRIPT | **B** | `MULTI_ACTOR_HELPER_OWNERSHIP_OPEN` |
 | 116 | Naughty Book | $0b | Bank3:$61C5 | TAIL | **D** | `SPECIAL_RESULT_BRANCH_FSM_OPEN` |
 
-## Occurrences (106) — resumen por causa
+## Occurrences (45) — resumen por causa
 
 ### A — 38 occurrences
 
-7 Energy Wave (fx) · 8 Energy Bomb (fx) · 10 Masenko (fx) · 12 Kamehameha (fx) · 13 S.Kamehameha (fx) · 14 F.Kamehameha (fx) · 17 S.Beam Can. (fx) · 18 F.Lightbomb (fx) · 20 Misty KiWave (fx) · 21 Destruct-Disk (fx) · 22 S.Destruc-D. (fx) · 24 Spirit Bomb (fx) · 30 Galick-Ho (fx) · 31 Big Bang Atk (fx) · 32 Final Flash (fx) · 35 Burning Atk. (fx) · 36 Fin.Buster (fx) · 38 Kamekameha (fx) · 39 Galactica D. (fx) · 40 S.G.K.Atk. (fx) · 44 Flash.Sword (fx) · 47 KiBlast Bomb (fx) · 48 Lightning C. (fx) · 49 Telekinesis (fx) · 50 M.Soundwave (fx) · 54 Eraser Can. (fx) · 56 Crasher Ball (fx) · 62 Body Change (fx) · 63 Finger Beam (fx) · 64 Super E-Ball (fx) · 65 Grand Wave (fx) · 67 Eye Beam (fx) · 69 Rocket Punch (fx) · 70 Hell Flash (fx) · 72 Energy Slash (fx) · 73 Energy Slice (fx) · 80 Potbelly Atk (fx) · 82 Sweet Beam (fx)
+7 Energy Wave (fx-window) · 8 Energy Bomb (fx-window) · 10 Masenko (fx-window) · 12 Kamehameha (fx-window) · 13 S.Kamehameha (fx-window) · 14 F.Kamehameha (fx-window) · 17 S.Beam Can. (fx-window) · 18 F.Lightbomb (fx-window) · 20 Misty KiWave (fx-window) · 21 Destruct-Disk (fx-window) · 22 S.Destruc-D. (fx-window) · 24 Spirit Bomb (fx-window) · 30 Galick-Ho (fx-window) · 31 Big Bang Atk (fx-window) · 32 Final Flash (fx-window) · 35 Burning Atk. (fx-window) · 36 Fin.Buster (fx-window) · 38 Kamekameha (fx-window) · 39 Galactica D. (fx-window) · 40 S.G.K.Atk. (fx-window) · 44 Flash.Sword (fx-window) · 47 KiBlast Bomb (fx-window) · 48 Lightning C. (fx-window) · 49 Telekinesis (fx-window) · 50 M.Soundwave (fx-window) · 54 Eraser Can. (fx-window) · 56 Crasher Ball (fx-window) · 62 Body Change (fx-window) · 63 Finger Beam (fx-window) · 64 Super E-Ball (fx-window) · 65 Grand Wave (fx-window) · 67 Eye Beam (fx-window) · 69 Rocket Punch (fx-window) · 70 Hell Flash (fx-window) · 72 Energy Slash (fx-window) · 73 Energy Slice (fx-window) · 80 Potbelly Atk (fx-window) · 82 Sweet Beam (fx-window)
 
-### B — 15 occurrences
+### D — 7 occurrences
 
-42 Kiai (fx) · 51 Paralysis (fx) · 57 Purple Comet (fx) · 58 P.Comet Z (fx) · 83 Bulma (fx) · 84 Chaiotzu (fx) · 87 Kaio (fx) · 91 Supreme Kai (fx) · 93 Babidi (fx) · 95 Yakon (fx) · 96 Scouter (fx) · 101 Gravity Dev. (fx) · 103 Sealed Ball (fx) · 113 Heart Virus (fx) · 115 Sandglass (fx)
-
-### D — 16 occurrences
-
-19 Taiyoken (actor) · 21 Destruct-Disk (actor) · 22 S.Destruc-D. (actor) · 39 Galactica D. (actor) · 41 V-ball Crash (fx) · 45 Barrier (actor) · 53 Breath (actor) · 64 Super E-Ball (actor) · 85 Tien (fx) · 86 Yajirobe (fx) · 90 Hercule (fx) · 94 Dabura (fx) · 98 Stop Device (fx) · 110 Gamebomb (fx) · 112 H's Choco. (fx) · 116 Naughty Book (fx)
-
-### F — 37 occurrences
-
-16 Resurrection (fx) · 19 Taiyoken (fx) · 23 Kaio Ken (fx) · 26 Teleport. (fx) · 27 Sup.Saiyan-2 (fx) · 28 Sup.Saiyan-3 (fx) · 45 Barrier (fx) · 52 Time Freeze (fx) · 53 Breath (fx) · 59 Speed Up (fx) · 68 Lock On (fx) · 76 Energy Absorb (fx) · 79 Flesh Guard (fx) · 88 Dende (fx) · 89 Guru (fx) · 92 Kibito (fx) · 97 Caps. Fridge (fx) · 99 Life Preser. (fx) · 100 Medical Mac. (fx) · 102 Ene.Absorber (fx) · 104 Trunks Sword (fx) · 105 Dabura Spear (fx) · 106 Light Vest (fx) · 107 Btl. Jacket (fx) · 108 New-B Jacket (fx) · 109 Sunglasses (fx) · 111 Champ.Belt (fx) · 114 Heart Medi. (fx) · 117 Full Spirit (fx) · 118 Afterimage (fx) · 119 Reading Ki (fx) · 120 Feint (fx) · 121 Endurance (fx) · 122 Telepathy (fx) · 123 Foresight (fx) · 124 Shockwave (fx) · 125 Avoiding (fx)
+19 Taiyoken (actor) · 21 Destruct-Disk (actor) · 22 S.Destruc-D. (actor) · 39 Galactica D. (actor) · 45 Barrier (actor) · 53 Breath (actor) · 64 Super E-Ball (actor)
 
 Detalle fila a fila (cardId · handler · resource · sequence · reasonCode · evidenceStatus · blocker · evidence):
-ver `dynamic-film-tracker.csv` (106 filas occurrence + 26 filas film) — columnas como exige el gate.
+ver `dynamic-film-tracker.csv` (45 filas occurrence + 26 filas film) — columnas como exige el gate.
 
 ## Hallazgo causa A (SFX-V4-05 → siguiente paso SFX-V4-06)
 

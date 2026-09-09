@@ -19,6 +19,7 @@ export type RomSequenceSelectorKind =
   | 'ACTOR_PROFILE'
   | 'HANDLER_SELECTED'
   | 'RESULT_BRANCH'
+  | 'NON_SEQUENCE_DISPLAY'
   | 'DYNAMIC_PENDING';
 
 export type RomTrackPhysicalStatus = PhysicalLinkageStatus | 'NO_ANIMATION_RESOURCE';
@@ -258,7 +259,7 @@ function buildFxTrack(rom: RomCardData): RomActionAnimationTrack | null {
   const fxPalette = rom.fxPalette === NONE ? null : rom.fxPalette;
   return {
     trackId: 'fx', label: 'FX / BG Effect', slot: 1, resourceId: rom.fxGraphics,
-    selector: { kind: 'DYNAMIC_PENDING', value: null, evidence: `FX resource ${hex(rom.fxGraphics)} belongs to the separate FX/display grammar.` },
+    selector: { kind: 'NON_SEQUENCE_DISPLAY', value: null, evidence: `FX resource ${hex(rom.fxGraphics)} belongs to the separate FX/display grammar, not to an AnimationResource sequence selector.` },
     sequences: [], totalFrames: 0, totalTicks: 0,
     physicalStatus: 'NO_ANIMATION_RESOURCE',
     evidence: [`fx=${hex(rom.fxGraphics)}`, `palette=${hex(fxPalette)}`, 'Not an AnimationResource $62-$64 track.'],
@@ -376,7 +377,7 @@ export function getBindingSummary(): RomActionSequenceBindingSummary {
     NO_ANIMATION_RESOURCE: 0,
   };
   const bySelectorKind: Record<RomSequenceSelectorKind, number> = {
-    FIXED: 0, ACTOR_PROFILE: 0, HANDLER_SELECTED: 0, RESULT_BRANCH: 0, DYNAMIC_PENDING: 0,
+    FIXED: 0, ACTOR_PROFILE: 0, HANDLER_SELECTED: 0, RESULT_BRANCH: 0, NON_SEQUENCE_DISPLAY: 0, DYNAMIC_PENDING: 0,
   };
   const fullyClosed = new Set<string>();
   const frameStreamOnly = new Set<string>();

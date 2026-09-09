@@ -2,8 +2,7 @@
 // VERIFY: DYNAMIC FILM TRACKER (P0.2 slice 1 gate)
 // ═══════════════════════════════════════════════════════════════════════
 // Invariantes (todas contra datos vivos + tracker, sin literales):
-//   1. DYNAMIC_PENDING total (bindings selector-kind) == filas del tracker
-//      == 106 (hoy) y la suma por causa == total.
+//   1. Pendientes vivos (selector de actor + ventana FX) == filas tracker.
 //   2. UNTRACKED_DYNAMIC_PENDING == 0: cada pending vivo tiene SU fila
 //      (cardId|trackId|resourceHex) y cada fila corresponde a un pending
 //      vivo (sin filas stale). Films: los 26 dynamic films == filas film.
@@ -18,6 +17,7 @@ import { readFileSync, existsSync } from 'fs';
 import { join } from 'path';
 import { getRomActionSequenceBindings } from '../src/data/romActionSequenceBinding';
 import { compileAllRomPresentationProfiles } from '../src/battle/romPresentationCompiler';
+import runtimeCutover from '../generated/rom-fx/runtime_cutover.json';
 import {
   TRACKER_DOC_MD, TRACKER_DOC_CSV,
   CAUSE_DEFS,
@@ -36,11 +36,22 @@ function main(): void {
   console.log('verify:dynamic-film-tracker\n');
 
   // ── Datos vivos ─────────────────────────────────────────────────────
-  const livePending = getRomActionSequenceBindings().flatMap(b =>
+  const liveSequencePending = getRomActionSequenceBindings().flatMap(b =>
     b.tracks
       .filter(t => t.selector.kind === 'DYNAMIC_PENDING')
       .map(t => ({ key: `${b.card.id}|${t.trackId}|${t.resourceId != null ? t.resourceId.toString(16).padStart(2, '0') : '—'}`, cardId: b.card.id })),
   );
+  const liveWindowPending = (runtimeCutover.rows as Array<{
+    cardId: number;
+    fxResource?: string;
+    playerWindows?: Array<{ scroll?: { status?: string }; timing?: { status?: string } }>;
+  }>).flatMap(row => {
+    const window = row.playerWindows?.[0];
+    if (!window || (window.scroll?.status !== 'PENDING_ROM_TRACE' && window.timing?.status !== 'PENDING_ROM_TRACE')) return [];
+    const resourceHex = row.fxResource?.replace(/^0x/i, '').padStart(2, '0') ?? '—';
+    return [{ key: `${row.cardId}|fx-window|${resourceHex}`, cardId: row.cardId }];
+  });
+  const livePending = [...liveWindowPending, ...liveSequencePending];
   const liveFilms = compileAllRomPresentationProfiles().filter(f => f.completion.dynamic === 'PENDING_ROM_TRACE');
 
   // ── Tracker ─────────────────────────────────────────────────────────
@@ -48,7 +59,7 @@ function main(): void {
   const films = buildFilmRows();
   const totals = trackerTotals(occurrences, films);
 
-  check('invariante 1: DYNAMIC_PENDING total == filas del tracker',
+  check('invariante 1: pendientes dinámicos reales == filas del tracker',
     livePending.length === occurrences.length,
     `live ${livePending.length} · tracker ${occurrences.length}`);
   check('invariante 1: suma por causa == total occurrences',

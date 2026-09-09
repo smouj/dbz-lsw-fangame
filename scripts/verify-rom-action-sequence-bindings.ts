@@ -159,6 +159,12 @@ check('summary:with actor resource', summary.withActorResource === 70, String(su
 check('summary:no resource-level unknown physical status', (summary.byPhysicalStatus.FRAME_STREAM_CLOSED ?? 0) === 0 && (summary.byPhysicalStatus.METASPRITE_LINK_PENDING ?? 0) === 0);
 check('summary:empty actor tracks', (summary.byPhysicalStatus.EMPTY_RESOURCE_SLOT ?? 0) === 4, String(summary.byPhysicalStatus.EMPTY_RESOURCE_SLOT ?? 0));
 
+const fxTracks = bindings.flatMap((binding) => binding.tracks.filter((track) => track.trackId === 'fx'));
+const dynamicTracks = bindings.flatMap((binding) => binding.tracks.filter((track) => track.selector.kind === 'DYNAMIC_PENDING'));
+check('fx display:all tracks are non-sequence resources', fxTracks.every((track) => track.selector.kind === 'NON_SEQUENCE_DISPLAY'), `${fxTracks.filter((track) => track.selector.kind !== 'NON_SEQUENCE_DISPLAY').length} invalid`);
+check('fx display:no false dynamic sequence selectors', fxTracks.every((track) => track.selector.kind !== 'DYNAMIC_PENDING'));
+check('dynamic selectors:actor tracks only', dynamicTracks.every((track) => track.trackId.startsWith('actor')), `${dynamicTracks.filter((track) => !track.trackId.startsWith('actor')).length} non-actor`);
+
 const standardDamageCardIds = CARDS
   .filter((card) => romCardData(card.name)?.exec === 0x0a)
   .map((card) => card.id);

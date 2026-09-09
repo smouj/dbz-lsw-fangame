@@ -6,8 +6,9 @@
 //
 //   films       = perfiles ROM con completion.dynamic === 'PENDING_ROM_TRACE'
 //                 (26 hoy: SPECIAL_HANDLER cuyo result-branch/FSM sigue abierto)
-//   occurrences = selector tracks con kind === 'DYNAMIC_PENDING'
-//                 (106 hoy: 99 fx + 7 actor, viven en romActionSequenceBinding)
+//   occurrences = decisiones dinámicas reales todavía abiertas:
+//                 - ventanas FX con scroll/timing PENDING_ROM_TRACE
+//                 - selector tracks de actor con kind DYNAMIC_PENDING
 //
 // La clasificación es DETERMINISTA y deriva de datos reales (bindings,
 // perfiles, runtime_cutover.json, FX corpus) — ninguna fila se fabrica.
@@ -28,7 +29,7 @@
 //    G unknown genuino no tiene filas hoy: 0 pendientes SIN explicación.)
 // ═══════════════════════════════════════════════════════════════════════
 
-import { getRomActionSequenceBindings, type RomActionSequenceBinding } from '../src/data/romActionSequenceBinding';
+import { getRomActionSequenceBindings } from '../src/data/romActionSequenceBinding';
 import { compileAllRomPresentationProfiles } from '../src/battle/romPresentationCompiler';
 import { romPresentationProfileForCard } from '../src/battle/romPresentationProfiles';
 import { CARDS } from '../src/data/cards';
@@ -147,6 +148,9 @@ function sequenceLabel(sequences: number[]): string {
 
 interface RuntimeWindowRow {
   cardId: number;
+  name?: string;
+  fxResource?: string;
+  status?: string;
   playerWindows?: Array<{ scroll?: { status?: string }; timing?: { status?: string }; evidence?: string[] }>;
   [k: string]: unknown;
 }
@@ -180,47 +184,45 @@ const REASON_CODES: Record<string, string> = {
   F: 'SUPPORT_FX_DOMAIN_CORPUS_OPEN',
 };
 
-function occurrenceCause(binding: RomActionSequenceBinding, trackId: string, cardInRuntime: boolean, cardIsFilm: boolean): 'A' | 'B' | 'D' | 'F' {
-  if (trackId === 'fx' && cardInRuntime) return 'A';
-  if (trackId === 'actor') return 'D';
-  // fx track fuera del runtime cutover
-  if (cardIsFilm) {
-    return binding.execution.worker != null && WORKER_MULTI_ACTOR.test(binding.execution.worker) ? 'B' : 'D';
-  }
-  return 'F';
-}
-
 export function buildOccurrenceRows(): OccurrenceRow[] {
-  const filmIds = new Set(buildFilmRows().map(f => f.cardId));
-  const runtimeCardIds = new Set((runtimeCutover.rows as RuntimeWindowRow[]).map(r => r.cardId));
   const rows: OccurrenceRow[] = [];
+
+  // FX/display resources do not select AnimationResource sequences. Track the
+  // real open decision instead: the ROM window whose scroll/timing still needs
+  // a per-scanline trace.
+  for (const runtime of runtimeCutover.rows as RuntimeWindowRow[]) {
+    const window = runtime.playerWindows?.[0];
+    if (!window || (window.scroll?.status !== 'PENDING_ROM_TRACE' && window.timing?.status !== 'PENDING_ROM_TRACE')) continue;
+    const binding = getRomActionSequenceBindings().find(candidate => candidate.card.id === runtime.cardId);
+    if (!binding) continue;
+    const resourceHex = runtime.fxResource?.replace(/^0x/i, '').padStart(2, '0') ?? null;
+    const evidence = runtimeWindowEvidenceFor(runtime.cardId);
+    rows.push({
+      key: `${runtime.cardId}|fx-window|${resourceHex ?? '—'}`,
+      cardId: runtime.cardId,
+      cardName: binding.card.name,
+      handlerHex: binding.execution.handlerHex,
+      family: binding.execution.family,
+      worker: binding.execution.worker,
+      trackId: 'fx-window',
+      resourceHex,
+      sequence: '—',
+      physicalStatus: runtime.status ?? 'ROM_FX_WINDOW_STATIC_COMPLETE',
+      cause: 'A',
+      reasonCode: REASON_CODES.A,
+      evidenceStatus: evidence.status,
+      blocker: BLOCKERS.A,
+      evidence: evidence.evidence,
+    });
+  }
 
   for (const binding of getRomActionSequenceBindings()) {
     for (const track of binding.tracks) {
       if (track.selector.kind !== 'DYNAMIC_PENDING') continue;
-      const cause = occurrenceCause(binding, track.trackId, runtimeCardIds.has(binding.card.id), filmIds.has(binding.card.id));
-      let reasonCode: string;
-      let blocker: string;
-      if (cause === 'A') {
-        reasonCode = REASON_CODES.A;
-        blocker = BLOCKERS.A;
-      } else if (cause === 'B') {
-        reasonCode = REASON_CODES.B;
-        blocker = BLOCKERS.B;
-      } else if (cause === 'D') {
-        if (track.trackId === 'actor') {
-          reasonCode = REASON_CODES.D_ACTOR;
-          blocker = BLOCKERS.D_ACTOR;
-        } else {
-          reasonCode = REASON_CODES.D_FILM;
-          blocker = BLOCKERS.D_FILM;
-        }
-      } else {
-        reasonCode = REASON_CODES.F;
-        blocker = BLOCKERS.F;
-      }
+      const cause = 'D' as const;
+      const reasonCode = REASON_CODES.D_ACTOR;
+      const blocker = BLOCKERS.D_ACTOR;
       const resourceHex = track.resourceId != null ? track.resourceId.toString(16).padStart(2, '0') : null;
-      const aEvidence = cause === 'A' ? runtimeWindowEvidenceFor(binding.card.id) : null;
       rows.push({
         key: `${binding.card.id}|${track.trackId}|${resourceHex ?? '—'}`,
         cardId: binding.card.id,
@@ -234,9 +236,9 @@ export function buildOccurrenceRows(): OccurrenceRow[] {
         physicalStatus: track.physicalStatus,
         cause,
         reasonCode,
-        evidenceStatus: aEvidence?.status ?? 'STATIC_EVIDENCE',
+        evidenceStatus: 'STATIC_EVIDENCE',
         blocker,
-        evidence: aEvidence ? aEvidence.evidence : track.selector.evidence,
+        evidence: track.selector.evidence,
       });
     }
   }
