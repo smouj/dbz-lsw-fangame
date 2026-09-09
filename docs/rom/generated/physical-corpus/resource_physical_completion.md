@@ -2,8 +2,8 @@
 
 This matrix separates decoded ROM resources from Fighter physical resources promoted into the certified 48-form corpus.
 
-Renderable resources: 57/66
-Frame-stream-only resources: 4
+Renderable resources: 61/66
+Frame-stream-only resources: 0
 Handler-dependent resources: 0
 Dynamic-pending resources: 0
 Unreferenced resources: 1
@@ -46,10 +46,10 @@ Unreferenced resources: 1
 | `0x21` | 1 | 3 | 33 | `FULL` | 10 | 60 | 330 | `RENDERABLE` | — |
 | `0x22` | 1 | 1 | 10 | `FULL` | 4 | 16 | 40 | `RENDERABLE` | — |
 | `0x23` | 1 | 2 | 12 | `FULL` | 7 | 21 | 84 | `RENDERABLE` | — |
-| `0x24` | 1 | 3 | 141 | `FRAME_STREAM_ONLY` | 0 | 0 | 0 | `FRAME_STREAM_ONLY` | Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet. |
-| `0x25` | 1 | 1 | 47 | `FRAME_STREAM_ONLY` | 0 | 0 | 0 | `FRAME_STREAM_ONLY` | Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet. |
-| `0x26` | 1 | 3 | 147 | `FRAME_STREAM_ONLY` | 0 | 0 | 0 | `FRAME_STREAM_ONLY` | Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet. |
-| `0x27` | 1 | 2 | 100 | `FRAME_STREAM_ONLY` | 0 | 0 | 0 | `FRAME_STREAM_ONLY` | Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet. |
+| `0x24` | 1 | 3 | 141 | `FULL` | 6 | 36 | 846 | `RENDERABLE` | — |
+| `0x25` | 1 | 1 | 47 | `FULL` | 2 | 10 | 94 | `RENDERABLE` | — |
+| `0x26` | 1 | 3 | 147 | `FULL` | 12 | 70 | 1676 | `RENDERABLE` | — |
+| `0x27` | 1 | 2 | 100 | `FULL` | 6 | 30 | 600 | `RENDERABLE` | — |
 | `0x28` | 1 | 0 | 0 | `PARTIAL` | 0 | 0 | 0 | `GRAPHICS_PENDING` | ROM catalog length is zero for a referenced slot (Teleport.). This is a handler/preload token, not an undecoded actor frame stream. |
 | `0x29` | 1 | 0 | 0 | `PARTIAL` | 0 | 0 | 0 | `GRAPHICS_PENDING` | ROM catalog length is zero for a referenced slot (Paralysis). This is a handler/preload token, not an undecoded actor frame stream. |
 | `0x2a` | 1 | 0 | 0 | `PARTIAL` | 0 | 0 | 0 | `GRAPHICS_PENDING` | ROM catalog length is zero for a referenced slot (Time Freeze). This is a handler/preload token, not an undecoded actor frame stream. |

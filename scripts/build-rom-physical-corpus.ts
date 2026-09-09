@@ -7,7 +7,7 @@
 import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, unlinkSync, writeFileSync } from 'fs';
 import { createHash } from 'crypto';
 import { execFileSync } from 'child_process';
-import { dirname, join } from 'path';
+import { dirname, join, relative } from 'path';
 import { CARDS, type CardDef } from '../src/data/cards';
 import { FORMS } from '../src/data/roster';
 import { romCardData } from '../src/data/romCardData';
@@ -15,6 +15,9 @@ import { ANIMATION_RESOURCE_CATALOG } from '../src/battle/animationResources';
 import { ROM_BANK61_ANIMATION_CORE_RESOURCE_BASES } from '../src/data/generated/romAnimationCore.generated';
 
 const ROOT = process.cwd();
+function repoRelative(path: string): string {
+  return relative(ROOT, path).replace(/\\/g, '/');
+}
 function runTsx(args: string[]): void {
   // Execute the installed tsx CLI through Node itself. Nested cmd/npx calls
   // on Windows may return before their node renderer has finished, which can
@@ -43,7 +46,12 @@ const GENERATED_TS = join(ROOT, 'src/data/generated/romPhysicalCorpus.generated.
 const SCHEMA_VERSION = 2;
 const PHYSICAL_RENDERER_SCHEMA = 3;
 const OFFSET_ENCODING = 's8';
-const FIGHTER_PHYSICAL_RESOURCE_IDS = new Set([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0e, 0x0f, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1a, 0x1b, 0x1c, 0x1d, 0x1e, 0x1f, 0x20, 0x21, 0x22, 0x23, 0x2b, 0x2c, 0x2d, 0x2e, 0x2f, 0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x3a, 0x3b, 0x3c, 0x3d, 0x3e, 0x3f, 0x41]);
+// Every entry here has a decoded ROM frame stream and is rendered through the
+// same metasprite/graphics/profile invariants. Resources $24-$27 used to be
+// left at FRAME_STREAM_ONLY even though their streams are complete; keeping
+// them in the certified set makes the physical corpus, Dev previews and the
+// production resolver share the same ROM-derived frames.
+const FIGHTER_PHYSICAL_RESOURCE_IDS = new Set([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0e, 0x0f, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1a, 0x1b, 0x1c, 0x1d, 0x1e, 0x1f, 0x20, 0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27, 0x2b, 0x2c, 0x2d, 0x2e, 0x2f, 0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x3a, 0x3b, 0x3c, 0x3d, 0x3e, 0x3f, 0x41]);
 // The incremental mode is deliberately narrow: it re-renders only the newly
 // requested neutral candidate, then rebuilds and validates the complete
 // manifest from the existing certified render inputs.  Full remains default.
@@ -528,7 +536,7 @@ function buildForForm(profile: RomFormProfile, profilesByResource: Map<number, R
         frameAddress: meta.frameRecord.provenance.frameAddress,
         physicalId: physicalId(meta),
         physicalRender: 'EMPTY_NOT_PROMOTED',
-        evidence: metaPath.replace(`${ROOT}/`, ''),
+        evidence: repoRelative(metaPath),
       });
     }
 
@@ -589,7 +597,7 @@ function buildForForm(profile: RomFormProfile, profilesByResource: Map<number, R
           physicalRendererSchema: PHYSICAL_RENDERER_SCHEMA,
           offsetEncoding: OFFSET_ENCODING,
           file,
-          sourceRender: metaPath.replace(`${ROOT}/`, ''),
+          sourceRender: repoRelative(metaPath),
           resourceId,
           resourceHex: `0x${hex(resourceId)}`,
           visualFrameId: meta.frameRecord.visualFrameId,
@@ -715,7 +723,7 @@ function buildForForm(profile: RomFormProfile, profilesByResource: Map<number, R
           physicalRendererSchema: PHYSICAL_RENDERER_SCHEMA,
           offsetEncoding: OFFSET_ENCODING,
           file,
-          sourceRender: metaPath.replace(`${ROOT}/`, ''),
+          sourceRender: repoRelative(metaPath),
           resourceId: null,
           animationBank: meta.animationBank ?? 0x61,
           resourceBase: meta.resourceBase ?? cpuBase,

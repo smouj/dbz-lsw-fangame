@@ -69,7 +69,7 @@ Validation at this checkpoint:
 - `verify:dev-routes` — 22/22 modules;
 - `verify:dev-studio` — 58 checks;
 - `verify:dev-rom-truth` — 27 checks;
-- `verify:dev-physical-sync` — 48 forms, 4,407 physical IDs, 28,669 instances;
+- `verify:dev-physical-sync` — 48 forms, 4,553 physical IDs, 31,885 instances;
 - `verify:rom-fighter-neutral` — 100 checks across all 48 forms;
 - action-preview runtime parity and frame-form identity gates.
 

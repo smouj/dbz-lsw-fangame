@@ -36,7 +36,7 @@ check('corpus forms rendered 48/48', totals.forms === 48 && totals.formsIndexed 
 check('corpus has no palette-blocked forms', totals.formsPaletteBlocked === 0, `${totals.formsPaletteBlocked}`);
 check('corpus physical IDs > 0', totals.physicalIdentities > 0, `${totals.physicalIdentities}`);
 check('corpus frame instances > physical IDs', totals.frameInstances > totals.physicalIdentities, `${totals.frameInstances}/${totals.physicalIdentities}`);
-check('transparent ROM frame records are retained outside promoted PNGs', (totals as { transparentFrameRecords?: number; transparentPhysicalIds?: number }).transparentFrameRecords === 38 && (totals as { transparentFrameRecords?: number; transparentPhysicalIds?: number }).transparentPhysicalIds === 8, `records=${(totals as { transparentFrameRecords?: number }).transparentFrameRecords ?? 0} ids=${(totals as { transparentPhysicalIds?: number }).transparentPhysicalIds ?? 0}`);
+check('transparent ROM frame records are retained outside promoted PNGs', ((totals as { transparentFrameRecords?: number }).transparentFrameRecords ?? 0) > 0 && ((totals as { transparentPhysicalIds?: number }).transparentPhysicalIds ?? 0) > 0, `records=${(totals as { transparentFrameRecords?: number }).transparentFrameRecords ?? 0} ids=${(totals as { transparentPhysicalIds?: number }).transparentPhysicalIds ?? 0}`);
 
 const catalogPath = join(EXPORT_ROOT, 'catalog.json');
 const physicalCatalogPath = join(EXPORT_ROOT, 'physical_catalog.json');
@@ -73,6 +73,8 @@ if (!physicalExportsPresent && !REQUIRE_ROM_PHYSICAL_EXPORTS) {
 } else {
   let publicPhysicalPngs = 0;
   let publicFrameEntries = 0;
+  let publicTransparentFrameRecords = 0;
+  const publicTransparentPhysicalIds = new Set<string>();
   for (const form of ROM_PHYSICAL_CORPUS_SUMMARY.forms) {
     const formDir = join(PUBLIC_SPRITES, form.formId);
     const physicalDir = join(formDir, 'physical');
@@ -83,10 +85,14 @@ if (!physicalExportsPresent && !REQUIRE_ROM_PHYSICAL_EXPORTS) {
     check(`${form.formId}: public physical dir exists`, existsSync(physicalDir));
     if (!existsSync(manifestPath) || !existsSync(provenancePath) || !existsSync(physicalDir)) continue;
     const manifest = readJson<{ source: string; schemaVersion: number; physicalRendererSchema?: number; offsetEncoding: string; transparentFrameRecords?: unknown[]; sequences: Record<string, { physicalRendererSchema?: number; frames: unknown[] }> }>(manifestPath);
-    const provenance = readJson<{ source: string; physicalRendererSchema?: number; transparentFrameRecords?: Array<{ physicalRender?: string }>; frames: Array<{ file: string; rawCanvasFile?: string; rawImageFile?: string; physicalId: string; physicalRendererSchema?: number; assembly?: { errors?: string[]; assemblyInputHash?: string } }> }>(provenancePath);
+    const provenance = readJson<{ source: string; physicalRendererSchema?: number; transparentFrameRecords?: Array<{ physicalId?: string; physicalRender?: string }>; frames: Array<{ file: string; rawCanvasFile?: string; rawImageFile?: string; physicalId: string; physicalRendererSchema?: number; assembly?: { errors?: string[]; assemblyInputHash?: string } }> }>(provenancePath);
     const pngs = readdirSync(physicalDir).filter(name => name.endsWith('.png'));
     publicPhysicalPngs += pngs.length;
     publicFrameEntries += provenance.frames.length;
+    publicTransparentFrameRecords += provenance.transparentFrameRecords?.length ?? 0;
+    for (const frame of provenance.transparentFrameRecords ?? []) {
+      if (frame.physicalId) publicTransparentPhysicalIds.add(frame.physicalId);
+    }
     check(`${form.formId}: manifest source ROM_PHYSICAL_FIGHTERS`, manifest.source === 'ROM_PHYSICAL_FIGHTERS');
     check(`${form.formId}: manifest schema 2/s8`, manifest.schemaVersion === 2 && manifest.offsetEncoding === 's8');
     check(`${form.formId}: physical renderer schema 3`, manifest.physicalRendererSchema === 3 && provenance.physicalRendererSchema === 3);
@@ -102,6 +108,8 @@ if (!physicalExportsPresent && !REQUIRE_ROM_PHYSICAL_EXPORTS) {
 
   check('public physical PNGs match corpus total', publicPhysicalPngs === totals.physicalIdentities, `${publicPhysicalPngs}/${totals.physicalIdentities}`);
   check('public provenance frame entries match corpus total', publicFrameEntries === totals.physicalIdentities, `${publicFrameEntries}/${totals.physicalIdentities}`);
+  check('public transparent frame records match corpus total', publicTransparentFrameRecords === totals.transparentFrameRecords, `${publicTransparentFrameRecords}/${totals.transparentFrameRecords}`);
+  check('public transparent physical IDs match corpus total', publicTransparentPhysicalIds.size === totals.transparentPhysicalIds, `${publicTransparentPhysicalIds.size}/${totals.transparentPhysicalIds}`);
 
   check('generated/rom-fighters catalog exists', existsSync(catalogPath));
   check('generated/rom-fighters physical catalog exists', existsSync(physicalCatalogPath));

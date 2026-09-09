@@ -5,6 +5,7 @@ import { PNG } from 'pngjs';
 import { CARDS } from '../src/data/cards';
 import { ROM_FIGHTER_FORM_IDENTITY } from '../src/data/generated/romFighterFormIdentity.generated';
 import { ROM_PHYSICAL_CORPUS_SUMMARY } from '../src/data/generated/romPhysicalCorpus.generated';
+import { getBindingForCard } from '../src/data/romActionSequenceBinding';
 import { romPresentationTimelineForCard } from '../src/battle/romPresentationForCard';
 
 const ROOT = process.cwd();
@@ -37,6 +38,8 @@ for (const row of renderable.values()) {
 }
 
 let verifiedConsumers = 0;
+let selectorPendingConsumers = 0;
+let nonCinematicConsumers = 0;
 let verifiedPngs = 0;
 let verifiedOccurrences = 0;
 const globalPhysicalIds = new Map<string, string>();
@@ -136,6 +139,18 @@ for (const identity of ROM_FIGHTER_FORM_IDENTITY) {
     if (route.profile.completion.static !== 'COMPLETE' || route.profile.completion.dynamic !== 'NOT_REQUIRED') continue;
     const pending = route.timeline.entries.filter(entry => entry.cue.type === 'ROM_PENDING');
     const physical = route.timeline.entries.filter(entry => entry.cue.type === 'ROM_PHYSICAL_FRAME');
+    if (route.kind === 'DEFENSE_RULE' || route.kind === 'SUPPORT_SPECIAL' || route.kind === 'SUPPORT_FIELD_EFFECT') {
+      check(physical.length === 0, `${identity.formId}/${card.name}: non-cinematic rule route must not start a fighter ActionObject`);
+      nonCinematicConsumers++;
+      continue;
+    }
+    const actorTrack = getBindingForCard(card.id)?.tracks.find(track => track.trackId === 'actor');
+    if (actorTrack?.selector.kind === 'DYNAMIC_PENDING') {
+      check(physical.length === 0, `${identity.formId}/${card.name}: dynamic selector must fail closed instead of choosing a physical sequence`);
+      check(actorTrack.sequences.length > 1 && actorTrack.totalFrames > 0 && actorTrack.totalTicks > 0, `${identity.formId}/${card.name}: dynamic selector has no closed physical sequence corpus`);
+      selectorPendingConsumers++;
+      continue;
+    }
     check(pending.length === 0 && route.pendingCues === 0, `${identity.formId}/${card.name}: pending ROM cues remain`);
     check(physical.length > 0, `${identity.formId}/${card.name}: promoted consumer emits no physical frames`);
     check(physical.every(entry => (entry.cue as { source?: string }).source === 'ROM_PHYSICAL'), `${identity.formId}/${card.name}: unresolved/fallback physical frame`);
@@ -147,10 +162,10 @@ for (const identity of ROM_FIGHTER_FORM_IDENTITY) {
   }
 }
 
-console.log(`ROM physical combat: resources=${renderable.size} consumers=${verifiedConsumers} pngs=${verifiedPngs} occurrences=${verifiedOccurrences} checks=${checks}`);
+console.log(`ROM physical combat: resources=${renderable.size} consumers=${verifiedConsumers} selectorPending=${selectorPendingConsumers} nonCinematic=${nonCinematicConsumers} pngs=${verifiedPngs} occurrences=${verifiedOccurrences} checks=${checks}`);
 if (failures.length > 0) {
   console.error(`FAIL (${failures.length})`);
   for (const failure of failures.slice(0, 100)) console.error(`  - ${failure}`);
   process.exit(1);
 }
-console.log('PASS — every promoted ROM physical combat consumer has complete frames, provenance, timing, slots, PNGs and a zero-pending runtime route.');
+console.log('PASS — every promoted ROM physical combat consumer either has a complete zero-pending runtime route or a closed physical corpus with an explicit fail-closed dynamic selector.');

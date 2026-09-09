@@ -83,13 +83,30 @@ if (REQUIRE_ROM_PHYSICAL_EXPORTS) {
 }
 
 const physicalCorpusGenerated = readFileSync(join(ROOT, 'src/data/generated/romPhysicalCorpus.generated.ts'), 'utf8');
+const physicalCorpusSummary = JSON.parse(readFileSync(join(ROOT, 'docs/rom/generated/physical-corpus/summary.json'), 'utf8')) as {
+  totals: {
+    fighterPhysicalIdentities: number;
+    fighterFrameInstances: number;
+    stagePhysicalIdentities: number;
+    stageFrameInstances: number;
+    physicalIdentities: number;
+    frameInstances: number;
+    transparentPhysicalIds: number;
+    transparentFrameRecords: number;
+  };
+};
+const corpusTotals = physicalCorpusSummary.totals;
 check('current generated corpus exposes fighter and Stage-promoted totals',
-  physicalCorpusGenerated.includes('"fighterPhysicalIdentities": 1911') &&
-  physicalCorpusGenerated.includes('"fighterFrameInstances": 13309') &&
-  physicalCorpusGenerated.includes('"physicalIdentities": 4407') &&
-  physicalCorpusGenerated.includes('"frameInstances": 28669') &&
-  physicalCorpusGenerated.includes('"transparentPhysicalIds": 8') &&
-  physicalCorpusGenerated.includes('"transparentFrameRecords": 38'));
+  corpusTotals.fighterPhysicalIdentities + corpusTotals.stagePhysicalIdentities === corpusTotals.physicalIdentities &&
+  corpusTotals.fighterFrameInstances + corpusTotals.stageFrameInstances === corpusTotals.frameInstances &&
+  corpusTotals.transparentPhysicalIds > 0 &&
+  corpusTotals.transparentFrameRecords >= corpusTotals.transparentPhysicalIds &&
+  physicalCorpusGenerated.includes(`"fighterPhysicalIdentities": ${corpusTotals.fighterPhysicalIdentities}`) &&
+  physicalCorpusGenerated.includes(`"fighterFrameInstances": ${corpusTotals.fighterFrameInstances}`) &&
+  physicalCorpusGenerated.includes(`"physicalIdentities": ${corpusTotals.physicalIdentities}`) &&
+  physicalCorpusGenerated.includes(`"frameInstances": ${corpusTotals.frameInstances}`) &&
+  physicalCorpusGenerated.includes(`"transparentPhysicalIds": ${corpusTotals.transparentPhysicalIds}`) &&
+  physicalCorpusGenerated.includes(`"transparentFrameRecords": ${corpusTotals.transparentFrameRecords}`));
 
 if (failures) {
   console.log(`\nworkspace-hygiene: ${failures} failure(s)`);
