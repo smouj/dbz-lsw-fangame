@@ -1,0 +1,62 @@
+name: release-desktop
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify source and ROM contracts
+        run: npm run verify:ci
+
+      - name: Build and audit release web content
+        run: npm run verify:release-content
+
+      - name: Build NSIS installer and publish release
+        uses: tauri-apps/tauri-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: ${{ github.ref_name }}
+          releaseName: 'DBZ LSW Fangame ${{ github.ref_name }}'
+          releaseBody: 'Windows alpha build. The package does not include a Game Boy Color ROM.'
+          releaseDraft: true
+          prerelease: true
+          args: --bundles nsis
+
+      - name: Create portable ZIP and checksums
+        shell: pwsh
+        run: |
+          $version = (Get-Content package.json | ConvertFrom-Json).version
+          $out = 'release-artifacts'
+          New-Item -ItemType Directory -Force $out | Out-Null
+          $exe = Get-ChildItem 'src-tauri/target/release' -Filter '*.exe' -File |
+            Where-Object Name -NotMatch 'build-script' |
+            Select-Object -First 1
+          if (-not $exe) { throw 'Portable executable not found' }
+          Copy-Item $exe.FullName "$out/DBZ-LSW-Fangame-$version.exe"
+          Compress-Archive -Path "$out/DBZ-LSW-Fangame-$version.exe" -DestinationPath "$out/DBZ-LSW-Fangame-$version-Portable.zip"
+          Get-ChildItem $out -File | ForEach-Object {
+            "{0}  {1}" -f (Get-FileHash $_.FullName -Algorithm SHA256).Hash.ToLowerInvariant(), $_.Name
+          } | Set-Content "$out/checksums.sha256"
+          gh release upload $env:GITHUB_REF_NAME "$out/DBZ-LSW-Fangame-$version-Portable.zip" "$out/checksums.sha256" --clobber
+

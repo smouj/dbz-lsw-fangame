@@ -1,0 +1,17 @@
+[package]
+name = "dbz-lsw-fangame"
+version = "0.10.0"
+description = "Desktop shell for DBZ Legendary Super Warriors Fangame"
+authors = ["DBZ LSW Fangame contributors"]
+edition = "2021"
+
+[lib]
+name = "dbz_lsw_fangame_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+

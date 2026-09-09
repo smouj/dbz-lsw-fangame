@@ -23,7 +23,11 @@
     "build:preview": "vite build --mode preview",
     "build:release": "vite build --mode release",
     "package:web": "node scripts/package-web.mjs",
-    "release": "npm run release:verify && npm run build:release && npm run package:web",
+    "release": "npm run release:verify && npm run verify:release-content && npm run package:web",
+    "desktop:dev": "tauri dev",
+    "desktop:build": "npm run verify:release-content && tauri build --bundles nsis",
+    "verify:distribution": "node scripts/verify-distribution.mjs",
+    "verify:release-content": "npm run build:release && npm run verify:distribution",
     "predev": "node scripts/git-info.mjs && node scripts/check-rom-assets.mjs",
     "prebuild": "node scripts/git-info.mjs && node scripts/check-rom-assets.mjs",
     "prebuild:preview": "node scripts/git-info.mjs",
@@ -177,6 +181,7 @@
     "vite": "^6.0.7"
   },
   "devDependencies": {
+    "@tauri-apps/cli": "^2.11.4",
     "@types/pngjs": "^6.0.5",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",

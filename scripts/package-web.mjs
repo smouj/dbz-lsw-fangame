@@ -11,7 +11,7 @@ import { createGzip } from 'node:zlib';
 
 const ROOT = resolve(import.meta.dirname, '..');
 const DIST = join(ROOT, 'dist');
-const VERSION = '0.8.0';
+const VERSION = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8')).version;
 const BUILD = 142;
 
 const git = {

@@ -43,7 +43,7 @@ export interface GameConfig {
 export const GAME_CONFIG: GameConfig = {
   id: 'dbz-lsw-remake',
   title: 'DBZ Legendary Super Warriors Remake',
-  version: '0.8.0',
+  version: '0.10.0',
   build: 142,
   channel: 'development',
   defaultLocale: 'es',
