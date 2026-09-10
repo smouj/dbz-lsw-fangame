@@ -1,0 +1,70 @@
+{
+  "evidence": "ROM_STATIC_DISASSEMBLY",
+  "timestamp": "2026-09-10",
+  "description": "Special handler FSM static evidence extracted from ROM disassembly",
+  "handlers": {
+    "0x0F": {
+      "name": "Big Bang Attack",
+      "cardIds": [127, 188, 216, 200],
+      "dispatchAddresses": {
+        "bank03": ["0x4A18", "0x64A3"],
+        "bank01": ["0x4AE3"]
+      },
+      "ca06Phases": "requires_dynamic_trace",
+      "sceneChoreography": "PENDING_ROM_TRACE"
+    },
+    "0x12": {
+      "name": "Destructo Disk",
+      "cardIds": [215, 289],
+      "dispatchAddresses": {
+        "bank03": ["0x64D3"],
+        "bank01": ["0x70E5"]
+      },
+      "ca06Phases": "requires_dynamic_trace",
+      "sceneChoreography": "PENDING_ROM_TRACE"
+    },
+    "0x16": {
+      "name": "S.Beam Cannon",
+      "cardIds": [25, 56, 120, 302, 316],
+      "dispatchAddresses": {
+        "bank03": ["0x5F33", "0x5CD0", "0x5DC2", "0x65BA"],
+        "bank01": ["0x4925", "0x6282", "0x6B05", "0x6B92"]
+      },
+      "ca06Phases": "requires_dynamic_trace",
+      "sceneChoreography": "PENDING_ROM_TRACE"
+    },
+    "0x22": {
+      "name": "Spirit Bomb",
+      "cardIds": [],
+      "dispatchAddresses": {
+        "bank03": ["0x6640"],
+        "bank01": ["0x49BC"]
+      },
+      "ca06Phases": "requires_dynamic_trace",
+      "sceneChoreography": "PENDING_ROM_TRACE"
+    }
+  },
+  "blockedBy": "Dynamic ROM trace capture requires BizHawk/Lua execution. Static disassembly provides handler addresses and dispatch tables but cannot determine scene/camera/visibility choreography per phase.",
+  "requiredCaptures": {
+    "perHandler": [
+      "PC trace through all FSM phases ($CA03 transitions)",
+      "ActionObject+0 state changes (visibility bit $80)",
+      "SCENE_SET operations (scene type, VRAM load address)",
+      "FIGHTER_VISIBILITY transitions (actor/target show/hide)",
+      "Camera/scroll operations (SCX, SCY per scanline for beams)",
+      "Layer operations (BG tilemap, FX window)",
+      "STOP/HIDE timing per ActionObject slot"
+    ],
+    "perBeam": [
+      "LY, SCX, SCY per scanline (LY 0-153)",
+      "C405, C406 register values per frame",
+      "Screen-program start/end ticks",
+      "Beam handler phase transitions"
+    ]
+  },
+  "tooling": {
+    "existing": "scripts/trace-handler02.py (static disassembly)",
+    "new": "scripts/trace-special-handlers.py (static FSM extraction)",
+    "required": "BizHawk Lua script for dynamic trace capture"
+  }
+}
