@@ -28,7 +28,18 @@ export class RomDriver {
   private noise: string[] = [];
 
   constructor(rom: string, sav?: string) {
-    this.proc = spawn(join(__dirname, 'rom-driver'), sav ? [rom, sav] : [rom], { cwd: __dirname, stdio: ['pipe', 'pipe', 'pipe'] });
+    const driver = process.env.ROM_DRIVER_PATH
+      ?? join(__dirname, process.platform === 'win32' ? 'rom-driver-win.exe' : 'rom-driver');
+    const env = { ...process.env };
+    if (process.platform === 'win32') {
+      const mgbaRuntime = process.env.MGBA_RUNTIME_PATH ?? 'C:\\msys64\\ucrt64\\bin';
+      env.PATH = `${mgbaRuntime};${env.PATH ?? ''}`;
+    }
+    this.proc = spawn(driver, sav ? [rom, sav] : [rom], {
+      cwd: __dirname,
+      env,
+      stdio: ['pipe', 'pipe', 'pipe'],
+    });
     this.proc.stdout.on('data', (c: Buffer) => {
       this.buf += c.toString();
       this.drain();
