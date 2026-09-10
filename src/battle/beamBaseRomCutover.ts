@@ -146,7 +146,21 @@ export function compileBeamBaseRuntimeCutover(
     selectedResultFamily: outcome.family,
     selectedResultSourceEvent: outcome.sourceEvent,
   });
-  const timeline = withStaticDefenderEntrance(compiled.timeline, env.event.action, env.event.side);
+  const withEntrance = withStaticDefenderEntrance(compiled.timeline, env.event.action, env.event.side);
+  // P0.4: ROM $08 STOP_HIDE_OBJECT — both ActionObject slots must be hidden
+  // at the end of the beam film. Same cleanup that standardDamageResultSplice applies.
+  const endTick = withEntrance.endTick;
+  const base = withEntrance.entries[0];
+  const cleanup = base
+    ? [
+        { ...base, cue: { type: 'ACTION_OBJECT_STOP' as const, tick: endTick, slot: 0 as const } },
+        { ...base, cue: { type: 'ACTION_OBJECT_STOP' as const, tick: endTick, slot: 1 as const } },
+      ]
+    : [];
+  const timeline: BattleTimeline = {
+    ...withEntrance,
+    entries: [...withEntrance.entries, ...cleanup].sort((a, b) => a.cue.tick - b.cue.tick),
+  };
 
   return {
     card: resolved.card,
@@ -189,7 +203,21 @@ export function compileBeamFamilyRuntimeCutover(
     selectedResultFamily: outcome.family,
     selectedResultSourceEvent: outcome.sourceEvent,
   });
-  const timeline = withStaticDefenderEntrance(compiled.timeline, env.event.action, env.event.side);
+  const withEntrance = withStaticDefenderEntrance(compiled.timeline, env.event.action, env.event.side);
+  // P0.4: ROM $08 STOP_HIDE_OBJECT — both ActionObject slots must be hidden
+  // at the end of the beam film. Same cleanup that standardDamageResultSplice applies.
+  const endTick = withEntrance.endTick;
+  const base = withEntrance.entries[0];
+  const cleanup = base
+    ? [
+        { ...base, cue: { type: 'ACTION_OBJECT_STOP' as const, tick: endTick, slot: 0 as const } },
+        { ...base, cue: { type: 'ACTION_OBJECT_STOP' as const, tick: endTick, slot: 1 as const } },
+      ]
+    : [];
+  const timeline: BattleTimeline = {
+    ...withEntrance,
+    entries: [...withEntrance.entries, ...cleanup].sort((a, b) => a.cue.tick - b.cue.tick),
+  };
 
   return {
     card: resolved.card,
