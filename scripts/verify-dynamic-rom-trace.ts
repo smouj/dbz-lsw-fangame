@@ -119,9 +119,9 @@ if (failures.length === 0) {
   console.log(`\n═══ RESULTADO: ${checks} passed · 0 failed ═══`);
   console.log('PASS — dynamic film tracker: no UNKNOWN_REASON, no stale AnimationSlot8, DRAW_ORDER_ROM consumed.');
   console.log('');
-  console.log('BLOCKED items requiring external ROM trace capture:');
+  console.log('Items requiring additional ROM trace coverage:');
   console.log('  - 6 SPECIAL SCENE_SET (Hell Flash, Big Bang, S.Beam Cannon, Spirit Bomb, Destructo Disk, Tail)');
-  console.log('  - 1 BEAM BG_LAYER (scanline tilemap)');
+  console.log('  - BEAM BG_LAYER: LEFT Kamehameha captured; RIGHT + handlers $02-$07 remain');
   console.log('  - 2 TRACE_ONLY (CAMERA_TRACK, BEAM_FX_LOAD)');
   console.log('  - 2 BRIDGE (BEAM_PROJECTILE_BRIDGE, STAGE_SCENE_PREP)');
   console.log('');

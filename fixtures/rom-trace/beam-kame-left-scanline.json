@@ -1,0 +1,2916 @@
+{
+  "schema": "dbzlsw.rom.beam-scanline.v1",
+  "source": {
+    "rom": "dbz-lsw-spain.gbc",
+    "romSha256": "bd1df5d6653be9e262f96db3bcdd7bb8ae0cad6186c16f8c1e8eba3f091c8804",
+    "emulator": "mGBA",
+    "emulatorVersion": "0.10.5",
+    "driver": "tools/rom-trace/rom-driver.c scantrace",
+    "rawTraceSha256": "5d1c4a95b7322ecb11f347596cda058d7eb451c482e6d78d20782f96ea6d9d8c",
+    "cardId": 12,
+    "cardName": "Kamehameha",
+    "side": "LEFT",
+    "input": "60:1:8",
+    "framesCaptured": 700,
+    "bootstrapStateSha256": "6bc112e9a1a20b8c9e796344d314f5f7fcfda0525bb0fab502e7b059128019d5",
+    "bootstrap": "USA gameplay state payload with identity header rebound to the locally verified Spain ROM; execution and all sampled reads are from the Spain ROM."
+  },
+  "observed": {
+    "activeFrameRanges": [
+      [
+        408,
+        487
+      ],
+      [
+        644,
+        659
+      ]
+    ],
+    "restoreFrames": [
+      488,
+      660
+    ],
+    "frames": [
+      {
+        "frame": 408,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 409,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 410,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 411,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 412,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 413,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 414,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 415,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 416,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 417,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 418,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 419,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 420,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 421,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 422,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 423,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 424,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 425,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 426,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 427,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 428,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 429,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 430,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 431,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 432,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 433,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 434,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 435,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 436,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 437,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 438,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 439,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 440,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 441,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 442,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 443,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 444,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 445,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 446,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 447,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 448,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 449,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 450,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 451,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 452,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 453,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 454,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 455,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 456,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 457,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 458,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 459,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 460,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 461,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 462,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 463,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 464,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 465,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 466,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 467,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 468,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 469,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 470,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 471,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 472,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 473,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 474,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 475,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 476,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 477,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 478,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 479,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 480,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 481,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 482,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 483,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 484,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 485,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 486,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 487,
+        "C405": 252,
+        "C406": 87,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 33,
+            "lyEnd": 33,
+            "scx": 0,
+            "scy": 255
+          },
+          {
+            "lyStart": 34,
+            "lyEnd": 34,
+            "scx": 0,
+            "scy": 254
+          },
+          {
+            "lyStart": 35,
+            "lyEnd": 35,
+            "scx": 0,
+            "scy": 253
+          },
+          {
+            "lyStart": 36,
+            "lyEnd": 96,
+            "scx": 87,
+            "scy": 252
+          }
+        ]
+      },
+      {
+        "frame": 644,
+        "C405": 0,
+        "C406": 250,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 32,
+            "lyEnd": 96,
+            "scx": 250,
+            "scy": 0
+          }
+        ]
+      },
+      {
+        "frame": 645,
+        "C405": 0,
+        "C406": 244,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 32,
+            "lyEnd": 96,
+            "scx": 244,
+            "scy": 0
+          }
+        ]
+      },
+      {
+        "frame": 646,
+        "C405": 0,
+        "C406": 238,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 32,
+            "lyEnd": 96,
+            "scx": 238,
+            "scy": 0
+          }
+        ]
+      },
+      {
+        "frame": 647,
+        "C405": 0,
+        "C406": 232,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 32,
+            "lyEnd": 96,
+            "scx": 232,
+            "scy": 0
+          }
+        ]
+      },
+      {
+        "frame": 648,
+        "C405": 0,
+        "C406": 226,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 32,
+            "lyEnd": 96,
+            "scx": 226,
+            "scy": 0
+          }
+        ]
+      },
+      {
+        "frame": 649,
+        "C405": 0,
+        "C406": 220,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 32,
+            "lyEnd": 96,
+            "scx": 220,
+            "scy": 0
+          }
+        ]
+      },
+      {
+        "frame": 650,
+        "C405": 0,
+        "C406": 214,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 32,
+            "lyEnd": 96,
+            "scx": 214,
+            "scy": 0
+          }
+        ]
+      },
+      {
+        "frame": 651,
+        "C405": 0,
+        "C406": 208,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 32,
+            "lyEnd": 96,
+            "scx": 208,
+            "scy": 0
+          }
+        ]
+      },
+      {
+        "frame": 652,
+        "C405": 0,
+        "C406": 202,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 32,
+            "lyEnd": 96,
+            "scx": 202,
+            "scy": 0
+          }
+        ]
+      },
+      {
+        "frame": 653,
+        "C405": 0,
+        "C406": 196,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 32,
+            "lyEnd": 96,
+            "scx": 196,
+            "scy": 0
+          }
+        ]
+      },
+      {
+        "frame": 654,
+        "C405": 0,
+        "C406": 190,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 32,
+            "lyEnd": 96,
+            "scx": 190,
+            "scy": 0
+          }
+        ]
+      },
+      {
+        "frame": 655,
+        "C405": 0,
+        "C406": 184,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 32,
+            "lyEnd": 96,
+            "scx": 184,
+            "scy": 0
+          }
+        ]
+      },
+      {
+        "frame": 656,
+        "C405": 0,
+        "C406": 178,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 32,
+            "lyEnd": 96,
+            "scx": 178,
+            "scy": 0
+          }
+        ]
+      },
+      {
+        "frame": 657,
+        "C405": 0,
+        "C406": 172,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 32,
+            "lyEnd": 96,
+            "scx": 172,
+            "scy": 0
+          }
+        ]
+      },
+      {
+        "frame": 658,
+        "C405": 0,
+        "C406": 166,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 32,
+            "lyEnd": 96,
+            "scx": 166,
+            "scy": 0
+          }
+        ]
+      },
+      {
+        "frame": 659,
+        "C405": 0,
+        "C406": 160,
+        "C407": 0,
+        "C409": 0,
+        "bands": [
+          {
+            "lyStart": 32,
+            "lyEnd": 96,
+            "scx": 160,
+            "scy": 0
+          }
+        ]
+      }
+    ]
+  }
+}
