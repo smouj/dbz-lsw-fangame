@@ -7,7 +7,9 @@ if (-not (Test-Path -LiteralPath $bash)) {
 }
 
 $env:MSYSTEM = 'UCRT64'
-& $bash -lc 'export PATH=/ucrt64/bin:$PATH; cd "$(cygpath -u "$OLDPWD")"; gcc -O2 -Wall -Wextra -I/ucrt64/include -L/ucrt64/lib -o rom-driver-win.exe rom-driver.c -lmgba -lm'
+$traceDir = $PSScriptRoot
+$env:DBZLSW_TRACE_DIR = $traceDir
+& $bash -lc 'export PATH=/ucrt64/bin:$PATH; cd "$(cygpath -u "$DBZLSW_TRACE_DIR")"; gcc -O2 -Wall -Wextra -I/ucrt64/include -L/ucrt64/lib -o rom-driver-win.exe rom-driver.c -lmgba -lm'
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
 Write-Host 'Built tools/rom-trace/rom-driver-win.exe (local artifact; do not commit).'
