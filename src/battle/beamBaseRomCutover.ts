@@ -11,7 +11,7 @@ import { CARDS, type CardDef } from '../data/cards';
 import type { BattleActionDescriptor } from './engine/events/BattleEvent';
 import type { BattleEventEnvelope } from './engine/events/EventLog';
 import type { BattleSide } from './engine/state/BattleState';
-import type { BattleTimeline } from './engine/presentation/PresentationCue';
+import type { BattleTimeline, TimelineEntry } from './engine/presentation/PresentationCue';
 import { compileRomPresentationProfile } from './romPresentationCompiler';
 import { romActionExecutionDescriptorForCard } from './romActionExecutionDescriptors';
 import {
@@ -147,6 +147,11 @@ export function compileBeamBaseRuntimeCutover(
     selectedResultSourceEvent: outcome.sourceEvent,
   });
   const withEntrance = withStaticDefenderEntrance(compiled.timeline, env.event.action, env.event.side);
+  // P0.4D: ROM $CA39 draw order — actor (slot 0) in front of target (slot 1)
+  const drawOrderCue: TimelineEntry = {
+    ...withEntrance.entries[0],
+    cue: { type: 'ACTION_OBJECT_DRAW_ORDER' as const, tick: env.tick, order: 'SLOT_0_THEN_1' as const },
+  };
   // P0.4: ROM $08 STOP_HIDE_OBJECT — both ActionObject slots must be hidden
   // at the end of the beam film. Same cleanup that standardDamageResultSplice applies.
   const endTick = withEntrance.endTick;
@@ -159,7 +164,7 @@ export function compileBeamBaseRuntimeCutover(
     : [];
   const timeline: BattleTimeline = {
     ...withEntrance,
-    entries: [...withEntrance.entries, ...cleanup].sort((a, b) => a.cue.tick - b.cue.tick),
+    entries: [drawOrderCue, ...withEntrance.entries, ...cleanup].sort((a, b) => a.cue.tick - b.cue.tick),
   };
 
   return {
@@ -204,6 +209,11 @@ export function compileBeamFamilyRuntimeCutover(
     selectedResultSourceEvent: outcome.sourceEvent,
   });
   const withEntrance = withStaticDefenderEntrance(compiled.timeline, env.event.action, env.event.side);
+  // P0.4D: ROM $CA39 draw order — actor (slot 0) in front of target (slot 1)
+  const drawOrderCue: TimelineEntry = {
+    ...withEntrance.entries[0],
+    cue: { type: 'ACTION_OBJECT_DRAW_ORDER' as const, tick: env.tick, order: 'SLOT_0_THEN_1' as const },
+  };
   // P0.4: ROM $08 STOP_HIDE_OBJECT — both ActionObject slots must be hidden
   // at the end of the beam film. Same cleanup that standardDamageResultSplice applies.
   const endTick = withEntrance.endTick;
@@ -216,7 +226,7 @@ export function compileBeamFamilyRuntimeCutover(
     : [];
   const timeline: BattleTimeline = {
     ...withEntrance,
-    entries: [...withEntrance.entries, ...cleanup].sort((a, b) => a.cue.tick - b.cue.tick),
+    entries: [drawOrderCue, ...withEntrance.entries, ...cleanup].sort((a, b) => a.cue.tick - b.cue.tick),
   };
 
   return {

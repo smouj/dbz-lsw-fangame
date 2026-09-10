@@ -101,6 +101,12 @@ export function spliceStandardDamageResult(input: StandardDamageResultSpliceOpti
 
   const out: TimelineEntry[] = [...head];
 
+  // ── Draw order ($CA39 == 2): slot 0 (actor) in front of slot 1 (target) ──
+  out.push({
+    ...frameCueBase(branchTick, 0, meta),
+    cue: { type: 'ACTION_OBJECT_DRAW_ORDER', tick: branchTick, order: 'SLOT_0_THEN_1' },
+  });
+
   // ── slot0 (actor): seq1 de la carta, con su estructura de frames ──
   out.push({
     ...frameCueBase(branchTick, 0, meta),

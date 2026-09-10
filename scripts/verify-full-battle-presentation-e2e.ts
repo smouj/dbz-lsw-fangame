@@ -142,10 +142,11 @@ function assertPresentationPipeline(trace: ActionTrace): void {
     check(Object.values(BattlePosition).includes(pc.position), `${label}: invalid position ${pc.position}`);
   }
 
-  // 7. Draw order references valid slots
+  // 7. Draw order references valid orders (SLOT_0_THEN_1 or SLOT_1_THEN_0)
   const drawOrderCues = cues.filter(c => c.type === 'ACTION_OBJECT_DRAW_ORDER');
   for (const doc of drawOrderCues) {
-    check(doc.slot === 0 || doc.slot === 1, `${label}: invalid draw order slot ${doc.slot}`);
+    const drawCue = doc as Extract<PresentationCue, { type: 'ACTION_OBJECT_DRAW_ORDER' }>;
+    check(drawCue.order === 'SLOT_0_THEN_1' || drawCue.order === 'SLOT_1_THEN_0', `${label}: invalid draw order ${drawCue.order}`);
   }
 
   // 8. Timeline is monotonically ordered
