@@ -103,6 +103,8 @@ function fighterFromConfig(cfg: InitialBattleConfig, side: BattleSide): BattleFi
     battlePos: p ? cfg.playerPos : cfg.enemyPos,
     battleId: undefined,
     powerWindowCounter: 0,
+    /** P0.3 — ROM §39: bitmask de octavos de MaxHp ya cruzados (anti-farm). */
+    ccThresholdCrossed: 0,
     limits: p ? cfg.playerFighterLimits : [],
   };
 }

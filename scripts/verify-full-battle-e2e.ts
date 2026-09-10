@@ -40,11 +40,14 @@ function config(overrides: Partial<InitialBattleConfig> = {}): InitialBattleConf
 
 function assertResolution(label: string, result: DispatchResult): void {
   const types = result.events.map(event => event.type);
-  const hit = types.indexOf('ATTACK_HIT');
+  const hitOrMiss = Math.max(types.indexOf('ATTACK_HIT'), types.indexOf('ATTACK_MISSED'));
   const damage = types.indexOf('DAMAGE_APPLIED');
   const defeated = types.indexOf('FIGHTER_DEFEATED');
   const resolved = types.indexOf('ACTION_RESOLVED');
-  check(hit >= 0 && damage > hit && defeated > damage && resolved > defeated, `${label}: causal event order is invalid`);
+  // ROM §32/§59: ATTACK_MISSED with missType='ATTENUATED' also produces damage.
+  // Causal order: ATTACK_HIT|ATTACK_MISSED → DAMAGE_APPLIED → FIGHTER_DEFEATED → ACTION_RESOLVED
+  // CC_GAINED may appear between DEFEATED and RESOLVED.
+  check(hitOrMiss >= 0 && damage > hitOrMiss && defeated > damage && resolved > defeated, `${label}: causal event order is invalid`);
 
   const allEntries = result.timeline.entries;
   // Runtime timelines are replay histories. Presenter consumes only the lot

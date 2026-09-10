@@ -936,8 +936,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
         enemyDeck: { drawPile: eDeckState.drawPile, hand: eDeckState.hand, discardPile: eDeckState.discardPile },
         playerLimits: playerLimits ?? [], playerFighterLimits: player.limits ?? [],
         // C1b — reserves (team-mode) alimentan el BattleState; 1v1 conserva null.
-        player2: player2 && playerReserveFormId ? { ...player2, id: playerReserveFormId, powerWindowCounter: 0 } : null,
-        enemy2: enemy2 && enemyReserveFormId ? { ...enemy2, id: enemyReserveFormId, powerWindowCounter: 0 } : null,
+        player2: player2 && playerReserveFormId ? { ...player2, id: playerReserveFormId, powerWindowCounter: 0, ccThresholdCrossed: 0 } : null,
+        enemy2: enemy2 && enemyReserveFormId ? { ...enemy2, id: enemyReserveFormId, powerWindowCounter: 0, ccThresholdCrossed: 0 } : null,
         firstAttacker: turnOwnerRef.current ?? 'player',
         seed: 4242,
       }),

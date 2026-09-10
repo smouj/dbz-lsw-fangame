@@ -136,7 +136,7 @@ export type BattleEvent =
 
   // ── resolución de ataque (precisión/evasión — M5) ──
   | { type: 'ATTACK_HIT'; source: BattleSide; target: BattleSide; outcome: 'hit' | 'block' | 'guard' }
-  | { type: 'ATTACK_MISSED'; source: BattleSide; target: BattleSide }
+  | { type: 'ATTACK_MISSED'; source: BattleSide; target: BattleSide; missType?: 'AVOIDED' | 'ATTENUATED' }
 
   // ── daño / derrota (tipos listos en M4; el Engine los emite en M5) ──
   | { type: 'DAMAGE_APPLIED'; source: BattleSide; target: BattleSide; amount: number; hpBefore: number; hpAfter: number; cause: DamageCause }

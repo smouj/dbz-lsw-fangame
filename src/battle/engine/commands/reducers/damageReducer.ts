@@ -48,6 +48,36 @@ export interface DamageOutcome {
  * - Emite DAMAGE_APPLIED y, si el luchador queda a 0, FIGHTER_DEFEATED
  *   DESPUÉS (orden causal).
  */
+/** ROM §39 — Life → CC thresholds.
+ *  MaxHp se divide en 8 tramos (eighths). Cada nuevo tramo cruzado por
+ *  daño otorga +2 CC. Healing NO resetea el tracker. Imposible farmear
+ *  el mismo tramo otra vez (bitmask de tramos ya cruzados).
+ *  Varios tramos en un golpe → varios +2 CC.
+ */
+function computeLifeThresholdCcGain(
+  maxHp: number,
+  hpBefore: number,
+  hpAfter: number,
+  crossedBitmask: number,
+): { gain: number; newBitmask: number } {
+  if (maxHp <= 0) return { gain: 0, newBitmask: crossedBitmask };
+  const eighthSize = maxHp / 8;
+  if (eighthSize <= 0) return { gain: 0, newBitmask: crossedBitmask };
+  let newBitmask = crossedBitmask;
+  let gain = 0;
+  // Check thresholds 1..7 (threshold 0 = full HP, never crossed by damage)
+  for (let i = 1; i <= 7; i++) {
+    const thresholdHp = Math.ceil(maxHp - (i * eighthSize));
+    const bit = 1 << i;
+    // Threshold crossed: hpBefore > threshold AND hpAfter <= threshold
+    if (hpBefore > thresholdHp && hpAfter <= thresholdHp && !(crossedBitmask & bit)) {
+      gain += 2;
+      newBitmask |= bit;
+    }
+  }
+  return { gain, newBitmask };
+}
+
 export function applyDamage(
   state: BattleState,
   target: BattleSide,
@@ -61,7 +91,18 @@ export function applyDamage(
   const hpAfter = Math.max(0, hpBefore - amount);
   const applied = Math.min(amount, hpBefore);
   if (applied <= 0) return { state, events: [] };
-  const nextFighter = { ...fighter, hp: hpAfter };
+  // ROM §39: Life → CC thresholds (+2 CC per new eighth crossed)
+  const { gain: ccGain, newBitmask } = computeLifeThresholdCcGain(
+    fighter.maxHp, hpBefore, hpAfter, fighter.ccThresholdCrossed,
+  );
+  const hpAfterWithCc = hpAfter;
+  const ccAfter = Math.min(fighter.maxCc, fighter.cc + ccGain);
+  const nextFighter = {
+    ...fighter,
+    hp: hpAfterWithCc,
+    cc: ccAfter,
+    ccThresholdCrossed: newBitmask,
+  };
   const next: BattleState = {
     ...state,
     player: target === 'player' ? nextFighter : state.player,
@@ -72,6 +113,10 @@ export function applyDamage(
   ];
   if (hpAfter <= 0) {
     events.push({ type: 'FIGHTER_DEFEATED', side: target });
+  }
+  // ROM §39: CC_GAINED goes AFTER FIGHTER_DEFEATED (causal order: damage → defeat → threshold)
+  if (ccGain > 0) {
+    events.push({ type: 'CC_GAINED', side: target, amount: ccGain, before: fighter.cc, after: ccAfter });
   }
   return { state: next, events };
 }
@@ -207,10 +252,38 @@ export function resolveCardAction(state: BattleState, side: BattleSide, card: Ca
     const accRoll = nextRng(rng);
     rng = accRoll.rngState;
     if (!accuracyHits(accRoll.value, effAcc, lockOn)) {
+      // ROM §32/§59: Miss resolution bifurcation.
+      //   (sample & 3) == 0 && ccCost < 21 → CA53=1 AVOIDED (damage 0)
+      //   otherwise               → CA53=2 ATTENUATED (damage = ccCost)
+      // ccCost is the CC cost of the incoming card; 0 for free cards.
+      const sample = Math.floor(accRoll.value * 100); // 0..99 (same RNG as $C231)
+      const ccCost = card.cc ?? 0;
+      if ((sample & 3) === 0 && ccCost < 21) {
+        // CA53=1: AVOIDED — clean miss, 0 damage
+        return {
+          state,
+          events: [{ type: 'ATTACK_MISSED', source: side, target, missType: 'AVOIDED' }],
+          rngState: rng,
+        };
+      }
+      // CA53=2: ATTENUATED — partial hit, damage = ccCost of the incoming card
+      const attenuatedDamage = ccCost;
+      if (attenuatedDamage > 0) {
+        const applied = applyDamage(state, target, attenuatedDamage, { type: 'CARD', cardId: card.id }, side);
+        return {
+          state: applied.state,
+          events: [
+            { type: 'ATTACK_MISSED', source: side, target, missType: 'ATTENUATED' },
+            ...applied.events,
+          ],
+          rngState: rng,
+        };
+      }
+      // ccCost == 0 and sample & 3 != 0: AVOIDED (0 damage, no attenuation possible)
       return {
         state,
-        events: [{ type: 'ATTACK_MISSED', source: side, target }],
-        rngState: rng, // 1 avance (miss: 0 más)
+        events: [{ type: 'ATTACK_MISSED', source: side, target, missType: 'AVOIDED' }],
+        rngState: rng,
       };
     }
     events.push({ type: 'ATTACK_HIT', source: side, target, outcome: 'hit' });

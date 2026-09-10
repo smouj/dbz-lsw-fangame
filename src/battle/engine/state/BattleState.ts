@@ -90,6 +90,12 @@ export interface BattleFighterState {
    *  CHARA=2). PER FIGHTER: el mantenimiento (§132-133) decrementa ambos
    *  lados tras cada ActionExecution completada. */
   powerWindowCounter: number;
+  /** P0.3 — ROM §39: Life → CC thresholds.
+   * Bitmask de los octavos de MaxHp ya cruzados (bits 0..7).
+   * Cada octavo = maxHp/8. Cuando el HP baja y cruza un nuevo tramo,
+   * se añade +2 CC y se marca el bit. Healing NO resetea el tracker
+   * (anti-farm: imposible ganar CC del mismo tramo otra vez). */
+  ccThresholdCrossed: number;
   limits: string[];
 }
 

@@ -15,12 +15,12 @@ function runtimeWithReserves() {
     player2: {
       id: 'goku_base', name: 'Goku', form: 'Normal', level: 1, maxHp: 90, hp: 90,
       str: 10, ki: 10, spd: 10, maxCc: 99, cc: 10, battlePos: BattlePosition.DOWN_BACK,
-      powerWindowCounter: 0, limits: [],
+      powerWindowCounter: 0, ccThresholdCrossed: 0, limits: [],
     },
     enemy2: {
       id: 'krillin_base', name: 'Krillin', form: 'Base', level: 1, maxHp: 70, hp: 70,
       str: 6, ki: 8, spd: 9, maxCc: 99, cc: 10, battlePos: BattlePosition.DOWN_BACK,
-      powerWindowCounter: 0, limits: [],
+      powerWindowCounter: 0, ccThresholdCrossed: 0, limits: [],
     },
     firstAttacker: 'player', seed: 42,
   });
