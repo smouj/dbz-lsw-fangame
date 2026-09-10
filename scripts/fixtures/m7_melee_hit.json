@@ -774,6 +774,14 @@
   },
   {
    "tick": 251,
+   "type": "ACTION_OBJECT_DRAW_ORDER",
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
+  },
+  {
+   "tick": 251,
    "type": "ANIMATION_START",
    "resource": 44,
    "slot": 0,

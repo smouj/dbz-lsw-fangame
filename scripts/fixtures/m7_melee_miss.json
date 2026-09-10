@@ -753,6 +753,14 @@
   },
   {
    "tick": 179,
+   "type": "ACTION_OBJECT_DRAW_ORDER",
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-6"
+  },
+  {
+   "tick": 179,
    "type": "ANIMATION_START",
    "resource": 45,
    "slot": 0,
