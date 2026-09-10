@@ -18,13 +18,13 @@ const check = (condition: boolean, message: string): void => {
 
 const load = (name: string): Fixture =>
   JSON.parse(readFileSync(resolve(`fixtures/rom-trace/${name}`), 'utf8')) as Fixture;
-const common = (fixture: Fixture, label: string, cardId: number, side: string, framesCaptured: number): void => {
+const common = (fixture: Fixture, label: string, cardId: number, side: string, framesCaptured: number, activeFrames = 96): void => {
   check(fixture.schema === 'dbzlsw.rom.beam-scanline.v1', `${label}: schema mismatch`);
   check(fixture.source.romSha256 === 'bd1df5d6653be9e262f96db3bcdd7bb8ae0cad6186c16f8c1e8eba3f091c8804', `${label}: non-canonical Spain ROM`);
   check(fixture.source.rawTraceSha256.length === 64, `${label}: raw trace SHA missing`);
   check(fixture.source.cardId === cardId && fixture.source.side === side, `${label}: capture identity mismatch`);
   check(fixture.source.framesCaptured === framesCaptured, `${label}: capture length mismatch`);
-  check(fixture.observed.frames.length === 96, `${label}: expected 96 active raster frames`);
+  check(fixture.observed.frames.length === activeFrames, `${label}: expected ${activeFrames} active raster frames`);
 };
 
 const fixture = load('beam-kame-left-scanline.json');
@@ -84,6 +84,38 @@ for (let index = 0; index < travel.length; index++) {
   ]), `frame ${frame.frame}: travel band differs`);
 }
 
+const energyBomb = load('beam-energybomb-left-scanline.json');
+common(energyBomb, 'Energy Bomb LEFT handler $05', 8, 'LEFT', 900, 37);
+check(JSON.stringify(energyBomb.observed.activeFrameRanges) === JSON.stringify([[349, 369], [605, 620]]), 'Energy Bomb LEFT: active ranges changed');
+check(JSON.stringify(energyBomb.observed.restoreFrames) === JSON.stringify([370, 621]), 'Energy Bomb LEFT: restore boundaries changed');
+
+const energyMotion = energyBomb.observed.frames.filter(frame => frame.frame >= 349 && frame.frame <= 369);
+check(energyMotion.length === 21, 'Energy Bomb LEFT: expected 2 preparation frames plus 19 motion frames');
+for (let index = 0; index < energyMotion.length; index++) {
+  const frame = energyMotion[index];
+  const expectedScx = index < 2 ? 100 : (100 - (index - 1) * 6 + 256) % 256;
+  check(frame.frame === 349 + index, `Energy Bomb motion frame ${index}: discontinuous tick`);
+  check(frame.C405 === 0xfc && frame.C406 === expectedScx, `Energy Bomb frame ${frame.frame}: screen-motion selector differs`);
+  check(JSON.stringify(frame.bands) === JSON.stringify([
+    { lyStart: 33, lyEnd: 33, scx: 0, scy: 0xff },
+    { lyStart: 34, lyEnd: 34, scx: 0, scy: 0xfe },
+    { lyStart: 35, lyEnd: 35, scx: 0, scy: 0xfd },
+    { lyStart: 36, lyEnd: 96, scx: expectedScx, scy: 0xfc },
+  ]), `Energy Bomb frame ${frame.frame}: scanline bands differ`);
+}
+
+const energyTravel = energyBomb.observed.frames.filter(frame => frame.frame >= 605);
+check(energyTravel.length === 16, 'Energy Bomb LEFT: travel raster window must last 16 frames');
+for (let index = 0; index < energyTravel.length; index++) {
+  const frame = energyTravel[index];
+  const expectedScx = 250 - index * 6;
+  check(frame.frame === 605 + index, `Energy Bomb travel frame ${index}: discontinuous tick`);
+  check(frame.C405 === 0 && frame.C406 === expectedScx, `Energy Bomb frame ${frame.frame}: travel selector differs`);
+  check(JSON.stringify(frame.bands) === JSON.stringify([
+    { lyStart: 32, lyEnd: 96, scx: expectedScx, scy: 0 },
+  ]), `Energy Bomb frame ${frame.frame}: travel band differs`);
+}
+
 if (failures.length) {
   console.error(`FAIL — beam scanline trace: ${failures.length}/${checks}`);
   failures.forEach(failure => console.error(`  - ${failure}`));
@@ -92,3 +124,4 @@ if (failures.length) {
 console.log(`PASS — beam scanline trace: ${checks}/${checks}`);
 console.log('Kamehameha LEFT: 80-frame raster window + 16-frame projectile travel + explicit restore boundaries.');
 console.log('S.Beam Can. RIGHT: 80-frame raster window + mirrored 16-frame projectile travel + explicit restore boundaries.');
+console.log('Energy Bomb LEFT handler $05: 2-frame preparation + ROM -6×19 screen motion + restore + 16-frame projectile travel.');
