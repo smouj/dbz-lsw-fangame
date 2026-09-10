@@ -168,7 +168,7 @@ function runtimeWindowEvidenceFor(cardId: number): { evidence: string; status: E
 }
 
 const BLOCKERS: Record<string, string> = {
-  A: 'SFX-V4-05: Kamehameha LEFT ya tiene captura per-scanline real (fixture beam-kame-left-scanline): ventana LY 33-96, travel LY 32-96 y restore demostrados. Falta RIGHT/side2 y cubrir handlers $02-$07 antes de quitar PENDING_ROM_TRACE o generalizar la fórmula.',
+  A: 'SFX-V4-05: handler $02 tiene capturas per-scanline reales en ambos lados (Kamehameha LEFT y S.Beam Can. RIGHT): ventanas raster de 80f, travel de 16f y restore demostrados. Falta Kamehameha RIGHT como diferencial de orientación con la misma carta y cubrir handlers $03-$07 antes de quitar PENDING_ROM_TRACE o generalizar la fórmula.',
   B: 'Trace FSM/runtime del worker MULTI_ACTOR_SCRIPT (Bank3:$5C04 / Bank3:$5D0C): quién es dueño del actor/helper, ancla espacial y coreografía frente al target; solo entonces cerrar result-branch HIT/MISS/GUARD de la familia $0D/$0E.',
   D_ACTOR: 'Trace FSM del handler: qué estado/branch selecciona la secuencia entre las N físicas cerradas (result macros $2F/$30/$31 u operación interna del worker); evidencia dinámica por worker antes de promover selector.',
   D_DEFENSE: 'Taiyoken: resolver el caso alcanzable ginyu/profile $1B. Bank00:$3966 no encuentra esa clave entre el inicio de resource $26 (30:$6CC8) y el final físico de la tabla (30:$6D28). Capturar la selección/forma real en $3966 y el start $60B2 para determinar si ginyu base es inalcanzable o si otra identidad alimenta $2B65. No promover sequence 0.',
