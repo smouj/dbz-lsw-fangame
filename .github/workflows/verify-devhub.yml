@@ -27,6 +27,10 @@ jobs:
     timeout-minutes: 45
 
     steps:
+      - name: Enable Git long paths
+        shell: pwsh
+        run: git config --global core.longpaths true
+
       - name: Checkout
         uses: actions/checkout@v4
 
