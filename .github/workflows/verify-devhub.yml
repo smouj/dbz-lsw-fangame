@@ -1,0 +1,60 @@
+name: verify-devhub
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/devtools/systemHub.tsx'
+      - 'src/devtools/systemHub.css'
+      - 'src/devtools/DevStudio.tsx'
+      - 'src-tauri/Cargo.toml'
+      - 'src-tauri/src/devhub.rs'
+      - 'src-tauri/src/lib.rs'
+      - 'src-tauri/tauri.conf.json'
+      - 'src-tauri/tauri.devhub.conf.json'
+      - 'scripts/devhub.ps1'
+      - 'scripts/install-devhub.ps1'
+      - '.github/workflows/verify-devhub.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  windows-devhub:
+    runs-on: windows-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck frontend
+        run: npm run typecheck
+
+      - name: Check Dev Hub native commands
+        run: cargo check --manifest-path src-tauri/Cargo.toml --features devhub
+
+      - name: Build Dev Hub NSIS installer
+        run: npx tauri build --features devhub --config src-tauri/tauri.devhub.conf.json --bundles nsis
+
+      - name: Upload Dev Hub installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: dbz-lsw-dev-hub-windows
+          path: src-tauri/target/release/bundle/nsis/*.exe
+          if-no-files-found: error
+          retention-days: 14
