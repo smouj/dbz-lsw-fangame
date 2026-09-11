@@ -56,6 +56,7 @@ const FIGHTER_PHYSICAL_RESOURCE_IDS = new Set([0x00, 0x01, 0x02, 0x03, 0x04, 0x0
 // requested neutral candidate, then rebuilds and validates the complete
 // manifest from the existing certified render inputs.  Full remains default.
 const RENDER_BANK61_NEUTRAL_ONLY = process.env.ROM_PHYSICAL_RENDER_MODE === 'bank61-neutral';
+const SKIP_RENDERS = process.env.ROM_PHYSICAL_RENDER_MODE === 'skip-renders';
 const STAGE_BANK61_RENDER_TARGETS = [
   // Selector 0 is the static neutral candidate: a single physical frame with
   // zero offsets that is the recovery target for Bank $61 animations.  It is
@@ -456,17 +457,18 @@ function clearGeneratedPhysical(formId: string): void {
   const formOut = join(PUBLIC_SPRITES, formId);
   const physicalOut = join(formOut, 'physical');
   const debugOut = join(formOut, 'physical-debug');
+  const safeUnlink = (path: string) => { try { unlinkSync(path); } catch (e: any) { if (e.code !== 'ENOENT') throw e; } };
   if (existsSync(physicalOut)) {
     for (const existing of readdirSync(physicalOut)) {
       if (/^rom-p[0-9a-f]{2}-(?:g[0-9a-f]{2}-)?(?:r[0-9a-f]{2}|ab[0-9a-f]{2}-b[0-9a-f]{4})-vf[0-9a-f]{2}(?:-ms[0-9a-f]{8}-gfx[0-9a-f]{8})?\.png$/.test(existing)) {
-        unlinkSync(join(physicalOut, existing));
+        safeUnlink(join(physicalOut, existing));
       }
     }
   }
   if (existsSync(debugOut)) {
     for (const existing of readdirSync(debugOut)) {
       if (/^rom-p[0-9a-f]{2}-(?:g[0-9a-f]{2}-)?(?:r[0-9a-f]{2}|ab[0-9a-f]{2}-b[0-9a-f]{4})-vf[0-9a-f]{2}(?:-ms[0-9a-f]{8}-gfx[0-9a-f]{8})?-raw(?:-canvas)?\.png$/.test(existing)) {
-        unlinkSync(join(debugOut, existing));
+        safeUnlink(join(debugOut, existing));
       }
     }
   }
@@ -859,8 +861,8 @@ const profilesByResource = new Map(resources.map(resource => [
 const corpusProfiles = physicalProfiles.filter(profile =>
   resources.some(resource => (profilesByResource.get(resource.resourceId) ?? []).some(candidate => candidate.formId === profile.formId)));
 const resourceBlockedProfiles = physicalProfiles.filter(profile => !corpusProfiles.some(candidate => candidate.formId === profile.formId));
-if (!RENDER_BANK61_NEUTRAL_ONLY) renderReachableResources(resources, profilesByResource);
-renderStageBank61Resources(physicalProfiles);
+if (!RENDER_BANK61_NEUTRAL_ONLY && !SKIP_RENDERS) renderReachableResources(resources, profilesByResource);
+if (!SKIP_RENDERS) renderStageBank61Resources(physicalProfiles);
 for (const profile of [...paletteBlockedProfiles, ...resourceBlockedProfiles]) clearGeneratedPhysical(profile.formId);
 
 const summary = corpusProfiles.map(profile => {
