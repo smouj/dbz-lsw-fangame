@@ -1,4 +1,5 @@
 use std::{env, net::{SocketAddr, TcpStream}, path::{Path, PathBuf}, process::Command, time::Duration};
+use tauri::Emitter;
 
 const DEV_SERVER: &str = "127.0.0.1:5178";
 const GITHUB_URL: &str = "https://github.com/smouj/dbz-lsw-fangame";
@@ -259,4 +260,59 @@ pub fn devhub_action(action: String, repo_path: Option<String>) -> Result<String
     }
 
     Ok(format!("Acción iniciada: {action}"))
+}
+
+#[derive(Clone, serde::Serialize)]
+struct UpdateProgress {
+    label: String,
+    detail: String,
+}
+
+/// Auto-update: git pull + npm run build, then signal the frontend to reload.
+#[tauri::command]
+pub async fn devhub_update(app: tauri::AppHandle, repo_path: Option<String>) -> Result<Vec<String>, String> {
+    let repo = resolve_repo(repo_path)?;
+    let mut log = Vec::new();
+
+    let emit_progress = |label: &str, detail: &str| {
+        let _ = app.emit("devhub-update-progress", UpdateProgress { label: label.to_string(), detail: detail.to_string() });
+    };
+
+    // 1. git stash (por si hay cambios locales que bloquean pull)
+    emit_progress("stash", "Guardando cambios locales...");
+    let stash = git(&repo, &["stash", "--include-untracked"]);
+    let had_stash = !stash.is_empty() && !stash.contains("No local changes to save");
+    log.push(format!("stash={}", if had_stash { "saved" } else { "clean" }));
+
+    // 2. git pull origin main
+    emit_progress("pull", "Descargando cambios...");
+    let pull = git(&repo, &["pull", "origin", "main"]);
+    if pull.contains("CONFLICT") || pull.contains("error:") {
+        if had_stash { let _ = git(&repo, &["stash", "pop"]); }
+        log.push(format!("pull=FAILED: {}", pull.lines().next().unwrap_or("unknown error")));
+        return Err(format!("git pull falló: {}", pull.lines().take(3).collect::<Vec<_>>().join(" · ")));
+    }
+    log.push(format!("pull={}", pull.lines().next().unwrap_or("ok")));
+
+    // 3. Restaurar stash si lo había
+    if had_stash {
+        emit_progress("stash-pop", "Restaurando cambios locales...");
+        let _ = git(&repo, &["stash", "pop"]);
+        log.push("stash-pop=restored".to_string());
+    }
+
+    // 4. npm run build -- --mode devhub
+    emit_progress("build", "Compilando frontend...");
+    let build = output("npm", &["run", "build", "--", "--mode", "devhub"], Some(&repo));
+    if build.contains("error") && !build.contains("warning") {
+        log.push("build=FAILED".to_string());
+        return Err("npm build falló. Verifica en una terminal.".to_string());
+    }
+    log.push("build=ok".to_string());
+
+    // 5. Signal frontend to reload
+    emit_progress("reload", "Actualización lista. Recargando...");
+    log.push("done=ready".to_string());
+
+    Ok(log)
 }

@@ -9,6 +9,7 @@ pub fn run() {
     let builder = builder.invoke_handler(tauri::generate_handler![
         devhub::devhub_probe,
         devhub::devhub_action,
+        devhub::devhub_update,
     ]);
 
     builder

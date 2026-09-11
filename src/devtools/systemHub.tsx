@@ -18,7 +18,8 @@ type NativeAction =
   | 'open-devstudio' | 'open-game' | 'open-terminal' | 'open-vscode'
   | 'open-wsl' | 'start-dev' | 'typecheck' | 'tests' | 'build'
   | 'verify-ci' | 'verify-presentation' | 'verify-full-battle'
-  | 'verify-physical' | 'verify-beam' | 'git-status' | 'git-fetch';
+  | 'verify-physical' | 'verify-beam' | 'git-status' | 'git-fetch'
+  | 'auto-update';
 
 type NativeBridge = {
   core?: {
@@ -140,7 +141,24 @@ export function SystemHubModule({ onNavigate }: SystemHubModuleProps) {
     }
   }, [invoke, repoPath]);
 
+  const [updateProgress, setUpdateProgress] = useState<{label: string; detail: string} | null>(null);
+
   useEffect(() => { void refresh(); }, []);
+
+  // Listen for auto-update progress events from Tauri backend
+  useEffect(() => {
+    if (!isNative) return;
+    try {
+      // @ts-expect-error Tauri event API
+      const { listen } = window.__TAURI_INTERNALS__ ?? {};
+      if (typeof listen === 'function') {
+        const unlistenPromise = listen('devhub-update-progress', (event: { payload: { label: string; detail: string } }) => {
+          setUpdateProgress(event.payload);
+        });
+        return () => { void unlistenPromise.then((u: () => void) => u()); };
+      }
+    } catch { /* events optional */ }
+  }, [isNative]);
 
   const runAction = async (action: NativeAction) => {
     setRunning(action);
@@ -151,6 +169,19 @@ export function SystemHubModule({ onNavigate }: SystemHubModuleProps) {
         else if (action === 'open-devstudio') window.open('http://localhost:5178/#dev/dashboard', '_blank', 'noopener,noreferrer');
         else if (action === 'open-game') window.open('http://localhost:5178/', '_blank', 'noopener,noreferrer');
         else throw new Error('Instala/ejecuta el flavor Tauri DBZ LSW Dev Hub para usar acciones del sistema.');
+        return;
+      }
+      if (action === 'auto-update') {
+        setUpdateProgress({label: 'update', detail: 'Iniciando...'});
+        try {
+          const log = await invoke<string[]>('devhub_update', { repoPath: repoPath.trim() || null });
+          setMessage(`Actualización completada: ${log.join(', ')}`);
+          setUpdateProgress(null);
+          void refresh();
+        } catch (cause) {
+          setError(cause instanceof Error ? cause.message : String(cause));
+          setUpdateProgress(null);
+        }
         return;
       }
       const result = await invoke<string>('devhub_action', { action, repoPath: repoPath.trim() || null });
@@ -223,7 +254,10 @@ export function SystemHubModule({ onNavigate }: SystemHubModuleProps) {
         <div><small>ENTORNOS</small><h2>Arranque y sincronización</h2></div>
       </div>
       <div className="hub-environment-grid">
-        <button type="button" className="hub-environment primary" onClick={() => void runAction('start-dev')} disabled={running === 'start-dev'}>
+        <button type="button" className="hub-environment primary" onClick={() => void runAction('auto-update')} disabled={running === 'auto-update'}>
+          <RefreshCw size={20} className={running === 'auto-update' ? 'hub-spin' : ''} /><span><strong>Actualizar App</strong><small>git pull + build — sincroniza con el repo</small></span>
+        </button>
+        <button type="button" className="hub-environment" onClick={() => void runAction('start-dev')} disabled={running === 'start-dev'}>
           <Play size={20} /><span><strong>Dev Server</strong><small>Levanta Vite en :5178 en una terminal dedicada</small></span>
         </button>
         <button type="button" className="hub-environment" onClick={() => void runAction('open-wsl')}>
