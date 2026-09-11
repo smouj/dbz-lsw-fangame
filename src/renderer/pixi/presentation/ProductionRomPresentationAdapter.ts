@@ -402,7 +402,9 @@ export class ProductionRomPresentationAdapter {
         }
 
         // Direct texture drive from ROM_PHYSICAL_FRAME (to match ROM exactly, bypassing pose fallback)
-        if (cue.visualFrameId != null || cue.file) {
+        // Always forward the cue — physicalId is the canonical atlas key; the FighterActor
+        // resolves texture via physicalId → file → pose fallback → invisible.
+        if (cue.physicalId != null || cue.visualFrameId != null || cue.file) {
           const setPhysical = (this.pres as any).setPhysicalFrameForSlot;
           if (typeof setPhysical === 'function') {
             setPhysical.call(this.pres, cue.slot, cue);
