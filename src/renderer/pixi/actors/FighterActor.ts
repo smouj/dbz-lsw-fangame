@@ -144,8 +144,12 @@ export class FighterActor extends Container {
    *  Texture lookup order (matches AtlasLoader key registration):
    *  1. cue.physicalId  — canonical ROM identity key (e.g. "rom-p05-g36-r03-vf01-ms46655521-gfx59124315")
    *  2. cue.file          — path key (e.g. "physical/rom-p05-g36-r03-vf01-ms46655521-gfx59124315.png")
-   *  3. Fallback pose:key — legacy pose-based animation frame
-   *  4. Invisible         — no texture found; sprite hidden
+   *  3. Invisible         — no texture found; sprite hidden
+   *
+   *  GATE: When physicalId exists, pose-based fallback is PROHIBITED.
+   *  The ROM provides a physical identity; falling back to a synthetic
+   *  pose:key would display the wrong frame. If physicalId is present
+   *  but not in the atlas, the sprite MUST be invisible — not a wrong frame.
    */
   setPhysicalFrame(cue: {
     resource: number;
@@ -170,7 +174,7 @@ export class FighterActor extends Container {
     // 1. physicalId — the canonical key registered by AtlasLoader for ROM physical frames
     if (cue.physicalId && this.atlas.textures.has(cue.physicalId)) {
       this.sprite.texture = this.atlas.textures.get(cue.physicalId)!;
-      this.sprite.visible = true;
+ this.sprite.visible = true;
       return;
     }
     // 2. file — path-based key registered by AtlasLoader
@@ -179,7 +183,17 @@ export class FighterActor extends Container {
       this.sprite.visible = true;
       return;
     }
-    // 3. Fallback to pose-based animation frame
+    // GATE: When physicalId is present but not found in atlas, the sprite MUST be invisible.
+    // Pose-based fallback would display the WRONG frame — the ROM provided a physical
+    // identity, and we either have the correct texture or we have nothing.
+    if (cue.physicalId) {
+      if (typeof console !== 'undefined') {
+        console.warn(`[FighterActor] physicalId "${cue.physicalId}" not found in atlas — sprite hidden (no synthetic fallback)`);
+      }
+      this.sprite.visible = false;
+      return;
+    }
+    // 3. No physicalId — legacy pose-based fallback for pre-physical cues
     const texKey = `${this.activePose}:${cue.frameIndex}:rom:${cue.resource}:${cue.sequence}`;
     const tex = this.atlas.textures.get(texKey) ?? this.atlas.textures.get(`${this.activePose}:${cue.frameIndex}`);
     if (tex) {
