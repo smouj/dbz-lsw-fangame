@@ -31,9 +31,10 @@ import { RomDisplayLab } from './romdisplay2';
 import { TeamBuilderModule } from './teamBuilder';
 import { DeckBuilderModule } from './deckBuilder';
 import { WorkspaceModule } from './workspace';
+import { SystemHubModule } from './systemHub';
 
 export type DevModuleId =
-  | 'dashboard' | 'characters' | 'cards' | 'animation'
+  | 'system-hub' | 'dashboard' | 'characters' | 'cards' | 'animation'
   | 'pixelart' | 'hud' | 'facing' | 'assets'
   | 'lab' | 'story' | 'validation' | 'research' | 'music' | 'gameconfig' | 'positions'
   | 'combat' | 'timeline' | 'romdisplay' | 'animation-studio'
@@ -48,6 +49,7 @@ export interface DevModuleDef {
 }
 
 export const DEV_MODULES: DevModuleDef[] = [
+  { id: 'system-hub', label: 'System Hub', icon: FolderCode, desc: 'Entornos, repos, procesos, verificadores y accesos del proyecto', group: 'Overview' },
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, desc: 'Estado real: ROM physical, producción, legacy y blockers', group: 'Overview' },
   { id: 'validation', label: 'Validation', icon: CheckCircle2, desc: 'Integridad de datos y cobertura visible', group: 'Overview' },
   { id: 'workspace', label: 'Workspace', icon: FolderCode, desc: 'Explorador de código, paneles Dev y scratch editor local', group: 'Overview' },
@@ -238,6 +240,7 @@ export function DevStudio({ onExit, onLaunchBattle }: DevStudioProps) {
             está dentro del contenedor que scrollea. */}
         <div className="dev-header-slot" />
         <div className="dev-module" data-module={module}>
+          {module === 'system-hub' && <SystemHubModule onNavigate={navigate} />}
           {module === 'dashboard' && <DashboardModule onNavigate={navigate} />}
           {module === 'characters' && <CharactersModule onOpenModule={openLinkedModule} />}
           {module === 'cards' && <CardsModule />}
