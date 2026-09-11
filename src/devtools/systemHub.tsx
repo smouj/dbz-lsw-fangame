@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   Activity, AlertCircle, BookOpen, CheckCircle2, ExternalLink, FileCode2,
-  FolderOpen, Gamepad2, GitBranch, Github, Hammer, HardDrive, Monitor,
+  FolderOpen, Gamepad2, GitBranch, Hammer, HardDrive, Monitor,
   Play, RefreshCw, Server, ShieldCheck, Swords, Terminal, TestTube2,
   Wrench,
 } from 'lucide-react';
@@ -140,7 +140,7 @@ export function SystemHubModule({ onNavigate }: SystemHubModuleProps) {
     }
   }, [invoke, repoPath]);
 
-  useEffect(() => { void refresh(); }, []); // only initial auto-detection
+  useEffect(() => { void refresh(); }, []);
 
   const runAction = async (action: NativeAction) => {
     setRunning(action);
@@ -170,7 +170,7 @@ export function SystemHubModule({ onNavigate }: SystemHubModuleProps) {
 
   const health = useMemo(() => [
     { label: 'Git', value: status.workingTree ?? '—', detail: `${status.branch ?? '—'} · ${status.head ?? '--------'}`, tone: statusTone(status.workingTree), icon: GitBranch },
-    { label: 'Origin', value: status.divergence ?? '—', detail: status.originHead ? `origin/main ${status.originHead}` : 'sin lectura', tone: status.divergence === '0 / 0' ? 'ok' as const : 'muted' as const, icon: Github },
+    { label: 'Origin', value: status.divergence ?? '—', detail: status.originHead ? `origin/main ${status.originHead}` : 'sin lectura', tone: status.divergence === '0 / 0' ? 'ok' as const : 'muted' as const, icon: GitBranch },
     { label: 'Dev server', value: status.devServer ?? '—', detail: 'localhost:5178', tone: statusTone(status.devServer), icon: Server },
     { label: 'Toolchain', value: status.node ?? '—', detail: `npm ${status.npm ?? '—'} · ${status.rustc ?? 'rustc —'}`, tone: status.node && status.node !== 'not-found' ? 'ok' as const : 'warn' as const, icon: Monitor },
   ], [status]);
@@ -236,7 +236,7 @@ export function SystemHubModule({ onNavigate }: SystemHubModuleProps) {
           <RefreshCw size={20} /><span><strong>Fetch origin</strong><small>Actualiza refs sin merge/reset automático</small></span>
         </button>
         <button type="button" className="hub-environment" onClick={() => void runAction('open-github')}>
-          <Github size={20} /><span><strong>GitHub</strong><small>smouj/dbz-lsw-fangame</small></span><ExternalLink size={15} />
+          <GitBranch size={20} /><span><strong>GitHub</strong><small>smouj/dbz-lsw-fangame</small></span><ExternalLink size={15} />
         </button>
         <button type="button" className="hub-environment" onClick={() => void runAction('open-game')}>
           <Gamepad2 size={20} /><span><strong>Juego local</strong><small>Abre la build servida en navegador</small></span><ExternalLink size={15} />
