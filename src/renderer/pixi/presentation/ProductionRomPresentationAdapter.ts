@@ -476,6 +476,11 @@ export class ProductionRomPresentationAdapter {
             this.romDisplay.consume(cue);
             this.stats.displayEffects++;
             if (cue.type === 'ROM_FX_WINDOW') this.stats.fxWindows++;
+          } else {
+            // P0.4R — nunca descartar en silencio un cue de display (BG_ASSEMBLY
+            // incluido). Sin capa display es un PENDING explícito.
+            this.stats.pendingCues++;
+            this.stats.pendingReasons.push(`display cue ${cue.type} sin RomDisplayPresenter`);
           }
           break;
         }

@@ -121,6 +121,9 @@ export interface RomDisplayInspectionAssets {
 export class RomDisplayLayer {
   private readonly container: Container;
   private readonly bgLayer: Graphics;
+  /** P0.4R — composición BG física ROM ($19/$1A) montada en su región ROM. */
+  private readonly bgSprite: Sprite;
+  private bgSourceImage = '';
   private readonly visualLayer: Graphics;
   private readonly composeOverlay: Graphics;
   private readonly clearOverlay: Graphics;
@@ -142,6 +145,9 @@ export class RomDisplayLayer {
     // Capas (z-order: bg → visual → compose → clear → label)
     this.bgLayer = new Graphics();
     this.bgLayer.label = 'rom-display-bg';
+    this.bgSprite = new Sprite();
+    this.bgSprite.label = 'rom-display-bg-assembly';
+    this.bgSprite.visible = false;
     this.visualLayer = new Graphics();
     this.visualLayer.label = 'rom-display-visual';
     this.composeOverlay = new Graphics();
@@ -170,6 +176,7 @@ export class RomDisplayLayer {
     this.fxSprite.visible = false;
 
     this.container.addChild(this.bgLayer);
+    this.container.addChild(this.bgSprite);
     this.container.addChild(this.visualLayer);
     this.container.addChild(this.composeOverlay);
     this.container.addChild(this.fxSprite);
@@ -191,6 +198,7 @@ export class RomDisplayLayer {
     const stateJson = JSON.stringify({
       a: st.activeCardId, p: st.paletteIndex, c: st.composed,
       bg: st.bgAssembled, m: st.macroRuns, cl: st.cleared,
+      bga: st.bgAssembly ? `${st.bgAssembly.resource}:${st.bgAssembly.imageUrl ?? 'UNRESOLVED'}` : null,
       fx: st.fxWindow ? `${st.fxWindow.sourceImage}:${st.fxWindow.phase}:${st.fxWindow.sourceMap}` : null,
     });
     if (stateJson === this.lastStateJson) return;
@@ -232,17 +240,28 @@ export class RomDisplayLayer {
     // Clear label visibility
     this.clearLabel.visible = st.cleared;
 
-    // ── BG ASSEMBLY: rectángulo amarillo marcando BG $19 ──
+    // ── BG ASSEMBLY: composición física ROM real ($19/$1A) ──
+    // Sin fallback a overview/action/special_action: si el programa existe
+    // pero no hay imagen física demostrada, se marca UNRESOLVED explícito
+    // (contorno rojo), nunca un fondo genérico.
     this.bgLayer.clear();
-    if (st.bgAssembled) {
-      const bgW = SUPPORT_BG19_COLS * 8 * s;
-      const bgH = SUPPORT_BG19_ROWS * 8 * s;
-      const bgX = SUPPORT_BG19_BG_COL * 8 * s;
-      const bgY = SUPPORT_BG19_ROW_START * 8 * s;
-      this.bgLayer.rect(bgX, bgY, bgW, bgH)
-        .stroke({ color: 0xff_d3_6a, width: 2 });
-      this.bgLayer.rect(bgX + 2, bgY + 2, bgW - 4, bgH - 4)
-        .stroke({ color: 0xff_d3_6a, alpha: 0.4, width: 1 });
+    if (st.bgAssembly && st.bgAssembly.imageUrl) {
+      if (this.bgSourceImage !== st.bgAssembly.imageUrl) {
+        this.bgSprite.texture = Texture.from(st.bgAssembly.imageUrl);
+        this.bgSourceImage = st.bgAssembly.imageUrl;
+      }
+      this.bgSprite.visible = true;
+      this.bgSprite.x = st.bgAssembly.bgCol * 8 * s;
+      this.bgSprite.y = st.bgAssembly.bgRowStart * 8 * s;
+      this.bgSprite.width = st.bgAssembly.width * s;
+      this.bgSprite.height = st.bgAssembly.height * s;
+    } else {
+      this.bgSprite.visible = false;
+      if (st.bgAssembly) {
+        this.bgLayer
+          .rect(st.bgAssembly.bgCol * 8 * s, st.bgAssembly.bgRowStart * 8 * s, st.bgAssembly.width * s, st.bgAssembly.height * s)
+          .stroke({ color: 0xff_3b_30, width: 2 });
+      }
     }
 
     // ── VISUAL: indicar que el card-indexed visual está cargado ──
@@ -273,7 +292,7 @@ export class RomDisplayLayer {
       parts.push('COMPOSED');
     }
     if (st.bgAssembled) {
-      parts.push('BG19');
+      parts.push(st.bgAssembly?.status === 'RESOLVED' ? `BG$${st.bgAssembly.resource.toString(16)}` : 'BG-UNRESOLVED');
     }
     if (st.cleared) {
       parts.push('CLEARED');
@@ -290,6 +309,8 @@ export class RomDisplayLayer {
   /** Limpia todos los layers. */
   clear(): void {
     this.bgLayer.clear();
+    this.bgSprite.visible = false;
+    this.bgSourceImage = '';
     this.visualLayer.clear();
     this.composeOverlay.clear();
     this.clearOverlay.clear();
@@ -306,8 +327,5 @@ export class RomDisplayLayer {
   }
 }
 
-// Constantes BG $19 (compartidas con romSupportPresentationProfile).
-const SUPPORT_BG19_ROWS = 7;
-const SUPPORT_BG19_COLS = 6;
-const SUPPORT_BG19_ROW_START = 4;
-const SUPPORT_BG19_BG_COL = 7;
+// P0.4R — la geometría BG ($19/$1A) viene del estado del presenter
+// (ROM-verificada, por recurso); ya no hay constantes de debug por recurso.

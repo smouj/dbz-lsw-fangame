@@ -6,6 +6,7 @@
 // Separado de Fighter/Projectile/HUD (capa propia).
 // ═══════════════════════════════════════════════════════════════════════
 import type { PresentationCue } from '../engine/presentation/PresentationCue';
+import { romBgAssemblyImage } from '../../data/generated/romBgAssembly.generated';
 
 export type RomDisplayEventKind =
   | 'VISUAL_LOADED'
@@ -29,6 +30,23 @@ export interface RomDisplayState {
   paletteIndex: number | null;
   composed: boolean;
   bgAssembled: boolean;
+  /**
+   * P0.4R — ensamblado BG físico ROM ($19/$1A) resuelto a un PNG real.
+   * `status: UNRESOLVED_PALETTE` cuando la paleta no tiene imagen demostrada:
+   * nunca se sustituye por otro fondo.
+   */
+  bgAssembly: {
+    resource: number;
+    imageUrl: string | null;
+    file: string | null;
+    width: number;
+    height: number;
+    bgRowStart: number;
+    bgCol: number;
+    paletteSlot: number;
+    status: 'RESOLVED' | 'UNRESOLVED_PALETTE';
+    detail: string;
+  } | null;
   fxWindows: number;
   macroRuns: number;
   cleared: boolean;
@@ -70,6 +88,7 @@ export class RomDisplayPresenter {
     paletteIndex: null,
     composed: false,
     bgAssembled: false,
+    bgAssembly: null,
     fxWindows: 0,
     macroRuns: 0,
     cleared: false,
@@ -101,7 +120,25 @@ export class RomDisplayPresenter {
       }
       case 'BG_ASSEMBLY': {
         this.state.bgAssembled = true;
-        const ev = this.push('BG_ASSEMBLED', cardId, cue.tick, `BG $19 ${cue.rows}x${cue.cols} @ row${cue.bgRowStart} col${cue.bgCol} slot${cue.paletteSlot}`);
+        // P0.4R — resuelve la composición física ROM por (recurso, paleta).
+        // Nunca usa cardName ni cae a overview/action/special_action.
+        const image = romBgAssemblyImage(cue.resource, this.state.paletteIndex ?? -1);
+        this.state.bgAssembly = {
+          resource: cue.resource,
+          imageUrl: image?.url ?? null,
+          file: image?.file ?? null,
+          width: cue.cols * 8,
+          height: cue.rows * 8,
+          bgRowStart: cue.bgRowStart,
+          bgCol: cue.bgCol,
+          paletteSlot: cue.paletteSlot,
+          status: image ? 'RESOLVED' : 'UNRESOLVED_PALETTE',
+          detail: image
+            ? `BG $${cue.resource.toString(16)} physical ${image.file}`
+            : `BG $${cue.resource.toString(16)} UNRESOLVED: sin imagen física para paleta ${this.state.paletteIndex === null ? 'NONE' : `$${this.state.paletteIndex.toString(16)}`}`,
+        };
+        if (!image) this.state.pendingReasons.push(this.state.bgAssembly.detail);
+        const ev = this.push(image ? 'BG_ASSEMBLED' : 'PENDING', cardId, cue.tick, this.state.bgAssembly.detail);
         return ev;
       }
       case 'ROM_FX_WINDOW': {
@@ -136,6 +173,7 @@ export class RomDisplayPresenter {
       case 'DISPLAY_CLEAR': {
         this.state.composed = false;
         this.state.bgAssembled = false;
+        this.state.bgAssembly = null;
         this.state.cleared = true;
         this.state.activeCardId = null;
         this.state.fxWindow = null;
@@ -170,6 +208,7 @@ export class RomDisplayPresenter {
     this.state.paletteIndex = null;
     this.state.composed = false;
     this.state.bgAssembled = false;
+    this.state.bgAssembly = null;
     this.state.fxWindows = 0;
     this.state.macroRuns = 0;
     this.state.cleared = false;
