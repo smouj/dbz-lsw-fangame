@@ -23,8 +23,9 @@ function walk(dir: string): string[] {
     const rel = relative(ROOT, path);
     if (rel.includes('node_modules/') || rel.startsWith('dist/') || rel.startsWith('.git/')) continue;
     const stat = statSync(path);
-    if (stat.isDirectory()) out.push(...walk(path));
-    else out.push(path);
+    if (stat.isDirectory()) {
+      for (const child of walk(path)) out.push(child);
+    } else out.push(path);
   }
   return out;
 }
