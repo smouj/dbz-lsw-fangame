@@ -69,7 +69,9 @@ function assertResolution(label: string, result: DispatchResult): void {
       openSlots.add(entry.cue.slot);
     }
     if (entry.cue.type === 'ACTION_OBJECT_STOP') {
-      if (!openSlots.delete(entry.cue.slot)) invalidLifecycle = true;
+      // STOP_HIDE_OBJECT is idempotent. A profile may stop its actor and the
+      // shared tactical cleanup may then stop both slots defensively.
+      openSlots.delete(entry.cue.slot);
     }
   }
   check(!invalidLifecycle && openSlots.size === 0, `${label}: animation/projectile slot survives cleanup`);

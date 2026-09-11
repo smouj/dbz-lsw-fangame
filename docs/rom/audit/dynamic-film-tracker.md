@@ -127,14 +127,13 @@ ver `dynamic-film-tracker.csv` (39 filas occurrence + 26 filas film) — columna
 
 ## Hallazgo causa A (SFX-V4-05 → siguiente paso SFX-V4-06)
 
-El mecanismo NO es cerrable en este slice con la infra actual: la prueba per-scanline
-(LY 23-95) no está capturada y la fórmula SCY=low($C407)+C405 / SCX=low($C409)+C406 no
-está demostrada en vivo (el muestreo 1/frame del trace existente no alcanza: SCX/SCY a
-frame-boundary = 0; el delta vive solo dentro de la ventana HBlank).
+La infraestructura nativa Windows ya captura cada cambio de LY durante ejecución real
+de la ROM España. Esto demuestra los deltas que viven dentro de HBlank aunque SCX/SCY
+vuelvan a cero en el boundary del frame. La familia sigue abierta por cobertura, no por tooling.
 
-- Ya trazado (kame-trace-01.json, commit aab761e5): card 12 Kamehameha LEFT — C405=0xFC (-4),
-  C406=0x57 (+87) escritos en vivo (t389) coinciden con la fila del selector (7811a8ea).
-- Siguiente paso concreto: captura per-scanline LY 23-95 (SCY=low($C407)+C405,
-  SCX=low($C409)+C406), RIGHT/side2 (C406=0xA9 -87), handler $07 rows 3-10 LEFT/RIGHT,
-  FIRST/LAST_SCROLL_CHANGE + RESTORE_TICK → entonces conectar
-  `loadBeamBgOffsets`/`getBeamFrameDeltas` a consumidores y retirar las 38 occurrences A.
+- Handler $02: Kamehameha LEFT y S.Beam Can. RIGHT demuestran ventanas raster 80f,
+  travel 16f con dirección por lado y restore explícito.
+- Handler $05 LEFT: Energy Bomb demuestra 2f de preparación, screen motion -6×19,
+  restore y travel 16f. Fixture y hash del raw quedan fijados por el gate.
+- Siguiente paso: escenario legal same-card LEFT/RIGHT y representantes $03/$04/$06/$07;
+  solo entonces generalizar familias y retirar las occurrences que cubra la evidencia.

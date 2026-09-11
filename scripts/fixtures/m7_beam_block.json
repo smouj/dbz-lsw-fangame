@@ -31,6 +31,14 @@
   },
   {
    "tick": 0,
+   "type": "ACTION_OBJECT_DRAW_ORDER",
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "ROM_STATIC_COMPLETE",
+   "profile": "rom-card-12"
+  },
+  {
+   "tick": 0,
    "type": "SCENE_LOAD",
    "mode": "TACTICAL_TO_ACTION",
    "vramLoad": "$8E00",
@@ -290,6 +298,24 @@
    "side": "LEFT",
    "resource": 5,
    "palette": 44,
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "ROM_STATIC_COMPLETE",
+   "profile": "rom-card-12"
+  },
+  {
+   "tick": 145,
+   "type": "ACTION_OBJECT_STOP",
+   "slot": 0,
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "ROM_STATIC_COMPLETE",
+   "profile": "rom-card-12"
+  },
+  {
+   "tick": 145,
+   "type": "ACTION_OBJECT_STOP",
+   "slot": 1,
    "logicalTick": 0,
    "source": "ACTION_STARTED",
    "fidelity": "ROM_STATIC_COMPLETE",

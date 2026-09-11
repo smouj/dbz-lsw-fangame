@@ -131,17 +131,16 @@ function markdown(occurrences: OccurrenceRow[], films: FilmRow[], totals: Return
   lines.push('');
   lines.push('## Hallazgo causa A (SFX-V4-05 → siguiente paso SFX-V4-06)');
   lines.push('');
-  lines.push('El mecanismo NO es cerrable en este slice con la infra actual: la prueba per-scanline');
-  lines.push('(LY 23-95) no está capturada y la fórmula SCY=low($C407)+C405 / SCX=low($C409)+C406 no');
-  lines.push('está demostrada en vivo (el muestreo 1/frame del trace existente no alcanza: SCX/SCY a');
-  lines.push('frame-boundary = 0; el delta vive solo dentro de la ventana HBlank).');
+  lines.push('La infraestructura nativa Windows ya captura cada cambio de LY durante ejecución real');
+  lines.push('de la ROM España. Esto demuestra los deltas que viven dentro de HBlank aunque SCX/SCY');
+  lines.push('vuelvan a cero en el boundary del frame. La familia sigue abierta por cobertura, no por tooling.');
   lines.push('');
-  lines.push('- Ya trazado (kame-trace-01.json, commit aab761e5): card 12 Kamehameha LEFT — C405=0xFC (-4),');
-  lines.push('  C406=0x57 (+87) escritos en vivo (t389) coinciden con la fila del selector (7811a8ea).');
-  lines.push('- Siguiente paso concreto: captura per-scanline LY 23-95 (SCY=low($C407)+C405,');
-  lines.push('  SCX=low($C409)+C406), RIGHT/side2 (C406=0xA9 -87), handler $07 rows 3-10 LEFT/RIGHT,');
-  lines.push('  FIRST/LAST_SCROLL_CHANGE + RESTORE_TICK → entonces conectar');
-  lines.push('  `loadBeamBgOffsets`/`getBeamFrameDeltas` a consumidores y retirar las 38 occurrences A.');
+  lines.push('- Handler $02: Kamehameha LEFT y S.Beam Can. RIGHT demuestran ventanas raster 80f,');
+  lines.push('  travel 16f con dirección por lado y restore explícito.');
+  lines.push('- Handler $05 LEFT: Energy Bomb demuestra 2f de preparación, screen motion -6×19,');
+  lines.push('  restore y travel 16f. Fixture y hash del raw quedan fijados por el gate.');
+  lines.push('- Siguiente paso: escenario legal same-card LEFT/RIGHT y representantes $03/$04/$06/$07;');
+  lines.push('  solo entonces generalizar familias y retirar las occurrences que cubra la evidencia.');
   lines.push('');
   return lines.join('\n');
 }

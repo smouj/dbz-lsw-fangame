@@ -160,7 +160,7 @@ static void cmd_trace(const char* path, int n, const char* keyspec) {
   int keyFrames[64], keyMasks[64], keyHolds[64], keyN = 0;
   if (keyspec && keyspec[0]) {
     char buf[256];
-    snprintf(buf, sizeof(buf), "%s", keyspec);
+    snprintf(buf, sizeof(buf), "%.255s", keyspec);
     char* tok = strtok(buf, ",");
     while (tok && keyN < 64) {
       int kf = 0; unsigned int km = 0; int kh = 1;
@@ -200,6 +200,59 @@ static void cmd_trace(const char* path, int n, const char* keyspec) {
   fprintf(f, "  ]\n}\n");
   fclose(f);
   printf("OK trace %s frames=%d\n", path, n);
+  fflush(stdout);
+}
+
+// Capture one sample at every observed LY transition. runFrame() only exposes
+// the restored end-of-frame SCX/SCY values, so beam raster effects must be
+// observed while the CPU is executing the frame.
+static void cmd_scantrace(const char* path, int n, const char* keyspec) {
+  FILE* f = fopen(path, "w");
+  if (!f) { printf("ERR open %s\n", path); fflush(stdout); return; }
+  int keyFrames[64], keyMasks[64], keyHolds[64], keyN = 0;
+  if (keyspec && keyspec[0]) {
+    char buf[256];
+    snprintf(buf, sizeof(buf), "%.255s", keyspec);
+    char* tok = strtok(buf, ",");
+    while (tok && keyN < 64) {
+      int kf = 0; unsigned int km = 0; int kh = 1;
+      if (sscanf(tok, "%d:%x:%d", &kf, &km, &kh) >= 2) {
+        keyFrames[keyN] = kf; keyMasks[keyN] = (uint32_t)km;
+        keyHolds[keyN] = kh > 0 ? kh : 1; keyN++;
+      }
+      tok = strtok(NULL, ",");
+    }
+  }
+  fprintf(f, "{\n  \"samples\": [\n");
+  bool first = true;
+  for (int frame = 0; frame < n; frame++) {
+    uint32_t keys = 0;
+    for (int k = 0; k < keyN; k++)
+      if (frame >= keyFrames[k] && frame < keyFrames[k] + keyHolds[k]) keys |= keyMasks[k];
+    g_core->setKeys(g_core, keys);
+    uint32_t startFrame = g_core->frameCounter(g_core);
+    int previousLy = -1;
+    unsigned instruction = 0;
+    while (g_core->frameCounter(g_core) == startFrame) {
+      g_core->step(g_core);
+      int ly = rd(0xFF44);
+      if (ly != previousLy) {
+        uint16_t pc = 0;
+        g_core->readRegister(g_core, "pc", &pc);
+        if (!first) fprintf(f, ",\n");
+        first = false;
+        fprintf(f, "    {\"frame\":%d,\"instruction\":%u,\"ly\":%d,\"pc\":%u,\"scx\":%d,\"scy\":%d,\"C405\":%d,\"C406\":%d,\"C407\":%d,\"C408\":%d,\"C409\":%d,\"C40A\":%d,\"C2D0\":%d,\"C2D1\":%d,\"C0A0\":%d,\"CA06\":%d}",
+          frame, instruction, ly, pc, rd(0xFF43), rd(0xFF42), rd(0xC405), rd(0xC406),
+          rd(0xC407), rd(0xC408), rd(0xC409), rd(0xC40A), rd(0xC2D0), rd(0xC2D1),
+          rd(0xC0A0), rd(0xCA06));
+        previousLy = ly;
+      }
+      instruction++;
+    }
+  }
+  fprintf(f, "\n  ]\n}\n");
+  fclose(f);
+  printf("OK scantrace %s frames=%d\n", path, n);
   fflush(stdout);
 }
 
@@ -250,6 +303,8 @@ int main(int argc, char** argv) {
       cmd_shot(a);
     } else if (!strcmp(cmd, "trace") && n >= 3) {
       cmd_trace(a, atoi(b), n >= 4 ? c : "");
+    } else if (!strcmp(cmd, "scantrace") && n >= 3) {
+      cmd_scantrace(a, atoi(b), n >= 4 ? c : "");
     } else {
       printf("ERR unknown\n"); fflush(stdout);
     }

@@ -161,14 +161,15 @@ function runtimeWindowEvidenceFor(cardId: number): { evidence: string; status: E
   if (!window) return { evidence: 'no window row in runtime_cutover.json', status: 'STATIC_EVIDENCE' };
   const pendingLine = (window.evidence ?? []).find(line => line.startsWith('PENDING_ROM_TRACE'))
     ?? (window.scroll?.status ? `window scroll.status=${window.scroll.status}` : '');
-  // SFX-V4-05 capturó card 12 (Kamehameha LEFT): C405/C406 coinciden con la
-  // fila del selector; la fórmula per-scanline sigue sin probar.
-  const status: EvidenceStatus = cardId === 12 ? 'PARTIAL_DYN_EVIDENCE' : 'STATIC_EVIDENCE';
+  // Capturas nativas per-scanline ya existentes: handler $02 en ambos lados
+  // (cards 12/17) y handler $05 LEFT (card 8). La familia completa permanece
+  // abierta hasta cubrir $03/$04/$06/$07 y el diferencial same-card por lado.
+  const status: EvidenceStatus = [8, 12, 17].includes(cardId) ? 'PARTIAL_DYN_EVIDENCE' : 'STATIC_EVIDENCE';
   return { evidence: pendingLine, status };
 }
 
 const BLOCKERS: Record<string, string> = {
-  A: 'SFX-V4-05 per-scanline capture (LY 23-95): probar SCY=low($C407)+C405 / SCX=low($C409)+C406 en vivo; RIGHT/side2 mirror (C406=0xA9); handler $07 ventana rows 3-10; FIRST/LAST_SCROLL_CHANGE + RESTORE_TICK. Después: cablear loadBeamBgOffsets/getBeamFrameDeltas a consumidores y quitar PENDING_ROM_TRACE.',
+  A: 'SFX-V4-05: handler $02 tiene capturas per-scanline reales en ambos lados (Kamehameha LEFT y S.Beam Can. RIGHT). Handler $05 LEFT (Energy Bomb) demuestra además 2f de preparación + screen motion -6×19 + restore antes del travel de 16f. Falta el diferencial same-card por orientación y cubrir $03/$04/$06/$07 antes de quitar PENDING_ROM_TRACE o generalizar.',
   B: 'Trace FSM/runtime del worker MULTI_ACTOR_SCRIPT (Bank3:$5C04 / Bank3:$5D0C): quién es dueño del actor/helper, ancla espacial y coreografía frente al target; solo entonces cerrar result-branch HIT/MISS/GUARD de la familia $0D/$0E.',
   D_ACTOR: 'Trace FSM del handler: qué estado/branch selecciona la secuencia entre las N físicas cerradas (result macros $2F/$30/$31 u operación interna del worker); evidencia dinámica por worker antes de promover selector.',
   D_DEFENSE: 'Taiyoken: resolver el caso alcanzable ginyu/profile $1B. Bank00:$3966 no encuentra esa clave entre el inicio de resource $26 (30:$6CC8) y el final físico de la tabla (30:$6D28). Capturar la selección/forma real en $3966 y el start $60B2 para determinar si ginyu base es inalcanzable o si otra identidad alimenta $2B65. No promover sequence 0.',
