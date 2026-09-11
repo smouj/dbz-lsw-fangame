@@ -1,5 +1,5 @@
 import { createHash } from 'crypto';
-import { readFileSync } from 'fs';
+import { existsSync, readFileSync } from 'fs';
 import { resolve } from 'path';
 import { ROM_DEFENSE_SLOT8_SEQUENCE_SELECTORS, ROM_DEFENSE_SLOT8_UNRESOLVED } from '../src/data/generated/romDefenseSlot8SequenceSelectors.generated';
 import { getBindingForCard } from '../src/data/romActionSequenceBinding';
@@ -7,7 +7,9 @@ import { resolveRomSequenceSelector } from '../src/battle/romSequenceSelectors';
 import { resolveProductionFrame } from '../src/battle/productionFrameResolver';
 import { ROM_FIGHTER_FORM_IDENTITY } from '../src/data/generated/romFighterFormIdentity.generated';
 
-const rom = readFileSync(process.env.ROM_PATH ?? resolve(process.cwd(), '../dbz-lsw-decomp/13_raw_rom/dbz-lsw-spain.gbc'));
+const ROM_PATH = process.env.ROM_PATH ?? resolve(process.cwd(), '../dbz-lsw-decomp/13_raw_rom/dbz-lsw-spain.gbc');
+if (!existsSync(ROM_PATH)) { console.log('SKIP: ROM no presente (verify:rom-local)'); process.exit(0); }
+const rom = readFileSync(ROM_PATH);
 let failures = 0;
 const check = (name: string, ok: boolean, detail = '') => { if (!ok) { failures++; console.log(`FAIL ${name}${detail ? ` — ${detail}` : ''}`); } };
 check('canonical Spain ROM SHA-256', createHash('sha256').update(rom).digest('hex') === 'bd1df5d6653be9e262f96db3bcdd7bb8ae0cad6186c16f8c1e8eba3f091c8804');
