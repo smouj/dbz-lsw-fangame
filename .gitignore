@@ -32,3 +32,4 @@ public/assets/rom-fx/
 public/assets/sprites/*/physical/
 public/assets/sprites/*/physical-debug/
 public/assets/sprites/*/rom-physical.manifest.json
+media/
