@@ -28,6 +28,7 @@ import { inspectGoldenAction } from '../src/battle/actionTraceInspector';
 import { romPresentationTimelineForCard } from '../src/battle/romPresentationForCard';
 import { romPresentationProfileForCard } from '../src/battle/romPresentationProfiles';
 import { ProductionRomPresentationAdapter } from '../src/renderer/pixi/presentation/ProductionRomPresentationAdapter';
+import { RomDisplayPresenter } from '../src/battle/romDisplay/RomDisplayPresenter';
 import type { BattlePresentation, BattleScene } from '../src/renderer/pixi/presentation/BattlePresentation';
 
 let passed = 0;
@@ -205,25 +206,39 @@ let adapterChecked = 0;
 for (const card of CARDS) {
   const route = romPresentationTimelineForCard(card, 'player');
   if (!route) continue;
-  const adapter = new ProductionRomPresentationAdapter(stubPresentation(), undefined);
-  let myVisible = 0, myTrace = 0, myDropped = 0;
+  // Configuración de PRODUCCIÓN: la capa display siempre va montada. Sin ella
+  // los cues de display no pueden alcanzar su destino.
+  const adapter = new ProductionRomPresentationAdapter(stubPresentation(), new RomDisplayPresenter());
+  let myVisible = 0, myTrace = 0, myDropped = 0, myDisplay = 0;
   for (const en of route.timeline.entries) {
     const cls = classifyRomCue(en.cue);
     if (cls.visible) myVisible++;
     if (cls.trace) myTrace++;
     if (cls.dropped) myDropped++;
+    if (cls.display) myDisplay++;
     adapter.consume(en.cue);
   }
   const snap = adapter.snapshot;
-  if (snap.visibleEffects !== myVisible || snap.traceCues !== myTrace || snap.pendingCues !== myDropped) {
+  if (snap.visibleEffects !== myVisible || snap.traceCues !== myTrace || snap.pendingCues !== myDropped || snap.displayEffects !== myDisplay) {
     adapterDivergence++;
     if (adapterDivergence <= 5) {
-      console.log(`    (card #${card.id} ${card.name}: adapter vis=${snap.visibleEffects}/trace=${snap.traceCues}/pend=${snap.pendingCues} vs clasif vis=${myVisible}/trace=${myTrace}/drop=${myDropped})`);
+      console.log(`    (card #${card.id} ${card.name}: adapter vis=${snap.visibleEffects}/trace=${snap.traceCues}/disp=${snap.displayEffects}/pend=${snap.pendingCues} vs clasif vis=${myVisible}/trace=${myTrace}/disp=${myDisplay}/drop=${myDropped})`);
     }
   }
   adapterChecked++;
 }
 check(`clasificador ≡ adapter en ${adapterChecked} cartas bridge-eligible`, adapterDivergence === 0, `${adapterDivergence} divergen`);
+
+// P0.4R — un cue de display JAMÁS puede ignorarse en silencio: sin capa display
+// debe contabilizarse como PENDING explícito (esto cierra el agujero que hacía
+// que BG_ASSEMBLY "emitido pero ignorado" fuese invisible).
+const orphanAdapter = new ProductionRomPresentationAdapter(stubPresentation(), undefined);
+orphanAdapter.consume({ type: 'BG_ASSEMBLY', tick: 0, resource: 0x19, rows: 7, cols: 6, bgRowStart: 4, bgCol: 7, paletteSlot: 5, note: 'SINGLE_BG_GRAPHIC' });
+check(
+  'BG_ASSEMBLY sin capa display → PENDING explícito (nunca ignorado)',
+  orphanAdapter.snapshot.pendingCues === 1 && orphanAdapter.snapshot.displayEffects === 0,
+  `pend=${orphanAdapter.snapshot.pendingCues} disp=${orphanAdapter.snapshot.displayEffects}`,
+);
 
 // ═══ 13. Action Trace Inspector (P0.4): cadena hasta el frame ═══
 section('Action Trace Inspector (rol → frame → ROM → clasificación → fallback)');
