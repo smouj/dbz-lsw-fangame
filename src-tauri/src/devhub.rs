@@ -130,8 +130,8 @@ fn open_url(url: &str) -> Result<(), String> {
 fn launch_terminal(repo: &Path, command: &str, title: &str) -> Result<(), String> {
     use std::os::windows::process::CommandExt;
     const CREATE_NEW_CONSOLE: u32 = 0x00000010;
-    let path = repo.to_string_lossy().replace(''', "''");
-    let title = title.replace(''', "''");
+    let path = repo.to_string_lossy().replace("'", "''");
+    let title = title.replace("'", "''");
     let script = format!(
         "$Host.UI.RawUI.WindowTitle='{title}'; Set-Location -LiteralPath '{path}'; {command}"
     );
