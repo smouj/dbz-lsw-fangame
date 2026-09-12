@@ -501,27 +501,16 @@ export function compileRomPresentationProfile(
   //   estándar (mode1 $0308 $10 step2 — §1823) → SCENE_LOAD ACTION_READY.
   // La escena ACTION NO se entra en TACTICAL_TO_ACTION. La autoridad del
   // boundary es resolveActionEntryBoundary() (actionBoundary.ts).
+  //
+  // NO se extiende la duración ROM anclada: la palette transition ocupa la
+  // ventana previa a la entrada visual a ACTION (que ancla en el primer cue de
+  // actor), en vez de desplazar el resto del film.
   let actionPreparePending = false;
-  const flushActionReady = (): void => {
-    const program = PALETTE_TRANSITION_STANDARD_PROGRAM;
-    entries.push(entry({
-      type: 'PALETTE_TRANSITION',
-      tick: cursor,
-      durationTicks: program.totalTicks,
-      sourcePalette: 0,
-      targetPalette: 0,
-      mode: program.mode,
-      paletteMask16: program.paletteMask16,
-      maxCounter: program.maxCounter,
-      channelStep: program.channelStep,
-    }, profile, sourceEvent, logicalTick));
-    cursor += program.totalTicks;
-    entries.push(entry({ type: 'SCENE_LOAD', tick: cursor, vramLoad: '$8E00', mode: 'ACTION_READY' }, profile, sourceEvent, logicalTick));
-  };
+  let prepareEndCursor: number | null = null;
 
   for (const programStep of profile.program) {
     if (actionPreparePending && programStep.kind !== 'SCENE_LOAD' && programStep.kind !== 'PRESENTATION_MACRO') {
-      flushActionReady();
+      prepareEndCursor = cursor;
       actionPreparePending = false;
     }
     const compiled = compileStep(programStep, profile, cursor, actorSide, actorFormId, sequenceSelector, selectedResultFamily, selectedResultSourceEvent, state);
@@ -531,7 +520,29 @@ export function compileRomPresentationProfile(
     }
     cursor += compiled.advanceTicks;
   }
-  if (actionPreparePending) flushActionReady();
+  if (actionPreparePending) prepareEndCursor = cursor;
+
+  if (prepareEndCursor !== null) {
+    const program = PALETTE_TRANSITION_STANDARD_PROGRAM;
+    // Orden ROM: la palette transition arranca al terminar la preparación y la
+    // entrada a ACTION ocurre al completarse (totalTicks). No se avanza el
+    // cursor: la ventana es concurrente con el resto del film ya anclado.
+    const paletteTick = prepareEndCursor;
+    const entryTick = prepareEndCursor + program.totalTicks;
+    entries.push(entry({
+      type: 'PALETTE_TRANSITION',
+      tick: paletteTick,
+      durationTicks: program.totalTicks,
+      sourcePalette: 0,
+      targetPalette: 0,
+      mode: program.mode,
+      paletteMask16: program.paletteMask16,
+      maxCounter: program.maxCounter,
+      channelStep: program.channelStep,
+    }, profile, sourceEvent, logicalTick));
+    entries.push(entry({ type: 'SCENE_LOAD', tick: entryTick, vramLoad: '$8E00', mode: 'ACTION_READY' }, profile, sourceEvent, logicalTick));
+    entries.sort((a, b) => a.cue.tick - b.cue.tick);
+  }
 
   const endTick = Math.max(startTick, cursor, ...entries.map(item => item.cue.tick + ('durationTicks' in item.cue ? (item.cue.durationTicks ?? 0) : 0)));
   const pendingFromCues = entries

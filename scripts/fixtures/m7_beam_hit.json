@@ -58,6 +58,36 @@
   },
   {
    "tick": 0,
+   "type": "FIGHTER_MOTION",
+   "durationTicks": 17,
+   "side": "player",
+   "kind": "BEAM_SETUP",
+   "deltaPx": -27,
+   "holdTicks": 0,
+   "segments": [
+    {
+     "dxPerTick": -1,
+     "dyPerTick": 0,
+     "ticks": 2
+    },
+    {
+     "dxPerTick": -2,
+     "dyPerTick": 0,
+     "ticks": 10
+    },
+    {
+     "dxPerTick": -1,
+     "dyPerTick": 0,
+     "ticks": 5
+    }
+   ],
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "ROM_STATIC_COMPLETE",
+   "profile": "rom-card-12"
+  },
+  {
+   "tick": 0,
    "type": "PALETTE_TRANSITION",
    "mode": 1,
    "durationTicks": 17,
@@ -129,46 +159,6 @@
   },
   {
    "tick": 17,
-   "type": "SCENE_LOAD",
-   "mode": "ACTION_READY",
-   "vramLoad": "$8E00",
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-card-12"
-  },
-  {
-   "tick": 17,
-   "type": "FIGHTER_MOTION",
-   "durationTicks": 17,
-   "side": "player",
-   "kind": "BEAM_SETUP",
-   "deltaPx": -27,
-   "holdTicks": 0,
-   "segments": [
-    {
-     "dxPerTick": -1,
-     "dyPerTick": 0,
-     "ticks": 2
-    },
-    {
-     "dxPerTick": -2,
-     "dyPerTick": 0,
-     "ticks": 10
-    },
-    {
-     "dxPerTick": -1,
-     "dyPerTick": 0,
-     "ticks": 5
-    }
-   ],
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-card-12"
-  },
-  {
-   "tick": 34,
    "type": "ANIMATION_START",
    "resource": 3,
    "slot": 0,
@@ -178,7 +168,7 @@
    "profile": "rom-card-12"
   },
   {
-   "tick": 34,
+   "tick": 17,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 3,
    "resource": 3,
@@ -189,7 +179,7 @@
    "profile": "rom-card-12"
   },
   {
-   "tick": 34,
+   "tick": 17,
    "type": "WAIT_ANIMATION_FRAME",
    "slot": 0,
    "frame": 4,
@@ -199,7 +189,17 @@
    "profile": "rom-card-12"
   },
   {
-   "tick": 37,
+   "tick": 17,
+   "type": "SCENE_LOAD",
+   "mode": "ACTION_READY",
+   "vramLoad": "$8E00",
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "ROM_STATIC_COMPLETE",
+   "profile": "rom-card-12"
+  },
+  {
+   "tick": 20,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 3,
@@ -210,7 +210,7 @@
    "profile": "rom-card-12"
   },
   {
-   "tick": 39,
+   "tick": 22,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 60,
    "resource": 3,
@@ -232,7 +232,7 @@
    "profile": "rom-card-12"
   },
   {
-   "tick": 99,
+   "tick": 82,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 3,
@@ -243,7 +243,7 @@
    "profile": "rom-card-12"
   },
   {
-   "tick": 101,
+   "tick": 84,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 3,
@@ -254,7 +254,7 @@
    "profile": "rom-card-12"
   },
   {
-   "tick": 101,
+   "tick": 84,
    "type": "FX_LOAD",
    "durationTicks": 1,
    "resource": 5,
@@ -265,7 +265,7 @@
    "profile": "rom-card-12"
   },
   {
-   "tick": 101,
+   "tick": 84,
    "type": "ROM_FX_WINDOW",
    "durationTicks": 1,
    "side": "LEFT",
@@ -277,7 +277,7 @@
    "profile": "rom-card-12"
   },
   {
-   "tick": 101,
+   "tick": 84,
    "type": "ROM_AUDIO_SCRIPT",
    "logicalTick": 0,
    "source": "ACTION_STARTED",
@@ -285,7 +285,7 @@
    "profile": "rom-card-12"
   },
   {
-   "tick": 101,
+   "tick": 84,
    "type": "ROM_WAIT",
    "durationTicks": 60,
    "reason": "BEAM hold after FX spawn",
@@ -295,7 +295,7 @@
    "profile": "rom-card-12"
   },
   {
-   "tick": 103,
+   "tick": 86,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 3,
@@ -306,7 +306,7 @@
    "profile": "rom-card-12"
   },
   {
-   "tick": 105,
+   "tick": 88,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 3,
@@ -317,7 +317,7 @@
    "profile": "rom-card-12"
   },
   {
-   "tick": 107,
+   "tick": 90,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 3,
@@ -328,7 +328,7 @@
    "profile": "rom-card-12"
   },
   {
-   "tick": 161,
+   "tick": 144,
    "type": "ROM_RESULT_BRANCH",
    "family": "STANDARD_ATTACK result",
    "selectedFamily": "HIT",
@@ -341,7 +341,7 @@
    "profile": "rom-card-12"
   },
   {
-   "tick": 161,
+   "tick": 144,
    "type": "ROM_FX_WINDOW",
    "durationTicks": 1,
    "side": "LEFT",
@@ -353,7 +353,7 @@
    "profile": "rom-card-12"
   },
   {
-   "tick": 162,
+   "tick": 145,
    "type": "ACTION_OBJECT_STOP",
    "slot": 0,
    "logicalTick": 0,
@@ -362,7 +362,7 @@
    "profile": "rom-card-12"
   },
   {
-   "tick": 162,
+   "tick": 145,
    "type": "ACTION_OBJECT_STOP",
    "slot": 1,
    "logicalTick": 0,
