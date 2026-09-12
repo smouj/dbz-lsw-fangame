@@ -31,9 +31,15 @@ export type BattleScene =
 
 export interface BattlePresentation {
   /** Aplica el binding ROM actual a un ActionObject lógico. */
-  bindActionObject?(slot: ActionObjectSlot, binding: ActionObjectBinding): void;
-  /** Libera el binding ROM actual sin asumir un lado físico. */
+  bindActionObject?(slot: ActionObjectSlot, binding: ActionObjectBinding): void;  /** Libera el binding ROM actual sin asumir un lado físico. */
   unbindActionObject?(slot: ActionObjectSlot): void;
+  /**
+   * P0.4R-B7B2 — observabilidad del binding físico de slots. Permite demostrar
+   * en Production que slot0/slot1 son roles físicos, no bandos.
+   */
+  actionObjectBindingObservation?(): import('../../../battle/engine/presentation/ActionObjectRuntime').ActionObjectBindingObservation;
+  /** B7B2 — limpieza del binding al volver a FIELD (B6). */
+  clearActionObjectBinding?(): void;
   /** Cambia el plano cinematográfico (mapea SHOT). */
   setScene(scene: BattleScene, background?: string): void;
 

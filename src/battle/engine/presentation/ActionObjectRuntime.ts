@@ -17,7 +17,25 @@
 // ═══════════════════════════════════════════════════════════════════════
 
 /** Contexto de binding: quién es slot0 y slot1. */
-export type ActionObjectContext = 'OFFENSE' | 'DEFENSE' | 'REACTION';
+export type ActionObjectContext = 'OFFENSE' | 'DEFENSE_REACTION' | 'DEFENSE' | 'REACTION';
+
+/**
+ * P0.4R-B7B2 — observabilidad del binding físico de slots.
+ * Es el estado que demuestra que `slot0 != player`: los slots representan roles
+ * físicos, no bandos.
+ */
+export interface ActionObjectBindingObservation {
+  /** Cues de binding aplicadas. */
+  bindCount: number;
+  /** Tick de la última aplicación de binding. */
+  lastBindTick: number | null;
+  /** Contexto ROM activo. */
+  bindingContext: 'OFFENSE' | 'DEFENSE_REACTION' | null;
+  slot0Role: 'ATTACKER' | 'DEFENDER' | null;
+  slot1Role: 'ATTACKER' | 'DEFENDER' | null;
+  slot0Side: 'PLAYER' | 'ENEMY' | null;
+  slot1Side: 'PLAYER' | 'ENEMY' | null;
+}
 
 /** Estado runtime de un ActionObject físico (slot 0 o 1). */
 export interface ActionObjectState {
@@ -167,6 +185,12 @@ export type ActionObjectCueRole = 'ACTOR' | 'TARGET' | 'ACTOR_PRIMARY' | 'ACTOR_
 export interface ActionObjectBinding {
   role: ActionObjectCueRole;
   fighterSide?: 'PLAYER' | 'ENEMY';
+  /** B7B2 — contexto ROM del binder (autoridad del rol↔slot). */
+  context?: 'OFFENSE' | 'DEFENSE_REACTION';
+  /** B7B2 — semántica física confirmada por el cue. */
+  semantic?: 'ATTACKER' | 'DEFENDER';
+  /** B7B2 — tick del cue, para `lastBindTick` observable. */
+  tick?: number;
 }
 export interface ActionObjectRuntimeState {
   slot: ActionObjectSlot;
@@ -209,5 +233,134 @@ export class ActionObjectRuntime {
   resolve(slot: ActionObjectSlot): ActionObjectBinding | null {
     const binding = this.slots[slot].binding;
     return binding ? { ...binding } : null;
+  }
+
+  // ── P0.4R-B7B2 — binding ROM por contexto + observabilidad ──
+
+  private observation: ActionObjectBindingObservation = {
+    bindCount: 0,
+    lastBindTick: null,
+    bindingContext: null,
+    slot0Role: null,
+    slot1Role: null,
+    slot0Side: null,
+    slot1Side: null,
+  };
+
+  /**
+   * Aplica el binding de UN slot desde la autoridad ROM del contexto.
+   * El rol NO lo decide el cue (`semantic` es solo confirmación): los dos roles
+   * salen del contexto, de modo que el resultado observable tras procesar el
+   * tick es el binding COMPLETO, nunca medio actualizado.
+   */
+  applyBindingSlot(input: {
+    context: 'OFFENSE' | 'DEFENSE_REACTION' | 'DEFENSE' | 'REACTION';
+    tick: number;
+    slot: ActionObjectSlot;
+    side?: 'PLAYER' | 'ENEMY';
+  }): void {
+    const context: 'OFFENSE' | 'DEFENSE_REACTION' =
+      input.context === 'OFFENSE' ? 'OFFENSE' : 'DEFENSE_REACTION';
+    const roles: ['ATTACKER' | 'DEFENDER', 'ATTACKER' | 'DEFENDER'] =
+      context === 'OFFENSE' ? ['ATTACKER', 'DEFENDER'] : ['DEFENDER', 'ATTACKER'];
+    const switching = this.observation.bindingContext !== context;
+    const next: ActionObjectBindingObservation = switching
+      ? { ...this.observation, bindingContext: context, slot0Role: roles[0], slot1Role: roles[1] }
+      : { ...this.observation };
+    if (input.slot === 0) next.slot0Side = input.side ?? null;
+    else next.slot1Side = input.side ?? null;
+    next.bindCount = this.observation.bindCount + 1;
+    next.lastBindTick = input.tick;
+    this.observation = next;
+    // La facade por slot refleja el mismo binding (el rol sale del contexto).
+    this.slots[input.slot] = {
+      slot: input.slot,
+      binding: { role: roles[input.slot] === 'ATTACKER' ? 'ACTOR' : 'TARGET', fighterSide: input.side },
+      active: true,
+      visible: true,
+    };
+  }
+
+  /** Observabilidad del binding (B7B2). */
+  bindingObservation(): ActionObjectBindingObservation {
+    return { ...this.observation };
+  }
+
+  /**
+   * FIELD restore — el binding se limpia. El estado físico vuelve a UNBOUND:
+   * ningún slot conserva rol ni lado tras volver a FIELD.
+   */
+  resetBindingToField(): void {
+    this.observation = {
+      ...this.observation,
+      bindingContext: null,
+      slot0Role: null,
+      slot1Role: null,
+      slot0Side: null,
+      slot1Side: null,
+    };
+    this.slots[0] = { slot: 0, binding: null, active: true, visible: true };
+    this.slots[1] = { slot: 1, binding: null, active: true, visible: true };
+  }
+
+  /** UNBIND — el slot queda realmente sin binding (rol y lado a null). */
+  clearSlotBinding(slot: ActionObjectSlot): void {
+    if (slot === 0) this.observation = { ...this.observation, slot0Role: null, slot0Side: null };
+    else this.observation = { ...this.observation, slot1Role: null, slot1Side: null };
+    this.slots[slot] = { slot, binding: null, active: false, visible: false };
+  }
+}
+
+// ── P0.4R-B7B2 — aplicación de cues de binding (autoridad compartida) ──
+
+/**
+ * Aplica una cue `ACTION_OBJECT_BIND` sobre el runtime físico.
+ * Autoridad ÚNICA compartida por PixiBattlePresentation y los gates: así el gate
+ * no puede pasar con una delegación distinta a la de producción.
+ */
+export function applyBindingCue(
+  runtime: ActionObjectRuntime,
+  slot: ActionObjectSlot,
+  binding: ActionObjectBinding,
+): void {
+  if (binding.context) {
+    runtime.applyBindingSlot({
+      context: binding.context,
+      tick: binding.tick ?? 0,
+      slot,
+      side: binding.fighterSide,
+    });
+    return;
+  }
+  runtime.bind(slot, binding);
+}
+
+/** Deshace el binding de un slot (cue `ACTION_OBJECT_UNBIND`). */
+export function unapplyBindingCue(runtime: ActionObjectRuntime, slot: ActionObjectSlot): void {
+  runtime.clearSlotBinding(slot);
+}
+
+/**
+ * Sonda de gate: implementa la superficie de binding delegando en un runtime real
+ * con los MISMOS helpers que producción, para que el gate mida la cadena real
+ * (adapter → runtime) sin depender de Pixi.
+ */
+export class ActionObjectBindingProbe {
+  readonly runtime = new ActionObjectRuntime();
+
+  bindActionObject(slot: ActionObjectSlot, binding: ActionObjectBinding): void {
+    applyBindingCue(this.runtime, slot, binding);
+  }
+
+  unbindActionObject(slot: ActionObjectSlot): void {
+    unapplyBindingCue(this.runtime, slot);
+  }
+
+  actionObjectBindingObservation(): ActionObjectBindingObservation {
+    return this.runtime.bindingObservation();
+  }
+
+  clearActionObjectBinding(): void {
+    this.runtime.resetBindingToField();
   }
 }

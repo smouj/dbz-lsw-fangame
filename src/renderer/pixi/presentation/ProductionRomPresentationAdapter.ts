@@ -31,7 +31,7 @@ import type { PresentationCue } from '../../../battle/engine/presentation/Presen
 import type { RomDisplayPresenter } from '../../../battle/romDisplay/RomDisplayPresenter';
 import { sceneLoadEffect } from '../../../battle/presentation/actionBoundary';
 import { isExitResidualCue, type ActionExitBoundary } from '../../../battle/presentation/actionExitBoundary';
-import type { ActionObjectBinding, ActionObjectSlot } from '../../../battle/engine/presentation/ActionObjectRuntime';
+import type { ActionObjectBinding, ActionObjectSlot, ActionObjectBindingObservation } from '../../../battle/engine/presentation/ActionObjectRuntime';
 
 export type ProductionPresentationSource = 'ROM' | 'LEGACY' | 'NONE';
 
@@ -201,6 +201,15 @@ export class ProductionRomPresentationAdapter {
     return { ...this.stats, pendingReasons: [...this.stats.pendingReasons] };
   }
 
+  /**
+   * B7B2 — observabilidad del binding físico de slots en Production.
+   * Espejo de la autoridad única (`ActionObjectRuntime`), no una métrica propia.
+   */
+  get actionObjectBinding(): ActionObjectBindingObservation | null {
+    const fn = (this.pres as Partial<Pick<BattlePresentation, 'actionObjectBindingObservation'>>).actionObjectBindingObservation;
+    return typeof fn === 'function' ? fn.call(this.pres) ?? null : null;
+  }
+
   get cuesConsumed(): number {
     return this.stats.cuesConsumed;
   }
@@ -224,6 +233,9 @@ export class ProductionRomPresentationAdapter {
     this.stats.exitFieldRestoredTick = tick;
     this.currentScene = 'FIELD';
     this.pres.setScene('FIELD');
+    // B7B2 — FIELD restore limpia el binding: ningún slot conserva rol/lado.
+    const clearBinding = (this.pres as Partial<Pick<BattlePresentation, 'clearActionObjectBinding'>>).clearActionObjectBinding;
+    if (typeof clearBinding === 'function') clearBinding.call(this.pres);
     if (this.exitBoundary?.displayResidualAtField) {
       const release = (this.pres as Partial<Pick<BattlePresentation, 'releaseRomDisplayForField'>>).releaseRomDisplayForField;
       if (typeof release === 'function') {
@@ -531,6 +543,11 @@ export class ProductionRomPresentationAdapter {
           bind.call(this.pres, cue.slot as ActionObjectSlot, {
             role: cue.role,
             fighterSide: cue.fighterSide,
+            // B7B2 — el contexto ROM viaja con la cue; el runtime lo convierte
+            // en el binding coherente de ambos slots.
+            ...(cue.context ? { context: cue.context } : {}),
+            ...(cue.semantic ? { semantic: cue.semantic } : {}),
+            tick: cue.tick,
           } as ActionObjectBinding);
           visible = true;
         } else {

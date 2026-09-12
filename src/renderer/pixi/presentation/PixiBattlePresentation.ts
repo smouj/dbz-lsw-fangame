@@ -22,7 +22,7 @@ import { resolveProjectileVisualMode, type ProjectileVisualMode } from './projec
 import { RomDisplayPresenter } from '../../../battle/romDisplay/RomDisplayPresenter';
 import { RomDisplayLayer } from '../../../battle/romDisplay/RomDisplayLayer';
 import { CameraPresenter } from './CameraPresenter';
-import { ActionObjectRuntime, type ActionObjectBinding, type ActionObjectSlot } from '../../../battle/engine/presentation/ActionObjectRuntime';
+import { ActionObjectRuntime, applyBindingCue, unapplyBindingCue, type ActionObjectBinding, type ActionObjectSlot } from '../../../battle/engine/presentation/ActionObjectRuntime';
 
 export interface PixiPresentationConfig {
   playerFormId: string;
@@ -55,11 +55,23 @@ export class PixiBattlePresentation implements BattlePresentation {
   }
 
   bindActionObject(slot: ActionObjectSlot, binding: ActionObjectBinding): void {
-    this.actionObjects.bind(slot, binding);
+    // B7B2 — misma autoridad que el gate (`applyBindingCue`). Con contexto ROM el
+    // runtime resuelve los DOS roles desde el contexto; sin él, bind por slot.
+    applyBindingCue(this.actionObjects, slot, binding);
   }
 
   unbindActionObject(slot: ActionObjectSlot): void {
-    this.actionObjects.unbind(slot);
+    // B7B2 — UNBIND deja el slot realmente sin binding (rol y lado a null).
+    unapplyBindingCue(this.actionObjects, slot);
+  }
+
+  actionObjectBindingObservation() {
+    return this.actionObjects.bindingObservation();
+  }
+
+  /** B7B2 — limpieza del binding en el FIELD restore (B6 deja estado limpio). */
+  clearActionObjectBinding(): void {
+    this.actionObjects.resetBindingToField();
   }
 
   private actionObject(slot: ActionObjectSlot): FighterActor | null {
