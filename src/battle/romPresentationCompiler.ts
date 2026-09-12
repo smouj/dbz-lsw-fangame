@@ -529,7 +529,17 @@ export function compileRomPresentationProfile(
     // cursor: la ventana es concurrente con el resto del film ya anclado.
     const paletteTick = prepareEndCursor;
     const entryTick = prepareEndCursor + program.totalTicks;
-    entries.push(entry({
+    // Inserción ESTABLE: cada cue entra tras la última entrada con tick <= el
+    // suyo, preservando el orden relativo existente. Así se mantiene el
+    // "stable order" del compilador Y el orden de emisión que consumen otros
+    // verifiers (p.ej. el slot ganador de ROM_PHYSICAL_FRAME).
+    const insertStable = (cue: PresentationCue): void => {
+      const item = entry(cue, profile, sourceEvent, logicalTick);
+      let i = entries.length;
+      while (i > 0 && entries[i - 1].cue.tick > cue.tick) i--;
+      entries.splice(i, 0, item);
+    };
+    insertStable({
       type: 'PALETTE_TRANSITION',
       tick: paletteTick,
       durationTicks: program.totalTicks,
@@ -539,9 +549,8 @@ export function compileRomPresentationProfile(
       paletteMask16: program.paletteMask16,
       maxCounter: program.maxCounter,
       channelStep: program.channelStep,
-    }, profile, sourceEvent, logicalTick));
-    entries.push(entry({ type: 'SCENE_LOAD', tick: entryTick, vramLoad: '$8E00', mode: 'ACTION_READY' }, profile, sourceEvent, logicalTick));
-    entries.sort((a, b) => a.cue.tick - b.cue.tick);
+    });
+    insertStable({ type: 'SCENE_LOAD', tick: entryTick, vramLoad: '$8E00', mode: 'ACTION_READY' });
   }
 
   const endTick = Math.max(startTick, cursor, ...entries.map(item => item.cue.tick + ('durationTicks' in item.cue ? (item.cue.durationTicks ?? 0) : 0)));
