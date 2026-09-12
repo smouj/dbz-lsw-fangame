@@ -25,6 +25,8 @@
 
 export type RomBgResource = 0x19 | 0x1a;
 
+import type { PresentationCue } from '../engine/presentation/PresentationCue';
+
 /** Offset absoluto en ROM para (bank, dirección relativa). */
 export function romOffset(bank: number, address: number): number {
   return bank * 0x4000 + (address - (bank === 0 ? 0 : 0x4000));
@@ -81,6 +83,90 @@ export const ROM_BG_ASSEMBLY_SPECS: Readonly<Record<RomBgResource, RomBgAssembly
     evidence: 'ROM_BG_FORMAT_VERIFIED',
   },
 } as const;
+
+/**
+ * B6E — Selección ROM del BG `$1A` (CHARA / Gather Power).
+ *
+ * NO es una regla `CHARA => $31, Gather => $33`. La causalidad demostrada es:
+ *
+ *   el handler ROM escribe `$cc15`            → el display path LEE `$cc15`
+ *   CHARA  est. 9  bank_001:8934  $31         → jr_003_67cc: ld a,[$cc15]
+ *   Gather         bank_001:10315 $33            ; ld e,a ; ld b,$05
+ *
+ * y la CARGA del resource la dispara `Call_000_3abd` (bank_000:11553:
+ * `ld a,$03` → bank-switch → `call $6750`), que en Bank03 con `[$ca03]==$00`
+ * entra en `jr_003_67a3` (bank_003:6529): `ld b,$68 ; ld de,$001a ;
+ * call Call_000_1266 ; ld c,$01 ; ld hl,$8800 ; call Call_000_051d`.
+ *
+ * El resource viaja como INMEDIATO `DE` a `Call_000_1266`; `$19` y `$1A` son
+ * callsites hermanos (`jr_003_6711` vs `jr_003_67a3`), idénticos salvo ese DE.
+ * Por eso la selección se expresa por RUTA, nunca por nombre de carta/acción.
+ *
+ * Provenance: ROM_STATIC_VERIFIED (ver docs/rom/B6E_BG_1A_AUTHORITY.md).
+ */
+export interface RomBg1aSelection {
+  /** Resource ROM cargado. */
+  resource: 0x1a;
+  /** Rutina que dispara la carga (direcciones ROM). */
+  loadAuthority: { symbol: 'Call_000_3abd'; address: string; bankSwitchTo: 0x03; target: string };
+  /** Bloque efectivo que copia a VRAM. */
+  loader: { symbol: 'jr_003_67a3'; address: string; vram: string; resourceImmediate: string };
+  /** Selector hermano que carga `$19` (anti-confusión / anti-regresión). */
+  sibling: { symbol: 'jr_003_6711'; resourceImmediate: string };
+  /** Escribe la paleta; el loader NO la elige. */
+  paletteWriter: { register: '$cc15'; reader: { symbol: 'jr_003_67cc'; address: string } };
+  /** Consumidores con su escritura de `$cc15` (causalidad, no nombre→color). */
+  consumers: readonly [
+    { id: 'CHARA_CC15_31'; writer: { symbol: 'Jump_001_7364'; address: string; state: string }; cc15: 0x31 },
+    { id: 'GATHER_POWER_CC15_33'; writer: { symbol: 'Call_001_7b2c'; address: string }; cc15: 0x33 },
+  ];
+  evidence: 'ROM_STATIC_VERIFIED';
+}
+
+export const ROM_BG_1A_SELECTION: RomBg1aSelection = {
+  resource: 0x1a,
+  loadAuthority: { symbol: 'Call_000_3abd', address: 'bank_000:11553', bankSwitchTo: 0x03, target: 'Bank03:$6750' },
+  loader: { symbol: 'jr_003_67a3', address: 'bank_003:6529', vram: '$8800', resourceImmediate: '$001a' },
+  sibling: { symbol: 'jr_003_6711', resourceImmediate: '$0019' },
+  paletteWriter: { register: '$cc15', reader: { symbol: 'jr_003_67cc', address: 'bank_003:6553' } },
+  consumers: [
+    { id: 'CHARA_CC15_31', writer: { symbol: 'Jump_001_7364', address: 'bank_001:8934', state: '$ca04==$09' }, cc15: 0x31 },
+    { id: 'GATHER_POWER_CC15_33', writer: { symbol: 'Call_001_7b2c', address: 'bank_001:10315' }, cc15: 0x33 },
+  ],
+  evidence: 'ROM_STATIC_VERIFIED',
+} as const;
+
+/**
+ * B6E — emisión del cue físico para un consumidor de `$1A`.
+ *
+ * La paleta NO se inventa aquí: sale del `$cc15` que el handler ROM escribió
+ * (CHARA `$31` / Gather `$33`). El emisor solo materializa lo que la evidencia
+ * demuestra; el tick lo aporta el programa ROM que ejecuta la carga.
+ */
+export function romBg1aAssemblyCue(
+  consumerId: RomBg1aSelection['consumers'][number]['id'],
+  tick: number,
+): Extract<PresentationCue, { type: 'BG_ASSEMBLY' }> {
+  const spec = ROM_BG_ASSEMBLY_SPECS[0x1a];
+  return {
+    type: 'BG_ASSEMBLY',
+    tick,
+    resource: 0x1a,
+    rows: spec.rows,
+    cols: spec.cols,
+    bgRowStart: spec.bgRowStart,
+    bgCol: spec.bgCol,
+    paletteSlot: spec.paletteSlot,
+    note: 'SINGLE_BG_GRAPHIC',
+  };
+}
+
+/** `$cc15` que el handler ROM escribe para un consumidor (paleta del display). */
+export function romBg1aPaletteFor(consumerId: RomBg1aSelection['consumers'][number]['id']): number {
+  const consumer = ROM_BG_1A_SELECTION.consumers.find(c => c.id === consumerId);
+  if (!consumer) throw new Error(`B6E: consumidor $1A desconocido: ${consumerId}`);
+  return consumer.cc15;
+}
 
 export interface RomBgAssemblyCell {
   row: number;
