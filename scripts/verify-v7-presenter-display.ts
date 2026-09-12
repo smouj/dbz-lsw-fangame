@@ -33,20 +33,34 @@ let totalCues = 0;
 let silent = 0;
 let pendingCount = 0;
 const presenter = new RomDisplayPresenter();
+let clearMismatch = 0;
+let visualsChecked = 0;
+let visualsWithoutClear = 0;
 for (const cardId of Object.keys(ROM_SUPPORT_PHYSICAL_VISUALS).map(Number)) {
   presenter.reset();
   const profile = romSupportPresentationProfile({ cardId });
   const compiled = compileRomSupportPresentation(profile);
+  let hasClear = false;
   for (const e of compiled.timeline.entries) {
     totalCues++;
     const ev = presenter.consume(e.cue);
     if (!ev) silent++;
     if (ev.kind === 'PENDING') pendingCount++;
+    if (e.cue.type === 'DISPLAY_CLEAR') hasClear = true;
   }
+  visualsChecked++;
+  if (!hasClear) visualsWithoutClear++;
+  if (presenter.state.cleared !== hasClear) clearMismatch++;
 }
 check('0 cues silenciosos (48 Support, evento siempre generado)', silent === 0, `silent=${silent}`);
 check('PENDING explícito donde falta evidencia (no falsos PASS)', pendingCount > 0, `pending=${pendingCount}`);
-check('load->compose->clear reflejado (estado final del último visual)', presenter.state.cleared === true || presenter.state.pendingReasons.length > 0);
+// El estado `cleared` debe reflejar exactamente lo que declara el timeline. El
+// presenter no debe limpiar display por su cuenta ni inventar un PENDING.
+check('load->compose->clear: `cleared` refleja el DISPLAY_CLEAR declarado', clearMismatch === 0, `mismatch=${clearMismatch}/${visualsChecked}`);
+// Hallazgo P0.4R: la familia común $00/$02 retorna antes de declarar cleanup de
+// display. No es fallo del presenter (el clear llega con el teardown de ACTION),
+// pero queda registrado para no perderlo.
+console.log(`  · visuals sin DISPLAY_CLEAR propio: ${visualsWithoutClear}/${visualsChecked} (familia común $00/$02)`);
 
 // 3) 11 defensas: cada cue -> evento
 let defenseCues = 0;
