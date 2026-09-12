@@ -193,6 +193,12 @@ export function romSupportPresentationProfile(
       durationTicks: 40,
       sourcePalette: visual.palette.cardPaletteByte,
       targetPalette: visual.palette.cardPaletteByte,
+      // Parámetros ROM reales del worker $07F4: A=$00 (mode 0 restore),
+      // BC=$0340, E=$10 (maxCounter), D=$02 (channelStep). V7 LEDGER §"$0C".
+      mode: 0,
+      paletteMask16: 0x0340,
+      maxCounter: 0x10,
+      channelStep: 0x02,
     });
     cues.push({
       type: 'ROM_WAIT',

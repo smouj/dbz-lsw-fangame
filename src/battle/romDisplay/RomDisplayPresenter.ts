@@ -7,6 +7,7 @@
 // ═══════════════════════════════════════════════════════════════════════
 import type { PresentationCue } from '../engine/presentation/PresentationCue';
 import { romBgAssemblyImage } from '../../data/generated/romBgAssembly.generated';
+import { paletteTransitionProgram, type RomPaletteTransitionProgram } from './romPaletteTransitionProgram';
 
 export type RomDisplayEventKind =
   | 'VISUAL_LOADED'
@@ -61,6 +62,17 @@ export interface RomDisplayState {
     width: number;
     height: number;
   } | null;
+  /**
+   * P0.4R — transición de paleta ROM ($07F4/$080C) gobernando el display.
+   * `status: UNRESOLVED_PARAMS` si el cue no trae los parámetros ROM: nunca se
+   * sustituye por un fade.
+   */
+  paletteTransition: {
+    program: RomPaletteTransitionProgram | null;
+    startTick: number;
+    status: 'ACTIVE' | 'UNRESOLVED_PARAMS';
+    detail: string;
+  } | null;
   events: RomDisplayEvent[];
 }
 
@@ -94,6 +106,7 @@ export class RomDisplayPresenter {
     cleared: false,
     pendingReasons: [],
     fxWindow: null,
+    paletteTransition: null,
     events: [],
   };
 
@@ -140,6 +153,20 @@ export class RomDisplayPresenter {
         if (!image) this.state.pendingReasons.push(this.state.bgAssembly.detail);
         const ev = this.push(image ? 'BG_ASSEMBLED' : 'PENDING', cardId, cue.tick, this.state.bgAssembly.detail);
         return ev;
+      }
+      case 'PALETTE_TRANSITION': {
+        // P0.4R — interpolación BGR555 del worker ROM. Sin parámetros ROM no
+        // hay transición física: PENDING explícito (jamás un fade sustituto).
+        if (cue.mode == null || cue.paletteMask16 == null || cue.maxCounter == null || cue.channelStep == null) {
+          const detail = 'PALETTE_TRANSITION sin parámetros ROM ($07F4) — no se sustituye por fade';
+          this.state.paletteTransition = { program: null, startTick: cue.tick, status: 'UNRESOLVED_PARAMS', detail };
+          this.state.pendingReasons.push(detail);
+          return this.push('PENDING', cardId, cue.tick, detail);
+        }
+        const program = paletteTransitionProgram(cue.mode, cue.paletteMask16, cue.maxCounter, cue.channelStep);
+        const detail = `$07F4 mode ${program.mode} mask $${program.paletteMask16.toString(16)} counter $${program.maxCounter.toString(16)} step $${program.channelStep} · ${program.totalTicks}t · BG[${program.affectedBgSlots.join(',')}] OBJ[${program.affectedObjSlots.join(',')}]`;
+        this.state.paletteTransition = { program, startTick: cue.tick, status: 'ACTIVE', detail };
+        return this.push('PALETTE_APPLIED', cardId, cue.tick, detail);
       }
       case 'ROM_FX_WINDOW': {
         this.state.fxWindows++;
@@ -214,6 +241,7 @@ export class RomDisplayPresenter {
     this.state.cleared = false;
     this.state.pendingReasons = [];
     this.state.fxWindow = null;
+    this.state.paletteTransition = null;
     this.state.events = [];
   }
 

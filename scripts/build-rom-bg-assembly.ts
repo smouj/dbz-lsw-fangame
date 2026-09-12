@@ -18,7 +18,9 @@ import { PNG } from 'pngjs';
 import {
   ROM_BG_ASSEMBLY_SPECS,
   decodeCgbPaletteRgba,
+  decodeCgbPaletteWords,
   decodeRomBgAssembly,
+  decodeRomBgAssemblyIndices,
   decodeRomBgAssemblyRgba,
   type RomBgAssemblyProgram,
   type RomBgResource,
@@ -111,6 +113,20 @@ function programLiteral(program: RomBgAssemblyProgram): string {
 }
 
 const programs = [decodeRomBgAssembly(ROM_BG_ASSEMBLY_SPECS[0x19], rom), decodeRomBgAssembly(ROM_BG_ASSEMBLY_SPECS[0x1a], rom)];
+
+// ── Mapas de índices (0..3) + paletas BGR555: permiten re-colorear por paso de
+// transición de paleta ROM sin volver a leer la ROM. ──
+const indexMaps = programs.map(program => ({
+  resource: program.resource,
+  width: program.widthPx,
+  height: program.heightPx,
+  base64: Buffer.from(decodeRomBgAssemblyIndices(program, rom)).toString('base64'),
+}));
+const allPalettes = [...new Set([...PALETTES[0x19], ...PALETTES[0x1a]])].sort((a, b) => a - b);
+const paletteWords: Array<{ palette: number; words: number[] }> = allPalettes.map(palette => ({
+  palette,
+  words: decodeCgbPaletteWords(rom, palette),
+}));
 const content = `// ═══════════════════════════════════════════════════════════════════════
 // GENERADO por scripts/build-rom-bg-assembly.ts — NO editar a mano.
 // Fuente: ROM (Bank68:$7A0C/$7B10 + Bank03:$6834/$688F).
@@ -141,6 +157,28 @@ ${images.map(i => `  { resource: 0x${i.resource.toString(16)}, palette: 0x${i.pa
 /** Programa ROM para un recurso BG ($19/$1A). */
 export function romBgAssemblyProgram(resource: number): RomBgAssemblyProgram | null {
   return ROM_BG_ASSEMBLY_PROGRAMS.find(p => p.resource === resource) ?? null;
+}
+
+/** Mapa de índices de paleta (0..3) por recurso, para re-colorear por paso. */
+export const ROM_BG_ASSEMBLY_INDEX_MAPS: readonly { resource: number; width: number; height: number; base64: string }[] = [
+${indexMaps.map(m => `  { resource: 0x${m.resource.toString(16)}, width: ${m.width}, height: ${m.height}, base64: '${m.base64}' },`).join('\n')}
+];
+
+/** Paletas físicas CGB (4 words BGR555) usadas por los BG ROM. */
+export const ROM_BG_ASSEMBLY_PALETTES: readonly { palette: number; words: readonly number[] }[] = [
+${paletteWords.map(p => `  { palette: 0x${p.palette.toString(16)}, words: [${p.words.map(w => `0x${w.toString(16)}`).join(', ')}] },`).join('\n')}
+];
+
+/** Mapa de índices de un recurso, o null si no está demostrado. */
+export function romBgAssemblyIndexMap(resource: number): { width: number; height: number; indices: Uint8Array } | null {
+  const entry = ROM_BG_ASSEMBLY_INDEX_MAPS.find(m => m.resource === resource);
+  if (!entry) return null;
+  return { width: entry.width, height: entry.height, indices: Uint8Array.from(Buffer.from(entry.base64, 'base64')) };
+}
+
+/** Words BGR555 de una paleta física, o null. */
+export function romBgAssemblyPaletteWords(palette: number): readonly number[] | null {
+  return ROM_BG_ASSEMBLY_PALETTES.find(p => p.palette === palette)?.words ?? null;
 }
 
 /**

@@ -153,6 +153,11 @@ export interface RomPaletteTransitionCue {
   durationTicks: number;
   sourcePalette: number;
   targetPalette: number;
+  /** P0.4R — parámetros ROM del worker ($07F4). Sin ellos no hay transición física. */
+  mode?: 0 | 1;
+  paletteMask16?: number;
+  maxCounter?: number;
+  channelStep?: number;
 }
 
 /** Movimiento de fighter gobernado por ticks GBC (CHARA exit/entry — §176-178). */

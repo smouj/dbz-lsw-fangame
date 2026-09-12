@@ -94,13 +94,14 @@ const DISPLAY_CUES = new Set<PresentationCue['type']>([
   'DISPLAY_CLEAR',
   'SUPPORT_FX',
   'ROM_FX_WINDOW',
+  // P0.4R — display físico ROM (worker $07F4), espejo exacto del adapter.
+  'PALETTE_TRANSITION',
 ]);
 
 /** Cues de trazabilidad ROM (macros/waits/animation/screen/audio…). */
 const TRACE_CUES = new Set<PresentationCue['type']>([
   'MACRO',
   'ROM_MACRO',
-  'PALETTE_TRANSITION',
   'ANIMATION_STATE',
   'WAIT_ANIMATION',
   'WAIT_ANIMATION_FRAME',

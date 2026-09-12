@@ -102,13 +102,15 @@ const DISPLAY_CUES = new Set<PresentationCue['type']>([
   'DEFENSE_FX',
   'SUPPORT_FX',
   'ROM_FX_WINDOW',
+  // P0.4R — la transición de paleta ROM es display FÍSICO (no trace): gobierna
+  // los colores reales por paso del worker $07F4.
+  'PALETTE_TRANSITION',
 ]);
 
 /** Cues de trazabilidad ROM (macros/waits/animation/screen/audio…). */
 const TRACE_CUES = new Set<PresentationCue['type']>([
   'MACRO',
   'ROM_MACRO',
-  'PALETTE_TRANSITION',
   'ANIMATION_STATE',
   'WAIT_ANIMATION',
   'WAIT_ANIMATION_FRAME',

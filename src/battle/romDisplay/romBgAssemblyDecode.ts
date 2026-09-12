@@ -195,6 +195,36 @@ export function decodeCgbPaletteRgba(rom: Uint8Array, paletteIndex: number): Arr
   return out;
 }
 
+/**
+ * Mapa de ÍNDICES de paleta (0..3) del ensamblado ROM, en orden de píxel.
+ * Permite re-colorear por paso de transición sin volver a leer la ROM.
+ */
+export function decodeRomBgAssemblyIndices(program: RomBgAssemblyProgram, rom: Uint8Array): Uint8Array {
+  const width = program.widthPx;
+  const out = new Uint8Array(width * program.heightPx);
+  const tiles: number[][][] = [];
+  for (let i = 0; i < program.tileCount; i++) {
+    tiles.push(decodeRomBgTile(rom, program.descriptorOffset + 1 + i * 16));
+  }
+  for (const cell of program.cells) {
+    const tile = tiles[cell.tileIndex];
+    for (let yy = 0; yy < 8; yy++) {
+      for (let xx = 0; xx < 8; xx++) {
+        const sx = cell.flipX ? 7 - xx : xx;
+        const sy = cell.flipY ? 7 - yy : yy;
+        out[cell.col * 8 + xx + (cell.row * 8 + yy) * width] = tile[sy][sx];
+      }
+    }
+  }
+  return out;
+}
+
+/** Paleta CGB física → 4 words BGR555 (16 bits). */
+export function decodeCgbPaletteWords(rom: Uint8Array, paletteIndex: number): number[] {
+  const base = romOffset(0x30, 0x6e00) + paletteIndex * 8;
+  return [0, 1, 2, 3].map(i => rom[base + i * 2] | (rom[base + i * 2 + 1] << 8));
+}
+
 /** Compone el programa a RGBA (widthPx × heightPx). Determinista. */
 export function decodeRomBgAssemblyRgba(
   program: RomBgAssemblyProgram,
