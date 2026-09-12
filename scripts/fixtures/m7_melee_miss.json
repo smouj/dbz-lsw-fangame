@@ -41,9 +41,9 @@
   },
   {
    "tick": 0,
-   "type": "ROM_WAIT",
-   "durationTicks": 20,
-   "reason": "STANDARD_DAMAGE prepare wait",
+   "type": "PALETTE_TRANSITION",
+   "mode": 1,
+   "durationTicks": 17,
    "logicalTick": 0,
    "source": "ACTION_STARTED",
    "fidelity": "ROM_STATIC_PARTIAL",
@@ -72,7 +72,27 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 20,
+   "tick": 17,
+   "type": "SCENE_LOAD",
+   "mode": "ACTION_READY",
+   "vramLoad": "$8E00",
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-6"
+  },
+  {
+   "tick": 17,
+   "type": "ROM_WAIT",
+   "durationTicks": 20,
+   "reason": "STANDARD_DAMAGE prepare wait",
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-6"
+  },
+  {
+   "tick": 37,
    "type": "ROM_MACRO",
    "macroId": 28,
    "logicalTick": 0,
@@ -81,7 +101,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 20,
+   "tick": 37,
    "type": "FIGHTER_MOTION",
    "durationTicks": 25,
    "side": "player",
@@ -117,7 +137,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 45,
+   "tick": 62,
    "type": "ANIMATION_START",
    "resource": 45,
    "slot": 0,
@@ -127,7 +147,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 45,
+   "tick": 62,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -138,7 +158,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 45,
+   "tick": 62,
    "type": "WAIT_ANIMATION_FRAME",
    "slot": 0,
    "frame": 2,
@@ -148,7 +168,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 47,
+   "tick": 64,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -159,7 +179,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 49,
+   "tick": 66,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -170,7 +190,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 49,
+   "tick": 66,
    "type": "WAIT_ANIMATION",
    "durationTicks": 130,
    "slot": 0,
@@ -180,7 +200,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 51,
+   "tick": 68,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -191,7 +211,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 53,
+   "tick": 70,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -202,7 +222,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 55,
+   "tick": 72,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -213,7 +233,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 57,
+   "tick": 74,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -224,7 +244,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 59,
+   "tick": 76,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -235,7 +255,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 61,
+   "tick": 78,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -246,7 +266,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 63,
+   "tick": 80,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -257,7 +277,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 65,
+   "tick": 82,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -268,7 +288,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 67,
+   "tick": 84,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -279,7 +299,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 69,
+   "tick": 86,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -290,7 +310,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 71,
+   "tick": 88,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -301,7 +321,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 73,
+   "tick": 90,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -312,7 +332,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 75,
+   "tick": 92,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -323,7 +343,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 77,
+   "tick": 94,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -334,7 +354,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 79,
+   "tick": 96,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -345,7 +365,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 81,
+   "tick": 98,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -356,7 +376,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 83,
+   "tick": 100,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -367,7 +387,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 85,
+   "tick": 102,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -378,7 +398,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 87,
+   "tick": 104,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -389,7 +409,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 89,
+   "tick": 106,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -400,7 +420,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 91,
+   "tick": 108,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -411,7 +431,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 93,
+   "tick": 110,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -422,7 +442,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 95,
+   "tick": 112,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -433,7 +453,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 97,
+   "tick": 114,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -444,7 +464,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 99,
+   "tick": 116,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -455,7 +475,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 101,
+   "tick": 118,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -466,7 +486,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 103,
+   "tick": 120,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -477,7 +497,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 105,
+   "tick": 122,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -488,7 +508,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 107,
+   "tick": 124,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -499,7 +519,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 109,
+   "tick": 126,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -510,7 +530,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 111,
+   "tick": 128,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -521,7 +541,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 113,
+   "tick": 130,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -532,7 +552,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 115,
+   "tick": 132,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -543,7 +563,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 117,
+   "tick": 134,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -554,7 +574,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 119,
+   "tick": 136,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -565,7 +585,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 121,
+   "tick": 138,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -576,7 +596,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 123,
+   "tick": 140,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -587,7 +607,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 125,
+   "tick": 142,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -598,7 +618,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 127,
+   "tick": 144,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -609,7 +629,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 129,
+   "tick": 146,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -620,7 +640,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 131,
+   "tick": 148,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -631,7 +651,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 133,
+   "tick": 150,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -642,7 +662,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 135,
+   "tick": 152,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -653,7 +673,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 137,
+   "tick": 154,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -664,7 +684,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 139,
+   "tick": 156,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -675,7 +695,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 141,
+   "tick": 158,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -686,7 +706,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 143,
+   "tick": 160,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -697,7 +717,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 145,
+   "tick": 162,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -708,7 +728,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 147,
+   "tick": 164,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -719,7 +739,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 149,
+   "tick": 166,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 30,
    "resource": 45,
@@ -730,7 +750,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 179,
+   "tick": 196,
    "type": "ROM_MACRO",
    "macroId": 46,
    "logicalTick": 0,
@@ -739,7 +759,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 179,
+   "tick": 196,
    "type": "ROM_RESULT_BRANCH",
    "family": "CA53 -> HIT/MISS/SPECIAL_DEFENSE",
    "selectedFamily": "MISS",
@@ -752,7 +772,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 179,
+   "tick": 196,
    "type": "ACTION_OBJECT_DRAW_ORDER",
    "logicalTick": 0,
    "source": "ACTION_STARTED",
@@ -760,7 +780,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 179,
+   "tick": 196,
    "type": "ANIMATION_START",
    "resource": 45,
    "slot": 0,
@@ -770,7 +790,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 179,
+   "tick": 196,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 5,
    "resource": 45,
@@ -781,7 +801,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 179,
+   "tick": 196,
    "type": "WAIT_ANIMATION_FRAME",
    "slot": 0,
    "frame": 2,
@@ -791,7 +811,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 184,
+   "tick": 201,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 3,
    "resource": 45,
@@ -802,7 +822,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 187,
+   "tick": 204,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -813,7 +833,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 187,
+   "tick": 204,
    "type": "ANIMATION_START",
    "resource": 6,
    "slot": 1,
@@ -823,117 +843,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 187,
-   "type": "ROM_PHYSICAL_FRAME",
-   "durationTicks": 3,
-   "resource": 6,
-   "slot": 1,
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_PARTIAL",
-   "profile": "rom-card-6"
-  },
-  {
-   "tick": 189,
-   "type": "ROM_PHYSICAL_FRAME",
-   "durationTicks": 2,
-   "resource": 45,
-   "slot": 0,
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_PARTIAL",
-   "profile": "rom-card-6"
-  },
-  {
-   "tick": 190,
-   "type": "ROM_PHYSICAL_FRAME",
-   "durationTicks": 3,
-   "resource": 6,
-   "slot": 1,
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_PARTIAL",
-   "profile": "rom-card-6"
-  },
-  {
-   "tick": 191,
-   "type": "ROM_PHYSICAL_FRAME",
-   "durationTicks": 3,
-   "resource": 45,
-   "slot": 0,
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_PARTIAL",
-   "profile": "rom-card-6"
-  },
-  {
-   "tick": 193,
-   "type": "ROM_PHYSICAL_FRAME",
-   "durationTicks": 4,
-   "resource": 6,
-   "slot": 1,
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_PARTIAL",
-   "profile": "rom-card-6"
-  },
-  {
-   "tick": 194,
-   "type": "ROM_PHYSICAL_FRAME",
-   "durationTicks": 3,
-   "resource": 45,
-   "slot": 0,
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_PARTIAL",
-   "profile": "rom-card-6"
-  },
-  {
-   "tick": 197,
-   "type": "ROM_PHYSICAL_FRAME",
-   "durationTicks": 30,
-   "resource": 45,
-   "slot": 0,
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_PARTIAL",
-   "profile": "rom-card-6"
-  },
-  {
-   "tick": 197,
-   "type": "ROM_PHYSICAL_FRAME",
-   "durationTicks": 2,
-   "resource": 6,
-   "slot": 1,
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_PARTIAL",
-   "profile": "rom-card-6"
-  },
-  {
-   "tick": 199,
-   "type": "ROM_PHYSICAL_FRAME",
-   "durationTicks": 2,
-   "resource": 6,
-   "slot": 1,
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_PARTIAL",
-   "profile": "rom-card-6"
-  },
-  {
-   "tick": 201,
-   "type": "ROM_PHYSICAL_FRAME",
-   "durationTicks": 2,
-   "resource": 6,
-   "slot": 1,
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_PARTIAL",
-   "profile": "rom-card-6"
-  },
-  {
-   "tick": 203,
+   "tick": 204,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 3,
    "resource": 6,
@@ -946,6 +856,17 @@
   {
    "tick": 206,
    "type": "ROM_PHYSICAL_FRAME",
+   "durationTicks": 2,
+   "resource": 45,
+   "slot": 0,
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-6"
+  },
+  {
+   "tick": 207,
+   "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 3,
    "resource": 6,
    "slot": 1,
@@ -955,7 +876,18 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 209,
+   "tick": 208,
+   "type": "ROM_PHYSICAL_FRAME",
+   "durationTicks": 3,
+   "resource": 45,
+   "slot": 0,
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-6"
+  },
+  {
+   "tick": 210,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 4,
    "resource": 6,
@@ -966,7 +898,95 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 213,
+   "tick": 211,
+   "type": "ROM_PHYSICAL_FRAME",
+   "durationTicks": 3,
+   "resource": 45,
+   "slot": 0,
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-6"
+  },
+  {
+   "tick": 214,
+   "type": "ROM_PHYSICAL_FRAME",
+   "durationTicks": 30,
+   "resource": 45,
+   "slot": 0,
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-6"
+  },
+  {
+   "tick": 214,
+   "type": "ROM_PHYSICAL_FRAME",
+   "durationTicks": 2,
+   "resource": 6,
+   "slot": 1,
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-6"
+  },
+  {
+   "tick": 216,
+   "type": "ROM_PHYSICAL_FRAME",
+   "durationTicks": 2,
+   "resource": 6,
+   "slot": 1,
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-6"
+  },
+  {
+   "tick": 218,
+   "type": "ROM_PHYSICAL_FRAME",
+   "durationTicks": 2,
+   "resource": 6,
+   "slot": 1,
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-6"
+  },
+  {
+   "tick": 220,
+   "type": "ROM_PHYSICAL_FRAME",
+   "durationTicks": 3,
+   "resource": 6,
+   "slot": 1,
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-6"
+  },
+  {
+   "tick": 223,
+   "type": "ROM_PHYSICAL_FRAME",
+   "durationTicks": 3,
+   "resource": 6,
+   "slot": 1,
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-6"
+  },
+  {
+   "tick": 226,
+   "type": "ROM_PHYSICAL_FRAME",
+   "durationTicks": 4,
+   "resource": 6,
+   "slot": 1,
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-6"
+  },
+  {
+   "tick": 230,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 6,
    "resource": 6,
@@ -977,7 +997,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 219,
+   "tick": 236,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 8,
    "resource": 6,
@@ -988,7 +1008,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 227,
+   "tick": 244,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 4,
    "resource": 45,
@@ -999,7 +1019,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 227,
+   "tick": 244,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 9,
    "resource": 6,
@@ -1010,7 +1030,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 231,
+   "tick": 248,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 4,
    "resource": 45,
@@ -1021,7 +1041,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 235,
+   "tick": 252,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
    "resource": 45,
@@ -1032,7 +1052,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 236,
+   "tick": 253,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 30,
    "resource": 6,
@@ -1043,7 +1063,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 266,
+   "tick": 283,
    "type": "APPLY_FRAME_DELTA",
    "slot": 0,
    "logicalTick": 0,
@@ -1052,7 +1072,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 266,
+   "tick": 283,
    "type": "ACTION_OBJECT_STOP",
    "slot": 0,
    "logicalTick": 0,
@@ -1061,7 +1081,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 266,
+   "tick": 283,
    "type": "ACTION_OBJECT_STOP",
    "slot": 1,
    "logicalTick": 0,
@@ -1070,7 +1090,7 @@
    "profile": "rom-card-6"
   },
   {
-   "tick": 266,
+   "tick": 283,
    "type": "SCENE_LOAD",
    "mode": "RESTORE_TACTICAL",
    "vramLoad": "$8E00",

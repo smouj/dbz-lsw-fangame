@@ -219,6 +219,10 @@ export function romStagePresentationForCard(input: {
   const actorProfileKey = input.actorFormId ? profileForForm(input.actorFormId)?.actorVisualProfileKey ?? null : null;
   const out: TimelineEntry[] = [
     entry({ type: 'SCENE_LOAD', tick: startTick, vramLoad: '$8E00', mode: 'TACTICAL_TO_ACTION' }, input.card, logicalTick),
+    // P0.4R-B5 — la ruta Stage declara su entrada a ACTION explícitamente.
+    // NO se inventa palette transition: la secuencia física de Stage es propia
+    // y no hay evidencia ROM de paleta en este camino.
+    entry({ type: 'SCENE_LOAD', tick: startTick, vramLoad: '$8E00', mode: 'ACTION_READY' }, input.card, logicalTick),
   ];
 
   let cursor = startTick;

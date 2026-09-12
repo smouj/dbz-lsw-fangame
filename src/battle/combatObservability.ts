@@ -32,6 +32,7 @@ import type { PresentationCue } from './engine/presentation/PresentationCue';
 import { romPresentationTimelineForCard } from './romPresentationForCard';
 import { romPresentationProfileForCard, type RomPresentationProfileKind } from './romPresentationProfiles';
 import { romActionExecutionDescriptorForCard } from './romActionExecutionDescriptors';
+import { sceneLoadEffect } from './presentation/actionBoundary';
 
 /** Fuente de presentación de una acción en producción (canary C1.0). */
 export type PresentationSourceKind = 'ROM' | 'LEGACY' | 'REMAKE_FALLBACK' | 'MIXED';
@@ -68,7 +69,6 @@ const VISIBLE_CUES = new Set<PresentationCue['type']>([
   'PROJECTILE',
   'CAMERA',
   'IMPACT',
-  'SCENE_LOAD',
   'ROM_RESULT_BRANCH',
   'FIGHTER_VISIBILITY',
   // START_ANIMATION with a proven resource/sequence is routed to the actor
@@ -176,6 +176,15 @@ export function classifyRomCue(cue: PresentationCue): CueClassification {
       return { ...base, destination: 'VISIBLE', visible: true };
     }
     return { ...base, destination: 'TRACE', trace: true, noVisibleEffect: true };
+  }
+  if (cue.type === 'SCENE_LOAD') {
+    // P0.4R-B5 — espejo EXACTO del adapter vía la autoridad única
+    // sceneLoadEffect(): TACTICAL_TO_ACTION es PREPARACIÓN (sin efecto visible);
+    // ACTION_READY / RESTORE_TACTICAL cambian escena.
+    if (sceneLoadEffect(cue.mode) === 'PREPARE') {
+      return { ...base, destination: 'TRACE', noVisibleEffect: true };
+    }
+    return { ...base, destination: 'VISIBLE', visible: true };
   }
   if (VISIBLE_CUES.has(cue.type)) {
     return { ...base, destination: 'VISIBLE', visible: true };

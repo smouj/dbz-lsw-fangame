@@ -12,6 +12,7 @@ import type { BattlePresentation, BattleScene } from '../src/renderer/pixi/prese
 import { CameraPresenter } from '../src/renderer/pixi/presentation/CameraPresenter';
 import { ProductionRomPresentationAdapter } from '../src/renderer/pixi/presentation/ProductionRomPresentationAdapter';
 import { advanceAuthoritativeBattleTick } from '../src/renderer/pixi/presentation/RomPresentationPlayer';
+import { resolveActionEntryBoundary, describeActionEntryBoundary } from '../src/battle/presentation/actionBoundary';
 import { canonForAction } from '../src/battle/animationCanon';
 import { actionDescriptorForCard } from '../src/battle/engine/commands/buildActionDescriptor';
 
@@ -168,15 +169,22 @@ function assertStaticDefenderEntrance(cardId: number, formId: string, label: str
   const defenderIn = canonForAction(actionDescriptorForCard(card)).defenderIn;
   const targetSide: BattleSide = side === 'player' ? 'enemy' : 'player';
   const film = playFilm(timeline, 5150 + cardId);
-  const before = film.frames.find(frame => frame.presentationTick === timeline.startTick);
-  const entrance = film.frames.find(frame => frame.presentationTick === timeline.startTick + defenderIn);
-  check(`${label} hides the target in the attacker-only shot`, before?.scene === 'ACTION_SOLO' && before.targetVisible === false);
-  check(`${label} emits the verified defenderIn boundary`, timeline.entries.some(entry =>
+  // P0.4R-B5 — la autoridad del boundary es el contrato, NO timeline.startTick.
+  const boundary = resolveActionEntryBoundary(timeline);
+  const entryTick = boundary.actionEntryTick ?? timeline.startTick;
+  const showCue = timeline.entries.find(entry =>
     entry.cue.type === 'FIGHTER_VISIBILITY'
     && entry.cue.role === 'TARGET'
     && entry.cue.side === targetSide
-    && entry.cue.visible
-    && entry.cue.tick === timeline.startTick + defenderIn));
+    && entry.cue.visible);
+  const showTick = showCue?.cue.tick ?? timeline.startTick + defenderIn;
+  const before = film.frames.find(frame => frame.presentationTick === entryTick);
+  const entrance = film.frames.find(frame => frame.presentationTick === showTick);
+  check(`${label} hides the target in the attacker-only shot`, before?.scene === 'ACTION_SOLO' && before.targetVisible === false,
+    `entry=${entryTick} ${describeActionEntryBoundary(boundary)}`);
+  check(`${label} emits the verified defenderIn boundary`, showCue !== undefined && showCue.cue.tick === timeline.startTick + defenderIn,
+    `show=${showCue?.cue.tick} esperado=${timeline.startTick + defenderIn}`);
+  check(`${label} el duelo no se forma antes de la entrada a ACTION`, showTick >= entryTick, `show=${showTick} entry=${entryTick}`);
   check(`${label} composes the duel from target visibility`, entrance?.targetVisible === true && entrance.scene === 'ACTION_DUEL');
 }
 

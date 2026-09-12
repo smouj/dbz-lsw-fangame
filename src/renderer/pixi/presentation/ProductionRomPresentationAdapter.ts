@@ -29,6 +29,7 @@
 import type { BattlePresentation, BattleScene } from './BattlePresentation';
 import type { PresentationCue } from '../../../battle/engine/presentation/PresentationCue';
 import type { RomDisplayPresenter } from '../../../battle/romDisplay/RomDisplayPresenter';
+import { sceneLoadEffect } from '../../../battle/presentation/actionBoundary';
 import type { ActionObjectBinding, ActionObjectSlot } from '../../../battle/engine/presentation/ActionObjectRuntime';
 
 export type ProductionPresentationSource = 'ROM' | 'LEGACY' | 'NONE';
@@ -49,6 +50,8 @@ export interface ProductionRomPresentationStats {
   pendingCues: number;
   pendingReasons: string[];
   sceneChanges: number;
+  /** P0.4R-B5 — fases de preparación TACTICAL→ACTION (VRAM $8E00 + macros). */
+  scenePrepares: number;
   /** Cues FIGHTER_MOTION registrados (trazabilidad — no easeOutCubic). */
   motions: number;
   /** Cues DEFENSE_FX con pose guard/evade aplicada al defensor. */
@@ -156,6 +159,7 @@ export class ProductionRomPresentationAdapter {
       pendingCues: 0,
       pendingReasons: [],
       sceneChanges: 0,
+      scenePrepares: 0,
       motions: 0,
       defenseFx: 0,
       fxLoads: 0,
@@ -277,7 +281,15 @@ export class ProductionRomPresentationAdapter {
 
       // ── ROM VM — efectos visibles no-semánticos ──
       case 'SCENE_LOAD': {
-        this.currentScene = cue.mode === 'RESTORE_TACTICAL' ? 'FIELD' : 'ACTION_SOLO';
+        // P0.4R-B5 — autoridad única del boundary: sceneLoadEffect()
+        // (actionBoundary.ts). TACTICAL_TO_ACTION es PREPARACIÓN (gráficos VRAM
+        // $8E00 + macros $19/$1A); la escena ACTION se entra en ACTION_READY.
+        const effect = sceneLoadEffect(cue.mode);
+        if (effect === 'PREPARE') {
+          this.stats.scenePrepares++;
+          break;
+        }
+        this.currentScene = effect === 'RESTORE_FIELD' ? 'FIELD' : 'ACTION_SOLO';
         this.pres.setScene(this.currentScene);
         this.stats.sceneChanges++;
         visible = true;
