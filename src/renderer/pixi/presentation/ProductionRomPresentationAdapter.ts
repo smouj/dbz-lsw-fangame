@@ -30,6 +30,7 @@ import type { BattlePresentation, BattleScene } from './BattlePresentation';
 import type { PresentationCue } from '../../../battle/engine/presentation/PresentationCue';
 import type { RomDisplayPresenter } from '../../../battle/romDisplay/RomDisplayPresenter';
 import { sceneLoadEffect } from '../../../battle/presentation/actionBoundary';
+import { isExitResidualCue, type ActionExitBoundary } from '../../../battle/presentation/actionExitBoundary';
 import type { ActionObjectBinding, ActionObjectSlot } from '../../../battle/engine/presentation/ActionObjectRuntime';
 
 export type ProductionPresentationSource = 'ROM' | 'LEGACY' | 'NONE';
@@ -52,6 +53,15 @@ export interface ProductionRomPresentationStats {
   sceneChanges: number;
   /** P0.4R-B5 — fases de preparación TACTICAL→ACTION (VRAM $8E00 + macros). */
   scenePrepares: number;
+  /** P0.4R-B6B — tick ROM en el que el contrato declara FIELD_READY (null si no declarado). */
+  exitFieldReadyTick: number | null;
+  /** P0.4R-B6B — tick en el que el adapter aplicó realmente el restore a FIELD. */
+  exitFieldRestoredTick: number | null;
+  /** P0.4R-B6B — cues físicos/FX observados DESPUÉS del restore (debe ser 0). */
+  exitResidualCues: number;
+  exitResidualTypes: string[];
+  /** P0.4R-B6B/B6C — releases de display ROM ordenados por el contrato. */
+  exitDisplayReleases: number;
   /** Cues FIGHTER_MOTION registrados (trazabilidad — no easeOutCubic). */
   motions: number;
   /** Cues DEFENSE_FX con pose guard/evade aplicada al defensor. */
@@ -141,6 +151,8 @@ export class ProductionRomPresentationAdapter {
   private readonly romDisplay: RomDisplayPresenter | null;
   private stats: ProductionRomPresentationStats;
   private currentScene: BattleScene = 'FIELD';
+  /** P0.4R-B6B — contrato de salida enlazado (autoridad del teardown). */
+  private exitBoundary: ActionExitBoundary | null = null;
 
   constructor(pres: BattlePresentation, romDisplay?: RomDisplayPresenter) {
     this.pres = pres;
@@ -160,6 +172,11 @@ export class ProductionRomPresentationAdapter {
       pendingReasons: [],
       sceneChanges: 0,
       scenePrepares: 0,
+      exitFieldReadyTick: null,
+      exitFieldRestoredTick: null,
+      exitResidualCues: 0,
+      exitResidualTypes: [],
+      exitDisplayReleases: 0,
       motions: 0,
       defenseFx: 0,
       fxLoads: 0,
@@ -191,12 +208,55 @@ export class ProductionRomPresentationAdapter {
   /** Sincroniza el reloj GBC de la presentación (frame = f(tick, poseStartTick)). */
   sync(tick: number): void {
     this.pres.sync(tick);
+    // P0.4R-B6B — el restore a FIELD lo manda el CONTRATO: se aplica al alcanzar
+    // fieldReadyTick, sin depender de que exista un cue SCENE_LOAD RESTORE.
+    const ready = this.exitBoundary?.fieldReadyTick ?? null;
+    if (ready !== null && tick >= ready) this.applyFieldRestore(ready);
+  }
+
+  /**
+   * Aplica el restore a FIELD ordenado por el contrato. Idempotente: sólo la
+   * primera vez. Gobierna también el release del display ROM cuando el contrato
+   * detecta display aún compuesto sin DISPLAY_CLEAR declarado (Support $00/$02).
+   */
+  private applyFieldRestore(tick: number): void {
+    if (this.stats.exitFieldRestoredTick !== null) return;
+    this.stats.exitFieldRestoredTick = tick;
+    this.currentScene = 'FIELD';
+    this.pres.setScene('FIELD');
+    if (this.exitBoundary?.displayResidualAtField) {
+      const release = (this.pres as Partial<Pick<BattlePresentation, 'releaseRomDisplayForField'>>).releaseRomDisplayForField;
+      if (typeof release === 'function') {
+        release.call(this.pres);
+        this.stats.exitDisplayReleases++;
+      } else {
+        this.stats.pendingCues++;
+        this.stats.pendingReasons.push('BattlePresentation.releaseRomDisplayForField missing');
+      }
+    }
+  }
+
+  /**
+   * P0.4R-B6B — enlaza el contrato de salida. El adapter NO decide el teardown
+   * por su cuenta: toma `fieldReadyTick` del contrato y verifica que su propio
+   * restore a FIELD coincida. Los desvíos se registran, nunca se silencian.
+   */
+  bindExitBoundary(boundary: ActionExitBoundary): void {
+    this.exitBoundary = boundary;
+    this.stats.exitFieldReadyTick = boundary.fieldReadyTick;
   }
 
   /** Consume un cue ROM → efecto observable. Devuelve true si cambió Pixi. */
   consume(cue: PresentationCue): boolean {
     this.stats.cuesTotal++;
     let visible = false;
+
+    // P0.4R-B6B — residuo en runtime: cualquier cue físico/FX que llegue DESPUÉS
+    // del restore a FIELD significa que el teardown no limpió. Debe ser 0.
+    if (this.stats.exitFieldRestoredTick !== null && cue.tick > this.stats.exitFieldRestoredTick && isExitResidualCue(cue.type)) {
+      this.stats.exitResidualCues++;
+      if (!this.stats.exitResidualTypes.includes(cue.type)) this.stats.exitResidualTypes.push(cue.type);
+    }
 
     switch (cue.type) {
       // ── SEMÁNTICOS (buildTimeline: MOVE/GUARD + futuros cutovers) ──
@@ -289,7 +349,13 @@ export class ProductionRomPresentationAdapter {
           this.stats.scenePrepares++;
           break;
         }
-        this.currentScene = effect === 'RESTORE_FIELD' ? 'FIELD' : 'ACTION_SOLO';
+        if (effect === 'RESTORE_FIELD') {
+          this.applyFieldRestore(cue.tick);
+          this.stats.sceneChanges++;
+          visible = true;
+          break;
+        }
+        this.currentScene = 'ACTION_SOLO';
         this.pres.setScene(this.currentScene);
         this.stats.sceneChanges++;
         visible = true;

@@ -67,6 +67,18 @@ export interface ActionExitBoundary {
   screenRestoreTick: number | null;
   /** Tick en el que la escena vuelve a FIELD. */
   fieldReadyTick: number | null;
+  /**
+   * Fin autoritativo del film según el contrato. Los consumidores (player)
+   * NO deben calcular su propio end tick desde `timeline.endTick`.
+   */
+  filmEndTick: number;
+  /**
+   * P0.4R-B6B/B6C — true si al llegar a FIELD queda display ROM compuesto
+   * (BG_ASSEMBLY/DISPLAY_COMPOSE/paleta) SIN un DISPLAY_CLEAR declarado antes.
+   * En ese caso el release lo ordena el CONTRATO (no un cue sintético y no el
+   * presenter por su cuenta). Caso canónico: Support $00/$02.
+   */
+  displayResidualAtField: boolean;
   /** Cues de salida que ocurren DESPUÉS de FIELD_READY → residuo (debe ser 0). */
   residualAfterField: PresentationCue['type'][];
   /** true si el timeline no declara RESTORE y se usó endTick como fallback. */
@@ -107,6 +119,8 @@ export function resolveActionExitBoundary(timeline: BattleTimeline): ActionExitB
     paletteRestoreTick: maxTick(t => t === 'PALETTE_TRANSITION' || t === 'PALETTE_LOAD'),
     screenRestoreTick: firstTick('SCREEN_RESTORE'),
     fieldReadyTick,
+    filmEndTick: Math.max(timeline.endTick, fieldReadyTick),
+    displayResidualAtField: false,
     residualAfterField: [],
     usedLegacyFallback,
   };
@@ -120,7 +134,25 @@ export function resolveActionExitBoundary(timeline: BattleTimeline): ActionExitB
   }
   boundary.residualAfterField = [...residuals];
 
+  // Display residual: hubo composición de display y ningún DISPLAY_CLEAR la cerró
+  // antes de FIELD → el release lo ordena el contrato.
+  const composed = entries.some(e => DISPLAY_COMPOSE_CUES.has(e.cue.type));
+  const cleared = boundary.displayClearTick !== null && boundary.displayClearTick <= boundary.fieldReadyTick!;
+  boundary.displayResidualAtField = composed && !cleared;
+
   return boundary;
+}
+
+const DISPLAY_COMPOSE_CUES = new Set<PresentationCue['type']>([
+  'BG_ASSEMBLY',
+  'DISPLAY_COMPOSE',
+  'PALETTE_LOAD',
+  'PALETTE_TRANSITION',
+]);
+
+/** ¿El cue deja contenido vivo que FIELD debe haber limpiado? Autoridad única. */
+export function isExitResidualCue(type: PresentationCue['type']): boolean {
+  return PHYSICAL_CUES.has(type) || FX_CUES.has(type);
 }
 
 /** Ticks del contrato de salida en orden, para mensajes de gate. */

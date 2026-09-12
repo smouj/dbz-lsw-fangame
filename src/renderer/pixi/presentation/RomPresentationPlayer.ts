@@ -11,6 +11,7 @@
 // ═══════════════════════════════════════════════════════════════════════
 
 import type { BattleTimeline, PresentationCue } from '../../../battle/engine/presentation/PresentationCue';
+import { resolveActionExitBoundary } from '../../../battle/presentation/actionExitBoundary';
 import { GbcClockAdapter } from '../../../battle/GbcClockAdapter';
 import type { ProductionRomPresentationAdapter } from './ProductionRomPresentationAdapter';
 
@@ -54,7 +55,9 @@ export class RomPresentationPlayer {
     private readonly adapter: ProductionRomPresentationAdapter,
     private readonly opts: RomPresentationPlayerOptions,
   ) {
-    this.totalTicks = timeline.endTick;
+    // P0.4R-B6B — el fin del film viene del contrato de salida, no de un
+    // `timeline.endTick` reinterpretado localmente.
+    this.totalTicks = resolveActionExitBoundary(timeline).filmEndTick;
   }
 
   get tick(): number {

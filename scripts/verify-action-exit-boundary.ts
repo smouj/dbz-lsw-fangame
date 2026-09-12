@@ -25,7 +25,37 @@ import { compileRomSupportPresentation } from '../src/battle/romSupportPresentat
 import { getCard, type CardDef } from '../src/data/cards';
 import { CARDS } from '../src/data/cards';
 import { romBgAssemblyProgram } from '../src/data/generated/romBgAssembly.generated';
+import { ProductionRomPresentationAdapter } from '../src/renderer/pixi/presentation/ProductionRomPresentationAdapter';
 import type { BattleTimeline } from '../src/battle/engine/presentation/PresentationCue';
+
+/**
+ * Sonda mínima: el adapter solo consulta métodos del contrato BattlePresentation.
+ * Cualquier propiedad devuelve un no-op, así el adapter no cae a PENDING por
+ * métodos ausentes y medimos SU comportamiento real.
+ */
+function productionProbe(): never {
+  return new Proxy({}, { get: (_t, p) => (p === 'then' ? undefined : () => undefined) }) as never;
+}
+
+/** Corre el film entero por el adapter real y devuelve su snapshot final. */
+function playProduction(tl: BattleTimeline) {
+  const adapter = new ProductionRomPresentationAdapter(productionProbe());
+  const boundary = resolveActionExitBoundary(tl);
+  adapter.bindExitBoundary(boundary);
+  // Modela el player real: recorre TODOS los ticks del film (no solo los que
+  // tienen cue), porque el restore a FIELD se ordena por fieldReadyTick.
+  const byTick = new Map<number, BattleTimeline['entries'][number]['cue'][]>();
+  for (const e of [...tl.entries].sort((a, b) => a.cue.tick - b.cue.tick)) {
+    const list = byTick.get(e.cue.tick) ?? [];
+    list.push(e.cue);
+    byTick.set(e.cue.tick, list);
+  }
+  for (let t = tl.startTick; t <= boundary.filmEndTick; t++) {
+    adapter.sync(t);
+    for (const cue of byTick.get(t) ?? []) adapter.consume(cue);
+  }
+  return { adapter, boundary, snapshot: adapter.snapshot };
+}
 
 let failures = 0;
 let checks = 0;
@@ -116,6 +146,37 @@ check('caso Gather/CHARA $1A: hueco de ruta declarado (no silencioso)',
   bg1aRouteGap
     ? 'HUECO DECLARADO: ninguna carta declara BG $1A (background.resource solo admite $19) — bloquea cerrar el caso $1A de B6'
     : `card ${gatherCharaId}`);
+
+// ═══ PRODUCTION — el adapter real también queda limpio tras FIELD ═══
+let prodResidual = 0;
+let prodRestoreMismatch = 0;
+let prodNotField = 0;
+let prodReleaseMismatch = 0;
+for (const c of CASES) {
+  const tl = c.via === 'support' ? supportTimeline(c.id) : route(c.id);
+  if (!tl) continue;
+  const { boundary, snapshot } = playProduction(tl);
+  const declared = boundary.fieldReadyTick !== null && !boundary.usedLegacyFallback;
+  prodResidual += snapshot.exitResidualCues;
+  if (snapshot.exitResidualCues > 0) {
+    console.log(`  ! ${c.label}: residuo Production = [${snapshot.exitResidualTypes.join(',')}]`);
+  }
+  if (declared) {
+    if (snapshot.exitFieldRestoredTick !== boundary.fieldReadyTick) prodRestoreMismatch++;
+    if (snapshot.exitFieldRestoredTick === null) prodNotField++;
+  }
+  // El release del display lo ordena el CONTRATO: exactamente 1 cuando hay
+  // display residual en FIELD, 0 cuando el programa ya declara DISPLAY_CLEAR.
+  const expectedReleases = boundary.displayResidualAtField ? 1 : 0;
+  if (snapshot.exitDisplayReleases !== expectedReleases) {
+    prodReleaseMismatch++;
+    console.log(`  ! ${c.label}: releases=${snapshot.exitDisplayReleases} esperado=${expectedReleases} (displayResidualAtField=${boundary.displayResidualAtField})`);
+  }
+}
+check('Production: residuo tras FIELD = 0 (cues físicos/FX)', prodResidual === 0, `${prodResidual} residuos`);
+check('Production: el restore a FIELD coincide con fieldReadyTick del contrato', prodRestoreMismatch === 0, `${prodRestoreMismatch} desvíos`);
+check('Production: el adapter alcanza FIELD cuando el contrato lo declara', prodNotField === 0, `${prodNotField} sin restore`);
+check('Production: release de display ordenado por el contrato (1 si residual, 0 si clear declarado)', prodReleaseMismatch === 0, `${prodReleaseMismatch} desvíos`);
 
 console.log(`\nACTION exit boundary: ${checks} checks, ${failures} failed`);
 console.log(failures ? '❌ verify:action-exit-boundary FAIL' : '✅ verify:action-exit-boundary PASS');

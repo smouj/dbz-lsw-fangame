@@ -79,6 +79,12 @@ export interface BattlePresentation {
 
   /** Vuelve al plano FIELD (mapea FIELD_RETURN). */
   returnToField(): void;
+  /**
+   * P0.4R-B6C — release del display ROM ordenado por el contrato de salida
+   * (display aún compuesto sin DISPLAY_CLEAR declarado). El presenter no decide
+   * este teardown por su cuenta: lo ejecuta cuando el contrato lo indica.
+   */
+  releaseRomDisplayForField?(): void;
 
   /**
    * Aplica offset ROM-native al frame actual (desde ROM_PHYSICAL_FRAME).

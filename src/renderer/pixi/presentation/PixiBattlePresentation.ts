@@ -452,8 +452,7 @@ export class PixiBattlePresentation implements BattlePresentation {
   }
 
   returnToField(): void {
-    this.specialActionActive = false;
-    this.whiteFlashStartTick = -1;
+    this.specialActionActive = false;    this.whiteFlashStartTick = -1;
     this.syncWhiteFlash(this.renderer.currentTick);
     this.renderer.sceneDirector.setScene('FIELD');
     this.clearProjectile();
@@ -473,6 +472,17 @@ export class PixiBattlePresentation implements BattlePresentation {
     this.rightActor?.freezeTrack();
     this.leftActor?.setPos(ACTION_LEFT_X, ACTION_GROUND_Y);
     this.rightActor?.setPos(ACTION_RIGHT_X, ACTION_GROUND_Y);
+  }
+
+  /**
+   * P0.4R-B6C — release del display ROM ordenado por el contrato de salida.
+   * Se usa cuando el contrato detecta display aún compuesto al llegar a FIELD
+   * sin DISPLAY_CLEAR declarado (caso canónico: Support $00/$02). No es un clear
+   * sintético en la timeline ni una decisión autónoma del presenter.
+   */
+  releaseRomDisplayForField(): void {
+    this.romDisplayPresenter.reset();
+    this.romDisplayLayer.clear();
   }
 
   applyFrameOffset(offsetX: number, offsetY: number, slot: 0 | 1 = 0): void {
