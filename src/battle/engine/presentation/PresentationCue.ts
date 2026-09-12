@@ -158,6 +158,8 @@ export interface RomPaletteTransitionCue {
   paletteMask16?: number;
   maxCounter?: number;
   channelStep?: number;
+  /** Estado CA06 de la ROM que instala esta transición (camino común Support). */
+  stage?: 'T1_BEFORE_BG' | 'T2_AFTER_BG' | 'T3_AFTER_HOLD120';
 }
 
 /** Movimiento de fighter gobernado por ticks GBC (CHARA exit/entry — §176-178). */

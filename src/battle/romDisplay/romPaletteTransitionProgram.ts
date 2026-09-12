@@ -135,3 +135,42 @@ export const PALETTE_TRANSITION_STANDARD_PROGRAM = paletteTransitionProgram(1, 0
 
 /** Perfiles ROM observados (máscaras) — no inventar otros. */
 export const ROM_PALETTE_TRANSITION_MASKS = [0x0308, 0x0348, 0x0340, 0x0008, 0x0310, 0x0038, 0x0060, 0x0020, 0x008d, 0x00bf, 0x03bf] as const;
+
+export interface RomPaletteTransitionStage {
+  stage: 'T1_BEFORE_BG' | 'T2_AFTER_BG' | 'T3_AFTER_HOLD120';
+  /** Dirección ROM del estado CA06 que la instala. */
+  address: number;
+  mode: RomPaletteTransitionMode;
+  paletteMask16: number;
+  maxCounter: number;
+  channelStep: number;
+}
+
+/**
+ * Secuencia ROM REAL del camino común Support ($00/$02).
+ * V5 FSM, ROM_HANDLER_VERIFIED (03:$63FA..$64D7).
+ *
+ * Orden literal de la ROM — NO es el orden del código previo:
+ *   $0A paleta T1 (A=1 BC=$0038 E=$20 D=1)  ← ANTES de ensamblar el BG
+ *   $0B poll $080C · scene $3764 · macro $19
+ *   $0C BG helper $66D1 → Bank68:$19 ; al completar → T2 (A=0 BC=$0360 E=$20 D=1)
+ *   $0D delay $0821 DE=$28 (40t) · poll · CB77=0
+ *   $0E CB77++ hasta $78 (120t) → T3 (A=1 BC=$0020 E=$10 D=2)
+ *   $0F poll
+ *
+ * Máscaras: $0038 = BG3+BG4+BG5 · $0360 = BG5+BG6+OBJ0+OBJ1 · $0020 = BG5.
+ * Las tres incluyen BG5 = slot de paleta del overlay BG $19.
+ */
+export const SUPPORT_COMMON_PALETTE_TRANSITION_SEQUENCE: readonly RomPaletteTransitionStage[] = [
+  { stage: 'T1_BEFORE_BG', address: 0x642a, mode: 1, paletteMask16: 0x0038, maxCounter: 0x20, channelStep: 0x01 },
+  { stage: 'T2_AFTER_BG', address: 0x6459, mode: 0, paletteMask16: 0x0360, maxCounter: 0x20, channelStep: 0x01 },
+  { stage: 'T3_AFTER_HOLD120', address: 0x6487, mode: 1, paletteMask16: 0x0020, maxCounter: 0x10, channelStep: 0x02 },
+] as const;
+
+/** Slot de paleta del overlay BG $19/$1A (ROM: BG palette slot5). */
+export const ROM_BG_OVERLAY_PALETTE_SLOT = 5;
+
+/** ¿La máscara toca el slot de paleta del overlay BG? */
+export function paletteMaskAffectsBgSlot(paletteMask16: number, slot: number): boolean {
+  return ((paletteMask16 >> slot) & 1) === 1;
+}

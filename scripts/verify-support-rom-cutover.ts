@@ -106,7 +106,20 @@ check(
 );
 
 // ═══ TIER FIELD-EFFECT — timeline plano de 5 cues (sin branch) ═══
-const EXPECTED_FE_CUES = ['SUPPORT_VISUAL_LOAD', 'PALETTE_LOAD', 'BG_ASSEMBLY', 'PALETTE_TRANSITION', 'ROM_WAIT'];
+// P0.4R — secuencia ROM REAL del camino común Support (V5 FSM 03:$63FA..$64D7).
+// La versión previa (5 cues, BG antes de la paleta) era una suposición del
+// código, refutada por la ROM: T1 va ANTES del BG y hay 3 transiciones.
+const EXPECTED_FE_CUES = [
+  'SUPPORT_VISUAL_LOAD',
+  'PALETTE_LOAD',
+  'PALETTE_TRANSITION',
+  'MACRO',
+  'BG_ASSEMBLY',
+  'PALETTE_TRANSITION',
+  'ROM_WAIT',
+  'ROM_WAIT',
+  'PALETTE_TRANSITION',
+];
 let feWrongCueCount = 0;
 let feWrongCueSet = 0;
 let feBranch = 0;
@@ -116,23 +129,23 @@ for (const card of feCards) {
   const cut = supportFieldEffectCutover(card.id);
   if (!cut) { feWrongCueCount++; continue; }
   const types = cut.timeline.entries.map((e) => e.cue.type);
-  if (types.length !== 5) feWrongCueCount++;
+  if (types.length !== EXPECTED_FE_CUES.length) feWrongCueCount++;
   const isExpected = JSON.stringify(types) === JSON.stringify(EXPECTED_FE_CUES);
   if (!isExpected) feWrongCueSet++;
   if (cut.timeline.entries.some((e) => e.cue.type === 'ROM_RESULT_BRANCH')) feBranch++;
   if (cut.timeline.entries.every((e) => e.sourceEvent === 'SUPPORT_FIELD_EFFECT')) feSourceEventOk++;
-  const hold = cut.timeline.entries.find((e) => e.cue.type === 'ROM_WAIT');
+  const hold = cut.timeline.entries.find((e) => e.cue.type === 'ROM_WAIT' && e.cue.durationTicks === 120);
   if (hold?.cue.type === 'ROM_WAIT' && hold.cue.durationTicks === 120) feHoldOk++;
 }
-check('25/25 timelines field-effect con exactamente 5 cues', feWrongCueCount === 0, `${feWrongCueCount} divergen`);
+check(`${feCards.length}/${feCards.length} timelines field-effect con ${EXPECTED_FE_CUES.length} cues (orden ROM)`, feWrongCueCount === 0, `${feWrongCueCount} divergen`);
 check(
-  '25/25 con la secuencia SUPPORT_VISUAL_LOAD→PALETTE_LOAD→BG_ASSEMBLY→PALETTE_TRANSITION→ROM_WAIT',
+  'timeline con la secuencia ROM: VISUAL_LOAD→PALETTE_LOAD→T1→MACRO $19→BG_ASSEMBLY→T2→WAIT40→HOLD120→T3',
   feWrongCueSet === 0,
   `${feWrongCueSet} divergen`,
 );
 check('0 ROM_RESULT_BRANCH en field-effect (compilación plana, sin hydratación)', feBranch === 0, `${feBranch} con branch`);
 check('25/25 sourceEvent = SUPPORT_FIELD_EFFECT', feSourceEventOk === 25, `${feSourceEventOk}/25`);
-check('25/25 ROM_WAIT HOLD120 (120 ticks)', feHoldOk === 25, `${feHoldOk}/25`);
+check('25/25 ROM_WAIT HOLD120 (120 ticks) presente', feHoldOk === 25, `${feHoldOk}/25`);
 check('0 ROM_PENDING en field-effect (programa completo)', feCards.every((c) => (supportFieldEffectCutover(c.id)?.pendingCues ?? -1) === 0));
 
 // ═══ AMBOS TIERS — sin mutación de gameplay + sin auto-FX ═══

@@ -7,6 +7,7 @@
 // Kiai/Paralysis = PRELOADED_SLOT6_NOT_ACTIONOBJECT_STARTED).
 // ═══════════════════════════════════════════════════════════════════════
 import type { PresentationCue } from './engine/presentation/PresentationCue';
+import { SUPPORT_COMMON_PALETTE_TRANSITION_SEQUENCE } from './romDisplay/romPaletteTransitionProgram';
 import {
   ROM_SUPPORT_PHYSICAL_VISUALS,
   type RomSupportPhysicalVisual,
@@ -175,10 +176,33 @@ export function romSupportPresentationProfile(
   });
 
   if (family === '$00' || family === '$02') {
-    // 3a) BG $19 (V5: UN solo gráfico BG 48x56; no son 7 frames).
+    // ── Orden ROM REAL (V5 FSM ROM_HANDLER_VERIFIED 03:$63FA..$64D7) ──
+    // NO es el orden del código previo: en la ROM la primera transición de
+    // paleta ocurre ANTES de ensamblar el BG $19, y el camino tiene TRES
+    // transiciones (no una).
+    const [t1, t2, t3] = SUPPORT_COMMON_PALETTE_TRANSITION_SEQUENCE;
+
+    // $0A: paleta T1 (A=1 BC=$0038 E=$20 D=1) — antes del BG.
+    cues.push({
+      type: 'PALETTE_TRANSITION',
+      tick: tick(8),
+      durationTicks: t1.maxCounter + 1,
+      sourcePalette: visual.palette.cardPaletteByte,
+      targetPalette: visual.palette.cardPaletteByte,
+      mode: t1.mode,
+      paletteMask16: t1.paletteMask16,
+      maxCounter: t1.maxCounter,
+      channelStep: t1.channelStep,
+      stage: t1.stage,
+    });
+
+    // $0B: poll $080C · scene $3764 · macro $19 (SET_ANIMATION_STATE slot 0).
+    cues.push({ type: 'MACRO', tick: tick(41), macroId: 0x19 });
+
+    // $0C: BG $19 helper $66D1 → Bank68:$19 (48x56, row 4 col 7, slot 5).
     cues.push({
       type: 'BG_ASSEMBLY',
-      tick: tick(8),
+      tick: tick(49),
       resource: SUPPORT_BG19.resource,
       rows: SUPPORT_BG19.rows,
       cols: SUPPORT_BG19.cols,
@@ -187,25 +211,51 @@ export function romSupportPresentationProfile(
       paletteSlot: SUPPORT_BG19.paletteSlot,
       note: 'SINGLE_BG_GRAPHIC',
     });
+
+    // $0C cont.: al completar el helper → T2 (A=0 BC=$0360 E=$20 D=1).
     cues.push({
       type: 'PALETTE_TRANSITION',
-      tick: tick(16),
-      durationTicks: 40,
+      tick: tick(57),
+      durationTicks: t2.maxCounter + 1,
       sourcePalette: visual.palette.cardPaletteByte,
       targetPalette: visual.palette.cardPaletteByte,
-      // Parámetros ROM reales del worker $07F4: A=$00 (mode 0 restore),
-      // BC=$0340, E=$10 (maxCounter), D=$02 (channelStep). V7 LEDGER §"$0C".
-      mode: 0,
-      paletteMask16: 0x0340,
-      maxCounter: 0x10,
-      channelStep: 0x02,
+      mode: t2.mode,
+      paletteMask16: t2.paletteMask16,
+      maxCounter: t2.maxCounter,
+      channelStep: t2.channelStep,
+      stage: t2.stage,
     });
+
+    // $0D: delay $0821 DE=$28 (40 ticks) + poll + CB77=0.
     cues.push({
       type: 'ROM_WAIT',
-      tick: tick(56),
-      durationTicks: SUPPORT_HOLD120_TICKS,
-      reason: 'HOLD120 (CB77 -> $78, Support common)',
+      tick: tick(90),
+      durationTicks: 40,
+      reason: 'worker $0D: delay $0821 DE=$28 (40t) + poll paleta + CB77=0',
     });
+
+    // $0E: CB77++ hasta $78 = 120 ticks.
+    cues.push({
+      type: 'ROM_WAIT',
+      tick: tick(130),
+      durationTicks: SUPPORT_HOLD120_TICKS,
+      reason: 'HOLD120 (CB77 -> $78, worker $0E)',
+    });
+
+    // $0E cont.: tras el hold → T3 (A=1 BC=$0020 E=$10 D=2).
+    cues.push({
+      type: 'PALETTE_TRANSITION',
+      tick: tick(250),
+      durationTicks: t3.maxCounter + 1,
+      sourcePalette: visual.palette.cardPaletteByte,
+      targetPalette: visual.palette.cardPaletteByte,
+      mode: t3.mode,
+      paletteMask16: t3.paletteMask16,
+      maxCounter: t3.maxCounter,
+      channelStep: t3.channelStep,
+      stage: t3.stage,
+    });
+
     return { cardId: input.cardId, family, cues, boundary: 'STATIC' };
   }
 

@@ -13,10 +13,15 @@
 // ═══════════════════════════════════════════════════════════════════════
 import {
   PALETTE_TRANSITION_STANDARD_PROGRAM,
+  ROM_BG_OVERLAY_PALETTE_SLOT,
   ROM_PALETTE_TRANSITION_MASKS,
+  SUPPORT_COMMON_PALETTE_TRANSITION_SEQUENCE,
+  paletteMaskAffectsBgSlot,
   paletteTransitionChannelAt,
   paletteTransitionProgram,
 } from '../src/battle/romDisplay/romPaletteTransitionProgram';
+import { romSupportPresentationProfile } from '../src/battle/romSupportPresentationProfile';
+import { compileRomSupportPresentation } from '../src/battle/romSupportPresentationCompiler';
 import { ProductionRomPresentationAdapter } from '../src/renderer/pixi/presentation/ProductionRomPresentationAdapter';
 import { RomDisplayPresenter } from '../src/battle/romDisplay/RomDisplayPresenter';
 import { classifyRomCue } from '../src/battle/combatObservability';
@@ -120,6 +125,28 @@ check('sin params ROM → pendingReason registrado', barePresenter.state.pending
 const cls = classifyRomCue({ type: 'PALETTE_TRANSITION', tick: 0, durationTicks: 40, sourcePalette: 0, targetPalette: 0, ...params });
 check('clasificador: destino DISPLAY', cls.display === true, `${cls.destination}`);
 check('clasificador: no trace ni dropped', cls.trace === false && cls.dropped === false);
+
+// ── 8. Orden ROM real del camino común Support (V5 FSM) ──
+const seq = SUPPORT_COMMON_PALETTE_TRANSITION_SEQUENCE;
+check('secuencia ROM: 3 transiciones', seq.length === 3, `${seq.length}`);
+check('T1 ROM $0A: mode1 $0038 $20 step1', JSON.stringify(seq[0]) === JSON.stringify({ stage: 'T1_BEFORE_BG', address: 0x642a, mode: 1, paletteMask16: 0x0038, maxCounter: 0x20, channelStep: 0x01 }), JSON.stringify(seq[0]));
+check('T2 ROM $0C: mode0 $0360 $20 step1', JSON.stringify(seq[1]) === JSON.stringify({ stage: 'T2_AFTER_BG', address: 0x6459, mode: 0, paletteMask16: 0x0360, maxCounter: 0x20, channelStep: 0x01 }), JSON.stringify(seq[1]));
+check('T3 ROM $0E: mode1 $0020 $10 step2', JSON.stringify(seq[2]) === JSON.stringify({ stage: 'T3_AFTER_HOLD120', address: 0x6487, mode: 1, paletteMask16: 0x0020, maxCounter: 0x10, channelStep: 0x02 }), JSON.stringify(seq[2]));
+check('las 3 máscaras ROM tocan BG5 (slot del overlay)', seq.every(s => paletteMaskAffectsBgSlot(s.paletteMask16, ROM_BG_OVERLAY_PALETTE_SLOT)), `slot ${ROM_BG_OVERLAY_PALETTE_SLOT}`);
+
+// ── 9. El profile común respeta el orden ROM (T1 ANTES del BG) ──
+const prof = compileRomSupportPresentation(romSupportPresentationProfile({ cardId: 9 })); // card 9 = familia $00 (común)
+const order = prof.timeline.entries.map(e => e.cue.type);
+const iT1 = order.indexOf('PALETTE_TRANSITION');
+const iBg = order.indexOf('BG_ASSEMBLY');
+const lastTransition = order.lastIndexOf('PALETTE_TRANSITION');
+check('T1 ocurre ANTES del BG_ASSEMBLY (orden ROM)', iT1 !== -1 && iBg !== -1 && iT1 < iBg, `T1@${iT1} BG@${iBg}`);
+check('hay 3 PALETTE_TRANSITION en el timeline común', order.filter(t => t === 'PALETTE_TRANSITION').length === 3, `${order.filter(t => t === 'PALETTE_TRANSITION').length}`);
+check('T3 ocurre tras el BG', lastTransition > iBg, `T3@${lastTransition} BG@${iBg}`);
+const stages = prof.timeline.entries
+  .map(e => (e.cue.type === 'PALETTE_TRANSITION' ? (e.cue as { stage?: string }).stage : null))
+  .filter(Boolean);
+check('stages ROM en orden T1,T2,T3', JSON.stringify(stages) === JSON.stringify(['T1_BEFORE_BG', 'T2_AFTER_BG', 'T3_AFTER_HOLD120']), JSON.stringify(stages));
 
 console.log(`\nPalette transition program: ${checks} checks, ${failures} failed`);
 console.log(failures ? '❌ verify:palette-transition-program FAIL' : '✅ verify:palette-transition-program PASS');
