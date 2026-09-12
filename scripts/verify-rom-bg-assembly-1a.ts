@@ -80,8 +80,19 @@ const imgGather = romBgAssemblyImage(0x1a, 0x33);
 check('resource resolves physically (CHARA $1A/$31)', imgChara !== null, imgChara?.file ?? 'null');
 check('resource resolves physically (Gather $1A/$33)', imgGather !== null, imgGather?.file ?? 'null');
 const assetOk = [imgChara, imgGather].every(i => i !== null && existsSync(join('public', i.url.replace(/^\//, ''))) || i === null);
-check('PNG físico presente en public/assets/rom-bg', assetOk,
-  [imgChara, imgGather].map(i => i?.file ?? '—').join(' / '));
+// Export físico: solo se exige cuando existe (local estricto). En CI los PNG
+// generados no están en el repo → SKIP, igual que el verifier gemelo
+// (verify-rom-bg-assembly). Nunca se debilita la ruta local.
+const REQUIRE_ROM_BG_EXPORTS = process.env.REQUIRE_ROM_BG_EXPORTS === '1';
+const BG_EXPORT = join(process.cwd(), 'public/assets/rom-bg');
+if (!existsSync(BG_EXPORT)) {
+  if (REQUIRE_ROM_BG_EXPORTS) check('PNG físico presente en public/assets/rom-bg', false, 'falta public/assets/rom-bg (npm run build:rom-bg-assembly)');
+  else console.log('SKIP export físico $1A: public/assets/rom-bg no presente; usa REQUIRE_ROM_BG_EXPORTS=1 tras npm run build:rom-bg-assembly');
+} else {
+  check('PNG físico presente en public/assets/rom-bg',
+    existsSync(join(BG_EXPORT, 'bg1a-p31.png')) && existsSync(join(BG_EXPORT, 'bg1a-p33.png')),
+    'bg1a-p31.png / bg1a-p33.png');
+}
 
 // ── Production: el display lo consume ──────────────────────────────────
 function consumeThroughDisplay(cue: Extract<PresentationCue, { type: 'BG_ASSEMBLY' }>, palette: number): string {
