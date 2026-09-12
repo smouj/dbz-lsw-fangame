@@ -68,6 +68,7 @@ const VISIBLE_CUES = new Set<PresentationCue['type']>([
   'PROJECTILE',
   'CAMERA',
   'IMPACT',
+  'SCENE_LOAD',
   'ROM_RESULT_BRANCH',
   'FIGHTER_VISIBILITY',
   // START_ANIMATION with a proven resource/sequence is routed to the actor
@@ -175,16 +176,6 @@ export function classifyRomCue(cue: PresentationCue): CueClassification {
       return { ...base, destination: 'VISIBLE', visible: true };
     }
     return { ...base, destination: 'TRACE', trace: true, noVisibleEffect: true };
-  }
-  if (cue.type === 'SCENE_LOAD') {
-    // P0.4R — boundary físico: TACTICAL_TO_ACTION es la fase de PREPARACIÓN
-    // (gráficos $8E00 + macros), no un cambio de escena. El adapter entra en
-    // ACTION solo con ACTION_READY. Espejo exacto: si el case del adapter
-    // cambiara, este bloque diverge y el verifier lo detecta.
-    if (cue.mode === 'TACTICAL_TO_ACTION') {
-      return { ...base, destination: 'TRACE', noVisibleEffect: true };
-    }
-    return { ...base, destination: 'VISIBLE', visible: true };
   }
   if (VISIBLE_CUES.has(cue.type)) {
     return { ...base, destination: 'VISIBLE', visible: true };
