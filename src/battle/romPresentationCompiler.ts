@@ -18,6 +18,7 @@ import {
   type RomPresentationProfile,
   type RomPresentationStep,
 } from './romPresentationProfiles';
+import { PALETTE_TRANSITION_STANDARD_PROGRAM } from './romDisplay/romPaletteTransitionProgram';
 import { resolveProductionFrame } from './productionFrameResolver';
 import { animationResourceById } from './animationResources';
 import { romFxWindowFor, type RomFxWindowPhase } from './romFxWindow';
@@ -495,11 +496,41 @@ export function compileRomPresentationProfile(
   const state: CompileState = { animations: new Map() };
   let cursor = startTick;
 
+  // P0.4R — boundary físico TACTICAL→ACTION (ROM §182/§205):
+  //   prepare (SCENE_LOAD VRAM $8E00 + macros $19/$1A) → palette transition
+  //   estándar (mode1 $0308 $10 step2 — §1823) → SCENE_LOAD ACTION_READY.
+  // La escena ACTION NO se entra en TACTICAL_TO_ACTION.
+  let actionPreparePending = false;
+  const flushActionReady = (): void => {
+    const program = PALETTE_TRANSITION_STANDARD_PROGRAM;
+    entries.push(entry({
+      type: 'PALETTE_TRANSITION',
+      tick: cursor,
+      durationTicks: program.totalTicks,
+      sourcePalette: 0,
+      targetPalette: 0,
+      mode: program.mode,
+      paletteMask16: program.paletteMask16,
+      maxCounter: program.maxCounter,
+      channelStep: program.channelStep,
+    }, profile, sourceEvent, logicalTick));
+    cursor += program.totalTicks;
+    entries.push(entry({ type: 'SCENE_LOAD', tick: cursor, vramLoad: '$8E00', mode: 'ACTION_READY' }, profile, sourceEvent, logicalTick));
+  };
+
   for (const programStep of profile.program) {
+    if (actionPreparePending && programStep.kind !== 'SCENE_LOAD' && programStep.kind !== 'PRESENTATION_MACRO') {
+      flushActionReady();
+      actionPreparePending = false;
+    }
     const compiled = compileStep(programStep, profile, cursor, actorSide, actorFormId, sequenceSelector, selectedResultFamily, selectedResultSourceEvent, state);
     for (const cue of compiled.cues) entries.push(entry(cue, profile, sourceEvent, logicalTick));
+    if (compiled.cues.some(c => c.type === 'SCENE_LOAD' && c.mode === 'TACTICAL_TO_ACTION')) {
+      actionPreparePending = true;
+    }
     cursor += compiled.advanceTicks;
   }
+  if (actionPreparePending) flushActionReady();
 
   const endTick = Math.max(startTick, cursor, ...entries.map(item => item.cue.tick + ('durationTicks' in item.cue ? (item.cue.durationTicks ?? 0) : 0)));
   const pendingFromCues = entries

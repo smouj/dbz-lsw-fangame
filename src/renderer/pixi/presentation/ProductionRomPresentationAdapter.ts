@@ -49,6 +49,8 @@ export interface ProductionRomPresentationStats {
   pendingCues: number;
   pendingReasons: string[];
   sceneChanges: number;
+  /** P0.4R — fases de preparación TACTICAL→ACTION (VRAM $8E00 + macros). */
+  scenePrepares: number;
   /** Cues FIGHTER_MOTION registrados (trazabilidad — no easeOutCubic). */
   motions: number;
   /** Cues DEFENSE_FX con pose guard/evade aplicada al defensor. */
@@ -156,6 +158,7 @@ export class ProductionRomPresentationAdapter {
       pendingCues: 0,
       pendingReasons: [],
       sceneChanges: 0,
+      scenePrepares: 0,
       motions: 0,
       defenseFx: 0,
       fxLoads: 0,
@@ -277,6 +280,13 @@ export class ProductionRomPresentationAdapter {
 
       // ── ROM VM — efectos visibles no-semánticos ──
       case 'SCENE_LOAD': {
+        // P0.4R — boundary físico ROM (§182/§205): TACTICAL_TO_ACTION es la
+        // fase de PREPARACIÓN (gráficos VRAM $8E00 + macros $19/$1A). La escena
+        // ACTION no se entra hasta ACTION_READY (tras la palette transition).
+        if (cue.mode === 'TACTICAL_TO_ACTION') {
+          this.stats.scenePrepares++;
+          break;
+        }
         this.currentScene = cue.mode === 'RESTORE_TACTICAL' ? 'FIELD' : 'ACTION_SOLO';
         this.pres.setScene(this.currentScene);
         this.stats.sceneChanges++;
