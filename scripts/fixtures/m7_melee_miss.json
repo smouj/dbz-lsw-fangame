@@ -773,6 +773,26 @@
   },
   {
    "tick": 179,
+   "type": "ACTION_OBJECT_BIND",
+   "role": "ACTOR",
+   "slot": 0,
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-6"
+  },
+  {
+   "tick": 179,
+   "type": "ACTION_OBJECT_BIND",
+   "role": "TARGET",
+   "slot": 1,
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-6"
+  },
+  {
+   "tick": 179,
    "type": "ACTION_OBJECT_DRAW_ORDER",
    "logicalTick": 0,
    "source": "ACTION_STARTED",

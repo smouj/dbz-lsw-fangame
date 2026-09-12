@@ -118,6 +118,9 @@ export function compileStandardDamageRuntimeCutover(
         branch: outcome.family as 'HIT' | 'MISS' | 'SPECIAL_DEFENSE',
         actorFormId: actorFormId ?? null,
         targetFormId: targetFormId ?? null,
+        // B7B1 — el atacante es el autor del film; el defensor es el otro lado.
+        attackerSide: env.event.side,
+        defenderSide: env.event.side === 'player' ? 'enemy' : 'player',
       })
     : compiled.timeline;
   const timeline = withStaticDefenderEntrance(spliced, env.event.action, env.event.side);

@@ -180,6 +180,54 @@ export function presentationVmOpcodeByByte(opcode: number): PresentationVmOpcode
 // enlazan con los ActionObjects físicos vía $7318/$3F05.
 // ═══════════════════════════════════════════════════════════════════════
 
+export type ActionObjectBindContext = 'OFFENSE' | 'DEFENSE_REACTION';
+
+/**
+ * B7B1 — instrucción de binding FÍSICA derivada del binder ROM.
+ * No la decide quién ejecuta la carta: la decide el contexto ROM del film.
+ */
+export interface ActionObjectBindingInstruction {
+  slot: 0 | 1;
+  /** Semántica física del slot EN ESTE contexto. */
+  semantic: 'ATTACKER' | 'DEFENDER';
+  role: 'ACTOR' | 'TARGET';
+  fighterSide: 'PLAYER' | 'ENEMY';
+  /** Binder ROM de origen (bank:address). */
+  binder: { bank: number; address: number };
+}
+
+/**
+ * Binding de slots para un film, desde `ACTION_OBJECT_BINDING.binders`.
+ *   OFFENSE          → slot0 = ATTACKER · slot1 = DEFENDER
+ *   DEFENSE_REACTION → slot0 = DEFENDER · slot1 = ATTACKER
+ */
+export function actionObjectBindingInstructions(
+  context: ActionObjectBindContext,
+  sides: { attacker: 'player' | 'enemy'; defender: 'player' | 'enemy' },
+): readonly [ActionObjectBindingInstruction, ActionObjectBindingInstruction] {
+  const binder = ACTION_OBJECT_BINDING.binders.find(b => b.context === context);
+  if (!binder) throw new Error(`B7B1: binder ROM desconocido: ${context}`);
+  const at = { bank: binder.bank, address: binder.address };
+  const attackerFirst = context === 'OFFENSE';
+  const up = (s: 'player' | 'enemy'): 'PLAYER' | 'ENEMY' => (s === 'player' ? 'PLAYER' : 'ENEMY');
+  return [
+    {
+      slot: 0,
+      semantic: attackerFirst ? 'ATTACKER' : 'DEFENDER',
+      role: attackerFirst ? 'ACTOR' : 'TARGET',
+      fighterSide: up(attackerFirst ? sides.attacker : sides.defender),
+      binder: at,
+    },
+    {
+      slot: 1,
+      semantic: attackerFirst ? 'DEFENDER' : 'ATTACKER',
+      role: attackerFirst ? 'TARGET' : 'ACTOR',
+      fighterSide: up(attackerFirst ? sides.defender : sides.attacker),
+      binder: at,
+    },
+  ] as const;
+}
+
 export const ACTION_OBJECT_BINDING = {
   /** Logical slot storage: $7318 stores logical slot0 → C7D5, slot1 → C7D6. */
   logicalSlotStore: [0xc7d5, 0xc7d6] as const,

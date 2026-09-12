@@ -22,6 +22,7 @@ import {
 import { resolveRomSequenceSelector } from './romSequenceSelectors';
 import { cardForBattleAction } from './standardDamageRomCutover';
 import { withStaticDefenderEntrance } from './staticActionVisibility';
+import { actionObjectBindingInstructions } from './romActionObject';
 
 export const BEAM_BASE_ROM_HANDLER = 0x02;
 
@@ -148,6 +149,24 @@ export function compileBeamBaseRuntimeCutover(
   });
   const withEntrance = withStaticDefenderEntrance(compiled.timeline, env.event.action, env.event.side);
   // P0.4D: ROM $CA39 draw order — actor (slot 0) in front of target (slot 1)
+  // B7B1 — binding FÍSICO (binder ROM £6708, OFFENSE): slot0 = ATTACKER, slot1 = DEFENDER.
+  const bindCues: TimelineEntry[] = withEntrance.entries[0]
+    ? actionObjectBindingInstructions('OFFENSE', {
+        attacker: env.event.side,
+        defender: env.event.side === 'player' ? 'enemy' : 'player',
+      }).map((b) => ({
+        ...withEntrance.entries[0],
+        cue: {
+          type: 'ACTION_OBJECT_BIND' as const,
+          tick: env.tick,
+          slot: b.slot,
+          role: b.role,
+          fighterSide: b.fighterSide,
+          context: 'OFFENSE' as const,
+          semantic: b.semantic,
+        },
+      }))
+    : [];
   const drawOrderCue: TimelineEntry = {
     ...withEntrance.entries[0],
     cue: { type: 'ACTION_OBJECT_DRAW_ORDER' as const, tick: env.tick, order: 'SLOT_0_THEN_1' as const },
@@ -164,7 +183,7 @@ export function compileBeamBaseRuntimeCutover(
     : [];
   const timeline: BattleTimeline = {
     ...withEntrance,
-    entries: [drawOrderCue, ...withEntrance.entries, ...cleanup].sort((a, b) => a.cue.tick - b.cue.tick),
+    entries: [drawOrderCue, ...bindCues, ...withEntrance.entries, ...cleanup].sort((a, b) => a.cue.tick - b.cue.tick),
   };
 
   return {
@@ -210,6 +229,24 @@ export function compileBeamFamilyRuntimeCutover(
   });
   const withEntrance = withStaticDefenderEntrance(compiled.timeline, env.event.action, env.event.side);
   // P0.4D: ROM $CA39 draw order — actor (slot 0) in front of target (slot 1)
+  // B7B1 — binding FÍSICO (binder ROM £6708, OFFENSE): slot0 = ATTACKER, slot1 = DEFENDER.
+  const bindCues: TimelineEntry[] = withEntrance.entries[0]
+    ? actionObjectBindingInstructions('OFFENSE', {
+        attacker: env.event.side,
+        defender: env.event.side === 'player' ? 'enemy' : 'player',
+      }).map((b) => ({
+        ...withEntrance.entries[0],
+        cue: {
+          type: 'ACTION_OBJECT_BIND' as const,
+          tick: env.tick,
+          slot: b.slot,
+          role: b.role,
+          fighterSide: b.fighterSide,
+          context: 'OFFENSE' as const,
+          semantic: b.semantic,
+        },
+      }))
+    : [];
   const drawOrderCue: TimelineEntry = {
     ...withEntrance.entries[0],
     cue: { type: 'ACTION_OBJECT_DRAW_ORDER' as const, tick: env.tick, order: 'SLOT_0_THEN_1' as const },
@@ -226,7 +263,7 @@ export function compileBeamFamilyRuntimeCutover(
     : [];
   const timeline: BattleTimeline = {
     ...withEntrance,
-    entries: [drawOrderCue, ...withEntrance.entries, ...cleanup].sort((a, b) => a.cue.tick - b.cue.tick),
+    entries: [drawOrderCue, ...bindCues, ...withEntrance.entries, ...cleanup].sort((a, b) => a.cue.tick - b.cue.tick),
   };
 
   return {

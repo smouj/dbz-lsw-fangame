@@ -28,6 +28,7 @@
 // ═══════════════════════════════════════════════════════════════════════
 
 import type { BattleTimeline, PresentationCue, TimelineEntry } from './engine/presentation/PresentationCue';
+import { actionObjectBindingInstructions } from './romActionObject';
 import {
   ROM_BANK61_ANIMATION_CORE,
   ROM_BANK61_ANIMATION_CORE_RESOURCE_BASES,
@@ -47,6 +48,10 @@ export interface StandardDamageResultSpliceOptions {
   branch: RomStandardDamagePhysicalBranch;
   actorFormId: string | null;
   targetFormId: string | null;
+  /** B7B1 — lado del ATACANTE (autor del film). */
+  attackerSide?: 'player' | 'enemy';
+  /** B7B1 — lado del DEFENSOR. */
+  defenderSide?: 'player' | 'enemy';
 }
 
 function frameCueBase(
@@ -100,6 +105,28 @@ export function spliceStandardDamageResult(input: StandardDamageResultSpliceOpti
   }
 
   const out: TimelineEntry[] = [...head];
+
+  // ── B7B1 — binding FÍSICO de slots (binder ROM £6708, contexto OFFENSE).
+  // No lo decide quién ejecuta la carta: slot0 = ATTACKER, slot1 = DEFENDER.
+  if (input.attackerSide && input.defenderSide) {
+    for (const b of actionObjectBindingInstructions('OFFENSE', {
+      attacker: input.attackerSide,
+      defender: input.defenderSide,
+    })) {
+      out.push({
+        ...frameCueBase(branchTick, b.slot, meta),
+        cue: {
+          type: 'ACTION_OBJECT_BIND',
+          tick: branchTick,
+          slot: b.slot,
+          role: b.role,
+          fighterSide: b.fighterSide,
+          context: 'OFFENSE',
+          semantic: b.semantic,
+        },
+      });
+    }
+  }
 
   // ── Draw order ($CA39 == 2): slot 0 (actor) in front of slot 1 (target) ──
   out.push({

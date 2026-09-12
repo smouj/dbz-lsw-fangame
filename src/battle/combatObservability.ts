@@ -82,6 +82,10 @@ const VISIBLE_CUES = new Set<PresentationCue['type']>([
   // verifier lo detecta.
   'DEFENSE_FX',
   'ACTION_OBJECT_STOP',
+  // B7B1 — ACTION_OBJECT_BIND: el adapter la consume con bindActionObject
+  // (asigna logical fighter → slot físico) y marca visible. Espejo exacto del
+  // case del adapter; si divergiera, el verifier de paridad lo detecta.
+  'ACTION_OBJECT_BIND',
 ]);
 
 /** Cues de display Support/Defense → RomDisplayPresenter. */
@@ -113,7 +117,6 @@ const TRACE_CUES = new Set<PresentationCue['type']>([
   'ROM_SFX',
   'ROM_AUDIO_SCRIPT',
   'ROM_WAIT',
-  'ACTION_OBJECT_BIND',
   'ACTION_OBJECT_UNBIND',
   'ACTION_OBJECT_DRAW_ORDER',
   'ACTION_OBJECT_FRAME',

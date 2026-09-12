@@ -529,6 +529,13 @@ export interface RomActionObjectBindCue {
   slot: 0 | 1;
   role: 'ACTOR' | 'TARGET' | 'ACTOR_PRIMARY' | 'ACTOR_SUPPORT' | 'FX_PARTICIPANT';
   fighterSide?: 'PLAYER' | 'ENEMY';
+  /**
+   * P0.4R-B7B1 — contexto ROM del binder que asigna rol↔slot. Sin esto el
+   * binding no expresa ownership físico y slot0 acaba pareciendo "el jugador".
+   */
+  context?: 'OFFENSE' | 'DEFENSE_REACTION';
+  /** P0.4R-B7B1 — semántica FÍSICA del slot en ESTE contexto. */
+  semantic?: 'ATTACKER' | 'DEFENDER';
 }
 
 /** Liberación de un slot. */

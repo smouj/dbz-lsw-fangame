@@ -6,7 +6,6 @@
 // slot8 es preload consumido desde la ruta ofensiva (V5), y Teleport/Time
 // Freeze ni siquiera arrancan globalmente (V6.5).
 // ═══════════════════════════════════════════════════════════════════════
-import type { PresentationCue } from './engine/presentation/PresentationCue';
 import type { BattleSide } from './engine/state/BattleState';
 import {
   DEFENSE_ROM_RULES,
@@ -15,6 +14,8 @@ import {
   type RomCA53SemanticOutcome,
 } from './engine/rom/romDescriptors';
 import { CARDS } from '../data/cards';
+import { actionObjectBindingInstructions } from './romActionObject';
+import type { PresentationCue } from './engine/presentation/PresentationCue';
 
 export type DefenseSlot8Status =
   | 'CONSUMED_BY_OFFENSE'
@@ -83,6 +84,21 @@ export function romDefensePresentationProfile(
   const semanticOutcome = semanticOutcomeForCA53(romCA53, { defenseCardId: cardId });
 
   const cues: PresentationCue[] = [
+    // B7B1 — binding FÍSICO del film defensivo (binder ROM £6750):
+    // DEFENSE_REACTION → slot0 = DEFENDER, slot1 = ATTACKER. El contexto ROM
+    // decide el slot; nunca "slot0 = jugador".
+    ...actionObjectBindingInstructions('DEFENSE_REACTION', {
+      attacker: (options.side ?? 'player') === 'player' ? 'enemy' : 'player',
+      defender: (options.side ?? 'player') === 'player' ? 'player' : 'enemy',
+    }).map((b) => ({
+      type: 'ACTION_OBJECT_BIND' as const,
+      tick: 0,
+      slot: b.slot,
+      role: b.role,
+      fighterSide: b.fighterSide,
+      context: 'DEFENSE_REACTION' as const,
+      semantic: b.semantic,
+    })),
     {
       type: 'DEFENSE_FX',
       tick: 0,
