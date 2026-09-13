@@ -10,8 +10,8 @@ import { PRESENTATION_SCENARIOS, runPresentationScenario, type PresentationScena
 import { buildPresentationTimeline, resolveFacing } from '../battle/engine/presentation';
 import { SCENARIOS, SPECIAL_ACTION_BACKGROUND } from '../data/scenarios';
 import type { TimelineEntry } from '../battle/engine/presentation/PresentationCue';
-import { validateTrace, type RomActionTrace } from '../../tools/rom-trace/trace-schema';
-import { deriveStateMachine } from '../../tools/rom-trace/derive-state-machine';
+import { validateTrace, type RomActionTrace } from '../battle/romTrace/trace-schema';
+import { deriveStateMachine } from '../battle/romTrace/derive-state-machine';
 import { EnginePlayground } from './runtimePlayground';
 import { ReplayModule } from './replay';
 import { ExecutionModule } from './execution';
