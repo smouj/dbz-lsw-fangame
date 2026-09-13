@@ -2,17 +2,24 @@
 // ═══════════════════════════════════════════════════════════════════════
 // verify:rom-mode — protege la cadena ROM Mode
 // ═══════════════════════════════════════════════════════════════════════
-// Cadena: ROM → WRAM/OAM → decodeRomFeed → feedToScene → romModePixiLayout
+// Cadena: ROM → WRAM/OAM → decodeRomFeed → feedToScene → layout → adapter
 // Fixture: captura real del emulador (docs/rom/generated/rom-mode-spike).
 //
 // Comprueba lo que puede romperse sin que nadie mire: la semántica de OAM, el
-// filtrado de sprites fuera de pantalla, la agrupación por lado y el layout.
+// filtrado de sprites fuera de pantalla, la agrupación por lado, el layout y la
+// traducción a la API de la presentación.
 // ═══════════════════════════════════════════════════════════════════════
 
 import { readFileSync } from 'node:fs';
 import { decodeRomFeedSequence, isSpriteOffScreen, type RomRawFrame } from '../src/battle/romMode/decodeRomFeed';
 import { feedSequenceToScenes } from '../src/battle/romMode/feedToScene';
 import { sceneToPixiLayout, DEFAULT_ANCHOR } from '../src/battle/romMode/romModePixiLayout';
+import {
+  layoutToSlotCalls,
+  applyRomModeLayout,
+  type RomModePixiTarget,
+  type RomModeSlotCall,
+} from '../src/battle/romMode/romModePixiAdapter';
 
 const FIXTURE = 'docs/rom/generated/rom-mode-spike/battle-feed.json';
 const SPRITES: Record<string, string> = {
@@ -68,6 +75,40 @@ if (scene) {
   check('layout: scaleX sigue al facing de la ROM', (la.scaleX === 1) === (ally.facing === 'right'), `facing=${ally.facing} scaleX=${la.scaleX}`);
   check('layout: ancla en la base', la.anchor.x === DEFAULT_ANCHOR.x && la.anchor.y === DEFAULT_ANCHOR.y);
   check('layout: conserva la posición del OAM', layout.nodes.every((n, i) => n.x === scene.fighters[i].screenX));
+
+  // ── Adaptador Pixi (traduce a la API existente, no reimplementa render) ──
+  const calls = layoutToSlotCalls(layout);
+  check('adapter: un call por nodo', calls.length === layout.nodes.length);
+  check(
+    'adapter: ally→slot 0, enemy→slot 1',
+    calls.find((c) => c.role === 'ally')?.slot === 0 && calls.find((c) => c.role === 'enemy')?.slot === 1,
+  );
+  check(
+    'adapter: conserva coordenadas del OAM',
+    calls.every((c) => {
+      const n = layout.nodes.find((x) => x.role === c.role)!;
+      return c.x === n.x && c.y === n.y;
+    }),
+  );
+
+  const sent: RomModeSlotCall[] = [];
+  const spy: RomModePixiTarget = {
+    setActionObjectPosition: (slot, x, y) => {
+      sent.push({ slot, x, y, role: slot === 0 ? 'ally' : 'enemy' });
+    },
+  };
+  const res = applyRomModeLayout(spy, layout);
+  check('adapter: aplica al target', res.applied === 2, `applied=${res.applied}`);
+  check(
+    'adapter: el target recibe lo mismo que el layout',
+    sent.length === calls.length && sent.every((s, i) => s.slot === calls[i].slot && s.x === calls[i].x && s.y === calls[i].y),
+  );
+  const sent2: RomModeSlotCall[] = [];
+  applyRomModeLayout(
+    { setActionObjectPosition: (slot, x, y) => { sent2.push({ slot, x, y, role: slot === 0 ? 'ally' : 'enemy' }); } },
+    layout,
+  );
+  check('adapter: idempotente', JSON.stringify(sent) === JSON.stringify(sent2));
 }
 
 // ── Determinismo ──
