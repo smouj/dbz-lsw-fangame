@@ -35,17 +35,6 @@ export interface StageHudPanelProps {
   side?: 'left' | 'right';
 }
 
-/** Icono del paquete UI para cada tecla canónica (assets reales). */
-export function stageKeyIcon(key: StageKey): string {
-  switch (key) {
-    case 'UP': return 'arrow_up';
-    case 'DOWN': return 'arrow_down';
-    case 'RIGHT': return 'arrow_right';
-    case 'A': return 'key_q';
-    case 'B': return 'key_e';
-  }
-}
-
 /** Etiqueta legible de la tecla (teclado PC + pad GBC). */
 export function stageKeyLabel(key: StageKey): string {
   switch (key) {
@@ -58,11 +47,23 @@ export function stageKeyLabel(key: StageKey): string {
 }
 
 /**
+ * Representación determinista del byte de comando Stage. No depende de PNGs
+ * manuales: la identidad UP/DOWN/RIGHT/A/B procede de la secuencia ROM que
+ * recibe el panel. La extracción física del font/tile de prompt sigue siendo
+ * una deuda distinta y no se suplanta con un dibujo externo.
+ */
+function StageCommandGlyph({ command }: { command: StageKey }) {
+  const glyph = command === 'UP' ? '↑' : command === 'DOWN' ? '↓' : command === 'RIGHT' ? '→' : command;
+  return <span className={`stage-hud-key stage-hud-key-${command.toLowerCase()}`} aria-label={stageKeyLabel(command)}>{glyph}</span>;
+}
+
+/**
  * Panel canónico del Stage/QTE. Consumido por BattleScreen (partida real) y
  * por el HUD Studio (#dev/hud → vista STAGE). Misma estructura, misma CSS.
  */
 export function StageHudPanel({ portraitUrl, seq, idx, state, feedback = null, elapsedSec, limitSec, side = 'left' }: StageHudPanelProps) {
   const preparing = state === 'PREPARING';
+  const counter = state === 'COUNTER_WINDOW';
   return (
     <div className={`stage-hud-panel speaker-${side}`} data-stage-state={state}>
       {/* PORTRAIT — FUERA del cuadro (como el speaker del diálogo GBC), en el
@@ -86,13 +87,24 @@ export function StageHudPanel({ portraitUrl, seq, idx, state, feedback = null, e
             /* PREPARING: panel VACÍO (sin inputs ni cronómetro) — el Engine
                abre los inputs solo en QTE_STARTED (inputOpenTick). */
             <span className="stage-hud-prep">…</span>
+          ) : counter ? (
+            <div className="stage-hud-counter" role="group" aria-label="Stage recovery">
+              <span className="stage-hud-counter-option">
+                <StageCommandGlyph command="A" />
+                <span>DEFEND</span>
+              </span>
+              <span className="stage-hud-counter-option urgent">
+                <StageCommandGlyph command="B" />
+                <span>CONTINUE</span>
+              </span>
+            </div>
           ) : (
             <div className="stage-hud-sequence">
               {seq.map((k, i) => (
                 <span key={i} className={`stage-hud-cell ${i < idx ? 'done' : i === idx ? 'current' : 'future'}`}>
                   {i < idx
                     ? <span className="stage-hud-check">✓</span>
-                    : <img src={`/assets/ui/qte/${stageKeyIcon(k)}.png`} alt={stageKeyLabel(k)} className="stage-hud-key" />}
+                    : <StageCommandGlyph command={k} />}
                 </span>
               ))}
             </div>

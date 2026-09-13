@@ -52,7 +52,7 @@ const VIEWS: { id: HudView; label: string; tip: string }[] = [
   { id: 'MOVE', label: 'MOVE', tip: 'Selección de eje: HORIZONTAL ↔ o VERTICAL ↕' },
   { id: 'MOVE_ACTION', label: 'MOVE ACTION', tip: 'Preview de la acción MOVE en el plano ACTION' },
   { id: 'GATHER_ACTION', label: 'GATHER', tip: 'Preview de Gather Power en el plano ACTION' },
-  { id: 'STAGE', label: 'STAGE', tip: 'QTE del Stage Attack: inputs con los sprites del paquete' },
+  { id: 'STAGE', label: 'STAGE', tip: 'QTE del Stage Attack: comandos y recuperación gobernados por el estado ROM' },
   { id: 'STAGE_ACTION', label: 'STAGE ATTACK', tip: 'Preview de la película Stage completa' },
   { id: 'BEAM', label: 'BEAM', tip: 'Acción de carta Beam: carga · lanzamiento · viaje · contacto · reacción' },
   { id: 'DAMAGE', label: 'DAMAGE', tip: 'Acción de carta Damage: preparación · avance · impacto · reacción' },
@@ -137,6 +137,7 @@ export function HudModule() {
   const [actionSpecial, setActionSpecial] = useState(false);
   // Nº de inputs del QTE STAGE en el mockup (3-6 como el juego)
   const [stageLen, setStageLen] = useState(5);
+  const [stagePreviewState, setStagePreviewState] = useState<'INPUT_WINDOW' | 'COUNTER_WINDOW'>('INPUT_WINDOW');
   // Resultado del mockup: victoria o derrota
   const [result, setResult] = useState<'victory' | 'defeat'>('victory');
   const [introMatchup, setIntroMatchup] = useState<'1v1' | '1v2' | '2v1' | '2v2'>('1v1');
@@ -344,7 +345,12 @@ export function HudModule() {
         {/* Nº de inputs del QTE STAGE (3-6) — el mockup se adapta y el
             grupo derecha (prompt+tiempo) permanece anclado (layout estable) */}
         {view === 'STAGE' && (
-          <div className="dev-hud-stage-len" title="Nº de inputs de la secuencia STAGE (3-6, como el juego)">
+          <div className="dev-hud-stage-len" title="Estados del QTE Stage compartidos con BattleScreen">
+            <label>STATE</label>
+            <button className={`stage-len-btn ${stagePreviewState === 'INPUT_WINDOW' ? 'active' : ''}`}
+              onClick={() => setStagePreviewState('INPUT_WINDOW')}>INPUT</button>
+            <button className={`stage-len-btn ${stagePreviewState === 'COUNTER_WINDOW' ? 'active' : ''}`}
+              onClick={() => setStagePreviewState('COUNTER_WINDOW')}>RECOVERY</button>
             <label>INPUTS</label>
             {[3, 4, 5, 6].map(n => (
               <button key={n} className={`stage-len-btn ${stageLen === n ? 'active' : ''}`}
@@ -738,9 +744,8 @@ export function HudModule() {
                 </div>
               )}
 
-              {/* STAGE: el QTE real — secuencia de inputs con los sprites del
-                  paquete ORGANIZADO (key_q/key_e/↑↓/flechas) + prompt + el
-                  TIEMPO de reacción destacado + recovery */}
+              {/* STAGE: el mismo panel que producción. La secuencia y el
+                  estado proceden del contrato Stage; no usa PNGs manuales. */}
               {view === 'STAGE' && (
                 /* M8.C2a — StageHudPanel CANÓNICO: el MISMO componente que
                    BattleScreen. El Dev Studio solo lo envuelve en el preview;
@@ -749,7 +754,7 @@ export function HudModule() {
                   portraitUrl={(dlgSide === 'left' ? resolveSpeakerPortrait('goku', P_FORM) : resolveSpeakerPortrait('cell', P_FORM)) ?? ''}
                   seq={['A', 'B', 'UP', 'RIGHT', 'A', 'B'].slice(0, stageLen) as never}
                   idx={1}
-                  state="INPUT_WINDOW"
+                  state={stagePreviewState}
                   feedback="correct"
                   elapsedSec={0.6}
                   limitSec={1.2}

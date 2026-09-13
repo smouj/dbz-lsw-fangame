@@ -4034,7 +4034,37 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   box-shadow: 2px 2px 0 rgba(0,0,0,.4);
   box-sizing: border-box;
 }
-.stage-hud-cell img { width: 44px; height: 44px; image-rendering: pixelated; display: block; object-fit: contain; }
+.stage-hud-key {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border: 2px solid #f8f4e4;
+  color: #f8f4e4;
+  background: #141414;
+  font: 18px/1 var(--fpx);
+  text-shadow: 1px 1px 0 #000;
+}
+.stage-hud-key-a,
+.stage-hud-key-b { border-radius: 50%; }
+.stage-hud-counter {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.stage-hud-counter-option {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font: 12px/1 var(--fpx);
+  letter-spacing: .5px;
+}
+.stage-hud-counter-option.urgent .stage-hud-key {
+  border-color: #d03828;
+  color: #ffd858;
+}
 .stage-hud-cell.done { background: #101810; }
 .stage-hud-cell.done .stage-hud-check { font-size: 18px; color: #2ed05a; line-height: 1; }
 .stage-hud-cell.current { border-color: #f0d060; box-shadow: 0 0 8px rgba(240,208,96,.7), 2px 2px 0 rgba(0,0,0,.4); }

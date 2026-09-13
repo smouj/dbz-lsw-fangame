@@ -1913,10 +1913,11 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
       setPressedKey(key);
       setTimeout(() => setPressedKey(null), 120);
       const st = stageQteRef.current;
-      // En fallo de QTE el GBC no vuelve a mostrar el panel inferior: el rival
-      // resuelve el counter. Ignoramos inputs durante esa animación.
+      // ROM §7/§94-95: tras un comando fallido se abre una ventana real de
+      // recuperación. A (Q) aborta defendiendo antes de 25t; B (E) repara el
+      // comando antes de 10t. El Engine ya gobierna ambos deadlines.
       if (st.state === 'COUNTER_WINDOW') {
-        return;
+        stageRecoverInput(key);
       } else {
         submitStageInput(key);
       }
@@ -3686,7 +3687,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
         )}
         {phase === 'stageInput' && (() => {
           const q = stageQte;
-          if (q.state !== 'INPUT_WINDOW' && q.state !== 'PREPARING') return null;
+          if (q.state !== 'INPUT_WINDOW' && q.state !== 'PREPARING' && q.state !== 'COUNTER_WINDOW') return null;
           const preparing = q.state === 'PREPARING';
           // Tiempo GLOBAL de la secuencia en SEGUNDOS GBC (ventana total del manual).
           const elapsedSec = q.elapsedFrames / GBC_NATIVE_FPS;

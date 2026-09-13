@@ -499,7 +499,10 @@ El Stage Attack en PC replica el GBC con este mapeo:
 - Recuperación tras fallo: Q = ABANDON · E = REPAIR
 - Botones en pantalla (click): **Q** (puñetazo), **E** (patada), y las 4
   direcciones con flechas (↑←↓→ — también acepta WASD, cuenta igual)
-- Iconos: Kenney Input Prompts (`public/assets/ui/qte/` — key_q/key_e + arrow_*)
+- Comandos: derivados directamente de la secuencia Stage ROM (`UP`, `DOWN`,
+  `RIGHT`, `A`, `B`). El HUD no depende de PNGs externos. La extracción de
+  los tiles físicos de prompt se mantiene separada y no se simula con arte
+  manual.
 
 ## Robo de carta (manual GBC, 2026-08-12)
 

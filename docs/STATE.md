@@ -159,7 +159,9 @@ película (fase 3 de la auditoría, implementada en `d86fdf1`).
 - Inputs DENTRO del cuadro en UNA fila: secuencia de teclas + prompt grande
   + tiempo NUMÉRICO (`elapsed / max`, sin barra) — sin marcos alrededor de
   los iconos.
-- Iconos del paquete **DBZ_LSW_INPUT_PROMPTS_V2** (game_ready): key_q/key_e
+- Identidad de comandos Stage desde la secuencia ROM (`UP`, `DOWN`, `RIGHT`,
+  `A`, `B`), sin dependencia de PNGs manuales. Los tiles físicos de prompt
+  quedan pendientes de extracción explícita; no existe fallback visual falso.
   (A/B), arrow_up/down/left/right (direcciones con icono de flecha), xbox_a/b
   (recovery PROTEGERSE/REPARAR) — variante filled_white/engraved_white para
   el fondo claro.
