@@ -1,6 +1,6 @@
 # Desktop-first / Offline-first — arquitectura del producto
 
-Estado: **VIGENTE** · baseline de referencia `43ec99bc` (`DESKTOP_OFFLINE_BASELINE_V1`)
+Estado: **VIGENTE** · baseline de arquitectura A–F: `d1e2db18` (2026-09-13). El baseline histórico previo `43ec99bc` queda supersedido como referencia de cierre.
 Verificado contra el repositorio, no asumido.
 
 ---
@@ -20,8 +20,7 @@ El juego base DEBE poder jugarse sin:
 - mGBA instalado por el jugador
 ```
 
-> La indisponibilidad de servicios online futuros **nunca** debe impedir iniciar
-> y jugar al juego base.
+> La indisponibilidad de servicios online futuros nunca debe impedir iniciar y jugar al juego base.
 
 ---
 
@@ -40,13 +39,13 @@ DBZ LSW Fangame
 
 DESARROLLO
 Vite / localhost:5178
-  → únicamente `tauri dev` / desarrollo con recarga en caliente
+  → únicamente tauri dev / desarrollo con recarga en caliente
 ```
 
 Evidencia verificada en el repo:
 
 | Hecho | Valor real |
-| --- | --- |
+|---|---|
 | Empaquetado | Tauri v2 (`@tauri-apps/cli ^2.11.4`) |
 | `src-tauri/` | `Cargo.toml`, `build.rs`, `tauri.conf.json`, `capabilities/`, `icons/`, `src/` |
 | `productName` | `DBZ LSW Fangame` |
@@ -64,7 +63,7 @@ Evidencia verificada en el repo:
 ## 3. Qué necesita servidor y qué no
 
 | Sistema | Servidor |
-| --- | ---: |
+|---|---:|
 | Main Menu | No |
 | Battle | No |
 | Story | No |
@@ -84,30 +83,43 @@ Evidencia verificada en el repo:
 
 Regla:
 
-> La indisponibilidad de servicios online futuros nunca debe impedir iniciar y
-> jugar al juego base.
+> La indisponibilidad de servicios online futuros nunca debe impedir iniciar y jugar al juego base.
 
 ---
 
 ## 4. Red en runtime
 
-`src/` **no hace ninguna petición de red externa**. Todas las llamadas son
-**same-origin** sobre los assets empaquetados:
+`src/` no debe hacer peticiones de red externas para el juego base. Los recursos del producto deben resolverse desde el bundle/same-origin.
 
 ```text
 /assets/…        (sprites, manifests, duraciones, audio)
 /__dev/flip      (endpoint de desarrollo en devtools/)
 ```
 
-Riesgo a vigilar (no un problema actual): un `fetch` a un origen externo dentro
-de `src/` rompería el contrato offline. **Es lo que vigila `verify:desktop-offline`.**
+Un `fetch` a un origen externo dentro de `src/` rompería el contrato offline. `verify:desktop-offline` vigila tanto esta frontera como que el tooling ROM no se filtre al bundle del frontend.
 
 ---
 
-## 5. Frontera que NO hay que confundir
+## 5. Frontera ROM que no hay que confundir
 
 ```text
 Herramienta de investigación ROM  ≠  La aplicación ejecuta una ROM
 ```
 
-Detalle en `docs/architecture/ROM_EXECUTION_MODES.md`.
+Estado vigente:
+
+- `tools/rom-trace/`: existe y produce evidencia; queda fuera del producto.
+- remake runtime (`BattleEngine` / `BattleRuntime`): es el producto actual.
+- core GBC embebido en Tauri: **pendiente**; forma parte del milestone futuro G–J.
+
+Detalle autoritativo en `docs/architecture/ROM_EXECUTION_MODES.md`.
+
+---
+
+## 6. Enforcement
+
+El contrato no depende solo de documentación. `verify:desktop-offline` corre dentro de `verify:ci` y, en el cierre A–F, pasó **16/16** comprobaciones.
+
+El gate ya encontró una violación real de frontera (`src/devtools/timeline.tsx` importando desde `tools/rom-trace/`). Los contratos compartidos se movieron a `src/battle/romTrace/`, dejando la dirección permitida como `tools → src`.
+
+Por tanto, cualquier cambio futuro que vuelva a introducir una dependencia de producto hacia tooling debe considerarse regresión de arquitectura.
