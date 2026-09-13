@@ -50,6 +50,7 @@
     "verify:dynamic-rom-trace": "node scripts/run-bundled-script.mjs scripts/verify-dynamic-rom-trace.ts .vdrt2.mjs",
     "verify:rom-tick-parity": "node scripts/run-bundled-script.mjs scripts/verify-rom-tick-parity.ts .vrtp.mjs",
     "verify:rom-golden-timeline": "node scripts/run-bundled-script.mjs scripts/verify-rom-golden-timeline.ts .vrgt.mjs",
+    "verify:rom-mode": "npx tsx scripts/verify-rom-mode.ts",
     "verify:visual-production-gate": "node scripts/run-bundled-script.mjs scripts/verify-visual-production-gate.ts .vvpg.mjs",
     "verify:golden-visual-gate": "node scripts/run-bundled-script.mjs scripts/verify-golden-visual-gate.ts .vgyg.mjs",
     "verify:special-handler-physical-pixi": "node scripts/run-bundled-script.mjs scripts/verify-special-handler-physical-pixi.ts .vshpp.mjs",
