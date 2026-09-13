@@ -34,6 +34,18 @@ export const ACTION_SPECIAL_RIGHT_X = 208;
 export const ACTION_ACTOR_X = ACTION_LEFT_X;
 export const ACTION_TARGET_X = ACTION_RIGHT_X;
 
+/**
+ * P0.4R-B7B3 — alcance de `applySceneVisibility()`.
+ *
+ * ROM_PHYSICAL: PROHIBIDO. Una película ROM-backed deriva la visibilidad de
+ *   `ActionObjectRuntime` (side → binding → slot → slot.visible). Ninguna rama
+ *   por `scene` decide visibilidad.
+ * LEGACY: permitido temporalmente hasta B7B5.
+ *
+ * Gate: `verify:defender-action-physical` exige 0 llamadas desde el path ROM.
+ */
+export const APPLY_SCENE_VISIBILITY_SCOPE = 'LEGACY_ONLY' as const;
+
 export type ActionSceneMode = 'ACTION_SOLO' | 'ACTION_DUEL' | 'ACTION_TEAM' | 'PROJECTILE' | 'IMPACT' | 'DEFENDER_ACTION';
 
 export class ActionScene extends Container {

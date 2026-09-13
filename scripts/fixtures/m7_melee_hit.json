@@ -31,6 +31,26 @@
   },
   {
    "tick": 0,
+   "type": "ACTION_OBJECT_BIND",
+   "role": "ACTOR",
+   "slot": 0,
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
+  },
+  {
+   "tick": 0,
+   "type": "ACTION_OBJECT_BIND",
+   "role": "TARGET",
+   "slot": 1,
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
+  },
+  {
+   "tick": 0,
    "type": "SCENE_LOAD",
    "mode": "TACTICAL_TO_ACTION",
    "vramLoad": "$8E00",
@@ -787,26 +807,6 @@
    "selectedSourceEvent": "ATTACK_HIT",
    "selectedMacroId": 47,
    "selectedMacroHex": "0x2f",
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_PARTIAL",
-   "profile": "rom-card-5"
-  },
-  {
-   "tick": 251,
-   "type": "ACTION_OBJECT_BIND",
-   "role": "ACTOR",
-   "slot": 0,
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_PARTIAL",
-   "profile": "rom-card-5"
-  },
-  {
-   "tick": 251,
-   "type": "ACTION_OBJECT_BIND",
-   "role": "TARGET",
-   "slot": 1,
    "logicalTick": 0,
    "source": "ACTION_STARTED",
    "fidelity": "ROM_STATIC_PARTIAL",

@@ -309,6 +309,38 @@ export class ActionObjectRuntime {
     else this.observation = { ...this.observation, slot1Role: null, slot1Side: null };
     this.slots[slot] = { slot, binding: null, active: false, visible: false };
   }
+
+  // ── P0.4R-B7B3 — visibilidad por slot ligado, no por escena ni bando ──
+
+  /** Slot físico ligado a un bando, o null si no hay binding. */
+  slotBoundTo(side: 'player' | 'enemy'): ActionObjectSlot | null {
+    const want = side === 'player' ? 'PLAYER' : 'ENEMY';
+    const idx = this.slots.findIndex(s => s.binding?.fighterSide === want);
+    return idx < 0 ? null : (idx as ActionObjectSlot);
+  }
+
+  /**
+   * Visibilidad del PARTICIPANTE LIGADO. Resuelve `side → binding → slot` y
+   * muta el slot. Sin binding devuelve null: el caller DEBE ser explícito
+   * (PENDING), nunca caer a un fallback por bando.
+   *
+   * `$08 STOP_HIDE_OBJECT` es definitivo: con el objeto inactive, un
+   * `visible=true` NO lo revive.
+   */
+  setVisibilityForBoundParticipant(side: 'player' | 'enemy', visible: boolean): ActionObjectSlot | null {
+    const slot = this.slotBoundTo(side);
+    if (slot === null) return null;
+    const current = this.slots[slot];
+    if (!current.active) return slot; // $08 ya lo ocultó: no revive
+    this.slots[slot] = { ...current, visible };
+    return slot;
+  }
+
+  /** Visibilidad del participante ligado, o null si no hay binding. */
+  visibilityForBoundParticipant(side: 'player' | 'enemy'): boolean | null {
+    const slot = this.slotBoundTo(side);
+    return slot === null ? null : this.slots[slot].visible;
+  }
 }
 
 // ── P0.4R-B7B2 — aplicación de cues de binding (autoridad compartida) ──
@@ -358,6 +390,15 @@ export class ActionObjectBindingProbe {
 
   actionObjectBindingObservation(): ActionObjectBindingObservation {
     return this.runtime.bindingObservation();
+  }
+
+  /** B7B3 — visibilidad por participante ligado (sin binding → null). */
+  setVisibilityForBoundParticipant(side: 'player' | 'enemy', visible: boolean): 0 | 1 | null {
+    return this.runtime.setVisibilityForBoundParticipant(side, visible);
+  }
+
+  abilityForBoundParticipant(side: 'player' | 'enemy'): boolean | null {
+    return this.runtime.visibilityForBoundParticipant(side);
   }
 
   clearActionObjectBinding(): void {

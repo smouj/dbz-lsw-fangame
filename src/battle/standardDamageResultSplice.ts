@@ -104,20 +104,22 @@ export function spliceStandardDamageResult(input: StandardDamageResultSpliceOpti
     return timeline;
   }
 
-  const out: TimelineEntry[] = [...head];
-
   // ── B7B1 — binding FÍSICO de slots (binder ROM £6708, contexto OFFENSE).
+  // Va al INICIO del film: el binder ROM establece los slots cuando arranca la
+  // acción, así que las cues de visibilidad (posteriores) siempre lo resuelven.
   // No lo decide quién ejecuta la carta: slot0 = ATTACKER, slot1 = DEFENDER.
+  const filmStartTick = entries[0]?.cue.tick ?? branchTick;
+  const bindEntries: TimelineEntry[] = [];
   if (input.attackerSide && input.defenderSide) {
     for (const b of actionObjectBindingInstructions('OFFENSE', {
       attacker: input.attackerSide,
       defender: input.defenderSide,
     })) {
-      out.push({
-        ...frameCueBase(branchTick, b.slot, meta),
+      bindEntries.push({
+        ...frameCueBase(filmStartTick, b.slot, meta),
         cue: {
           type: 'ACTION_OBJECT_BIND',
-          tick: branchTick,
+          tick: filmStartTick,
           slot: b.slot,
           role: b.role,
           fighterSide: b.fighterSide,
@@ -127,6 +129,7 @@ export function spliceStandardDamageResult(input: StandardDamageResultSpliceOpti
       });
     }
   }
+  const out: TimelineEntry[] = [...bindEntries, ...head];
 
   // ── Draw order ($CA39 == 2): slot 0 (actor) in front of slot 1 (target) ──
   out.push({

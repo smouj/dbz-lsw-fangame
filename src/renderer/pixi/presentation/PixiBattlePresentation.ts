@@ -74,6 +74,20 @@ export class PixiBattlePresentation implements BattlePresentation {
     this.actionObjects.resetBindingToField();
   }
 
+  /**
+   * B7B3 — visibilidad por PARTICIPANTE LIGADO: resuelve side → binding → slot y
+   * el sprite refleja el estado físico del slot (`active && visible`), nunca el
+   * bando. `$08 STOP_HIDE_OBJECT` gana: un inactive no revive.
+   */
+  setActionObjectVisibilityForParticipant(side: 'player' | 'enemy', visible: boolean): 0 | 1 | null {
+    const slot = this.actionObjects.setVisibilityForBoundParticipant(side, visible);
+    if (slot === null) return null;
+    const state = this.actionObjects.state(slot);
+    const sprite = this.actionObject(slot);
+    if (sprite) sprite.visible = state.active && state.visible;
+    return slot;
+  }
+
   private actionObject(slot: ActionObjectSlot): FighterActor | null {
     const binding = this.actionObjects.resolve(slot);
     if (!binding) return null;

@@ -38,6 +38,7 @@ export interface BattlePresentation {
    * en Production que slot0/slot1 son roles físicos, no bandos.
    */
   actionObjectBindingObservation?(): import('../../../battle/engine/presentation/ActionObjectRuntime').ActionObjectBindingObservation;
+  setActionObjectVisibilityForParticipant?(side: 'player' | 'enemy', visible: boolean): 0 | 1 | null;
   /** B7B2 — limpieza del binding al volver a FIELD (B6). */
   clearActionObjectBinding?(): void;
   /** Cambia el plano cinematográfico (mapea SHOT). */

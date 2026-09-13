@@ -286,17 +286,30 @@ export class ProductionRomPresentationAdapter {
         break;
       }
       case 'FIGHTER_VISIBILITY': {
-        this.pres.setFighterVisibility(cue.role, cue.visible);
-        // Static ROM films begin with an attacker-only shot. The verified
-        // defender entrance cue is the scene boundary: once the target becomes
-        // visible, the same action background is composed as a duel. No card
-        // type or React state decides this transition.
+        // B7B3 — la visibilidad se resuelve por PARTICIPANTE LIGADO
+        // (side → binding → slot), no por bando ni por escena. Con binding no
+        // resoluble el cue queda PENDING explícito: nunca un fallback silencioso.
+        const setVis = (this.pres as Partial<Pick<BattlePresentation, 'setActionObjectVisibilityForParticipant'>>).setActionObjectVisibilityForParticipant;
+        if (typeof setVis === 'function') {
+          const slot = setVis.call(this.pres, cue.side, cue.visible);
+          if (slot === null) {
+            this.stats.pendingCues++;
+            this.stats.pendingReasons.push(`FIGHTER_VISIBILITY sin binding resoluble (side=${cue.side})`);
+          } else {
+            visible = true;
+          }
+        } else {
+          // Presentación sin binding físico (no produce películas ROM).
+          this.pres.setFighterVisibility(cue.role, cue.visible);
+          visible = true;
+        }
+        // Composición de escena: la entrada del defensor convierte el plano en
+        // duelo. Es composición, no la autoridad de visibilidad.
         if (cue.role === 'TARGET' && cue.visible && this.currentScene === 'ACTION_SOLO') {
           this.currentScene = 'ACTION_DUEL';
           this.pres.setScene(this.currentScene);
           this.stats.sceneChanges++;
         }
-        visible = true;
         break;
       }
       case 'ANIMATION_START': {
