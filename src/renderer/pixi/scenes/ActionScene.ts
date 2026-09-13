@@ -82,6 +82,27 @@ export class ActionScene extends Container {
    * o planos jamás vuelve a tocar el parent. Si se llama dos veces con los
    * mismos actores, es no-op (idempotente).
    */
+  /**
+   * P0.4R-B7B4 — orden de pintado físico.
+   *
+   * Demostrado (ROM_STATIC_VERIFIED): el loop bank_001:$4769 invoca el render de
+   * objetos con el objeto del SLOT0 primero, siempre (la rama $CA39 conserva
+   * slot0-primero cuando el índice físico alterna).
+   *
+   * Relación con la prioridad visible: en OAM de GBC el índice menor tiene MÁS
+   * prioridad (se pinta encima), así que slot0 —pintado primero— queda DELANTE.
+   * En Pixi "delante" = hijo POSTERIOR. Por eso el primer pintado se coloca
+   * antes en el orden de hijos.
+   *
+   * Reordena los DOS nodos estables: nunca reparenta ni duplica.
+   */
+  reorderFightersDrawnOrder(firstDrawn: FighterActor | null, secondDrawn: FighterActor | null): void {
+    if (!firstDrawn || !secondDrawn) return;
+    if (!this.children.includes(firstDrawn) || !this.children.includes(secondDrawn)) return;
+    this.setChildIndex(firstDrawn, 0);
+    this.setChildIndex(secondDrawn, Math.max(0, this.children.indexOf(firstDrawn) + 1));
+  }
+
   setFighters(left: FighterActor | null, right: FighterActor | null): void {
     if (left && this.leftFighter !== left) {
       if (this.leftFighter) this.removeChild(this.leftFighter);

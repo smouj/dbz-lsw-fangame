@@ -526,7 +526,10 @@ export interface RomActionObjectPosition {
   commitMode: 'FRAME_RELATIVE' | 'COMMITTED_BY_OPCODE_10';
 }
 
-/** Orden de dibujo derivado de la rama $CA39 == 2 (§264). */
+/** Orden de dibujo — ROM_STATIC_VERIFIED (B7B4): slot0 antes que slot1.
+ *  Procedencia real en ACTION_OBJECT_DRAW_ORDER_AUTHORITY (romActionObject.ts):
+ *  la rama sobre $CA39 (bank_001:$4769) conserva slot0-primero cuando el índice
+ *  físico alterna; `$CA39 == 2` aislado NO lo prueba. */
 export type ActionDrawOrder = 'SLOT_0_THEN_1' | 'SLOT_1_THEN_0';
 
 /** Opcode $0A — semántica PARTIAL (§265). */

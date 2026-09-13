@@ -131,7 +131,11 @@ export function spliceStandardDamageResult(input: StandardDamageResultSpliceOpti
   }
   const out: TimelineEntry[] = [...bindEntries, ...head];
 
-  // ── Draw order ($CA39 == 2): slot 0 (actor) in front of slot 1 (target) ──
+  // ── Draw order — ROM_STATIC_VERIFIED (B7B4): la ROM pinta SIEMPRE el objeto
+  // del slot0 antes que el del slot1. `$CA39` es el registro del participante
+  // ligado a slot0 y la rama bank_001:$4769 conserva slot0-primero cuando el
+  // índice físico alterna. NO es `$CA39 == 2 → SLOT_0_THEN_1`.
+  // Detalle: ACTION_OBJECT_DRAW_ORDER_AUTHORITY (romActionObject.ts).
   out.push({
     ...frameCueBase(branchTick, 0, meta),
     cue: { type: 'ACTION_OBJECT_DRAW_ORDER', tick: branchTick, order: 'SLOT_0_THEN_1' },

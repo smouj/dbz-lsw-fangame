@@ -148,7 +148,9 @@ export function compileBeamBaseRuntimeCutover(
     selectedResultSourceEvent: outcome.sourceEvent,
   });
   const withEntrance = withStaticDefenderEntrance(compiled.timeline, env.event.action, env.event.side);
-  // P0.4D: ROM $CA39 draw order — actor (slot 0) in front of target (slot 1)
+  // P0.4D/B7B4: ROM draw order (ROM_STATIC_VERIFIED) — el objeto del slot0 se
+  // pinta antes que el del slot1 SIEMPRE. La rama $CA39 (bank_001:$4769)
+  // conserva slot0-primero cuando el índice físico alterna.
   // B7B1 — binding FÍSICO (binder ROM £6708, OFFENSE): slot0 = ATTACKER, slot1 = DEFENDER.
   const bindCues: TimelineEntry[] = withEntrance.entries[0]
     ? actionObjectBindingInstructions('OFFENSE', {
@@ -228,7 +230,9 @@ export function compileBeamFamilyRuntimeCutover(
     selectedResultSourceEvent: outcome.sourceEvent,
   });
   const withEntrance = withStaticDefenderEntrance(compiled.timeline, env.event.action, env.event.side);
-  // P0.4D: ROM $CA39 draw order — actor (slot 0) in front of target (slot 1)
+  // P0.4D/B7B4: ROM draw order (ROM_STATIC_VERIFIED) — el objeto del slot0 se
+  // pinta antes que el del slot1 SIEMPRE. La rama $CA39 (bank_001:$4769)
+  // conserva slot0-primero cuando el índice físico alterna.
   // B7B1 — binding FÍSICO (binder ROM £6708, OFFENSE): slot0 = ATTACKER, slot1 = DEFENDER.
   const bindCues: TimelineEntry[] = withEntrance.entries[0]
     ? actionObjectBindingInstructions('OFFENSE', {

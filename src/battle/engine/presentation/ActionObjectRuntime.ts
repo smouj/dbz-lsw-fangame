@@ -341,6 +341,26 @@ export class ActionObjectRuntime {
     const slot = this.slotBoundTo(side);
     return slot === null ? null : this.slots[slot].visible;
   }
+
+  // ── P0.4R-B7B4 — orden de pintado físico ──
+
+  private drawOrder: 'SLOT_0_THEN_1' | 'SLOT_1_THEN_0' | null = null;
+  private drawOrderApplied = 0;
+
+  /** Aplica el orden de pintado ROM. Ordena SLOTS, no bandos. */
+  setDrawOrder(order: 'SLOT_0_THEN_1' | 'SLOT_1_THEN_0'): void {
+    this.drawOrder = order;
+    this.drawOrderApplied++;
+  }
+
+  drawOrderObservation(): {
+    order: 'SLOT_0_THEN_1' | 'SLOT_1_THEN_0' | null;
+    applied: number;
+    /** El orden se expresa sobre slots físicos, nunca sobre bandos. */
+    slotBased: true;
+  } {
+    return { order: this.drawOrder, applied: this.drawOrderApplied, slotBased: true };
+  }
 }
 
 // ── P0.4R-B7B2 — aplicación de cues de binding (autoridad compartida) ──
@@ -399,6 +419,15 @@ export class ActionObjectBindingProbe {
 
   abilityForBoundParticipant(side: 'player' | 'enemy'): boolean | null {
     return this.runtime.visibilityForBoundParticipant(side);
+  }
+
+  /** B7B4 — orden de pintado sobre slots físicos. */
+  setActionObjectDrawOrder(order: 'SLOT_0_THEN_1' | 'SLOT_1_THEN_0'): void {
+    this.runtime.setDrawOrder(order);
+  }
+
+  drawOrderObservation() {
+    return this.runtime.drawOrderObservation();
   }
 
   clearActionObjectBinding(): void {

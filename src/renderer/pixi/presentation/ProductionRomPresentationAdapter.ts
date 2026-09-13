@@ -569,8 +569,20 @@ export class ProductionRomPresentationAdapter {
         }
         break;
       }
-      case 'ACTION_OBJECT_UNBIND': {
-        const unbind = (this.pres as Partial<Pick<BattlePresentation, 'unbindActionObject'>>).unbindActionObject;
+      case 'ACTION_OBJECT_DRAW_ORDER': {
+        // B7B4 — el orden de pintado es autoridad real, no un cue ignorado.
+        // Ordena SLOTS físicos (nunca bandos) y reordena los nodos.
+        const setOrder = (this.pres as Partial<Pick<BattlePresentation, 'setActionObjectDrawOrder'>>).setActionObjectDrawOrder;
+        if (typeof setOrder === 'function') {
+          setOrder.call(this.pres, cue.order);
+          visible = true;
+        } else {
+          this.stats.pendingCues++;
+          this.stats.pendingReasons.push('BattlePresentation.setActionObjectDrawOrder missing');
+        }
+        break;
+      }
+      case 'ACTION_OBJECT_UNBIND': {        const unbind = (this.pres as Partial<Pick<BattlePresentation, 'unbindActionObject'>>).unbindActionObject;
         if (typeof unbind === 'function') {
           unbind.call(this.pres, cue.slot as ActionObjectSlot);
           visible = true;

@@ -228,6 +228,54 @@ export function actionObjectBindingInstructions(
   ] as const;
 }
 
+/**
+ * P0.4R-B7B4 — autoridad ROM del ORDEN DE PINTADO de ActionObjects.
+ *
+ * Precisión obligatoria: `$CA39 == 2` NO prueba `SLOT_0_THEN_1`. Leído aislado
+ * probaría lo CONTRARIO (dibuja el objeto de índice 1 antes del 0). Lo que
+ * prueba el orden es la ESTRUCTURA de la rama + la semántica de `$CA39`.
+ *
+ * Cadena ROM (bank_001:$4769 loop):
+ *   escritores de $CA39 = los binder, y copian el registro del participante
+ *   ligado al SLOT 0:
+ *     Call_001_6708 (OFFENSE)          $CA39 ← $CA59
+ *     Call_001_6750 (DEFENSE_REACTION) $CA39 ← $CA5A
+ *   loop de pintado (bank_001:1399):
+ *     C3C6=1 ; Call_000_0a01 ; Call_000_09da
+ *     ld a,[$CA39] ; cp $02 ; jr z, jr_001_4769
+ *     ≠2 → C3C6=0 → 0a60 ; C3C6=1 → 0a60      (objeto0, objeto1)
+ *     =2 → C3C6=1 → 0a60 ; C3C6=0 → 0a60      (objeto1, objeto0)
+ *   render por objeto: Call_000_0a60 → Call_000_0b07 (hl=$C3A0 + $13*índice)
+ *     → `and $80` sobre ActionObject+0 → `ret z` si bit7 claro (no se dibuja)
+ *
+ * Como registro 1 → índice 0 y registro 2 → índice 1 (`>>1`), la rama mantiene
+ * SIEMPRE el objeto de slot0 primero:
+ *   CA39==1 (slot0→índice0) → dibuja 0,1
+ *   CA39==2 (slot0→índice1) → dibuja 1,0
+ * → el orden pertenece a los SLOTS físicos, no a player/enemy ni a attacker/defender.
+ */
+export const ACTION_OBJECT_DRAW_ORDER_AUTHORITY = {
+  /** Registro de participante ligado al slot0 (selector de la rama). */
+  selectorRegister: 0xca39,
+  selectorWriters: [
+    { symbol: 'Call_001_6708', context: 'OFFENSE', copies: 0xca59 },
+    { symbol: 'Call_001_6750', context: 'DEFENSE_REACTION', copies: 0xca5a },
+  ] as const,
+  /** Loop de pintado: elige el orden de índice de objeto según el selector. */
+  orderSite: { bank: 1, address: 0x4769, note: 'ld a,[$CA39] ; cp $02 ; jr z, jr_001_4769' },
+  /** Render de UN objeto: comprueba bit7 de ActionObject+0 (ret z si claro). */
+  objectRenderer: { symbol: 'Call_000_0a60', checks: 'ActionObject+0 & $80' },
+  /** Resolutor de puntero: $C3A0 + $13 * índice de objeto. */
+  objectPointer: { symbol: 'Call_000_0b07', base: 0xc3a0, stride: 0x13 },
+  /** Conclusión demostrada. */
+  conclusion:
+    'la ROM pinta SIEMPRE el ActionObject del slot0 antes que el del slot1; la rama sobre $CA39 existe para conservar slot0-primero cuando el índice físico alterna',
+  /** Lo que `$CA39 == 2` NO prueba por sí solo. */
+  notProven: 'CA39 == 2 aislado NO demuestra SLOT_0_THEN_1: selecciona el orden de índice para que slot0 quede primero',
+  evidence: 'ROM_STATIC_VERIFIED',
+  source: 'bank_001:$4769 (loop) + Call_000_0a60/Call_000_0b07 (render) + Call_001_6708/Call_001_6750 (escritores de $CA39)',
+} as const;
+
 export const ACTION_OBJECT_BINDING = {
   /** Logical slot storage: $7318 stores logical slot0 → C7D5, slot1 → C7D6. */
   logicalSlotStore: [0xc7d5, 0xc7d6] as const,

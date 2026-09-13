@@ -88,6 +88,20 @@ export class PixiBattlePresentation implements BattlePresentation {
     return slot;
   }
 
+  /**
+   * B7B4 — orden de pintado físico de los ActionObject. Ordena SLOTS, nunca
+   * bandos. El primer slot pintado queda DETRÁS en el contenedor (OAM: índice
+   * menor = prioridad mayor = delante).
+   */
+  setActionObjectDrawOrder(order: 'SLOT_0_THEN_1' | 'SLOT_1_THEN_0'): void {
+    this.actionObjects.setDrawOrder(order);
+    const firstSlot: 0 | 1 = order === 'SLOT_0_THEN_1' ? 0 : 1;
+    const secondSlot: 0 | 1 = firstSlot === 0 ? 1 : 0;
+    const first = this.actionObject(firstSlot);
+    const second = this.actionObject(secondSlot);
+    this.renderer.sceneDirector.action.reorderFightersDrawnOrder(first, second);
+  }
+
   private actionObject(slot: ActionObjectSlot): FighterActor | null {
     const binding = this.actionObjects.resolve(slot);
     if (!binding) return null;

@@ -545,7 +545,9 @@ export interface RomActionObjectUnbindCue {
   slot: 0 | 1;
 }
 
-/** Orden de dibujo ($CA39 == 2 — §264). */
+/** Orden de dibujo — ROM_STATIC_VERIFIED (B7B4): el objeto del slot0 se pinta
+ *  antes que el del slot1, siempre, sea cual sea el binding. La rama $CA39 de
+ *  bank_001:$4769 conserva slot0-primero cuando el índice físico alterna. */
 export interface RomActionObjectDrawOrderCue {
   type: 'ACTION_OBJECT_DRAW_ORDER';
   tick: number;
