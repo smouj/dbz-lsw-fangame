@@ -5,6 +5,17 @@
 .devstudio .dev-logo-text { display:flex; }
 .devstudio .dev-logo-text strong { font-size:15px; }
 .devstudio .dev-logo-text small { font-size:11px; }
+.devstudio .dev-scope-badge {
+  margin-left:auto;
+  align-self:flex-start;
+  padding:3px 5px;
+  border:1px solid rgba(246,199,68,.58);
+  color:#f6c744;
+  background:rgba(246,199,68,.10);
+  font:700 9px/1 'Segoe UI',Arial,sans-serif;
+  letter-spacing:.08em;
+  white-space:nowrap;
+}
 .devstudio .dev-nav { display:block; flex:1; min-height:0; padding:8px; overflow-x:hidden; overflow-y:auto; scroll-behavior:auto; }
 .devstudio .dev-nav-entry { display:flex; flex-direction:column; }
 .devstudio .dev-nav-group { display:block; margin:8px 0 3px; padding:8px; font-size:10px; color:#a4aebe; }

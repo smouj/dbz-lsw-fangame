@@ -5,6 +5,7 @@
 // NO forma parte del flujo público de producción.
 // ═══════════════════════════════════════════════════════════
 import { useState, useEffect, useRef } from 'react';
+import './dev-layout.css';
 import {
   Activity, ArrowLeft, Brush, CheckCircle2,
   Film, FolderCode, Gamepad2, Gauge, Grid2X2, LayoutDashboard,
@@ -207,6 +208,7 @@ export function DevStudio({ onExit, onLaunchBattle }: DevStudioProps) {
             <strong>DBZ LSW</strong>
             <small>Development Studio</small>
           </div>
+          <span className="dev-scope-badge" title="Herramienta interna; no forma parte del juego">DEV ONLY</span>
         </div>
         <nav className="dev-nav" aria-label="Módulos del Dev Studio">
           {DEV_MODULES.map((m, i) => {

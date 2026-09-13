@@ -22,6 +22,26 @@ La build normal del juego no registra `devhub_probe` ni `devhub_action`.
 
 La UI tampoco expone un shell arbitrario: `devhub_action` acepta exclusivamente IDs predefinidos y cada tarea ejecuta un comando fijo del proyecto.
 
+El entrypoint web mantiene además dos superficies separadas:
+
+- **Juego público**: `/` sin marcadores Dev. No importa el layout privado ni
+  renderiza módulos del Studio.
+- **Dev Studio**: solo se activa con `#dev`, `#dev/<módulo>` o `?dev=1` en
+  builds de desarrollo/preview. El módulo se carga de forma diferida y su CSS
+  vive dentro de `src/devtools/`, junto a la herramienta.
+
+En una build `--mode release`, `DevStudio` se sustituye por un stub nulo y el
+guard de ruta queda desactivado. La frontera se comprueba con:
+
+```powershell
+npm run verify:dev-production-boundary
+npm run verify:release-content
+```
+
+El primer gate evita imports Dev accidentales desde el juego y valida el
+namespace de URL. El segundo inspecciona el artefacto final para confirmar que
+no expone módulos, endpoints ni datos de desarrollo.
+
 ## Ejecutar en desarrollo
 
 Desde PowerShell, en el repo:

@@ -8,7 +8,11 @@ export function isDevRoute(): boolean {
   if (typeof window === 'undefined') return false;
   if (import.meta.env.MODE === 'release') return false; // nunca en release
   const q = new URLSearchParams(window.location.search);
-  return window.location.hash.startsWith('#dev') || q.get('dev') === '1';
+  const hash = window.location.hash;
+  // Solo aceptamos el namespace exacto #dev / #dev/<módulo>. Esto evita que
+  // cualquier hash parecido (por ejemplo #developer) active la herramienta.
+  const devHash = hash === '#dev' || hash.startsWith('#dev/');
+  return devHash || q.get('dev') === '1';
 }
 
 export function initialDevModule(): string {

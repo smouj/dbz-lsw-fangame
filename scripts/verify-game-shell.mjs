@@ -208,7 +208,9 @@ try {
   const source=await readFile('src/devtools/DevStudio.tsx','utf8');
   const moduleBody=source.match(/export const DEV_MODULES[\s\S]*?= \[([\s\S]*?)\];/)[1];
   const modules=[...moduleBody.matchAll(/id: '([a-z-]+)'/g)].map(m=>m[1]);
-  assert.equal(modules.length,22);
+  // DEV_MODULES es la fuente única. Mantener este valor alineado con el
+  // registro evita que un módulo nuevo quede fuera de la sonda visual.
+  assert.equal(modules.length,23);
   await page.goto(new URL('#dev/dashboard',url).href,{waitUntil:'domcontentloaded'});
   await page.locator('.devstudio').waitFor({timeout:60000});
   for(const width of [1280,390]) {
@@ -227,7 +229,7 @@ try {
       if(width===390) assert.equal(await page.locator('.dev-mobile-bar button').first().getAttribute('aria-expanded'),'false');
       await shot(`dev-${module}-${width}`);
     }
-    console.log(`PASS: 22 Dev modules at ${width}px`);
+    console.log(`PASS: ${modules.length} Dev modules at ${width}px`);
   }
   await page.goto(new URL('?dev=1',url).href,{waitUntil:'domcontentloaded'});
   await page.locator('.devstudio').waitFor();
@@ -235,8 +237,9 @@ try {
   await page.locator('.shell-menu').waitFor();
   assert.ok(!page.url().includes('dev'),'leaving query-based Dev mode clears the URL');
   assert.deepEqual([...new Set(errors)],[],'no JavaScript exceptions');
-  await writeFile(`${output}/report.json`,JSON.stringify({passed:true,screenChecks:results.length,devChecks:44,errors,results},null,2));
-  console.log(`PASS: ${results.length} shell layout checks, 44 Dev checks, no JavaScript exceptions.`);
+  const devChecks = modules.length * 2;
+  await writeFile(`${output}/report.json`,JSON.stringify({passed:true,screenChecks:results.length,devChecks,errors,results},null,2));
+  console.log(`PASS: ${results.length} shell layout checks, ${devChecks} Dev checks, no JavaScript exceptions.`);
 } catch(error) {
   await shot('failure').catch(()=>{});
   await writeFile(`${output}/report.json`,JSON.stringify({passed:false,error:String(error),errors,results},null,2));

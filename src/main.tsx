@@ -6,7 +6,6 @@ import './styles.css';
 import './game-pages.css';
 import './game-shell.css';
 import './components/setup/setup-polish.css';
-import './devtools/dev-layout.css';
 import { GameShellSurface } from './components/GameShellSurface';
 import { GamePageHeader } from './components/GamePageHeader';
 import { applyHudTheme, loadHudTheme } from './data/hudTheme';
@@ -115,6 +114,9 @@ import { LANGUAGES, LangCode, TKey } from './i18n';
 import { ArrowLeft, X, Lock, ChevronRight, Languages, Sword, Shield, BookOpen, Swords, Library, Users, Settings, Sparkles, Volume2, Zap, Gauge, Monitor, Keyboard, Music, type LucideIcon } from 'lucide-react';
 // El Dev Studio SOLO existe en development/preview: en release (--mode release)
 // esta rama muerta se elimina del bundle (import.meta.env.MODE es constante).
+// Su CSS se importa dentro del propio módulo DevStudio, nunca desde el entry
+// point del juego. Así la ruta pública no arrastra layout ni estilos de la
+// herramienta interna.
 import type { DevStudioProps } from './devtools/DevStudioTypes';
 const DevStudioLazy = lazy(() => import('./devtools/DevStudio').then(m => ({ default: m.DevStudio })));
 const DevStudio: React.ComponentType<DevStudioProps> | null = import.meta.env.MODE === 'release' ? null : DevStudioLazy;
