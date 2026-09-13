@@ -184,6 +184,10 @@ static void cmd_trace(const char* path, int n, const char* keyspec) {
               rd(0xCA0D + o*3), rd(0xCA0D + o*3 + 1), rd(0xCA0D + o*3 + 2),
               rd(0xCA28 + o*3), rd(0xCA28 + o*3 + 1), rd(0xCA28 + o*3 + 2));
     }
+    fprintf(f, "], \"oam\": [");
+    for (int b = 0; b < 160; b++) fprintf(f, "%s%d", b ? ", " : "", rd(0xFE00 + b));
+    fprintf(f, "], \"vram\": [");
+    for (int b = 0; b < 64; b++) fprintf(f, "%s%d", b ? ", " : "", rd(0x9800 + b));
     fprintf(f, "]}");
     if (i + 1 < n) fprintf(f, ",");
     fprintf(f, "\n");
