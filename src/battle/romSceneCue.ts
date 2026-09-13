@@ -206,7 +206,6 @@ export const ROM_SCENE_CUES: RomSceneCueEntry[] = [
   // ── STAGE ──
   { id: 'STAGE_SCENE_PREP', operation: 'SCENE_SET', family: 'STAGE', evidence: 'PENDING_ROM_TRACE', source: 'Current bridge: STAGE_PREP=60t; ROM Stage VM is per-input/per-participant microprograms $04/$05/$06/$13', consumed: 'BRIDGE', description: 'Stage preparation bridge. Replace with ROM Stage VM queues; $06 waits ActionObject+4, so visual frames are part of gameplay timing.' },
   { id: 'STAGE_QTE_WINDOW', operation: 'FIGHTER_VISIBILITY', family: 'STAGE', evidence: 'ROM_EXACT', source: 'QTE window lengths: 50/80/120/150t by position', consumed: 'CONSUMED', description: 'QTE input window visibility (position-dependent ROM_EXACT durations)' },
-  { id: 'STAGE_COUNTER', operation: 'CAMERA_SHAKE', family: 'STAGE', evidence: 'ROM_STATIC_VERIFIED', source: 'COUNTER_WINDOW=24t (counter attack window)', consumed: 'CONSUMED', description: 'Counter attack window after QTE failure (24t)' },
   { id: 'STAGE_RETURN', operation: 'RETURN_TO_FIELD', family: 'STAGE', evidence: 'PRESENTATION_DERIVED', source: 'r(40) SCENE OVERVIEW after stage resolution', consumed: 'CONSUMED', description: 'Return to FIELD after stage resolution (40t post-QTE)' },
 
   // ── SUPPORT ──
