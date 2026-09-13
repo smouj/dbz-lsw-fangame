@@ -1,0 +1,184 @@
+{
+ "source": "ROM USA (sha256 8dab48cc81d14bcee7c73274df09cf5c4dd44c3b93d10a5a3175e04fead25dee)",
+ "emulator": "mGBA 0.10.2 headless (libmgba via tools/rom-trace/rom-driver)",
+ "savestate": "source-user-gather.ss1 \u2014 savestate del usuario en la pantalla 'Gather Power' (Gohan vs Ginyu), CC 0/99 (cheat 01633ECA activo)",
+ "command": "Gather Power (COMANDO ofensivo, no carta). Doc \u00a7114-115: Ofensivo CA36==1 -> GATHER (CA55=4, CA57=0)",
+ "trigger": "A sobre el panel POWER/Gather Power",
+ "observed": {
+  "CA40_series": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   1,
+   2,
+   6,
+   6,
+   6
+  ],
+  "CA40_note": "powerWindowCounter: 0 -> 1 -> 2 -> 6 durante la ejecucion real (GATHER_STATE)",
+  "CA03": "04 (menu) durante todo el film",
+  "CA36": "01 (cursor en la entrada de Gather)"
+ },
+ "screens": [
+  "escena ACTION: Gohan centrado en el campo, HUD inferior colapsado",
+  "rotulo 'Gohan's Attack' / 'Gather Power'"
+ ],
+ "framesTotal": 27,
+ "framesUnique": 14,
+ "pending": "GATHER_POSITION_RULE: falta la direccion RAM de 'position' (bit0 AIR/GROUND, bit1 FRONT/BACK). Se resuelve con un diff durante un MOVE o la resolucion Stage con direcciones.",
+ "frames": [
+  {
+   "frameIndex": 0,
+   "file": "g00-pre.png",
+   "sha256_12": "dc3ad8bd5ecb"
+  },
+  {
+   "frameIndex": 1,
+   "file": "g01.png",
+   "sha256_12": "5ad71ad4c6ff"
+  },
+  {
+   "frameIndex": 2,
+   "file": "g02.png",
+   "sha256_12": "5ad71ad4c6ff"
+  },
+  {
+   "frameIndex": 3,
+   "file": "g03.png",
+   "sha256_12": "5ad71ad4c6ff"
+  },
+  {
+   "frameIndex": 4,
+   "file": "g04.png",
+   "sha256_12": "df2e0ef36f20"
+  },
+  {
+   "frameIndex": 5,
+   "file": "g05.png",
+   "sha256_12": "ba3cc620ce55"
+  },
+  {
+   "frameIndex": 6,
+   "file": "g06.png",
+   "sha256_12": "9109671c12e7"
+  },
+  {
+   "frameIndex": 7,
+   "file": "g07.png",
+   "sha256_12": "ed5e7ae6a1cf"
+  },
+  {
+   "frameIndex": 8,
+   "file": "g08.png",
+   "sha256_12": "ed5e7ae6a1cf"
+  },
+  {
+   "frameIndex": 9,
+   "file": "g09.png",
+   "sha256_12": "ed5e7ae6a1cf"
+  },
+  {
+   "frameIndex": 10,
+   "file": "g10.png",
+   "sha256_12": "ed5e7ae6a1cf"
+  },
+  {
+   "frameIndex": 11,
+   "file": "g11.png",
+   "sha256_12": "ed5e7ae6a1cf"
+  },
+  {
+   "frameIndex": 12,
+   "file": "g12.png",
+   "sha256_12": "139865301146"
+  },
+  {
+   "frameIndex": 13,
+   "file": "g13.png",
+   "sha256_12": "7d2576ffecda"
+  },
+  {
+   "frameIndex": 14,
+   "file": "g14.png",
+   "sha256_12": "ac9169a5e25e"
+  },
+  {
+   "frameIndex": 15,
+   "file": "g15.png",
+   "sha256_12": "8fcdbeaa9c5f"
+  },
+  {
+   "frameIndex": 16,
+   "file": "g16.png",
+   "sha256_12": "8fcdbeaa9c5f"
+  },
+  {
+   "frameIndex": 17,
+   "file": "g17.png",
+   "sha256_12": "8fcdbeaa9c5f"
+  },
+  {
+   "frameIndex": 18,
+   "file": "g18.png",
+   "sha256_12": "8fcdbeaa9c5f"
+  },
+  {
+   "frameIndex": 19,
+   "file": "g19.png",
+   "sha256_12": "8fcdbeaa9c5f"
+  },
+  {
+   "frameIndex": 20,
+   "file": "g20.png",
+   "sha256_12": "8fcdbeaa9c5f"
+  },
+  {
+   "frameIndex": 21,
+   "file": "g21.png",
+   "sha256_12": "c4cf42505761"
+  },
+  {
+   "frameIndex": 22,
+   "file": "g22.png",
+   "sha256_12": "fd3a2350a11c"
+  },
+  {
+   "frameIndex": 23,
+   "file": "g23.png",
+   "sha256_12": "e35e1d4665bf"
+  },
+  {
+   "frameIndex": 24,
+   "file": "g24.png",
+   "sha256_12": "3683850fa3f3"
+  },
+  {
+   "frameIndex": 25,
+   "file": "g25.png",
+   "sha256_12": "3683850fa3f3"
+  },
+  {
+   "frameIndex": 26,
+   "file": "g26.png",
+   "sha256_12": "3683850fa3f3"
+  }
+ ]
+}
