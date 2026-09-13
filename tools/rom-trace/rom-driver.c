@@ -18,7 +18,7 @@
  *   savestate PATH       → guarda savestate nombrado (battery+RTC incluidos)
  *   loadstate PATH       → carga savestate nombrado
  *   savebatt PATH        → vuelca battery save actual a archivo
- *   shot PATH            → framebuffer → PPM P6 (160x144)
+ *   shot PATH            → PNG 160x144 (mCoreTakeScreenshotVF)
  *   trace PATH N         → captura N frames → JSON crudo (schema trace-action)
  *   quit
  *
@@ -136,20 +136,15 @@ static void cmd_savebatt(const char* path) {
   fflush(stdout);
 }
 
+/* shot PATH → PNG 160x144 vía mCoreTakeScreenshotVF.
+ * Antes volcaba g_fb (PPM) y salía NEGRO: el core no entrega el frame al
+ * videoBuffer sin la ruta de vídeo de mGBA. Corregido 2026-09-13. */
 static void cmd_shot(const char* path) {
-  FILE* f = fopen(path, "wb");
-  if (!f) { printf("ERR open %s\n", path); fflush(stdout); return; }
-  fprintf(f, "P6\n%u %u\n255\n", g_fb_w, g_fb_h);
-  for (unsigned y = 0; y < g_fb_h; y++) {
-    const uint32_t* row = g_fb + (y * g_fb_w);
-    for (unsigned x = 0; x < g_fb_w; x++) {
-      uint32_t c = row[x];
-      uint8_t rgb[3] = { (uint8_t)(c & 0xFF), (uint8_t)((c >> 8) & 0xFF), (uint8_t)((c >> 16) & 0xFF) };
-      fwrite(rgb, 1, 3, f);
-    }
-  }
-  fclose(f);
-  printf("OK shot %s (%ux%u)\n", path, g_fb_w, g_fb_h);
+  struct VFile* vf = VFileOpen(path, O_WRONLY | O_CREAT | O_TRUNC);
+  if (!vf) { printf("ERR open %s\n", path); fflush(stdout); return; }
+  bool ok = mCoreTakeScreenshotVF(g_core, vf);
+  vf->close(vf);
+  printf("%s shot %s\n", ok ? "OK" : "ERR", path);
   fflush(stdout);
 }
 
