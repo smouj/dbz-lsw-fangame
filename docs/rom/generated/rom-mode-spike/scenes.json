@@ -1,0 +1,1642 @@
+[
+ {
+  "tick": 0,
+  "actionPhase": 4,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ },
+ {
+  "tick": 1,
+  "actionPhase": 10,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ },
+ {
+  "tick": 2,
+  "actionPhase": 10,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ },
+ {
+  "tick": 3,
+  "actionPhase": 10,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ },
+ {
+  "tick": 4,
+  "actionPhase": 11,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ },
+ {
+  "tick": 5,
+  "actionPhase": 11,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ },
+ {
+  "tick": 6,
+  "actionPhase": 11,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ },
+ {
+  "tick": 7,
+  "actionPhase": 11,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ },
+ {
+  "tick": 8,
+  "actionPhase": 11,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ },
+ {
+  "tick": 9,
+  "actionPhase": 11,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ },
+ {
+  "tick": 10,
+  "actionPhase": 11,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ },
+ {
+  "tick": 11,
+  "actionPhase": 11,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ },
+ {
+  "tick": 12,
+  "actionPhase": 11,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ },
+ {
+  "tick": 13,
+  "actionPhase": 11,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ },
+ {
+  "tick": 14,
+  "actionPhase": 11,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ },
+ {
+  "tick": 15,
+  "actionPhase": 11,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ },
+ {
+  "tick": 16,
+  "actionPhase": 11,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ },
+ {
+  "tick": 17,
+  "actionPhase": 11,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ },
+ {
+  "tick": 18,
+  "actionPhase": 11,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ },
+ {
+  "tick": 19,
+  "actionPhase": 11,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ },
+ {
+  "tick": 20,
+  "actionPhase": 11,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ },
+ {
+  "tick": 21,
+  "actionPhase": 11,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ },
+ {
+  "tick": 22,
+  "actionPhase": 11,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ },
+ {
+  "tick": 23,
+  "actionPhase": 11,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ },
+ {
+  "tick": 24,
+  "actionPhase": 11,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ },
+ {
+  "tick": 25,
+  "actionPhase": 11,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ },
+ {
+  "tick": 26,
+  "actionPhase": 11,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ },
+ {
+  "tick": 27,
+  "actionPhase": 11,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ },
+ {
+  "tick": 28,
+  "actionPhase": 11,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ },
+ {
+  "tick": 29,
+  "actionPhase": 11,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ },
+ {
+  "tick": 30,
+  "actionPhase": 11,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ },
+ {
+  "tick": 31,
+  "actionPhase": 11,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ },
+ {
+  "tick": 32,
+  "actionPhase": 11,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ },
+ {
+  "tick": 33,
+  "actionPhase": 11,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ },
+ {
+  "tick": 34,
+  "actionPhase": 11,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ },
+ {
+  "tick": 35,
+  "actionPhase": 11,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ },
+ {
+  "tick": 36,
+  "actionPhase": 11,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ },
+ {
+  "tick": 37,
+  "actionPhase": 11,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ },
+ {
+  "tick": 38,
+  "actionPhase": 11,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ },
+ {
+  "tick": 39,
+  "actionPhase": 11,
+  "menuState": 6,
+  "display": {
+   "scx": 0,
+   "scy": 0
+  },
+  "fighters": [
+   {
+    "role": "ally",
+    "screenX": 32,
+    "screenY": 80,
+    "box": {
+     "x": 24,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "right",
+    "cgbPalette": 0,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/cell_imperfect_form_ow.png"
+   },
+   {
+    "role": "enemy",
+    "screenX": 128,
+    "screenY": 80,
+    "box": {
+     "x": 120,
+     "y": 72,
+     "width": 16,
+     "height": 16
+    },
+    "facing": "left",
+    "cgbPalette": 1,
+    "spriteCount": 2,
+    "spriteUrl": "/assets/overworld/panel_sprites/piccolo_base_ow.png"
+   }
+  ]
+ }
+]
