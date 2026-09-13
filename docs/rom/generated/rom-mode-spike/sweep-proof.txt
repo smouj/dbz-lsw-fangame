@@ -1,0 +1,12 @@
+tail_left_base    CA03= 21 C0A0=5 LCDC=0xc6 sprites=4 escenas_distintas=1
+     ally  (32,80) mira=right pal=0 n=2
+     enemy (128,80) mira=left pal=1 n=2
+kame_left_base    CA03= 21 C0A0=5 LCDC=0xc6 sprites=4 escenas_distintas=1
+     ally  (32,80) mira=right pal=0 n=2
+     enemy (128,80) mira=left pal=1 n=2
+battle-base       CA03=  4 C0A0=6 LCDC=0xc6 sprites=4 escenas_distintas=1
+     ally  (32,80) mira=right pal=0 n=2
+     enemy (128,80) mira=left pal=1 n=2
+offense-base      CA03=  4 C0A0=5 LCDC=0xc6 sprites=4 escenas_distintas=1
+     ally  (32,80) mira=right pal=0 n=2
+     enemy (128,80) mira=left pal=1 n=2

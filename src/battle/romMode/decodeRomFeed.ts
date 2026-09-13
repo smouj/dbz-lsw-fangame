@@ -63,12 +63,38 @@ export interface NormalizedBattleFeed {
   slots: { anim: number[]; gfx: number[] }[];
 }
 
+/** Ancho de la pantalla GBC, en píxeles. */
+export const GBC_SCREEN_WIDTH = 160;
+/** Alto de la pantalla GBC, en píxeles. */
+export const GBC_SCREEN_HEIGHT = 144;
+
 const OAM_ENTRIES = 40;
 
-/** ¿La entrada de OAM está vacía (fuera de pantalla, como rellena el hardware)? */
+/** ¿La entrada de OAM está vacía (los cuatro bytes a cero)? */
 export function isOamEntryHidden(y: number, x: number, tile: number, attr: number): boolean {
-  // El hardware oculta un sprite con Y = 0 (queda a 16px por encima del borde).
   return y === 0 && x === 0 && tile === 0 && attr === 0;
+}
+
+/**
+ * ¿El sprite cae TOTALMENTE fuera de la pantalla?
+ *
+ * La ROM oculta los sprites que no usa dejándolos en `Y = 0`, o sea
+ * `screenY = -16`: por encima del borde superior. Sin este filtro se cuelan
+ * como visibles — medido en `tail_left_base`: 20 de 24 sprites eran basura
+ * oculta en Y=0 y acabaron agrupados como si fueran el luchador.
+ */
+export function isSpriteOffScreen(s: {
+  screenX: number;
+  screenY: number;
+  width: number;
+  height: number;
+}): boolean {
+  return (
+    s.screenY + s.height <= 0 ||
+    s.screenY >= GBC_SCREEN_HEIGHT ||
+    s.screenX + s.width <= 0 ||
+    s.screenX >= GBC_SCREEN_WIDTH
+  );
 }
 
 /** Decodifica las 40 entradas de OAM. `objTall` = sprites 8x16 (LCDC bit 2). */
@@ -80,7 +106,7 @@ export function decodeSprites(oam: readonly number[], objTall: boolean): Normali
     const tile = oam[i * 4 + 2] ?? 0;
     const attr = oam[i * 4 + 3] ?? 0;
     if (isOamEntryHidden(y, x, tile, attr)) continue;
-    out.push({
+    const sprite: NormalizedSprite = {
       index: i,
       // Offset hardware: X+8, Y+16. Un sprite en Y=0 cae fuera por arriba.
       screenX: x - 8,
@@ -93,7 +119,10 @@ export function decodeSprites(oam: readonly number[], objTall: boolean): Normali
       paletteIndex: (attr & 0x10) ? 1 : 0,
       vramBank: (attr & 0x08) ? 1 : 0,
       cgbPalette: attr & 0x07,
-    });
+    };
+    // La ROM aparta los sprites que no usa a Y=0 (fuera de pantalla).
+    if (isSpriteOffScreen(sprite)) continue;
+    out.push(sprite);
   }
   return out;
 }

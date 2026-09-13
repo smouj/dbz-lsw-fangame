@@ -13,16 +13,16 @@
 // ═══════════════════════════════════════════════════════════════════════
 
 import type { NormalizedBattleFeed, NormalizedSprite } from './decodeRomFeed';
+import { GBC_SCREEN_WIDTH, GBC_SCREEN_HEIGHT } from './decodeRomFeed';
+
+// Una sola fuente de verdad para la geometría de pantalla (vive en el decoder).
+export { GBC_SCREEN_WIDTH, GBC_SCREEN_HEIGHT };
 
 /** Resuelve la URL de NUESTRO sprite para un id de forma. Se inyecta para no
  *  acoplar el decoder al loader de assets (que es de navegador: Vite resuelve
  *  las rutas `/assets/…`). En la app se pasa `battleOverworldActorUrl`; en
  *  pruebas headless, un stub o un mapa a ficheros locales. */
 export type SpriteResolver = (formId: string) => string | undefined;
-
-/** Ancho de la pantalla GBC, en píxeles. */
-export const GBC_SCREEN_WIDTH = 160;
-export const GBC_SCREEN_HEIGHT = 144;
 
 export interface RomModeFighter {
   role: 'ally' | 'enemy';
