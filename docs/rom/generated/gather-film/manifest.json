@@ -43,7 +43,7 @@
  ],
  "framesTotal": 27,
  "framesUnique": 14,
- "pending": "GATHER_POSITION_RULE: falta la direccion RAM de 'position' (bit0 AIR/GROUND, bit1 FRONT/BACK). Se resuelve con un diff durante un MOVE o la resolucion Stage con direcciones.",
+ "pending": "GATHER_POSITION_RULE: 'position' sin identificar. Tests con gate forzado marcados invalidos en action-trace/REPORT.md",
  "frames": [
   {
    "frameIndex": 0,
@@ -180,5 +180,12 @@
    "file": "g26.png",
    "sha256_12": "3683850fa3f3"
   }
- ]
+ ],
+ "GATHER_STATE_confirmed": {
+  "CA55": "04 = GATHER (commit formal, | 4; // GATHER_POWER)",
+  "CA7F": "05 = fighterState+4 = 5 (contador real del gather; NO CA40)",
+  "CA40": "otra direccion \u2014 se mueve en el film (0->1->2->6) pero no es el contador",
+  "repro": "inicial CA7F=05 CA55=02 | tras gather(120f) CA55=04 | tras commit CA7F=00",
+  "correction": "la nota previa de 'diferencia no resuelta' queda corregida: con CA7F el valor si es 5"
+ }
 }

@@ -11,19 +11,20 @@ activeObject, drawState y orden de dibujo. Es el formato que pide el plan para
 | ROM | USA `8dab48cc81d14bcee7c73274df09cf5c4dd44c3b93d10a5a3175e04fead25dee` |
 | Emulador | mGBA 0.10.2 headless (`tools/rom-trace/rom-driver`) |
 | Savestate | `tools/rom-trace/r31a/tail_left_base.ss0` |
-| Gate | `CA40 = 5` forzado (`powerWindowCounter != 0`) |
 | Comando | `trace PATH N "frame:key:hold,..."` |
 
-## Hallazgo clave del driver
+## Hallazgo del driver (esto sí es sólido)
 
 **`runFrame` NO hace progresar acciones que están esperando input.**
 El comando `trace` avanza con `step()` + `frameCounter()` y **sí** las hace
 progresar. Evidencia: con `frames` la acción quedaba clavada en `CA03=15`
-durante 240 frames; con `trace` la misma acción pasó `CA03 15 → … → 0` y recorrió
-la escalera de estados completa.
+durante 240 frames; con `trace` recorrió la escalera completa.
 
-Esto explica por qué varios intentos anteriores "no commiteaban": era el
-mecanismo de avance, no la falta de input.
+> **Matiz posterior (misma sesión):** `trace` tampoco garantiza el commit de un
+> comando. Con `trace 140 "0:1:8"` desde el savestate de Gather, `CA7F`/`CA55`
+> no se movieron; con `frames 10 0x01` + espera, sí (`CA55=04`, `CA7F=00`).
+> Conclusión revisada: **el commit depende del comando y del tiempo de pulsación**,
+> no solo del mecanismo de avance. No generalizar.
 
 ## Escalera de estados (18 transiciones en 90 frames)
 
@@ -51,8 +52,7 @@ frame  C0A0  CA03  CA04  CA06  activeObject  drawState  drawOrder
 - **`C0A0`**: 5 → 8 → 9 → 30 → 11 (fases de la acción, no un salto único).
 - **`CA03` = `0x5A`** al inicio — coincide con el commit documentado
   (`commit CA55=1 + CA03=0x5A`).
-- **`activeObject` 0→1** y **`drawOrderFlag` 2→1** en el frame 40: ahí es donde
-  el ActionObject pasa a ser el activo y cambia el orden de dibujo.
+- **`activeObject` 0→1** y **`drawOrderFlag` 2→1** en el frame 40.
 - **`CA04`** recorre `1 → 3 → 4 → 5 → 6` (subestados de animación).
 
 ## Campos por frame (en `tail-action-trace.json`)
@@ -61,9 +61,25 @@ frame  C0A0  CA03  CA04  CA06  activeObject  drawState  drawOrder
 `actionObjects` · `activeObject` · `drawState` · `drawOrderFlag` · `display` ·
 `scroll` · `slots`
 
-## Pendiente
+---
 
-`GATHER_POSITION_RULE` sigue abierto: falta la dirección RAM de `position`
-(`bit0` AIR/GROUND · `bit1` FRONT/BACK). Con `trace` ya se puede avanzar la
-acción; el siguiente intento es capturar la resolución de un Stage con
-direcciones **usando `trace`** y hacer el diff.
+## ⛔ TESTS INVÁLIDOS — retirados como evidencia
+
+Registrados aquí para que nadie los reutilice creyendo que prueban algo.
+
+### Test de posición con gate FORZADO — **INVÁLIDO**
+
+Se hizo `write 0xca40 5` para simular el gate de Gather y se mandaron
+direcciones. Resultado: `A+RIGHT` == `A+UP` == `A+DOWN` (diff idéntico de 22
+bytes; `CA5A: 01→02` en los tres).
+
+**Por qué no vale:**
+1. El gate se forzó **a mano** (`CA40`); no es un Gather real. Y se comprobó
+   después que **el contador del gather es `CA7F`, no `CA40`**.
+2. El único cambio dependiente de botón en el barrido previo
+   (`RIGHT` → `CA36: 00→01`) era **el cursor del menú**, no `position`.
+3. `CA5A/CA5B/CA5D` con bit1 encendido venían del **commit de la acción**, no de
+   los direccionales.
+
+**Conclusión: NO prueban `GATHER_POSITION_RULE`. `position` sigue sin
+identificar.**
