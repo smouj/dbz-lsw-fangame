@@ -1,0 +1,164 @@
+{
+ "source": "ROM USA (sha256 8dab48cc81d14bcee7c73274df09cf5c4dd44c3b93d10a5a3175e04fead25dee)",
+ "emulator": "mGBA 0.10.2 (headless, libmgba via tools/rom-trace/rom-driver)",
+ "savestate": "tools/rom-trace/r31a/offense-base.ss0",
+ "save": "dbz-lsw-decomp/13_raw_rom/dbz-lsw-usa-100pct.sav (100%)",
+ "action": "Stage Attack (card 3 '3 Stage Atk', COMMAND_STAGE)",
+ "trigger": "offense menu: RIGHT (cursor CA36 0->1) then A",
+ "qte": "A fed 5 frames held / 2 released per cycle (input = joypad & $3D)",
+ "state_machine_CA03": [
+  "04 (menu)",
+  "15 (action active)",
+  "5C (commit)",
+  "00",
+  "01",
+  "02",
+  "06 (maintenance)"
+ ],
+ "CA55": "01 (Stage)",
+ "CA40": "00 (powerWindowCounter, no Gather)",
+ "framesTotal": 23,
+ "framesUnique": 14,
+ "sampleInterval": "4 frames (1 shot each 4 frames while A held)",
+ "note": "El primer shot tras loadstate sale negro; se descartan ~12 frames antes de capturar.",
+ "frames": [
+  {
+   "frameIndex": 0,
+   "file": "f00.png",
+   "sha256_12": "fbaa4f2f2c76",
+   "tick": 0
+  },
+  {
+   "frameIndex": 1,
+   "file": "f01.png",
+   "sha256_12": "7435d7768292",
+   "tick": 4
+  },
+  {
+   "frameIndex": 2,
+   "file": "f02.png",
+   "sha256_12": "fc97f10a03a0",
+   "tick": 8
+  },
+  {
+   "frameIndex": 3,
+   "file": "f03.png",
+   "sha256_12": "d51417bc77c4",
+   "tick": 12
+  },
+  {
+   "frameIndex": 4,
+   "file": "f04.png",
+   "sha256_12": "d51417bc77c4",
+   "tick": 16
+  },
+  {
+   "frameIndex": 5,
+   "file": "f05.png",
+   "sha256_12": "d51417bc77c4",
+   "tick": 20
+  },
+  {
+   "frameIndex": 6,
+   "file": "f06.png",
+   "sha256_12": "fb380bad9c3f",
+   "tick": 24
+  },
+  {
+   "frameIndex": 7,
+   "file": "f07.png",
+   "sha256_12": "f0c26f7c345d",
+   "tick": 28
+  },
+  {
+   "frameIndex": 8,
+   "file": "f08.png",
+   "sha256_12": "6220425055f5",
+   "tick": 32
+  },
+  {
+   "frameIndex": 9,
+   "file": "f09.png",
+   "sha256_12": "6220425055f5",
+   "tick": 36
+  },
+  {
+   "frameIndex": 10,
+   "file": "f10.png",
+   "sha256_12": "6220425055f5",
+   "tick": 40
+  },
+  {
+   "frameIndex": 11,
+   "file": "f11.png",
+   "sha256_12": "6220425055f5",
+   "tick": 44
+  },
+  {
+   "frameIndex": 12,
+   "file": "f12.png",
+   "sha256_12": "9bc76b5a9fc2",
+   "tick": 48
+  },
+  {
+   "frameIndex": 13,
+   "file": "f13.png",
+   "sha256_12": "c6722256101a",
+   "tick": 52
+  },
+  {
+   "frameIndex": 14,
+   "file": "f14.png",
+   "sha256_12": "f9b3a4f2c70b",
+   "tick": 56
+  },
+  {
+   "frameIndex": 15,
+   "file": "f15.png",
+   "sha256_12": "c98669778f5b",
+   "tick": 60
+  },
+  {
+   "frameIndex": 16,
+   "file": "f16.png",
+   "sha256_12": "c98669778f5b",
+   "tick": 64
+  },
+  {
+   "frameIndex": 17,
+   "file": "f17.png",
+   "sha256_12": "c98669778f5b",
+   "tick": 68
+  },
+  {
+   "frameIndex": 18,
+   "file": "f18.png",
+   "sha256_12": "fea3e2955404",
+   "tick": 72
+  },
+  {
+   "frameIndex": 19,
+   "file": "f19.png",
+   "sha256_12": "18b3b918c00e",
+   "tick": 76
+  },
+  {
+   "frameIndex": 20,
+   "file": "f20.png",
+   "sha256_12": "77d717dbca4e",
+   "tick": 80
+  },
+  {
+   "frameIndex": 21,
+   "file": "f21.png",
+   "sha256_12": "77d717dbca4e",
+   "tick": 84
+  },
+  {
+   "frameIndex": 22,
+   "file": "f22.png",
+   "sha256_12": "77d717dbca4e",
+   "tick": 88
+  }
+ ]
+}
