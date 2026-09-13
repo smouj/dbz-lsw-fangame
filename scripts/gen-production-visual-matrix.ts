@@ -72,3 +72,57 @@ writeFileSync(out, lines.join('\n'));
 console.log(`═══ ${out} ═══`);
 console.log(`  filas: ${rows.length} · VERIFIED ${count('VERIFIED')} · PENDING ${count('PENDING')} · DEFERRED ${count('DEFERRED_TO_TRACE')}`);
 console.log(`  familias: ${MATRIX_FAMILIES.length - missing.length}/${MATRIX_FAMILIES.length}`);
+
+// ── Segunda proyección del MISMO modelo: datos importables por el Dev Studio ──
+// No es duplicar verdad: son dos outputs generados de las mismas filas en la
+// misma ejecución. El tab `assets` importa esto; nunca parsea el .md ni mantiene
+// una tabla manual paralela.
+const genLines: string[] = [];
+genLines.push('// GENERADO — no editar a mano. `npm run gen:production-visual-matrix`.');
+genLines.push('// Proyección importable de docs/audits/PRODUCTION_VISUAL_MATRIX.md (mismas filas).');
+genLines.push('// Autocontenido: define su propio tipo de fila para no importar desde scripts/.');
+genLines.push('');
+genLines.push('export type MatrixFidelity = \'VERIFIED\' | \'PENDING\' | \'DEFERRED_TO_TRACE\';');
+genLines.push('');
+genLines.push('export interface VisualMatrixRow {');
+genLines.push('  family: string;');
+genLines.push('  cardId: number | null;');
+genLines.push('  handler: string;');
+genLines.push('  entryTick: number | null;');
+genLines.push("  binding: 'OFFENSE' | 'DEFENSE_REACTION' | null;");
+genLines.push('  slots: string;');
+genLines.push('  firstPhysicalId: number | null;');
+genLines.push('  visibility: string;');
+genLines.push('  drawOrder: string;');
+genLines.push('  bg: string;');
+genLines.push('  palette: string;');
+genLines.push('  fx: string;');
+genLines.push('  camera: string;');
+genLines.push('  impactTick: number | null;');
+genLines.push('  exitTick: number | null;');
+genLines.push('  residual: number;');
+genLines.push('  fidelity: MatrixFidelity;');
+genLines.push('  note: string;');
+genLines.push('}');
+genLines.push('');
+genLines.push(`export const PRODUCTION_VISUAL_MATRIX_GENERATED_AT = ${JSON.stringify(new Date().toISOString())};`);
+genLines.push('');
+genLines.push('export const PRODUCTION_VISUAL_MATRIX_ROWS: VisualMatrixRow[] = [');
+for (const r of rows) genLines.push(`  ${JSON.stringify(r)},`);
+genLines.push('];');
+genLines.push('');
+genLines.push('export const PRODUCTION_VISUAL_MATRIX_FAMILIES = [');
+for (const f of MATRIX_FAMILIES) genLines.push(`  ${JSON.stringify(f)},`);
+genLines.push('] as const;');
+genLines.push('');
+genLines.push('export const PRODUCTION_VISUAL_MATRIX_COUNTS = {');
+genLines.push(`  verified: ${count('VERIFIED')},`);
+genLines.push(`  pending: ${count('PENDING')},`);
+genLines.push(`  deferred: ${count('DEFERRED_TO_TRACE')},`);
+genLines.push(`  familiesTotal: ${MATRIX_FAMILIES.length},`);
+genLines.push(`  familiesCovered: ${MATRIX_FAMILIES.length - missing.length},`);
+genLines.push('} as const;');
+genLines.push('');
+const genOut = 'src/devtools/romdisplay2/productionVisualMatrix.generated.ts';
+writeFileSync(genOut, genLines.join('\n'));
+console.log(`═══ ${genOut} (bridge del Dev Studio) ═══`);

@@ -12,8 +12,9 @@ import { SupportTab } from './supportTab';
 import { DefenseTab } from './defenseTab';
 import { PalettesTab } from './palettesTab';
 import { ProvenanceTab } from './provenanceTab';
+import { AssetsTab } from './assetsTab';
 
-type LabTab = 'fighters' | 'actions' | 'fx' | 'support' | 'defense' | 'palettes' | 'provenance';
+type LabTab = 'fighters' | 'actions' | 'fx' | 'support' | 'defense' | 'palettes' | 'provenance' | 'assets';
 
 const TABS: { id: LabTab; label: string }[] = [
   { id: 'fighters', label: 'FIGHTERS' },
@@ -23,6 +24,7 @@ const TABS: { id: LabTab; label: string }[] = [
   { id: 'defense', label: 'DEFENSE' },
   { id: 'palettes', label: 'PALETTES' },
   { id: 'provenance', label: 'PROVENANCE' },
+  { id: 'assets', label: 'ASSETS' },
 ];
 
 export function RomDisplayLab() {
@@ -63,6 +65,12 @@ export function RomDisplayLab() {
         {tab === 'defense' && <DefenseTab />}
         {tab === 'palettes' && <PalettesTab />}
         {tab === 'provenance' && <ProvenanceTab />}
+        {tab === 'assets' && (
+          <AssetsTab onNavigate={(next, opts) => {
+            if (opts.cardId != null) setGlobalCard(opts.cardId);
+            if (next === 'actions' || next === 'fighters' || next === 'palettes' || next === 'fx') setTab(next);
+          }} />
+        )}
       </div>
     </div>
   );
