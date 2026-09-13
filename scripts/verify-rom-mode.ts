@@ -176,5 +176,21 @@ check(
   `ROM ${romMacro} · remake ${remMacro}`,
 );
 
+// ───────────────────────────────────────────────────────────────────────
+// 4. Invariante de commit por familia
+// ───────────────────────────────────────────────────────────────────────
+// La escalera por familia está capturada en driven/ladders.json. El invariante
+// compartido es el commit CA03 = 0x5A (90), documentado en §3857.
+console.log('\n── 4. Invariante de commit (CA03=0x5A) ──');
+const LADDERS = 'docs/rom/generated/rom-mode-spike/driven/ladders.json';
+interface LadderEntry { frame: number; C0A0: number; CA03: number; CA06: number; activeObject: number; drawOrderFlag: number; }
+interface Ladder { frames: number; transitions: number; ladder: LadderEntry[]; commit_0x5A_at: number | null; activeObject1_from: number | null; }
+const ladders = JSON.parse(readFileSync(LADDERS, 'utf8')) as Record<string, Ladder>;
+for (const [fam, l] of Object.entries(ladders)) {
+  check(`${fam}: commit CA03=0x5A presente`, l.commit_0x5A_at !== null, `frame ${l.commit_0x5A_at}`);
+  check(`${fam}: escalera con transiciones`, l.transitions >= 2 && l.ladder.length === l.transitions, `${l.transitions} transiciones en ${l.frames} frames`);
+  check(`${fam}: C0A0 pasa por 8 o 9`, l.ladder.some((e) => e.C0A0 === 8 || e.C0A0 === 9));
+}
+
 console.log(`\n═══ RESULTADO: ${passed} passed · ${failed} failed ═══`);
 process.exit(failed === 0 ? 0 : 1);

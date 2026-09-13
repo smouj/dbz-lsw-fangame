@@ -1,0 +1,410 @@
+{
+ "beam": {
+  "frames": 100,
+  "transitions": 15,
+  "ladder": [
+   {
+    "frame": 0,
+    "C0A0": 5,
+    "CA03": 21,
+    "CA06": 0,
+    "activeObject": 0,
+    "drawOrderFlag": 2
+   },
+   {
+    "frame": 3,
+    "C0A0": 5,
+    "CA03": 90,
+    "CA06": 0,
+    "activeObject": 0,
+    "drawOrderFlag": 2
+   },
+   {
+    "frame": 4,
+    "C0A0": 5,
+    "CA03": 91,
+    "CA06": 0,
+    "activeObject": 0,
+    "drawOrderFlag": 2
+   },
+   {
+    "frame": 5,
+    "C0A0": 5,
+    "CA03": 92,
+    "CA06": 0,
+    "activeObject": 0,
+    "drawOrderFlag": 2
+   },
+   {
+    "frame": 10,
+    "C0A0": 8,
+    "CA03": 0,
+    "CA06": 0,
+    "activeObject": 0,
+    "drawOrderFlag": 2
+   },
+   {
+    "frame": 13,
+    "C0A0": 8,
+    "CA03": 0,
+    "CA06": 1,
+    "activeObject": 0,
+    "drawOrderFlag": 2
+   },
+   {
+    "frame": 14,
+    "C0A0": 8,
+    "CA03": 0,
+    "CA06": 20,
+    "activeObject": 0,
+    "drawOrderFlag": 2
+   },
+   {
+    "frame": 15,
+    "C0A0": 8,
+    "CA03": 0,
+    "CA06": 0,
+    "activeObject": 0,
+    "drawOrderFlag": 2
+   },
+   {
+    "frame": 17,
+    "C0A0": 9,
+    "CA03": 0,
+    "CA06": 0,
+    "activeObject": 0,
+    "drawOrderFlag": 2
+   },
+   {
+    "frame": 21,
+    "C0A0": 30,
+    "CA03": 0,
+    "CA06": 0,
+    "activeObject": 0,
+    "drawOrderFlag": 2
+   },
+   {
+    "frame": 40,
+    "C0A0": 11,
+    "CA03": 0,
+    "CA06": 0,
+    "activeObject": 0,
+    "drawOrderFlag": 2
+   },
+   {
+    "frame": 42,
+    "C0A0": 11,
+    "CA03": 0,
+    "CA06": 0,
+    "activeObject": 1,
+    "drawOrderFlag": 1
+   },
+   {
+    "frame": 58,
+    "C0A0": 11,
+    "CA03": 1,
+    "CA06": 0,
+    "activeObject": 1,
+    "drawOrderFlag": 1
+   },
+   {
+    "frame": 59,
+    "C0A0": 11,
+    "CA03": 2,
+    "CA06": 0,
+    "activeObject": 1,
+    "drawOrderFlag": 1
+   },
+   {
+    "frame": 63,
+    "C0A0": 11,
+    "CA03": 0,
+    "CA06": 0,
+    "activeObject": 1,
+    "drawOrderFlag": 1
+   }
+  ],
+  "commit_0x5A_at": 3,
+  "activeObject1_from": 42
+ },
+ "stage": {
+  "frames": 110,
+  "transitions": 15,
+  "ladder": [
+   {
+    "frame": 0,
+    "C0A0": 5,
+    "CA03": 4,
+    "CA06": 0,
+    "activeObject": 0,
+    "drawOrderFlag": 2
+   },
+   {
+    "frame": 11,
+    "C0A0": 5,
+    "CA03": 20,
+    "CA06": 0,
+    "activeObject": 0,
+    "drawOrderFlag": 2
+   },
+   {
+    "frame": 14,
+    "C0A0": 5,
+    "CA03": 21,
+    "CA06": 0,
+    "activeObject": 0,
+    "drawOrderFlag": 2
+   },
+   {
+    "frame": 31,
+    "C0A0": 5,
+    "CA03": 90,
+    "CA06": 0,
+    "activeObject": 0,
+    "drawOrderFlag": 2
+   },
+   {
+    "frame": 32,
+    "C0A0": 5,
+    "CA03": 91,
+    "CA06": 0,
+    "activeObject": 0,
+    "drawOrderFlag": 2
+   },
+   {
+    "frame": 33,
+    "C0A0": 5,
+    "CA03": 92,
+    "CA06": 0,
+    "activeObject": 0,
+    "drawOrderFlag": 2
+   },
+   {
+    "frame": 38,
+    "C0A0": 8,
+    "CA03": 0,
+    "CA06": 0,
+    "activeObject": 0,
+    "drawOrderFlag": 2
+   },
+   {
+    "frame": 41,
+    "C0A0": 8,
+    "CA03": 0,
+    "CA06": 1,
+    "activeObject": 0,
+    "drawOrderFlag": 2
+   },
+   {
+    "frame": 42,
+    "C0A0": 8,
+    "CA03": 0,
+    "CA06": 30,
+    "activeObject": 0,
+    "drawOrderFlag": 2
+   },
+   {
+    "frame": 43,
+    "C0A0": 8,
+    "CA03": 0,
+    "CA06": 31,
+    "activeObject": 0,
+    "drawOrderFlag": 2
+   },
+   {
+    "frame": 44,
+    "C0A0": 8,
+    "CA03": 0,
+    "CA06": 0,
+    "activeObject": 0,
+    "drawOrderFlag": 2
+   },
+   {
+    "frame": 46,
+    "C0A0": 9,
+    "CA03": 0,
+    "CA06": 0,
+    "activeObject": 0,
+    "drawOrderFlag": 2
+   },
+   {
+    "frame": 50,
+    "C0A0": 30,
+    "CA03": 0,
+    "CA06": 0,
+    "activeObject": 0,
+    "drawOrderFlag": 2
+   },
+   {
+    "frame": 69,
+    "C0A0": 10,
+    "CA03": 0,
+    "CA06": 0,
+    "activeObject": 0,
+    "drawOrderFlag": 2
+   },
+   {
+    "frame": 71,
+    "C0A0": 10,
+    "CA03": 0,
+    "CA06": 0,
+    "activeObject": 1,
+    "drawOrderFlag": 1
+   }
+  ],
+  "commit_0x5A_at": 31,
+  "activeObject1_from": 71
+ },
+ "support": {
+  "frames": 110,
+  "transitions": 18,
+  "ladder": [
+   {
+    "frame": 0,
+    "C0A0": 6,
+    "CA03": 21,
+    "CA06": 0,
+    "activeObject": 1,
+    "drawOrderFlag": 0
+   },
+   {
+    "frame": 3,
+    "C0A0": 6,
+    "CA03": 90,
+    "CA06": 0,
+    "activeObject": 1,
+    "drawOrderFlag": 0
+   },
+   {
+    "frame": 4,
+    "C0A0": 6,
+    "CA03": 91,
+    "CA06": 0,
+    "activeObject": 1,
+    "drawOrderFlag": 0
+   },
+   {
+    "frame": 9,
+    "C0A0": 7,
+    "CA03": 0,
+    "CA06": 0,
+    "activeObject": 1,
+    "drawOrderFlag": 0
+   },
+   {
+    "frame": 12,
+    "C0A0": 7,
+    "CA03": 0,
+    "CA06": 1,
+    "activeObject": 1,
+    "drawOrderFlag": 0
+   },
+   {
+    "frame": 13,
+    "C0A0": 7,
+    "CA03": 0,
+    "CA06": 10,
+    "activeObject": 1,
+    "drawOrderFlag": 0
+   },
+   {
+    "frame": 14,
+    "C0A0": 7,
+    "CA03": 0,
+    "CA06": 0,
+    "activeObject": 1,
+    "drawOrderFlag": 0
+   },
+   {
+    "frame": 16,
+    "C0A0": 9,
+    "CA03": 0,
+    "CA06": 0,
+    "activeObject": 1,
+    "drawOrderFlag": 0
+   },
+   {
+    "frame": 20,
+    "C0A0": 30,
+    "CA03": 0,
+    "CA06": 0,
+    "activeObject": 1,
+    "drawOrderFlag": 0
+   },
+   {
+    "frame": 39,
+    "C0A0": 20,
+    "CA03": 0,
+    "CA06": 0,
+    "activeObject": 1,
+    "drawOrderFlag": 0
+   },
+   {
+    "frame": 41,
+    "C0A0": 20,
+    "CA03": 0,
+    "CA06": 0,
+    "activeObject": 0,
+    "drawOrderFlag": 2
+   },
+   {
+    "frame": 98,
+    "C0A0": 20,
+    "CA03": 1,
+    "CA06": 0,
+    "activeObject": 0,
+    "drawOrderFlag": 2
+   },
+   {
+    "frame": 103,
+    "C0A0": 20,
+    "CA03": 0,
+    "CA06": 0,
+    "activeObject": 0,
+    "drawOrderFlag": 2
+   },
+   {
+    "frame": 105,
+    "C0A0": 20,
+    "CA03": 1,
+    "CA06": 0,
+    "activeObject": 0,
+    "drawOrderFlag": 2
+   },
+   {
+    "frame": 106,
+    "C0A0": 20,
+    "CA03": 2,
+    "CA06": 0,
+    "activeObject": 0,
+    "drawOrderFlag": 2
+   },
+   {
+    "frame": 107,
+    "C0A0": 20,
+    "CA03": 3,
+    "CA06": 0,
+    "activeObject": 0,
+    "drawOrderFlag": 2
+   },
+   {
+    "frame": 108,
+    "C0A0": 20,
+    "CA03": 4,
+    "CA06": 0,
+    "activeObject": 0,
+    "drawOrderFlag": 2
+   },
+   {
+    "frame": 109,
+    "C0A0": 20,
+    "CA03": 5,
+    "CA06": 0,
+    "activeObject": 0,
+    "drawOrderFlag": 2
+   }
+  ],
+  "commit_0x5A_at": 3,
+  "activeObject1_from": 0
+ }
+}
