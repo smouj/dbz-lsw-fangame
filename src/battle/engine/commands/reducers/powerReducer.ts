@@ -12,6 +12,14 @@
 // NUNCA max() ni suma. El decremento está centralizado en
 // decrementPowerWindow() y se dispara en postActionMaintenance (ROM §132-133).
 // ROM_CONFIRMED: cadencia verificada contra BattleRuntime.postActionMaintenanceIfNeeded
+//
+// Dirección RAM verificada en emulador (2026-09-13, mGBA headless, savestate
+// real en la pantalla de Gather): el contador vive en **$CA7F** — no en $CA40.
+// Reproducción: 
+//   inicial            CA7F=05  CA55=02  CA03=1F
+//   tras Gather (120f) CA7F=05  CA55=04   <- CA55=4 = GATHER_POWER (commit)
+//   tras commit        CA55=04  CA7F=00   <- consumido (ROM §132)
+// Evidencia: docs/rom/generated/gather-film/REPORT.md
 // ═══════════════════════════════════════════════════════════════════════
 
 import type { StageKey } from '../../../stageInputMap';
@@ -70,7 +78,10 @@ export function postActionMaintenance(state: BattleState): { state: BattleState;
   };
 }
 
-/** GATHER POWER (ROM §102): powerWindowCounter = 5. */
+/** GATHER POWER (ROM §102): powerWindowCounter = 5.
+ *  ROM verificado en emulador: deja `CA55 = 4` (commit GATHER_POWER) y consume
+ *  el contador (`CA7F` 5→0) tras el commit. Evidencia en
+ *  docs/rom/generated/gather-film/. */
 export function gatherPower(state: BattleState, side: BattleSide): { state: BattleState; events: BattleEvent[] } {
   if (side !== 'player') return { state, events: [] };
   const from = powerStateFromCounter(state.player.powerWindowCounter);
