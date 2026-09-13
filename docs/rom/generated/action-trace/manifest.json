@@ -1,0 +1,231 @@
+{
+ "source": "ROM USA (sha256 8dab48cc\u2026)",
+ "emulator": "mGBA 0.10.2 headless (rom-driver)",
+ "savestate": "tools/rom-trace/r31a/tail_left_base.ss0",
+ "gate": "CA40 forzado a 5 (powerWindowCounter != 0)",
+ "driver": "trace PATH N \"frame:key:hold,...\" \u2014 avance por step()+frameCounter (NO runFrame)",
+ "note": "runFrame no hace progresar acciones en espera; trace (step) si. Diferencia clave para futuras capturas.",
+ "framesTotal": 90,
+ "ladder": [
+  {
+   "frame": 0,
+   "C0A0": 5,
+   "CA03": 21,
+   "CA04": 0,
+   "CA06": 0,
+   "CA53": 1,
+   "activeObject": 0,
+   "drawState": 0,
+   "drawOrderFlag": 2
+  },
+  {
+   "frame": 1,
+   "C0A0": 5,
+   "CA03": 90,
+   "CA04": 0,
+   "CA06": 0,
+   "CA53": 1,
+   "activeObject": 0,
+   "drawState": 0,
+   "drawOrderFlag": 2
+  },
+  {
+   "frame": 2,
+   "C0A0": 5,
+   "CA03": 91,
+   "CA04": 0,
+   "CA06": 0,
+   "CA53": 1,
+   "activeObject": 0,
+   "drawState": 0,
+   "drawOrderFlag": 2
+  },
+  {
+   "frame": 3,
+   "C0A0": 5,
+   "CA03": 92,
+   "CA04": 0,
+   "CA06": 0,
+   "CA53": 1,
+   "activeObject": 0,
+   "drawState": 0,
+   "drawOrderFlag": 2
+  },
+  {
+   "frame": 8,
+   "C0A0": 8,
+   "CA03": 0,
+   "CA04": 0,
+   "CA06": 0,
+   "CA53": 1,
+   "activeObject": 0,
+   "drawState": 0,
+   "drawOrderFlag": 2
+  },
+  {
+   "frame": 11,
+   "C0A0": 8,
+   "CA03": 0,
+   "CA04": 0,
+   "CA06": 1,
+   "CA53": 1,
+   "activeObject": 0,
+   "drawState": 0,
+   "drawOrderFlag": 2
+  },
+  {
+   "frame": 12,
+   "C0A0": 8,
+   "CA03": 0,
+   "CA04": 0,
+   "CA06": 20,
+   "CA53": 1,
+   "activeObject": 0,
+   "drawState": 0,
+   "drawOrderFlag": 2
+  },
+  {
+   "frame": 13,
+   "C0A0": 8,
+   "CA03": 0,
+   "CA04": 0,
+   "CA06": 0,
+   "CA53": 1,
+   "activeObject": 0,
+   "drawState": 0,
+   "drawOrderFlag": 2
+  },
+  {
+   "frame": 15,
+   "C0A0": 9,
+   "CA03": 0,
+   "CA04": 0,
+   "CA06": 0,
+   "CA53": 1,
+   "activeObject": 0,
+   "drawState": 0,
+   "drawOrderFlag": 2
+  },
+  {
+   "frame": 19,
+   "C0A0": 30,
+   "CA03": 0,
+   "CA04": 0,
+   "CA06": 0,
+   "CA53": 1,
+   "activeObject": 0,
+   "drawState": 0,
+   "drawOrderFlag": 2
+  },
+  {
+   "frame": 38,
+   "C0A0": 11,
+   "CA03": 0,
+   "CA04": 0,
+   "CA06": 0,
+   "CA53": 1,
+   "activeObject": 0,
+   "drawState": 0,
+   "drawOrderFlag": 2
+  },
+  {
+   "frame": 40,
+   "C0A0": 11,
+   "CA03": 0,
+   "CA04": 0,
+   "CA06": 0,
+   "CA53": 1,
+   "activeObject": 1,
+   "drawState": 0,
+   "drawOrderFlag": 1
+  },
+  {
+   "frame": 51,
+   "C0A0": 11,
+   "CA03": 0,
+   "CA04": 1,
+   "CA06": 0,
+   "CA53": 1,
+   "activeObject": 1,
+   "drawState": 0,
+   "drawOrderFlag": 1
+  },
+  {
+   "frame": 52,
+   "C0A0": 11,
+   "CA03": 0,
+   "CA04": 3,
+   "CA06": 0,
+   "CA53": 1,
+   "activeObject": 1,
+   "drawState": 0,
+   "drawOrderFlag": 1
+  },
+  {
+   "frame": 53,
+   "C0A0": 11,
+   "CA03": 1,
+   "CA04": 3,
+   "CA06": 0,
+   "CA53": 1,
+   "activeObject": 1,
+   "drawState": 0,
+   "drawOrderFlag": 1
+  },
+  {
+   "frame": 54,
+   "C0A0": 11,
+   "CA03": 2,
+   "CA04": 3,
+   "CA06": 0,
+   "CA53": 1,
+   "activeObject": 1,
+   "drawState": 0,
+   "drawOrderFlag": 1
+  },
+  {
+   "frame": 58,
+   "C0A0": 11,
+   "CA03": 0,
+   "CA04": 4,
+   "CA06": 0,
+   "CA53": 1,
+   "activeObject": 1,
+   "drawState": 0,
+   "drawOrderFlag": 1
+  },
+  {
+   "frame": 59,
+   "C0A0": 11,
+   "CA03": 0,
+   "CA04": 5,
+   "CA06": 0,
+   "CA53": 1,
+   "activeObject": 1,
+   "drawState": 0,
+   "drawOrderFlag": 1
+  },
+  {
+   "frame": 76,
+   "C0A0": 11,
+   "CA03": 0,
+   "CA04": 6,
+   "CA06": 0,
+   "CA53": 1,
+   "activeObject": 1,
+   "drawState": 0,
+   "drawOrderFlag": 1
+  }
+ ],
+ "fieldsPerFrame": [
+  "frame",
+  "battle(C0A0,CA01,CA02,CA03,CA04,CA06,CA7E,CB77,CA53)",
+  "actionObjects",
+  "activeObject",
+  "drawState",
+  "drawOrderFlag",
+  "display",
+  "scroll",
+  "slots"
+ ]
+}
