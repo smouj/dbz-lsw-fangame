@@ -39,7 +39,7 @@ Consecuencias prácticas:
 
 | Herramienta | Estado real | Autoridad/fijado |
 |---|---|---|
-| Node — repositorio/release | **22** | `.nvmrc` + `release-desktop.yml` |
+| Node — repositorio/release | **22** | `.nvmrc` + los **4** workflows (verificado por gate) |
 | Node — WSL observado | `v24.20.0` | ⚠️ deriva local respecto a `.nvmrc` |
 | npm — WSL observado | `11.19.0` | no fijado de forma independiente |
 | `packageManager` | **ausente deliberadamente** | ver decisión abajo |
@@ -47,10 +47,19 @@ Consecuencias prácticas:
 | Tauri CLI | `@tauri-apps/cli ^2.11.4` | `package-lock.json` |
 | Tauri (Rust) | `tauri = "2"` | ⚠️ `src-tauri/Cargo.lock` ausente |
 
+> **Una sola versión de Node en todos los workflows.** `verify:desktop-offline`
+> compara `.nvmrc` con el `node-version` de cada workflow y **falla si dejan de
+> coincidir**, así que la deriva no puede volver sin que la CI lo diga.
+
 ### Divergencias conocidas
 
 1. **Node 22 es la autoridad; WSL se observó en Node 24.**
    `.nvmrc` contiene `22` y el workflow que produce el release de Windows usa Node 22. El WSL que estaba ejecutando Node 24 pasa la CI local, pero eso es una divergencia del entorno de desarrollo, no la versión fijada del proyecto. La acción correcta es usar `nvm use` antes de validar un cambio destinado a release.
+
+   **Corregido:** `portrait-domain-migration.yml` fijaba Node **20** — el único
+   workflow fuera de la autoridad. Ahora los cuatro fijan **22** y el gate lo
+   verifica. (Este WSL no tiene `nvm` instalado, así que la deriva local 24 sigue
+   documentada en vez de silenciada: la verificación autoritativa es la CI en 22.)
 
 2. **`packageManager` está deliberadamente sin definir.**
    El WSL observado usa npm 11 con Node 24, mientras que Node 22 trae la línea npm 10.x. Fijar `npm@11` de forma aislada introduciría una incompatibilidad con la autoridad de release/Corepack. La versión de npm debe decidirse junto con la política de Node, no por separado.
