@@ -1,232 +1,303 @@
 <div align="center">
 
-# 🐉 DBZ LSW Fangame
+# DBZ LSW — Fangame
 
-**A byte-faithful web remake of *Dragon Ball Z: Legendary Super Warriors* (Game Boy Color, 2002)**
+**High-fidelity desktop fan project based on _Dragon Ball Z: Legendary Super Warriors_ (Game Boy Color, 2002)**
 
 [![verify](https://github.com/smouj/dbz-lsw-fangame/actions/workflows/verify.yml/badge.svg)](https://github.com/smouj/dbz-lsw-fangame/actions/workflows/verify.yml)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178c6?logo=typescript&logoColor=white)
 ![React](https://img.shields.io/badge/React-19-61dafb?logo=react&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-6-646cff?logo=vite&logoColor=white)
 ![PixiJS](https://img.shields.io/badge/PixiJS-8-e91e63?logo=pixijs&logoColor=white)
-![License](https://img.shields.io/badge/license-Fan%20Project-8b0000)
+![Tauri](https://img.shields.io/badge/Tauri-2-24c8db?logo=tauri&logoColor=white)
 
-Card-based turn combat · 4 tactical positions · Stage Attack QTEs · 48 playable forms · ROM-exact sprites
+Card combat · 4 tactical positions · Stage Attack QTEs · **26 characters / 48 forms** · **125 cards**
 
 </div>
 
 ---
 
-## 📸 Screenshots
+## Project status — read this first
 
-| Main Menu | Story Map | Battle Setup |
-|:---:|:---:|:---:|
-| ![Menu](docs/screenshots/menu.png) | ![Story](docs/screenshots/story.png) | ![Versus](docs/screenshots/versus.png) |
+The current product is a **remake runtime**, not an emulator frontend. It uses mechanics, data, timings, animation evidence and visual contracts recovered from the original ROM, but **the shipped application does not execute a Game Boy Color ROM today**.
 
-| Battle | Characters | Deck Builder |
-|:---:|:---:|:---:|
-| ![Battle](docs/screenshots/battle.png) | ![Characters](docs/screenshots/characters.png) | ![Deck](docs/screenshots/deck.png) |
-
-| Card Collection | Settings |
-|:---:|:---:|
-| ![Cards](docs/screenshots/cards.png) | ![Settings](docs/screenshots/settings.png) |
-
----
-
-## ✨ What is this?
-
-**DBZ LSW Fangame** is a high-fidelity remake of the GBC classic: turn-based card combat with 4 tactical positions (AIR/GROUND × FRONT/BACK), a full CC (Combo Count) economy, Stage Attack QTEs with canonical deterministic sequences, beams, Gather Power, and 48 playable forms — all rendered with **authentic sprites extracted from the ROM** and the original's combat rhythm.
-
-The **ROM and its local decompilation** (`dbz-lsw-decomp/`) are the source of truth. Nothing is re-imagined as a new game: mechanics, timings, sequences and identities are verified against the original binary.
-
-- **663+ commits** · **92 automated verification suites** (`npm run verify:*`) · ROM-verified pipeline
-- Canonical ROM: España `CRC32 9DAD6E23` · Reference decomp: USA `025AA88A`
-- Combat clock: **59.7275 fps GBC** (deterministic accumulator, events on exact tick)
-
----
-
-## 🚀 Getting Started
-
-```bash
-npm install
-npm run dev          # dev server → http://localhost:5178
-npm run build        # production build
-npm run typecheck    # TypeScript (tsc --noEmit)
-```
-
-> GitHub Actions runs typecheck + build + a subset of suites on every push to `main` (`.github/workflows/verify.yml`).
-
-### ✅ Verification suites
-
-The project exposes **92 verifiers** (`npm run verify:*`). Main groups:
-
-```bash
-npm run verify:profiles               # signature profiles: every combat card has its own animation
-npm run audit:sprites                 # 48 forms / manifests / beam-ray: integrity + physical dimensions
-npm run verify:gbc                    # GBC invariants: positions, deck, canonical sequences, coverage
-npm run verify:rom-fighter-identity   # form identity 48/48
-npm run verify:rom-physical-corpus    # physical corpus 505 IDs / 2374 frame instances
-npm run verify:rom-fx-film-contract   # offensive FX 28/28 STATIC_COMPLETE
-npm run verify:rom-physical-key-bridge # profile-specific structured bridge (16 ✓)
-npm run verify:character-frame-map    # honest F-MAP (22 ✓)
-```
-
-See `docs/` for specifications. Run `npm run` and filter by `verify:` for the full list.
-
----
-
-## 🎮 Canonical Gameplay (GBC)
-
-| System | Implementation |
+| Area | Current state |
 |---|---|
-| **Turn** | TURN → 2 EXCHANGES (inverted roles), order by effective SPD |
-| **Positions** | 4 tactical: AIR/GROUND × FRONT/BACK; Beam vulnerable vs AIR, Damage vs GROUND |
-| **CC (Combo Count)** | +3 on attack · +1 per QTE input · +1/+2 when hit · +1 for position vulnerability · basics free |
-| **Defense** | Defender chooses BEFORE resolution: BASIC (Defense/Move 2 axes + push) / JOINT / LIMIT |
-| **Stage Attack** | QTE with **canonical deterministic sequences** (fixed pool, round-robin rotation): 3S=6 A/B variants, 4/5/6S add directions |
-| **Enemy AI** | GBC rhythm: regular attack ×2 → Gather Power → 5 Stage → Beam/Damage → repeat |
-| **Gather Power** | +4 STR/KI, unlocks Limit Deck, turns Basic 3 Stage → 4 Stage |
+| Product runtime | **Implemented** — React/Pixi + `BattleEngine` / `BattleRuntime` |
+| Desktop/offline shell | **Implemented** — Tauri 2, Windows/NSIS, static bundled frontend |
+| ROM research tooling | **Implemented, outside the product** — `tools/rom-trace/`, libmgba, captures and traces |
+| ROM-derived decoder/adapters | **Implemented and verified from captured evidence** — `decodeRomFeed`, scene/layout/Pixi adapters |
+| GBC core embedded in the app | **Not implemented yet** |
+| ROM distributed with the project | **No** |
 
-**Orchestration**: single timeline clocked at **59.7275 fps GBC** (deterministic accumulator, events emitted on exact tick). Card cinematic: `FIELD → ACTION_SOLO → PROJECTILE/ACTION_DUEL → IMPACT → FIELD_RETURN` with phase pauses, synchronized FX and SFX.
+The architecture baseline A–F was closed at **`d1e2db18`** with the full `verify:ci` gate green (`RC=0`). The embedded-core work is a **separate milestone** and must not be confused with the existing ROM research tooling.
 
----
-
-## 🧱 Stack
-
-- **Vite 6 + React 19 + TypeScript** (~17.3k lines TS/TSX)
-- **PixiJS 8** for cinematic battle presentation
-- Sprites/portraits/icons extracted from the USA ROM (`dbz-lsw-decomp/`)
-- GBC audio synthesized with Web Audio API (no external files)
-- Local persistence: decks, story progress, language (`localStorage`)
+> Authoritative execution-mode definition: [`docs/architecture/ROM_EXECUTION_MODES.md`](docs/architecture/ROM_EXECUTION_MODES.md)
 
 ---
 
-## 📁 Repository Structure
+## What this project is
 
+DBZ LSW Fangame recreates the original battle system and presentation with a modern desktop stack while treating the ROM as the primary source of evidence.
+
+The current game includes the card-based combat loop, four tactical positions, CC economy, Stage Attack QTEs, beams, support/defense behavior, deterministic GBC-tick presentation, 1v1/2v2 battle support, the playable roster and the project tooling used to verify those systems.
+
+```text
+Player / AI
+   ↓
+BattleCommand
+   ↓
+BattleEngine / BattleRuntime
+   ↓
+state + event log + ROM-derived presentation data
+   ↓
+Presentation / timeline
+   ↓
+PixiJS
 ```
+
+ROM research is deliberately a separate pipeline:
+
+```text
+original ROM
+   ↓
+tools/rom-trace + libmgba
+   ↓
+traces / screenshots / RAM evidence / fixtures
+   ↓
+decoders + ROM-derived contracts + verifiers
+   ↓
+product data and presentation behavior
+```
+
+There is **no dependency from the product frontend to `tools/rom-trace/`**. Shared TypeScript contracts live under `src/battle/romTrace/`; tooling may depend on those contracts, never the other way around. `verify:desktop-offline` enforces that boundary.
+
+---
+
+## Desktop-first, offline-first
+
+The intended shipped product is a desktop application that can run the base game without Internet, a backend, localhost, Node.js or mGBA installed on the player's machine.
+
+| Concern | Current contract |
+|---|---|
+| Shell | Tauri 2 (`src-tauri/`) |
+| Windows packaging | NSIS |
+| Frontend | static Vite build bundled from `dist/` |
+| Runtime network requirement | none for the base game |
+| `localhost:5178` | development only |
+| Online services | future optional layer; never required to start the base game |
+
+```bash
+npm run desktop:dev
+npm run desktop:build
+```
+
+See [`DESKTOP_OFFLINE_ARCHITECTURE.md`](docs/architecture/DESKTOP_OFFLINE_ARCHITECTURE.md), [`ENVIRONMENTS.md`](docs/development/ENVIRONMENTS.md) and [`DESKTOP_OFFLINE_SMOKE.md`](docs/qa/DESKTOP_OFFLINE_SMOKE.md).
+
+---
+
+## ROM execution modes
+
+The repository contains three different concepts. Their names are intentionally explicit because mixing them produces incorrect status reports.
+
+### A. ROM research tooling — exists, outside the product
+
+`tools/rom-trace/` uses libmgba/headless tooling for reverse engineering, frame captures, traces, RAM reads, savestates and evidence generation. It is development/research infrastructure and is not bundled into Tauri.
+
+### B. Remake runtime — exists, current product
+
+React + PixiJS + `BattleEngine` / `BattleRuntime` execute the game. ROM-derived constants, state rules, animation resources and captured evidence are consumed by this runtime, but the runtime itself does not boot or execute a ROM.
+
+### C. Future embedded ROM mode — designed, not embedded
+
+The planned architecture is:
+
+```text
+Tauri
+  ↓
+embedded GBC core
+  ↓
+ROM execution
+  ↓
+framebuffer + memory state
+  ↓
+decodeRomFeed
+  ↓
+modern frontend / Pixi
+```
+
+The decoder side already exists and has been exercised against captured ROM evidence. The missing boundary is the **embedded GBC core running inside the desktop application**. Selection between SameBoy/libmgba (or another suitable core) remains a separate implementation decision.
+
+`verify:rom-mode` therefore verifies the feed/scene/layout/adapter contract. It must **not** be read as proof that production currently embeds or runs an emulator.
+
+---
+
+## Verification
+
+The repository currently exposes **140 `verify:*` scripts**. The full `verify:ci` chain executes **117 commands/steps**; those are different metrics and should not be conflated.
+
+The A–F desktop/offline baseline (`d1e2db18`) passed the complete gate with zero failures. Relevant focused gates include:
+
+```bash
+npm run verify:ci
+npm run verify:desktop-offline    # 16 checks: desktop/offline and boundary contract
+npm run verify:rom-mode           # 44 checks: captured ROM feed → scene/layout/adapter contract
+npm run verify:rom-trace          # 21/0 on the A–F closure
+npm run verify:rom-campaign       # 10/0 on the A–F closure
+npm run typecheck
+npm run build
+```
+
+`verify:ci` remains the definition of done for code changes. A local green run on an uncommitted tree is not equivalent to `main` being green.
+
+---
+
+## Getting started
+
+### Requirements
+
+- **Node 22** is the repository authority (`.nvmrc`) and the release-CI baseline.
+- npm from the selected Node installation.
+- Rust/Tauri prerequisites only when building or running the desktop shell.
+- ROM research dependencies only when working under `tools/rom-trace/`; they are not required for normal frontend development.
+
+```bash
+nvm use
+npm ci
+npm run dev          # development server: http://localhost:5178
+npm run typecheck
+npm run build
+npm run verify:ci
+```
+
+For the actual desktop product path:
+
+```bash
+npm run desktop:dev
+npm run desktop:build
+```
+
+Environment authority and known toolchain divergences are documented in [`docs/development/ENVIRONMENTS.md`](docs/development/ENVIRONMENTS.md).
+
+---
+
+## Gameplay and data scope
+
+The current repository models the original GBC battle grammar rather than inventing a separate combat system:
+
+| System | Current implementation |
+|---|---|
+| Battle flow | turn/exchange model with player/enemy roles |
+| Tactical space | AIR/GROUND × FRONT/BACK |
+| Resources | CC, Ki, Gather/Power windows and card costs |
+| Stage Attack | deterministic input sequences, timing windows, fail/counter behavior |
+| Presentation | GBC-tick timeline, ACTION/FIELD transitions, physical frame mapping, FX and camera cues |
+| Teams | 1v1 and 2v2, including character changes and reserve entry |
+| Content inventory | 26 characters, 48 forms, 125 cards |
+| Localization inventory | 10 locale files: `ar bn en es fr hi ja pt ru zh` |
+
+The ROM and captured evidence are the authority for fidelity claims. When a behavior is not proven, it should be documented as pending rather than presented as canonical.
+
+---
+
+## Stack
+
+- **TypeScript 5 + React 19 + Vite 6**
+- **PixiJS 8** for battle presentation
+- **Tauri 2** for the desktop shell
+- deterministic GBC-rate timing for battle presentation
+- ROM-derived data, sprite/animation provenance and automated fidelity gates
+- local persistence for player-facing state
+- internal Development Studio for inspection and validation
+
+---
+
+## Repository map
+
+```text
 dbz-lsw-fangame/
 ├── src/
-│   ├── data/                 # ROM-derived data: cards, roster, sprite manifests, enemy decks, positions
-│   ├── battle/               # Battle engine: action profiles, stage sequences, timeline (GBC clock)
-│   ├── renderer/pixi/        # PixiJS presentation: battle, projectiles, actors
-│   ├── components/           # UI: menu, story, setup, characters, deck, cards, settings
-│   ├── devtools/             # Internal Development Studio (dashboard, labs, validation)
-│   └── styles.css            # Global styles
-├── docs/                     # Specifications, ROM research, audit reports, screenshots
-│   ├── rom/                  # ROM decompilation findings & research passes
-│   ├── design/               # Game design documents
-│   └── screenshots/          # README screenshots
-├── scripts/                  # Verification suites & build pipelines (verify:*, audit:*)
-├── tools/                    # ROM research, tracing, sprite mapping utilities
-├── generated/                # ROM-derived runtime assets (regenerable: npm run gen:rom-runtime-assets)
-├── public/                   # Static assets (sprites, sheets, audio, menu art)
-└── skills/                   # Agent skills for project workflows (UI layout, visual excellence)
+│   ├── battle/
+│   │   ├── engine/            # pure battle rules/state transitions
+│   │   ├── runtime/           # runtime orchestration
+│   │   ├── presentation/      # battle presentation contracts
+│   │   ├── romMode/           # decoder/scene/layout adapter pieces; NOT an embedded emulator
+│   │   └── romTrace/          # shared trace contracts owned by product-side code
+│   ├── data/                  # roster, cards and ROM-derived/static game data
+│   ├── renderer/pixi/         # PixiJS renderer/presenter
+│   ├── components/            # player-facing UI
+│   └── devtools/              # internal Development Studio
+├── src-tauri/                 # Tauri desktop shell and packaging config
+├── tools/
+│   └── rom-trace/             # research/evidence tooling; outside the product bundle
+├── scripts/                   # verification, generation and audit commands
+├── public/                    # packaged static assets
+├── docs/                      # architecture, ROM research, QA, audits and design docs
+└── .github/workflows/         # CI and desktop release workflows
 ```
 
-### Key modules
-
-| Path | Content |
-|---|---|
-| `src/data/cards.ts` | 125 real ROM cards (names, stats, types, verified compatibility) |
-| `src/data/roster.ts` | 24 characters / 48 forms with authentic sheets + growth curves |
-| `src/data/spriteManifest.ts` | 48 form → animated combat sprite mappings (atomic ZIP V5) |
-| `src/data/enemy_decks.ts` | Real decks for 32 chapters + AI boosts + 2v2 battles |
-| `src/data/positions.ts` | 4 tactical positions + facing + vulnerabilities |
-| `src/battle/actionProfiles.ts` | 42 signature profiles per card: declarative timeline + resolver |
-| `src/battle/stageSequences.ts` | Canonical Stage Attack sequences (fixed pool, deterministic rotation) |
-| `src/battle/stageInputMap.ts` | QTE input → fighter pose mapping (A/B/↑/↓/←/→) |
-| `src/battle/timeline.ts` | Single GBC clock (59.7275 fps) with deterministic seek |
-| `src/page-layout-system.css` | Unified internal page composition (container-query based) |
+For a curated documentation map, start at [`docs/README.md`](docs/README.md) rather than browsing the large `docs/` directory blindly.
 
 ---
 
-## 📚 Documentation
+## Screenshots
 
-| Document | Content |
-|---|---|
-| `docs/FRAMES_ACTIONS_SPEC.md` | Spec V1: canonical views, naming `[role]_[action]_[variant]_[frame]`, frame-perfect criteria |
-| `docs/COMBAT_ACTION_PIPELINE.md` | Action pipeline: signature profiles → timeline → presentation |
-| `docs/BATTLE_ENGINE_SPEC.md` | Battle engine specification |
-| `docs/CINEMATIC_GRAMMAR.md` | Shot grammar and cinematic orchestration |
-| `docs/SPRITE_TAXONOMY.md` | Canonical sprite taxonomy |
-| `docs/CARD_SYSTEM.md` · `docs/HUD_BUTTONS.md` · `docs/GAMEPLAY_SYSTEM.md` | Cards, HUD and systems |
-| `docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md` | 310+ ROM-confirmed combat findings |
+The PNG files under `docs/screenshots/` are **historical captures from the 2026-08-31 build**. The UI has changed materially since then, so they are no longer embedded here as if they represented the current product.
+
+They are retained for historical/reference purposes until a new release-like capture set is produced. See [`docs/screenshots/README.md`](docs/screenshots/README.md).
 
 ---
 
-## 🛠️ Development Studio (internal)
+## Development Studio
 
-Embedded production tool at `http://localhost:5178/?dev=1` (+ `#dev/<module>`). Not part of the public flow.
+The internal Development Studio is exposed in development at `http://localhost:5178/?dev=1` and `#dev/<module>`. It contains the project-specific inspectors used for characters, cards, sprites, animation, battle presentation, ROM evidence and validation.
 
-- **Dashboard** — live counters (48 forms / 24 characters / 125 cards / 32 decks / 42 profiles)
-- **Character Studio** — forms + stats at any level (ROM curves)
-- **Card Database** — all 125 cards with filters and detail sheet
-- **Sprite Inspector** — real frame with bbox and transparency %
-- **Position Lab** — 4 positions and MOVE rules (2 axes)
-- **Story Studio** — boss decks, AI boosts, 2v2 and vignettes
-- **Animation Studio** — real timeline (play/step/fps/loop) from manifest
-- **Battle Lab** — instant real combat (Versus or story chapter)
-- **Pixi Seq** — deterministic `BattleTimeline → Pixi` lab with projectile visual matrix
-- **Validation** — real integrity checks · **Research** — sources and verification level
-
-### 🔬 Combat debug modes
-
-| Param | Function |
-|---|---|
-| `?debugCinematics=1` | Cinematic debugger: shot/pose/projectile + next event. `Space` play/pause · `←/→` ±1 tick · `Shift+←/→` ±10 · `R` reset |
-| `?debugState=1` | Internal state inspector + QTE Debugger. `F` freeze · `.` +1 frame · `Shift+.` +10 |
-| `?pixiField=1` | Pixi field/action renderer (avoids duplicate sprites with DOM fallback) |
+It is a development surface, not a substitute for testing the actual Tauri release build.
 
 ---
 
-## 🌍 Languages (10)
+## A–F desktop/offline milestone
 
-English · Español · Français · Deutsch · Português · Italiano · 中文 · 日本語 · 한국어 · Русский
+| Block | Result | Commit |
+|---|---|---|
+| A | architecture/environment execution-mode documentation | `53c5df97` |
+| B | `verify:desktop-offline`, CI enforcement and version authority | `8b38ea56` |
+| C/D | desktop/offline QA smoke contract | `d1e2db18` |
+| E | full HEAD CI | `RC=0` |
+| F | synchronization/clean-tree closure | `d1e2db18` baseline |
 
-Switch in **Settings → Language** (persisted in `localStorage` as `dbzlsw_lang`).
+A real boundary violation was found during this work: `src/devtools/timeline.tsx` depended on `tools/rom-trace/`. The shared contracts were moved into `src/battle/romTrace/`, leaving the dependency direction as **tools → src**. The new gate prevents that regression.
 
----
+### Next milestone: G–J
 
-## 🗺️ Development Status
-
-### ✅ Completed
-- Main menu (7 options), Story with 32 chapters across 4 sagas and manga vignettes
-- Battle Mode (Versus) with 24 selectable characters (incl. Vegito)
-- **Canonical GBC combat**: TURN → 2 EXCHANGES, SPD order, 4 positions, full CC, defense before resolution
-- **Canonical Stage Attacks**: predetermined sequences (not random), QTE with per-key poses, A/B counter windows
-- **42 signature profiles** — all 66 combat cards have their own animation (verify:profiles requires full coverage)
-- Action cinematic orchestrated by **single timeline** (59.7275 fps GBC): attacker → travel → target → return with synchronized FX/CSS
-- **48 forms** = exact ROM, all with 21 poses (idle..power_up) and manifests with verified physical dimensions
-- **ROM physical canon (P0)**: identity 48/48, physical corpus 505/2374, profile-specific structured bridge
-- Item cards with **blue aura** (fx-item) vs ki buffs with golden aura; Afterimage FX with teleport trails
-- Animated combat sprites with silhouette facing; procedural beams (no stretching, no duplicates)
-- Byte-identical character sheets (48/48 verified)
-- Persistent deck (20 cards), collection, EXP/levels with ROM curves
-- GBC-synthesized audio + i18n in 10 languages
-- **Unified page composition system** (`page-layout-system.css`, container-query based)
-- **Performance**: memoized sprites (62 FPS in QTE), manifest cache, timer-free timeline
-
-### ⏳ Pending
-- Forensic ROM capture to replace HYPOTHESIS values (counter windows A≈0.4s/B≈0.15s, BLOCK/AVOID formulas, speed tie) → frame-exact fidelity
-- Visual verification of portrait/icon mapping (contact sheets)
-- Animated transformations (aura + flash + palette swap) — base ready (fx-aura)
-- Real BGM (GBS 20 tracks → WAV/MP3)
-- More characters with full animation `battleId` (only goku/vegeta)
-- More professional Dragon Ball themed battle/menu background
+G–J are intentionally separate from A–F. The first embedded-core spike is defined as: **load a ROM, run frames, read WRAM and feed that state into `decodeRomFeed` without modifying `BattleEngine`**. No README wording should describe that milestone as completed until the app actually embeds and executes the core.
 
 ---
 
-## 🔑 localStorage Keys
+## Known environment/reproducibility debt
 
-| Key | Usage |
-|---|---|
-| `dbzlsw_deck` | 20-card deck |
-| `dbzlsw_story_progress` | Highest unlocked chapter |
-| `dbzlsw_lang` | Selected language |
-| `dbzlsw_progress` | EXP/levels per form |
+The repository deliberately documents the remaining differences instead of hiding them:
+
+- `.nvmrc` pins **Node 22**, which is the release authority. A WSL workspace has been observed running Node 24; that is local drift, not the repository baseline.
+- `package.json` deliberately has **no `packageManager` field** yet. npm should be aligned together with the Node policy rather than independently forcing npm 11 into Node 22 CI.
+- `src-tauri/Cargo.lock` is currently absent. It should be generated and committed from a Rust-capable Windows/CI environment for reproducible Tauri dependency resolution; it must not be fabricated from a WSL environment without Cargo.
+- Rust is currently `stable` in release CI; a repository-level Rust toolchain pin remains a separate reproducibility decision.
 
 ---
 
-## ⚖️ Legal
+## Documentation
 
-**Educational, non-profit fan remake.** Dragon Ball Z and its characters are © Bird Studio / Shueisha / Toei Animation. Sprites come from personally owned ROMs and public reference archives (Sprite Database / Spriters Resource) for research purposes. Code and mechanics are original; the ROM is not distributed.
+Use [`docs/README.md`](docs/README.md) as the documentation index. The most important source-of-truth documents are:
+
+- [`docs/architecture/DESKTOP_OFFLINE_ARCHITECTURE.md`](docs/architecture/DESKTOP_OFFLINE_ARCHITECTURE.md)
+- [`docs/architecture/ROM_EXECUTION_MODES.md`](docs/architecture/ROM_EXECUTION_MODES.md)
+- [`docs/development/ENVIRONMENTS.md`](docs/development/ENVIRONMENTS.md)
+- [`docs/qa/DESKTOP_OFFLINE_SMOKE.md`](docs/qa/DESKTOP_OFFLINE_SMOKE.md)
+- [`docs/BATTLE_ENGINE_SPEC.md`](docs/BATTLE_ENGINE_SPEC.md)
+- [`docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md`](docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md)
+
+---
+
+## Legal
+
+This is an educational, non-profit fan project. Dragon Ball Z and its characters are properties of their respective rights holders. The original ROM is **not distributed or included in any build**. ROM research and extracted evidence are used to study and reproduce behavior; users are responsible for using legally obtained material in their own research environment.
