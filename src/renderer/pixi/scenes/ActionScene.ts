@@ -116,14 +116,17 @@ export class ActionScene extends Container {
       right.setPos(ACTION_RIGHT_X, ACTION_GROUND_Y);
       this.addChild(right);
     }
-    this.applySceneVisibility();
   }
 
   /** M8.P0 — Cambia QUIÉN ataca (rol). NO toca parents: los nodos ya cuelgan
-   *  de la escena; solo cambia la semántica actor/target y la visibilidad. */
+   *  de la escena; solo cambia la semántica actor/target.
+   *
+   *  P0.4R-B7B5 — ya NO toca visibilidad: en la ruta ROM-backed la visibilidad
+   *  la resuelve exclusivamente el binding físico (ACTION_OBJECT_BIND → slot →
+   *  ActionObjectRuntime.active/visible). Una decisión por escena aquí competiría
+   *  con esa autoridad. */
   setRoles(attacker: BattleSide): void {
     this.attackerSide = attacker;
-    this.applySceneVisibility();
   }
 
   /** M8.P0 — ACTOR = rol, no nodo: el luchador del lado atacante. */
@@ -153,7 +156,6 @@ export class ActionScene extends Container {
 
   setScene(scene: ActionSceneMode): void {
     this.scene = scene;
-    this.applySceneVisibility();
   }
 
   /** Posición canónica del actor según el lado (para rush/move cinematográfico). */
@@ -174,17 +176,18 @@ export class ActionScene extends Container {
     this.visible = false;
   }
 
-  /** M8.P0 — Matriz de visibilidad canónica:
-   *  ACTION_SOLO → solo el ACTOR grande visible (target oculto)
-   *  DEFENDER_ACTION → solo el DEFENSOR (target) visible — cámara en él
-   *  ACTION_DUEL/PROJECTILE/IMPACT → ambos grandes visibles
-   *  (el SceneDirector controla FIELD ↔ ACTION; aquí solo lo interno). */
-  private applySceneVisibility(): void {
-    const solo = this.scene === 'ACTION_SOLO';
-    const defenderShot = this.scene === 'DEFENDER_ACTION';
-    const actor = this.getActor();
-    const target = this.getTarget();
-    if (actor) actor.visible = !defenderShot;
-    if (target) target.visible = !solo;
-  }
+  /**
+   * P0.4R-B7B5 — `applySceneVisibility()` ELIMINADO.
+   *
+   * Era la matriz de visibilidad por escena:
+   *   ACTION_SOLO → solo el ACTOR visible · DEFENDER_ACTION → solo el DEFENSOR
+   *
+   * Retirado como autoridad: en la ruta ROM-backed la visibilidad la resuelve
+   * `ACTION_OBJECT_BIND → slot físico → ActionObjectRuntime.active/visible`
+   * (B7B3). Dejar aquí una decisión por escena —o un guard `if (romPhysical)`—
+   * mantendría una API muerta visible invitando a regresiones.
+   *
+   * Barrera: una película ROM_PHYSICAL nunca gobierna visibilidad por escena
+   * (`verify:defender-action-physical` exige 0).
+   */
 }

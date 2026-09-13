@@ -127,6 +127,22 @@ export type SceneCueFamily =
 // REGISTRY — All scene/camera/visibility/layering operations audited
 // ═══════════════════════════════════════════════════════════════════════
 
+/**
+ * P0.4R-B7B5 — BARRERA de autoridad.
+ *
+ * Una timeline ROM_PHYSICAL NUNCA gobierna visibilidad por escena: la autoridad
+ * es `ACTION_OBJECT_BIND → slot físico → ActionObjectRuntime.active/visible`
+ * (B7B3), y el orden de pintado pertenece a los slots (B7B4).
+ *
+ * `DEFENDER_ACTION` sobrevive como etiqueta LEGACY_ONLY (tipos históricos,
+ * Dev tools, fixtures LEGACY, buildTimeline antiguo) pero PROHIBIDO como
+ * autoridad en la ruta ROM-backed.
+ *
+ * `applySceneVisibility()` fue eliminado de ActionScene (B7B5).
+ */
+export const ROM_PHYSICAL_SCENE_AUTHORITY = 'PROHIBITED' as const;
+export const DEFENDER_ACTION_AUTHORITY = 'LEGACY_ONLY' as const;
+
 export const ROM_SCENE_CUES: RomSceneCueEntry[] = [
   // ── SHARED: Scene entry ──
   { id: 'SCENE_ENTRY_CUT', operation: 'CAMERA_CUT', family: 'SHARED', evidence: 'ROM_HANDLER_VERIFIED', source: 'SCENE_LOAD cue → ACTION_SOLO via compiler', consumed: 'CONSUMED', description: 'Instant cut from FIELD to ACTION (ROM SCENE_LOAD opcode)' },
@@ -140,7 +156,7 @@ export const ROM_SCENE_CUES: RomSceneCueEntry[] = [
   { id: 'ACTOR_VISIBILITY_HIDE', operation: 'FIGHTER_VISIBILITY', family: 'SHARED', evidence: 'PRESENTATION_DERIVED', source: 'applySceneVisibility() ACTION_SOLO hides target', consumed: 'CONSUMED', description: 'Hide actor (not typical in current codebase)' },
   { id: 'TARGET_VISIBILITY_SHOW', operation: 'FIGHTER_VISIBILITY', family: 'SHARED', evidence: 'ROM_HANDLER_VERIFIED', source: 'FIGHTER_VISIBILITY cue role=TARGET visible=true (compiler)', consumed: 'CONSUMED', description: 'Show target at defenderIn or approach beat' },
   { id: 'TARGET_VISIBILITY_HIDE', operation: 'FIGHTER_VISIBILITY', family: 'SHARED', evidence: 'PRESENTATION_DERIVED', source: 'applySceneVisibility() hides target in ACTION_SOLO', consumed: 'CONSUMED', description: 'Hide target in solo scene (actor-only shots)' },
-  { id: 'DEFENDER_VISIBILITY', operation: 'FIGHTER_VISIBILITY', family: 'DEFENSE', evidence: 'PRESENTATION_DERIVED', source: 'DEFENDER_ACTION → applySceneVisibility() shows only defender', consumed: 'CONSUMED', description: 'Show defender, hide attacker in DEFENDER_ACTION scene' },
+  { id: 'DEFENDER_VISIBILITY', operation: 'FIGHTER_VISIBILITY', family: 'DEFENSE', evidence: 'PRESENTATION_DERIVED', source: 'histórico: DEFENDER_ACTION → applySceneVisibility() mostraba solo al defensor (RETIRADO en B7B5)', consumed: 'TRACE_ONLY', remediation: 'Retirado como autoridad en B7B5: la visibilidad la resuelve el binding físico (ACTION_OBJECT_BIND → slot → ActionObjectRuntime.active/visible). Sin migración pendiente; se conserva LEGACY_ONLY por trazabilidad histórica.', description: 'LEGACY_ONLY (B7B5). En la ruta ROM la visibilidad la resuelve el binding físico: ACTION_OBJECT_BIND → slot → ActionObjectRuntime.active/visible. Prohibido como autoridad.' },
 
   // ── SHARED: Position ──
   { id: 'ACTOR_ANCHOR_LEFT', operation: 'FIGHTER_POSITION', family: 'SHARED', evidence: 'PRESENTATION_DERIVED', source: 'ACTION_LEFT_X=96 (ActionScene.ts)', consumed: 'CONSUMED', x: 96, description: 'Actor anchor position left side (hardcoded bridge — NO coincide con anchors ROM, ver ACTION_ANCHOR_TABLE_ROM)' },

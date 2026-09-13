@@ -90,7 +90,10 @@ for (const c of bridgeCues) {
 // ── 10. TRACE_ONLY cues documented ──
 
 const traceOnlyCues = ROM_SCENE_CUES.filter(c => c.consumed === 'TRACE_ONLY');
-check(traceOnlyCues.length === 2, `TRACE_ONLY cues: ${traceOnlyCues.length}, expected 2`);
+// B7B5: DEFENDER_VISIBILITY se retiró como autoridad y quedó TRACE_ONLY con su
+// remediation (la visibilidad la resuelve el binding físico). El conteo pasa de
+// 2 a 3 por ese retiro intencional, no por una regresión.
+check(traceOnlyCues.length === 3, `TRACE_ONLY cues: ${traceOnlyCues.length}, expected 3`);
 for (const c of traceOnlyCues) {
   check(c.evidence !== undefined, `TRACE_ONLY cue ${c.id} missing evidence`);
   check((c as any)?.remediation !== undefined, `TRACE_ONLY cue ${c.id} missing remediation`);

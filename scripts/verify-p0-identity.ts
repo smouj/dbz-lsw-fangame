@@ -71,31 +71,35 @@ for (let i = 0; i < 100; i++) {
 check('I4: 100 cambios de escena → fighterCount === 2', scene.fighterCount === countBefore && scene.fighterCount === 2);
 check('I4: 100 cambios → parents siguen estables', player.parent === scene && enemy.parent === scene);
 
-// ── Invariante 5: visibilidad canónica por plano ──
+// ── Invariante 5 (B7B5): la ESCENA ya no decide visibilidad ──
+// La autoridad es el binding físico: ACTION_OBJECT_BIND → slot físico →
+// ActionObjectRuntime.active/visible (B7B3). Cambiar de plano NO puede ocultar
+// ni mostrar actores: si lo hiciera, competiría con esa autoridad. Antes este
+// check afirmaba la matriz por escena (applySceneVisibility), retirada en B7B5.
 scene.setRoles('left');
-scene.setScene('ACTION_SOLO');
-check('I5: ACTION_SOLO → actor visible · target oculto',
-  player.visible === true && enemy.visible === false);
-scene.setScene('ACTION_DUEL');
-check('I5: ACTION_DUEL → ambos visibles',
-  player.visible === true && enemy.visible === true);
+for (const mode of ['ACTION_SOLO', 'ACTION_DUEL', 'DEFENDER_ACTION'] as const) {
+  scene.setScene(mode);
+  check(`I5: ${mode} no decide visibilidad (attacker=left)`,
+    player.visible === true && enemy.visible === true);
+}
 scene.setRoles('right');
-scene.setScene('ACTION_SOLO');
-check('I5: ACTION_SOLO con attacker=right → enemy visible · player oculto',
-  enemy.visible === true && player.visible === false);
-scene.setScene('ACTION_DUEL');
-check('I5: vuelta a ACTION_DUEL → ambos visibles',
-  player.visible === true && enemy.visible === true);
+for (const mode of ['ACTION_SOLO', 'ACTION_DUEL', 'DEFENDER_ACTION'] as const) {
+  scene.setScene(mode);
+  check(`I5b: ${mode} no decide visibilidad (attacker=right)`,
+    player.visible === true && enemy.visible === true);
+}
 
-// ── M8.C2a: DEFENDER_ACTION — cámara en el defensor ──
+// ── M8.C2a (B7B5): DEFENDER_ACTION no gobierna visibilidad ni crea actores ──
+// La etiqueta sobrevive LEGACY_ONLY, pero una película ROM-backed resuelve la
+// visibilidad por binding. La escena NO puede ocultar al actor ni al defensor.
 scene.setRoles('left');
 scene.setScene('DEFENDER_ACTION');
-check('C2a: DEFENDER_ACTION (attacker=left) → defensor right visible · actor left oculto',
-  enemy.visible === true && player.visible === false);
+check('C2a: DEFENDER_ACTION no oculta al actor (attacker=left)',
+  player.visible === true);
 scene.setRoles('right');
 scene.setScene('DEFENDER_ACTION');
-check('C2a: DEFENDER_ACTION (attacker=right) → defensor left visible · actor right oculto',
-  player.visible === true && enemy.visible === false);
+check('C2a: DEFENDER_ACTION no oculta al actor (attacker=right)',
+  enemy.visible === true);
 scene.setScene('ACTION_DUEL');
 check('C2a: DEFENDER_ACTION → ACTION_DUEL → ambos visibles',
   player.visible === true && enemy.visible === true);

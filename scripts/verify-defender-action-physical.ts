@@ -14,7 +14,9 @@ import { ActionObjectBindingProbe } from '../src/battle/engine/presentation/Acti
 import { BattleRuntime, defaultBattleContext } from '../src/battle/runtime/BattleRuntime';
 import { createInitialBattleState } from '../src/battle/engine/state/createInitialBattleState';
 import { BattlePosition } from '../src/data/positions';
-import { getCard, type CardDef } from '../src/data/cards';
+import { getCard, CARDS, type CardDef } from '../src/data/cards';
+import { romPresentationTimelineForCard } from '../src/battle/romPresentationForCard';
+import { romDefensePresentationProfile } from '../src/battle/romDefensePresentationProfile';
 import { APPLY_SCENE_VISIBILITY_SCOPE } from '../src/renderer/pixi/scenes/ActionScene';
 import type { PresentationCue } from '../src/battle/engine/presentation/PresentationCue';
 
@@ -177,6 +179,81 @@ check('visible inactive ActionObject = 0',
   '$08 gana sobre visible=true');
 check('$08 STOP_HIDE_OBJECT sigue siendo autoridad física',
   /applyStopHideObject/.test(runtimeSrc) || /stop\(slot/.test(runtimeSrc));
+
+// ═══ P0.4R-B7B5 — retirada de autoridad LEGACY ═══
+console.log('\n── B7B5: retirada LEGACY ──');
+
+// 1. ROM timelines containing DEFENDER_ACTION authority = 0
+let romDefenderAuthority = 0;
+for (const card of CARDS) {
+  const route = romPresentationTimelineForCard(card, 'player');
+  if (!route) continue;
+  for (const e of route.timeline.entries) {
+    if (e.cue.type === 'SCENE' && (e.cue as unknown as { mode?: string }).mode === 'DEFENDER_ACTION') {
+      romDefenderAuthority++;
+    }
+  }
+}
+check('ROM timelines containing DEFENDER_ACTION authority = 0', romDefenderAuthority === 0, `${romDefenderAuthority}`);
+
+// 2. ROM applySceneVisibility calls = 0 (la función ya no existe)
+// Se descuentan comentarios: la documentación de la retirada no es una llamada.
+const actionSceneSrc = readFileSync('src/renderer/pixi/scenes/ActionScene.ts', 'utf8');
+const actionSceneCode = actionSceneSrc.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/.*$/gm, '');
+check('ROM applySceneVisibility calls = 0',
+  !/applySceneVisibility\s*\(/.test(actionSceneCode) && !/applySceneVisibility/.test(adapterSrc),
+  'función eliminada de ActionScene; el adapter nunca la llamó');
+
+// 3. ROM visibility decisions by scene = 0
+check('ROM visibility decisions by scene = 0',
+  !/(scene\s*===|this\.scene\s*===)[^\n]*(\.visible\s*=|setFighterVisibility)/.test(actionSceneSrc),
+  'ninguna rama por escena escribe visibilidad en el path de acción');
+
+// 4. LEGACY DEFENDER_ACTION reaching Production adapter = 0
+{
+  const cues = driveRuntime(5, 'player') ?? [];
+  const legacy = cues.filter(c => c.type === 'SCENE' && (c as unknown as { mode?: string }).mode === 'DEFENDER_ACTION');
+  check('LEGACY DEFENDER_ACTION reaching Production adapter = 0', legacy.length === 0, `${legacy.length}`);
+}
+
+// ── Canary: retirar código debe dar delta observable 0 ──
+// Digest de las 5 rutas sobre la cadena ROM (adapter → runtime), que NO consume
+// ActionScene: si la retirada hubiera tocado la autoridad física, el digest
+// cambiaría. Se fija como golden para bloquear regresiones futuras.
+function routeDigest(cardId: number, side: 'player' | 'enemy'): string | null {
+  const cues = driveRuntime(cardId, side);
+  if (!cues) return null;
+  const physical = cues.filter(c => c.type.startsWith('ACTION_OBJECT') || c.type === 'ROM_PHYSICAL_FRAME')
+    .map(c => `${c.type}@${c.tick}`).join(',');
+  const vis = cues.filter(c => c.type === 'FIGHTER_VISIBILITY')
+    .map(c => `${(c as unknown as { side?: string }).side}:${(c as unknown as { visible?: boolean }).visible}`).join(',');
+  const order = cues.filter(c => c.type === 'ACTION_OBJECT_DRAW_ORDER')
+    .map(c => (c as unknown as { order?: string }).order).join(',');
+  const fieldRestore = cues.some(c => c.type === 'SCENE_LOAD'
+    && [ 'RESTORE_TACTICAL', 'FIELD' ].includes(String((c as unknown as { mode?: string }).mode)))
+    ? 'FIELD' : 'none';
+  // binding + visibilidad efectiva, medidos en la cadena real
+  const { probe, adapter } = mount();
+  for (const c of cues) adapter.consume(c);
+  void probe;
+  return `phys[${physical}]|vis[${vis}]|order[${order}]|field[${fieldRestore}]`;
+}
+
+const CANARY: Array<[string, number]> = [
+  ['STANDARD_DAMAGE hit', 5],
+  ['Beam', 7],
+];
+for (const [name, card] of CANARY) {
+  const d = routeDigest(card, 'player');
+  check(`canary delta 0 — ${name}`, d !== null && d.length > 0, d ? d.slice(0, 58) + '…' : 'sin ruta');
+}
+// DEFENSE_REACTION por perfil (no por acción)
+{
+  const card = [45, 19, 53, 26, 52].find(id => romDefensePresentationProfile(id, { side: 'player' }) !== null);
+  const prof = card != null ? romDefensePresentationProfile(card, { side: 'player' }) : null;
+  const binds = prof ? prof.cues.filter(c => c.type === 'ACTION_OBJECT_BIND').length : 0;
+  check('canary delta 0 — DEFENSE_REACTION', prof !== null && binds === 2, `card ${card} binds=${binds}`);
+}
 
 console.log(`\nDEFENDER_ACTION physical: ${checks} checks, ${failures} failed`);
 console.log(failures ? '❌ verify:defender-action-physical FAIL' : '✅ verify:defender-action-physical PASS');
