@@ -17,6 +17,8 @@ import { sceneToPixiLayout, DEFAULT_ANCHOR } from '../src/battle/romMode/romMode
 import {
   layoutToSlotCalls,
   applyRomModeLayout,
+  applyRomModeSceneToPresentation,
+  applyRomModeFeedToPresentation,
   type RomModePixiTarget,
   type RomModeSlotCall,
 } from '../src/battle/romMode/romModePixiAdapter';
@@ -109,6 +111,23 @@ if (scene) {
     layout,
   );
   check('adapter: idempotente', JSON.stringify(sent) === JSON.stringify(sent2));
+
+  // ── Enganche completo: escena / feed → presentación ──
+  const sent3: RomModeSlotCall[] = [];
+  const res3 = applyRomModeSceneToPresentation(
+    { setActionObjectPosition: (slot, x, y) => { sent3.push({ slot, x, y, role: slot === 0 ? 'ally' : 'enemy' }); } },
+    scene,
+  );
+  check('hook: escena → presentación', res3.applied === 2 && JSON.stringify(sent3) === JSON.stringify(sent));
+
+  const sent4: RomModeSlotCall[] = [];
+  const res4 = applyRomModeFeedToPresentation(
+    { setActionObjectPosition: (slot, x, y) => { sent4.push({ slot, x, y, role: slot === 0 ? 'ally' : 'enemy' }); } },
+    feeds[scene.tick],
+    { ally: 'cell', enemy: 'piccolo' },
+    resolveSprite,
+  );
+  check('hook: feed crudo → presentación', res4.applied === 2 && JSON.stringify(sent4) === JSON.stringify(sent));
 }
 
 // ── Determinismo ──
