@@ -1,0 +1,35 @@
+── Lado ROM (captura real, 90 frames) ──
+  frame   0  C0A0=5 CA03=21 activeObj=0 drawOrder=2
+  frame   1  C0A0=5 CA03=90 activeObj=0 drawOrder=2
+  frame   2  C0A0=5 CA03=91 activeObj=0 drawOrder=2
+  frame   3  C0A0=5 CA03=92 activeObj=0 drawOrder=2
+  frame   8  C0A0=8 CA03=0 activeObj=0 drawOrder=2
+  frame  15  C0A0=9 CA03=0 activeObj=0 drawOrder=2
+  frame  19  C0A0=30 CA03=0 activeObj=0 drawOrder=2
+  frame  38  C0A0=11 CA03=0 activeObj=0 drawOrder=2
+  frame  40  C0A0=11 CA03=0 activeObj=1 drawOrder=1
+  frame  53  C0A0=11 CA03=1 activeObj=1 drawOrder=1
+  frame  54  C0A0=11 CA03=2 activeObj=1 drawOrder=1
+  frame  58  C0A0=11 CA03=0 activeObj=1 drawOrder=1
+
+── Lado remake (m7_melee_hit) ──
+  tick    0  SCENE_LOAD TACTICAL_TO_ACTION
+  tick    0  ROM_WAIT dur=20
+  tick    0  PALETTE_TRANSITION 1 dur=17
+  tick    0  FIGHTER_VISIBILITY ACTOR
+  tick    0  FIGHTER_VISIBILITY TARGET
+  tick   17  SCENE_LOAD ACTION_READY
+  tick   20  ROM_MACRO
+  tick   20  FIGHTER_MOTION dur=25
+  tick   40  FIGHTER_VISIBILITY TARGET
+  tick   45  ANIMATION_START
+  tick  251  ROM_MACRO
+  tick  251  ANIMATION_START
+  tick  256  ANIMATION_START
+  tick  279  ANIMATION_START
+
+── Contraste en los beats que ambos declaran ──
+  objetivo activo → ROM frame 40 (activeObj 1, drawOrder 1) · remake tick 40   ✅ coinciden (frame/tick exacto)
+  macro de acción → ROM frame 19 (C0A0=30) · remake tick 20   ✅ dentro de ±2t
+  captura ROM: 90 frames trazados (longitud de captura, no duración del action)
+  timeline remake: 302 ticks

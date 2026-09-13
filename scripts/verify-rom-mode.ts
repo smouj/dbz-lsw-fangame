@@ -150,5 +150,31 @@ for (const fam of FAMILIES) {
   check(`${fam.name}: layout aplicable`, layout.nodes.length === 2 && layout.world.width === 160, `CA03=${ff[0].battle.CA03}`);
 }
 
+// ───────────────────────────────────────────────────────────────────────
+// 3. Feel: alineación de beats ROM ↔ remake
+// ───────────────────────────────────────────────────────────────────────
+// Si el remake deja de caer en los mismos ticks que la ROM en los beats
+// clave, "se siente" distinto. Aquí se ancla contra la captura real.
+console.log('\n── 3. Beats ROM ↔ remake ──');
+const ROM_TRACE = 'docs/rom/generated/action-trace/tail-action-trace.json';
+const REM_MELEE = 'scripts/fixtures/m7_melee_hit.json';
+interface RomTraceFrame { frame: number; battle: Record<string, number>; activeObject: number; drawOrderFlag: number; }
+interface RemEvent { tick: number; type: string; role?: string; }
+const romTrace = (JSON.parse(readFileSync(ROM_TRACE, 'utf8')) as { frames: RomTraceFrame[] }).frames;
+const remTl = (JSON.parse(readFileSync(REM_MELEE, 'utf8')) as { timeline: RemEvent[] }).timeline;
+
+const romActivate = romTrace.find((f) => f.activeObject === 1)?.frame;
+const remVL = remTl.filter((e) => e.type === 'FIGHTER_VISIBILITY' && e.role === 'TARGET');
+const remActivate = (remVL.find((e) => e.tick > 0) ?? remVL[0])?.tick;
+check('feel: objetivo activo (ROM frame == remake tick)', romActivate !== undefined && romActivate === remActivate, `ROM ${romActivate} · remake ${remActivate}`);
+
+const romMacro = romTrace.find((f) => f.battle.C0A0 === 30)?.frame;
+const remMacro = remTl.find((e) => e.type === 'ROM_MACRO')?.tick;
+check(
+  'feel: macro de acción ROM ≈ remake (±2t)',
+  romMacro !== undefined && remMacro !== undefined && Math.abs(romMacro - remMacro) <= 2,
+  `ROM ${romMacro} · remake ${remMacro}`,
+);
+
 console.log(`\n═══ RESULTADO: ${passed} passed · ${failed} failed ═══`);
 process.exit(failed === 0 ? 0 : 1);
