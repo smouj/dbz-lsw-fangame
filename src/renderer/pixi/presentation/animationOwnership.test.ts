@@ -28,6 +28,18 @@ function fakeAtlas(): FormAtlas {
   return { formId: 'gohan_young', dir: '', anims: new Map(), textures: new Map(), maxW: 16, maxH: 16 };
 }
 
+function physicalLatchAtlas(): FormAtlas {
+  const atlas = fakeAtlas();
+  atlas.anims.set('attack_fwd', {
+    fps: 12,
+    loop: true,
+    frames: [{ file: 'semantic.png', w: 8, h: 8, durationTicks: 1 }],
+  });
+  atlas.textures.set('attack_fwd:0', Texture.EMPTY);
+  atlas.textures.set('rom-frame-0', Texture.WHITE);
+  return atlas;
+}
+
 function rendererFixture() {
   const app = { stage: new Container(), screen: { width: 320, height: 160 } };
   const world = new Container();
@@ -94,6 +106,56 @@ describe('FighterActor track ownership (G7)', () => {
     expect(actor.isPlaybackEnabled).toBe(false);
     actor.setPose('attack_fwd', 10);
     expect(actor.isPlaybackEnabled).toBe(true);
+  });
+
+  it('mantiene el frame físico ROM entre cues y no deja que sync lo sustituya', () => {
+    const actor = new FighterActor(physicalLatchAtlas(), 'gohan_young', 'left');
+    actor.setPose('attack_fwd', 0);
+    actor.setPhysicalFrame({
+      resource: 44,
+      sequence: 0,
+      frameIndex: 0,
+      physicalId: 'rom-frame-0',
+      offsetX: 3,
+      offsetY: -2,
+    });
+    actor.setPlaybackEnabled(true);
+    const sprite = (actor as any).sprite;
+    expect(sprite.texture).toBe(Texture.WHITE);
+    expect(actor.inspect().frameOffsetX).toBe(3);
+    expect(actor.inspect().frameOffsetY).toBe(-2);
+    actor.sync(1);
+    expect(sprite.texture).toBe(Texture.WHITE);
+    expect(actor.frameIndex).toBe(0);
+
+    // An explicit semantic pose is the documented ownership hand-off.
+    actor.setPose('attack_fwd', 2);
+    expect(sprite.texture).toBe(Texture.EMPTY);
+  });
+
+  it('no reutiliza offsets ni pose cuando el frame físico no está materializado', () => {
+    const actor = new FighterActor(physicalLatchAtlas(), 'gohan_young', 'left');
+    actor.setPose('attack_fwd', 0);
+    actor.setPhysicalFrame({
+      resource: 44,
+      sequence: 0,
+      frameIndex: 0,
+      physicalId: 'missing-rom-frame',
+      offsetX: 7,
+      offsetY: 4,
+    });
+    actor.setPlaybackEnabled(true);
+    const sprite = (actor as any).sprite;
+    expect(sprite.visible).toBe(false);
+    actor.sync(10);
+    expect(sprite.visible).toBe(false);
+    expect(actor.inspect().frameOffsetX).toBe(7);
+    expect(actor.inspect().frameOffsetY).toBe(4);
+
+    // The next physical record without explicit deltas resets both axes.
+    actor.setPhysicalFrame({ resource: 44, sequence: 0, frameIndex: 1, physicalId: 'rom-frame-0' });
+    expect(actor.inspect().frameOffsetX).toBe(0);
+    expect(actor.inspect().frameOffsetY).toBe(0);
   });
 });
 

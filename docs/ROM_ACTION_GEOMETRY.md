@@ -41,6 +41,16 @@ La cámara se aplica al contenedor común del mundo y se restablece al volver a
 `FIELD` o al reiniciar la presentación. Esto evita que un desplazamiento ROM
 residual deje el campo fuera del viewport tras una película.
 
+## Secuenciado físico
+
+Una cue `ROM_PHYSICAL_FRAME` es la autoridad directa de textura, offset y
+`frameIndex`. `FighterActor` mantiene ese frame durante sus `durationTicks` y no
+deja que el animador semántico del atlas lo sustituya entre cues. Un nuevo
+`ANIMATION_START` invalida el frame anterior; una pose semántica solo recupera
+el control cuando la propia timeline la emite de forma explícita. Si la textura
+física no está materializada, el actor permanece oculto y no muestra un frame
+parecido del atlas.
+
 ## Alcance y validación
 
 Este contrato solo afecta al canary Pixi (`?pixiField=1`); el renderer DOM y la

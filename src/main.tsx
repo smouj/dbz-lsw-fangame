@@ -1582,7 +1582,11 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
     // El plano SOLO/DUEL/PROJECTILE se aplica desde el primer tick
     setViewMode('ACTION');
     setCardFx({ card, side, step: 'attacker', visual: cardProjectileClass(card) });
-    setActorPose(cardBattlePose(card, 'field'));
+    // A ROM-backed presentation has already consumed its start boundary above.
+    // Do not apply a semantic pose afterwards: that would clear the direct
+    // ROM_PHYSICAL_FRAME ownership for cards whose first frame starts at tick 0
+    // and would make the film briefly render the legacy atlas sequence.
+    if (!useRomPixi) setActorPose(cardBattlePose(card, 'field'));
 
     // STANDARD_DAMAGE pilot: Pixi consumes the focused Runtime film and its
     // ROM completion boundary releases control. Do not start a parallel DOM

@@ -41,6 +41,9 @@ export class FighterActor extends Container {
   private baseFlip = 1;
   private scaleMag = 1;
 
+  /** Direct ROM frames own the texture until the next physical cue or pose. */
+  private physicalFrameLocked = false;
+
   /** ROM sequence state per slot (for SPECIAL_HANDLER multi-actor: Purple Comet, P.Comet Z, etc.) */
   private romResource: number | null = null;
   private romSequence: number | null = null;
@@ -100,8 +103,11 @@ export class FighterActor extends Container {
   setRomSequence(resource: number, sequence: number): void {
     this.romResource = resource;
     this.romSequence = sequence;
-    // TODO: trigger SpriteAnimator / atlas lookup con (resource, sequence)
-    // por ahora solo almacena el estado para que el resolver físico lo use
+    // Invalidate a previous direct frame immediately. The compiler emits the
+    // first ROM_PHYSICAL_FRAME at this same boundary when the sequence is
+    // decoded; unresolved sequences remain hidden instead of showing stale art.
+    this.physicalFrameLocked = false;
+    this.sprite.visible = false;
   }
 
   /** Explicit ROM ownership gate for frame advancement. */
@@ -127,6 +133,7 @@ export class FighterActor extends Container {
   resetRomTrackState(): void {
     this.romResource = null;
     this.romSequence = null;
+    this.physicalFrameLocked = false;
     this._frameOffsetX = 0;
     this._frameOffsetY = 0;
     this.applyTransform();
@@ -166,9 +173,19 @@ export class FighterActor extends Container {
     this.romSequence = cue.sequence;
     this.lastFrameIndex = cue.frameIndex;
 
-    if (cue.offsetX != null || cue.offsetY != null) {
-      this._frameOffsetX = cue.offsetX ?? 0;
-      this._frameOffsetY = cue.offsetY ?? 0;
+    // Offsets belong to this exact physical frame. Always write both axes so
+    // a frame without a delta cannot inherit the previous frame's displacement.
+    this._frameOffsetX = cue.offsetX ?? 0;
+    this._frameOffsetY = cue.offsetY ?? 0;
+    this.applyTransform();
+
+    const hasPhysicalIdentity = cue.physicalId != null
+      || cue.visualFrameId != null
+      || cue.file != null;
+    if (hasPhysicalIdentity) {
+      // A ROM_PHYSICAL_FRAME cue is authoritative until another physical cue
+      // or an explicit semantic pose hands ownership back.
+      this.physicalFrameLocked = true;
     }
 
     // 1. physicalId — the canonical key registered by AtlasLoader for ROM physical frames
@@ -186,9 +203,9 @@ export class FighterActor extends Container {
     // GATE: When physicalId is present but not found in atlas, the sprite MUST be invisible.
     // Pose-based fallback would display the WRONG frame — the ROM provided a physical
     // identity, and we either have the correct texture or we have nothing.
-    if (cue.physicalId) {
+    if (hasPhysicalIdentity) {
       if (typeof console !== 'undefined') {
-        console.warn(`[FighterActor] physicalId "${cue.physicalId}" not found in atlas — sprite hidden (no synthetic fallback)`);
+        console.warn(`[FighterActor] physical frame not found in atlas (physicalId=${cue.physicalId ?? '—'}, file=${cue.file ?? '—'}) — sprite hidden (no synthetic fallback)`);
       }
       this.sprite.visible = false;
       return;
@@ -267,6 +284,10 @@ export class FighterActor extends Container {
   /** Cambia la pose en el tick absoluto `absTick` (reloj de la pose a cero).
    *  Detecta automáticamente ROM_TICKS vs LEGACY_FPS según durationTicks. */
   setPose(pose: string, absTick: number): void {
+    // A semantic pose is an explicit hand-off back to the pose animator. ROM
+    // timelines normally stay on direct physical frames; when a pose is
+    // emitted it must be the deliberate owner rather than a stale latch.
+    this.physicalFrameLocked = false;
     this.playbackEnabled = true;
     const resolved = resolvePose(this.atlas, pose);
     this.activePose = resolved;
@@ -294,6 +315,10 @@ export class FighterActor extends Container {
   }
 
   private applyFrame(elapsedTicks: number): void {
+    // Physical ROM cues are already scheduled at their exact duration ticks.
+    // Never let the semantic animator replace the current ROM frame between
+    // two cues; doing so produces one-tick flicker and wrong sequences.
+    if (this.physicalFrameLocked) return;
     if (!this.anim || !this.activePose) {
       this.sprite.visible = false;
       this.lastFrameIndex = 0;
