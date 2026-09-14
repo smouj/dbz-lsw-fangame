@@ -2,7 +2,7 @@
 // grid, pills de mapeo, swatches de paleta y filas de ficha.
 import { useEffect, useRef, useState } from 'react';
 
-export type MappingStatus = 'EXACT' | 'RUNTIME' | 'SHARED' | 'COMPOSITE' | 'FALLBACK' | 'UNRESOLVED';
+export type MappingStatus = 'EXACT' | 'RUNTIME' | 'SHARED' | 'COMPOSITE' | 'FALLBACK' | 'UNRESOLVED' | 'GENERATED_ASSET_MISSING';
 
 const STATUS_COLORS: Record<MappingStatus, { color: string; bg: string; border: string }> = {
   EXACT: { color: '#7CFC00', bg: 'rgba(124,252,0,0.08)', border: '1px solid #7CFC00' },
@@ -11,6 +11,7 @@ const STATUS_COLORS: Record<MappingStatus, { color: string; bg: string; border: 
   COMPOSITE: { color: '#d9a0ff', bg: 'rgba(217,160,255,0.08)', border: '1px solid #d9a0ff' },
   FALLBACK: { color: '#ffb0b0', bg: 'rgba(255,176,176,0.08)', border: '1px solid #ffb0b0' },
   UNRESOLVED: { color: '#ff8080', bg: 'rgba(255,128,128,0.06)', border: '1px dashed #ff8080' },
+  GENERATED_ASSET_MISSING: { color: '#ffb070', bg: 'rgba(255,176,112,0.08)', border: '1px dashed #ffb070' },
 };
 
 export function MappingPill({ status, label }: { status: MappingStatus; label?: string }) {

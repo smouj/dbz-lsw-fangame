@@ -87,8 +87,8 @@ check('missing generated asset explicit',
   /GENERATED_ASSET_MISSING/.test(tabCode) && /build:rom-bg-assembly/.test(tabCode),
   'resource + comando, sin sustitución');
 
-// 12. Tabs existentes preservados.
-const tabs = ['fighters', 'actions', 'fx', 'support', 'defense', 'palettes', 'provenance', 'assets'];
+// 12. Tabs existentes preservados, incluyendo ROM Sprite Atlas.
+const tabs = ['fighters', 'sprite-atlas', 'actions', 'fx', 'support', 'defense', 'palettes', 'provenance', 'assets'];
 const missingTabs = tabs.filter(t => !new RegExp(`id: '${t}'`).test(indexSrc));
 check('existing romdisplay2 tabs preserved', missingTabs.length === 0,
   missingTabs.length ? `faltan: ${missingTabs.join(', ')}` : `${tabs.length} tabs`);

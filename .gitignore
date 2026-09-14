@@ -27,6 +27,7 @@ generated/rom-fighters/
 generated/rom-fx/
 generated/rom-stage/
 generated/rom-animation-core/
+generated/rom-sprite-atlas/
 generated/rom-fighters/
 docs/rom/generated/fighters/
 public/assets/rom-fx/

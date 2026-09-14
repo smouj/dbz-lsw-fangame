@@ -54,6 +54,33 @@ La estructura se valida con:
 npm run verify:dev-studio-navigation
 ```
 
+Dentro de `Visuals → ROM Display Lab` existe también **ROM Sprite Atlas**. Es
+una proyección del corpus `ROM_PHYSICAL_FIGHTERS`, no un editor de PNGs: ofrece
+`Physical Atlas` (identidades físicas únicas) y `Animation Map` (resource →
+sequence → timeline), con inspector de `physicalId`, `visualFrameId`, hashes de
+metasprite/gráficos, geometría, origen/ancla, paleta y usos en producción. Las
+previsualizaciones permiten alternar la paleta ROM canónica, la materialización
+RAW 2BPP y una vista de escala de grises únicamente para inspección; ninguna de
+esas vistas altera la identidad física ni el runtime.
+imágenes se cargan únicamente como materialización del frame ROM y un fallo de
+materialización se muestra como `GENERATED_ASSET_MISSING`; nunca se sustituye
+por un sprite externo o parecido. La vista exporta un `atlas.json`
+determinista para la forma seleccionada y queda protegida por:
+
+```powershell
+npm run verify:rom-sprite-atlas
+```
+
+Para materializar las hojas de contacto y los frames por forma (salida
+regenerable e ignorada por Git) se usa:
+
+```powershell
+npm run build:rom-sprite-atlas
+```
+
+El catálogo conserva la frontera Dev/Juego: no añade una ruta pública ni
+modifica los datos de combate.
+
 ## Ejecutar en desarrollo
 
 Desde PowerShell, en el repo:

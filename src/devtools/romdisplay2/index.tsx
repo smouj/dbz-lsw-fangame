@@ -1,5 +1,5 @@
 // ROM Display Lab 2.0 — herramienta central de inspección ROM ↔ assets ↔ runtime.
-// Tabs: FIGHTERS · ACTIONS · OFFENSIVE FX · SUPPORT · DEFENSE · PALETTES.
+// Tabs: FIGHTERS · SPRITE ATLAS · ACTIONS · OFFENSIVE FX · SUPPORT · DEFENSE · PALETTES.
 // Principio: ROM_PHYSICAL es la autoridad para Fighter physical frames.
 // Canonical_Frames_Official queda como corpus histórico/remake-source hasta
 // reconciliación P0.3C. Ningún fallback se etiqueta ROM_PHYSICAL; ningún
@@ -13,11 +13,13 @@ import { DefenseTab } from './defenseTab';
 import { PalettesTab } from './palettesTab';
 import { ProvenanceTab } from './provenanceTab';
 import { AssetsTab } from './assetsTab';
+import { SpriteAtlasTab } from './spriteAtlasTab';
 
-type LabTab = 'fighters' | 'actions' | 'fx' | 'support' | 'defense' | 'palettes' | 'provenance' | 'assets';
+type LabTab = 'fighters' | 'sprite-atlas' | 'actions' | 'fx' | 'support' | 'defense' | 'palettes' | 'provenance' | 'assets';
 
 const TABS: { id: LabTab; label: string }[] = [
   { id: 'fighters', label: 'FIGHTERS' },
+  { id: 'sprite-atlas', label: 'ROM SPRITE ATLAS' },
   { id: 'actions', label: 'ACTIONS' },
   { id: 'fx', label: 'OFFENSIVE FX' },
   { id: 'support', label: 'SUPPORT' },
@@ -59,6 +61,7 @@ export function RomDisplayLab() {
 
       <div style={{ padding: 4 }}>
         {tab === 'fighters' && <FightersTab initialForm={globalForm} onFormChange={setGlobalForm} />}
+        {tab === 'sprite-atlas' && <SpriteAtlasTab />}
         {tab === 'actions' && <ActionsTab initialCardId={globalCard} onCardChange={setGlobalCard} />}
         {tab === 'fx' && <OffensiveFxTab />}
         {tab === 'support' && <SupportTab />}
