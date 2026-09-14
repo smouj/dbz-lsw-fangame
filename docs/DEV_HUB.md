@@ -44,7 +44,7 @@ no expone módulos, endpoints ni datos de desarrollo.
 
 La navegación interna se organiza en seis áreas de trabajo: `Overview`,
 `Combat`, `Visuals`, `Game Data`, `Content` y `QA & ROM`. Cada área muestra
-solo sus módulos contextuales, pero conserva las 23 rutas canónicas y sus
+solo sus módulos contextuales, pero conserva las 24 rutas canónicas y sus
 deep links. `DEV_MODULES` sigue siendo la fuente de módulos; `DEV_AREAS` solo
 define su organización visual.
 
@@ -101,6 +101,16 @@ El estado y las métricas de este frente están documentados en
 [`PERFORMANCE_P0.md`](architecture/PERFORMANCE_P0.md). Las optimizaciones que
 afecten al reloj GBC, Pixi o memoria quedan condicionadas a una medición real
 de `BattleScreen`; no se aplican cambios especulativos al gameplay.
+
+El área `Combat` incluye `Performance`, un profiler interno bajo demanda. Al
+abrirlo inicia una captura con `requestAnimationFrame` y observa únicamente
+las APIs reales del navegador: FPS, frame time, tareas largas, recursos,
+bytes transferidos y heap JS cuando está disponible. Las marcas `MAIN_MENU`,
+`BATTLE_READY`, `ACTION_START`, `IMPACT` y `CLEANUP` permiten comparar un
+recorrido de combate entre sesiones. Texturas GPU, draw calls y memoria de
+vídeo se muestran como no disponibles hasta que el backend las exponga de
+forma estable; no se fabrican cifras. La captura continúa al navegar al juego
+para medir `BattleScreen` y se detiene explícitamente desde el panel.
 
 ## Ejecutar en desarrollo
 

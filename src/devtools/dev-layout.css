@@ -39,6 +39,26 @@
 .devstudio :is(button,input,select,textarea):focus-visible { outline:2px solid #ffe098; outline-offset:2px; }
 .devstudio :is(input,select,textarea) { max-width:100%; }
 .devstudio .dev-hint { line-height:1.5; color:#aeb9ca; }
+.devstudio .dev-module-loading { min-height:160px; display:grid; place-items:center; color:#f0dfb7; border:1px dashed #3a465a; background:#0f1724; letter-spacing:.04em; }
+.devstudio .dev-perf-toolbar { display:flex; align-items:center; flex-wrap:wrap; gap:8px; margin:0 0 14px; padding:10px 12px; border:1px solid #303a4a; background:#101a28; }
+.devstudio .dev-perf-target { margin-left:auto; color:#7f8da5; font-size:11px; font-variant-numeric:tabular-nums; }
+.devstudio .dev-perf-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin-bottom:14px; }
+.devstudio .dev-perf-metric { min-width:0; padding:12px 14px; border:1px solid #303a4a; border-radius:5px; background:#111a27; }
+.devstudio .dev-perf-metric.ok { border-top:2px solid #52b788; }
+.devstudio .dev-perf-metric.warn { border-top:2px solid #f2b84b; }
+.devstudio .dev-perf-metric-head { display:flex; align-items:center; gap:7px; color:#9eabc0; font-size:10px; letter-spacing:.08em; text-transform:uppercase; }
+.devstudio .dev-perf-metric strong { display:block; margin-top:7px; color:#f0f3f7; font-size:22px; font-variant-numeric:tabular-nums; }
+.devstudio .dev-perf-metric small { display:block; margin-top:3px; color:#78869c; font-size:10px; }
+.devstudio .dev-perf-section { margin-top:14px; }
+.devstudio .dev-perf-marks { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
+.devstudio .dev-perf-empty { color:#78869c; font-size:11px; }
+.devstudio .dev-perf-mark-list { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:6px 12px; margin:12px 0 0; padding:0; list-style:none; }
+.devstudio .dev-perf-mark-list li { display:flex; justify-content:space-between; gap:12px; padding:6px 8px; color:#aeb9ca; border:1px solid #273448; background:#0d1521; font-size:11px; }
+.devstudio .dev-perf-mark-list code { color:#f6c744; }
+.devstudio .dev-perf-mark-list span { color:#8ea0b8; font-variant-numeric:tabular-nums; }
+.devstudio .dev-perf-notes { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:10px; }
+.devstudio .dev-perf-notes p { margin:0; padding:10px 12px; color:#aeb9ca; border:1px solid #273448; background:#0d1521; font-size:11px; line-height:1.5; }
+.devstudio .dev-perf-notes strong { color:#f0dfb7; }
 .devstudio .dev-workspace-editor { overflow:hidden; }
 .devstudio .dev-workspace-editor-head { flex-shrink:0; }
 .devstudio .dev-workspace-code { min-height:0; }

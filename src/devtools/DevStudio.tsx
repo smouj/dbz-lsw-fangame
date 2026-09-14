@@ -4,42 +4,47 @@
 // Inspeccionar / validar / previsualizar el juego sin tocar código.
 // NO forma parte del flujo público de producción.
 // ═══════════════════════════════════════════════════════════
-import { useState, useEffect, useRef } from 'react';
+import { lazy, Suspense, useState, useEffect, useRef } from 'react';
 import './dev-layout.css';
 import {
   Activity, ArrowLeft, Brush, CheckCircle2,
   Film, FolderCode, Gamepad2, Gauge, Grid2X2, LayoutDashboard,
   Search, Swords, TableProperties, Users, Music, Rocket, type LucideIcon,
 } from 'lucide-react';
-import { DashboardModule } from './dashboard';
-import { CharactersModule } from './characters';
-import { CardsModule } from './cards';
-import { PositionsModule } from './positions';
-import { ValidationModule } from './validation';
-import { StoryModule } from './story';
-import { ResearchModule } from './research';
-import MusicModule from './music';
-import GameConfigModule from './gameconfig';
-import { AnimationStudioModule } from './animationStudio';
-import { LabModule } from './lab';
-import { PixelArtModule } from './pixelart';
-import { HudModule } from './hud';
-import { FacingModule } from './facing';
-import { TimelineModule } from './timeline';
-import { CombatContractModule } from './combat';
-import { AssetsModule } from './assets';
-import { RomDisplayLab } from './romdisplay2';
-import { TeamBuilderModule } from './teamBuilder';
-import { DeckBuilderModule } from './deckBuilder';
-import { WorkspaceModule } from './workspace';
-import { SystemHubModule } from './systemHub';
+
+// Cada módulo se descarga únicamente al abrirlo. Dev Studio es una herramienta
+// interna y sus módulos son deliberadamente independientes para que abrir el
+// panel no cargue de golpe todos los inspectores ROM y sus datos pesados.
+const SystemHubModule = lazy(() => import('./systemHub').then(m => ({ default: m.SystemHubModule })));
+const DashboardModule = lazy(() => import('./dashboard').then(m => ({ default: m.DashboardModule })));
+const CharactersModule = lazy(() => import('./characters').then(m => ({ default: m.CharactersModule })));
+const CardsModule = lazy(() => import('./cards').then(m => ({ default: m.CardsModule })));
+const PositionsModule = lazy(() => import('./positions').then(m => ({ default: m.PositionsModule })));
+const ValidationModule = lazy(() => import('./validation').then(m => ({ default: m.ValidationModule })));
+const StoryModule = lazy(() => import('./story').then(m => ({ default: m.StoryModule })));
+const ResearchModule = lazy(() => import('./research').then(m => ({ default: m.ResearchModule })));
+const MusicModule = lazy(() => import('./music'));
+const GameConfigModule = lazy(() => import('./gameconfig'));
+const AnimationStudioModule = lazy(() => import('./animationStudio').then(m => ({ default: m.AnimationStudioModule })));
+const LabModule = lazy(() => import('./lab').then(m => ({ default: m.LabModule })));
+const PixelArtModule = lazy(() => import('./pixelart').then(m => ({ default: m.PixelArtModule })));
+const HudModule = lazy(() => import('./hud').then(m => ({ default: m.HudModule })));
+const FacingModule = lazy(() => import('./facing').then(m => ({ default: m.FacingModule })));
+const TimelineModule = lazy(() => import('./timeline').then(m => ({ default: m.TimelineModule })));
+const CombatContractModule = lazy(() => import('./combat').then(m => ({ default: m.CombatContractModule })));
+const AssetsModule = lazy(() => import('./assets').then(m => ({ default: m.AssetsModule })));
+const RomDisplayLab = lazy(() => import('./romdisplay2').then(m => ({ default: m.RomDisplayLab })));
+const TeamBuilderModule = lazy(() => import('./teamBuilder').then(m => ({ default: m.TeamBuilderModule })));
+const DeckBuilderModule = lazy(() => import('./deckBuilder').then(m => ({ default: m.DeckBuilderModule })));
+const WorkspaceModule = lazy(() => import('./workspace').then(m => ({ default: m.WorkspaceModule })));
+const PerformanceModule = lazy(() => import('./performance').then(m => ({ default: m.PerformanceModule })));
 
 export type DevModuleId =
   | 'system-hub' | 'dashboard' | 'characters' | 'cards' | 'animation'
   | 'pixelart' | 'hud' | 'facing' | 'assets'
   | 'lab' | 'story' | 'validation' | 'research' | 'music' | 'gameconfig' | 'positions'
   | 'combat' | 'timeline' | 'romdisplay' | 'animation-studio'
-  | 'team-builder' | 'deck-builder' | 'workspace';
+  | 'team-builder' | 'deck-builder' | 'workspace' | 'performance';
 
 export interface DevModuleDef {
   id: DevModuleId;
@@ -66,6 +71,7 @@ export const DEV_MODULES: DevModuleDef[] = [
   { id: 'combat', label: 'Combat Contract', icon: Swords, desc: 'Contrato y simulador del Engine real', group: 'Runtime' },
   { id: 'positions', label: 'Positions', icon: Grid2X2, desc: 'Laboratorio de posiciones Air/Ground x Front/Back', group: 'Runtime' },
   { id: 'hud', label: 'HUD', icon: Gauge, desc: 'Visualizador y editor del tema HUD', group: 'Runtime' },
+  { id: 'performance', label: 'Performance', icon: Activity, desc: 'Medición real de BattleScreen: frames, tareas largas, recursos y memoria', group: 'Runtime' },
 
   { id: 'cards', label: 'Cards', icon: TableProperties, desc: 'Base de datos ROM de las 125 cartas', group: 'Data' },
   { id: 'animation', label: 'Animation', icon: Film, desc: 'Inspector de animación física ROM', group: 'Data' },
@@ -103,7 +109,7 @@ export const DEV_AREAS: DevAreaDef[] = [
   {
     id: 'combat', label: 'Combat', icon: Swords,
     desc: 'Runtime real, timeline, HUD y presentación de combate',
-    modules: ['lab', 'timeline', 'combat', 'positions', 'hud'],
+    modules: ['lab', 'timeline', 'combat', 'positions', 'hud', 'performance'],
   },
   {
     id: 'visuals', label: 'Visuals', icon: Film,
@@ -318,29 +324,32 @@ export function DevStudio({ onExit, onLaunchBattle }: DevStudioProps) {
             está dentro del contenedor que scrollea. */}
         <div className="dev-header-slot" />
         <div className="dev-module" data-module={module}>
-          {module === 'system-hub' && <SystemHubModule onNavigate={navigate} />}
-          {module === 'dashboard' && <DashboardModule onNavigate={navigate} />}
-          {module === 'characters' && <CharactersModule onOpenModule={openLinkedModule} />}
-          {module === 'cards' && <CardsModule />}
-          {module === 'animation' && <AnimationStudioModule />}
-          {module === 'animation-studio' && <AnimationStudioModule />}
-          {module === 'pixelart' && <PixelArtModule target={pixelTarget} />}
-          {module === 'facing' && <FacingModule />}
-          {module === 'assets' && <AssetsModule target={linkedTarget} onOpenModule={openLinkedModule} />}
-          {module === 'hud' && <HudModule />}
-          {module === 'lab' && <LabModule onLaunchBattle={onLaunchBattle} />}
-          {module === 'positions' && <PositionsModule />}
-          {module === 'combat' && <CombatContractModule />}
-          {module === 'timeline' && <TimelineModule />}
-          {module === 'story' && <StoryModule />}
-          {module === 'validation' && <ValidationModule />}
-          {module === 'research' && <ResearchModule />}
-          {module === 'romdisplay' && <RomDisplayLab />}
-          {module === 'music' && <MusicModule />}
-          {module === 'gameconfig' && <GameConfigModule />}
-          {module === 'team-builder' && <TeamBuilderModule />}
-          {module === 'deck-builder' && <DeckBuilderModule />}
-          {module === 'workspace' && <WorkspaceModule modules={DEV_MODULES} />}
+          <Suspense fallback={<div className="dev-module-loading" role="status" aria-live="polite">Cargando módulo…</div>}>
+            {module === 'system-hub' && <SystemHubModule onNavigate={navigate} />}
+            {module === 'dashboard' && <DashboardModule onNavigate={navigate} />}
+            {module === 'characters' && <CharactersModule onOpenModule={openLinkedModule} />}
+            {module === 'cards' && <CardsModule />}
+            {module === 'animation' && <AnimationStudioModule />}
+            {module === 'animation-studio' && <AnimationStudioModule />}
+            {module === 'pixelart' && <PixelArtModule target={pixelTarget} />}
+            {module === 'facing' && <FacingModule />}
+            {module === 'assets' && <AssetsModule target={linkedTarget} onOpenModule={openLinkedModule} />}
+            {module === 'hud' && <HudModule />}
+            {module === 'lab' && <LabModule onLaunchBattle={onLaunchBattle} />}
+            {module === 'positions' && <PositionsModule />}
+            {module === 'combat' && <CombatContractModule />}
+            {module === 'timeline' && <TimelineModule />}
+            {module === 'performance' && <PerformanceModule />}
+            {module === 'story' && <StoryModule />}
+            {module === 'validation' && <ValidationModule />}
+            {module === 'research' && <ResearchModule />}
+            {module === 'romdisplay' && <RomDisplayLab />}
+            {module === 'music' && <MusicModule />}
+            {module === 'gameconfig' && <GameConfigModule />}
+            {module === 'team-builder' && <TeamBuilderModule />}
+            {module === 'deck-builder' && <DeckBuilderModule />}
+            {module === 'workspace' && <WorkspaceModule modules={DEV_MODULES} />}
+          </Suspense>
         </div>
       </main>
     </div>

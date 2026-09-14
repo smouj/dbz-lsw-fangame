@@ -14,6 +14,12 @@ selección ROM para optimizar.
   `provenance.json`, capturas y páginas de auditoría.
 - `npm run verify:release-content` mide JS/CSS, assets de juego, archivos ROM y
   material Dev, y falla ante cualquier fuga.
+- Dev Studio carga sus 24 módulos con `React.lazy` y una frontera `Suspense`.
+  Abrir `/` no descarga los inspectores ROM; cada módulo se solicita solo al
+  navegar a su deep link. El release mantiene el stub nulo.
+- `Combat → Performance` aporta una captura Dev-only reproducible para
+  `BattleScreen`: FPS/frame time, Long Tasks, recursos/bytes, heap JS y marcas
+  de fase. Las APIs no expuestas quedan en `N/D`, sin valores sintéticos.
 
 Medición del corte `c68e18bd` en Windows:
 
@@ -45,6 +51,10 @@ memoria estable tras 10 rematches
 El visor ROM Sprite Atlas sí genera hojas de contacto para Dev, pero esas hojas
 no son todavía una sustitución del cargador físico de producción. Cualquier
 promoción futura debe conservar `physicalId`, geometría y provenance ROM.
+
+El gate `npm run verify:performance-profiler` protege esta frontera: exige la
+carga diferida de módulos, la captura basada en APIs del navegador y la
+ausencia del profiler en el stub de release.
 
 ## Comandos
 
