@@ -173,12 +173,6 @@ export class FighterActor extends Container {
     this.romSequence = cue.sequence;
     this.lastFrameIndex = cue.frameIndex;
 
-    // Offsets belong to this exact physical frame. Always write both axes so
-    // a frame without a delta cannot inherit the previous frame's displacement.
-    this._frameOffsetX = cue.offsetX ?? 0;
-    this._frameOffsetY = cue.offsetY ?? 0;
-    this.applyTransform();
-
     const hasPhysicalIdentity = cue.physicalId != null
       || cue.visualFrameId != null
       || cue.file != null;
@@ -187,6 +181,14 @@ export class FighterActor extends Container {
       // or an explicit semantic pose hands ownership back.
       this.physicalFrameLocked = true;
     }
+
+    // Offsets belong to this exact physical frame. Always write both axes so
+    // a frame without a delta cannot inherit the previous frame's displacement.
+    // Set the ownership latch before applying the transform: the first physical
+    // cue of a sequence must not inherit the semantic `move_back` mirror.
+    this._frameOffsetX = cue.offsetX ?? 0;
+    this._frameOffsetY = cue.offsetY ?? 0;
+    this.applyTransform();
 
     // 1. physicalId — the canonical key registered by AtlasLoader for ROM physical frames
     if (cue.physicalId && this.atlas.textures.has(cue.physicalId)) {
@@ -305,7 +307,14 @@ export class FighterActor extends Container {
   }
 
   private applyTransform(): void {
-    const sign = this.activePose === 'move_back' ? -this.baseFlip : this.baseFlip;
+    // ROM physical frames already carry the orientation of the decoded
+    // metasprite. Only the actor side supplies the battle-facing mirror. The
+    // semantic move_back inversion belongs to legacy pose frames; applying it
+    // to a ROM_PHYSICAL_FRAME reverses real ROM sequences and makes actors look
+    // away from their opponent.
+    const sign = this.physicalFrameLocked
+      ? this.baseFlip
+      : (this.activePose === 'move_back' ? -this.baseFlip : this.baseFlip);
     this.sprite.scale.set(this.scaleMag * sign, this.scaleMag);
     this.flash.scale.set(this.scaleMag, this.scaleMag);
     // ROM-native frame offset: applied alongside durationTicks from same record.

@@ -31,6 +31,11 @@ todavía usan una película legacy conservan esa película visible aunque Pixi
 esté montado para el campo; así no se produce una acción vacía por el mero
 hecho de cargar el renderer.
 
+`RomPresentationPlayer` es además el único scheduler de cualquier ruta ROM:
+cuando `useRomPixi` está activo, `BattleTimeline` no se crea en paralelo, aunque
+el motor conserve un cierre propio para una familia concreta. Esto mantiene un
+solo reloj, una sola película y una sola orientación física por acción.
+
 ## Geometría única
 
 La escena ACTION usa coordenadas ROM nativas de `160×80`. `ActionScene` aplica

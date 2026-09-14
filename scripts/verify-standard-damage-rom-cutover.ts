@@ -273,10 +273,12 @@ check('adapter:0 Math.random', !/Math\.random\s*\(/.test(adapterSource + cutover
 check('adapter:0 cardId switch for cutover', !/switch\s*\([^)]*card/i.test(cutoverSource) && !/card\.id\s*===/.test(cutoverSource));
 check('adapter:0 damage calculation authority', !/calculateDamage|applyDamage|damageReducer|accuracyRoll|resolveAccuracy|rngNext/.test(cutoverSource));
 check('production owner:BattleScreen uses focused Runtime film', /latestStandardDamageRuntimeCutover\(\s*runtimeResult\.log\.entries/.test(battleScreenSource));
-check('production owner:ROM completion releases control', battleScreenSource.includes('if (romOwnsCompletion) finishRomCinematic()'));
+check('production owner:ROM completion releases control', battleScreenSource.includes('finishRomCinematic();')
+  && battleScreenSource.includes('onComplete: () => {'));
 check('production owner:completion cleanup restores DOM boundary', battleScreenSource.includes("completionOwnerRef.current = 'DOM'")
   && battleScreenSource.includes('romAdapterRef.current = null;'));
-check('production owner:parallel DOM timeline suppressed', battleScreenSource.includes('if (romOwnsCompletion) return;'));
+check('production owner:all ROM routes suppress parallel DOM timeline', battleScreenSource.includes('if (useRomPixi) return;')
+  && !battleScreenSource.includes('if (romOwnsCompletion) return;'));
 check('production owner:ROM impact reveals visual projection', battleScreenSource.includes('isStandardDamageImpactBoundary(cue)')
   && battleScreenSource.includes('revealDamageVisualProjection(current)'));
 check('enemy ownership:Engine resolves before ROM film', battleScreenSource.includes("const res = rtApi.runtime.resolveCard('enemy', card);")

@@ -35,7 +35,13 @@ function physicalLatchAtlas(): FormAtlas {
     loop: true,
     frames: [{ file: 'semantic.png', w: 8, h: 8, durationTicks: 1 }],
   });
+  atlas.anims.set('move_back', {
+    fps: 12,
+    loop: true,
+    frames: [{ file: 'semantic-back.png', w: 8, h: 8, durationTicks: 1 }],
+  });
   atlas.textures.set('attack_fwd:0', Texture.EMPTY);
+  atlas.textures.set('move_back:0', Texture.EMPTY);
   atlas.textures.set('rom-frame-0', Texture.WHITE);
   return atlas;
 }
@@ -131,6 +137,31 @@ describe('FighterActor track ownership (G7)', () => {
     // An explicit semantic pose is the documented ownership hand-off.
     actor.setPose('attack_fwd', 2);
     expect(sprite.texture).toBe(Texture.EMPTY);
+  });
+
+  it('no aplica el espejo semántico move_back al primer frame físico ROM', () => {
+    const actor = new FighterActor(physicalLatchAtlas(), 'gohan_young', 'left');
+    actor.setPose('move_back', 0);
+    const sprite = (actor as any).sprite;
+    // Left side faces right: a semantic move_back is mirrored, but a direct
+    // ROM frame must keep only the side mirror supplied by facingFlip.
+    expect(sprite.scale.x).toBe(-1);
+    actor.setPhysicalFrame({
+      resource: 44,
+      sequence: 0,
+      frameIndex: 0,
+      physicalId: 'rom-frame-0',
+      offsetX: 2,
+    });
+    expect(sprite.scale.x).toBe(1);
+    expect(sprite.x).toBe(2);
+
+    const enemy = new FighterActor(physicalLatchAtlas(), 'gohan_young', 'right');
+    enemy.setPose('move_back', 0);
+    const enemySprite = (enemy as any).sprite;
+    expect(enemySprite.scale.x).toBe(1); // semantic move_back cancels side mirror
+    enemy.setPhysicalFrame({ resource: 44, sequence: 0, frameIndex: 0, physicalId: 'rom-frame-0' });
+    expect(enemySprite.scale.x).toBe(-1); // physical cue restores right-side facing
   });
 
   it('no reutiliza offsets ni pose cuando el frame físico no está materializado', () => {

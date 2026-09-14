@@ -1484,6 +1484,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
       if (cinematicFinished) return;
       cinematicFinished = true;
       setPixiActionActive(false);
+      stageRomActiveRef.current = false;
+      runtimeTimelineCursorRef.current = 0;
       completionOwnerRef.current = 'DOM';
       romAdapterRef.current = null;
       setViewMode('OVERVIEW');
@@ -1554,10 +1556,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
         },
         onComplete: () => {
           romPlayerRef.current = null;
-          stageRomActiveRef.current = false;
-          runtimeTimelineCursorRef.current = 0;
-          setPixiActionActive(false);
-          pixiPres.returnToField();
+          finishRomCinematic();
         },
       });
       romPlayerRef.current = player;
@@ -1574,9 +1573,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
         },
         onComplete: () => {
           romPlayerRef.current = null;
-          pixiPres.returnToField();
-          if (!romOwnsCompletion) setPixiActionActive(false);
-          if (romOwnsCompletion) finishRomCinematic();
+          // Toda timeline ROM tiene propiedad exclusiva de la película. Esto
+          // evita que Stage/Beam (aunque el Engine conserve su propio cierre)
+          // arranquen además el BattleTimeline DOM legacy.
+          finishRomCinematic();
         },
         onCue: (cue) => {
           if (romOwnsCompletion && isStandardDamageImpactBoundary(cue)) onRomImpact?.();
@@ -1605,10 +1605,12 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
     // and would make the film briefly render the legacy atlas sequence.
     if (!useRomPixi) setActorPose(cardBattlePose(card, 'field'));
 
-    // STANDARD_DAMAGE pilot: Pixi consumes the focused Runtime film and its
-    // ROM completion boundary releases control. Do not start a parallel DOM
-    // timeline for the same action.
-    if (romOwnsCompletion) return;
+    // Toda ruta ROM ya tiene un reloj y una película exclusivos. No arranques
+    // BattleTimeline DOM después de iniciar RomPresentationPlayer: hacerlo
+    // produciría dos cinematics y dos schedulers para la misma carta. El
+    // callback de RomPresentationPlayer llama a onDone en todas las familias;
+    // `romOwnsCompletion` solo describe quién resolvió el Engine.
+    if (useRomPixi) return;
 
     // Guard: si es beam/damage con target cut, el defensor espera en guard
     const resetCinematicReplay = () => {
