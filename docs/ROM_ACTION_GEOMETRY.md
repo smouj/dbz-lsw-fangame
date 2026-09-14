@@ -53,9 +53,10 @@ parecido del atlas.
 
 ## Alcance y validación
 
-Este contrato solo afecta al canary Pixi (`?pixiField=1`); el renderer DOM y la
-autoridad de datos ROM no cambian. Los frames, secuencias, timings y provenance
-siguen proviniendo del corpus físico ROM. Las comprobaciones asociadas son:
+Este contrato gobierna el renderer Pixi de producción. El renderer DOM se
+conserva únicamente como fallback explícito (`?domField=1`) y la autoridad de
+datos ROM no cambia. Los frames, secuencias, timings y provenance siguen
+proviniendo del corpus físico ROM. Las comprobaciones asociadas son:
 
 - `verify:presentation-physical-geometry`
 - `verify:presentation-physical-film`

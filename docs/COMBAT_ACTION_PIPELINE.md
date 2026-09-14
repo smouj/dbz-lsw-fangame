@@ -64,10 +64,11 @@ FIELD
 
 Runtime ownership:
 
-- DOM `card-fx` is the fallback presentation when Pixi is not active.
-- Pixi is the presentation owner when `?pixiField=1` is active and the
-  `PixiBattlePresentation` is ready; in that mode DOM `card-fx` is hidden to
-  avoid duplicated actors.
+- DOM `card-fx` is the explicit fallback presentation (`?domField=1`).
+- Pixi is the presentation owner by default once `PixiBattlePresentation` is
+  ready; in that mode DOM `card-fx` is hidden to avoid duplicated actors. During
+  lazy initialization the DOM field remains visible so the player never sees a
+  blank battlefield.
 - Field fighters (`battlefield-fighters`) are hidden during card actions. The
   action scene owns the visible actor/target until `FIELD_RETURN`.
 - `ACTION_SOLO` shows the actor only. `PROJECTILE`, `ACTION_DUEL` and `IMPACT`
@@ -199,4 +200,4 @@ What they protect:
 
 When launching a battle from Dev Studio, the app removes only `dev` from the
 query and preserves useful debug flags such as `debugState`, `debugCinematics`
-and `pixiField`.
+and the explicit `domField` fallback.

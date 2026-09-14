@@ -11,7 +11,6 @@ import { useState } from 'react';
 import { Bug, Clapperboard, Cpu, Play } from 'lucide-react';
 import { FORMS, CHARACTERS, ROM_ORDERED_FORM_IDS } from '../data/roster';
 import { STORY_ENEMY_DECKS } from '../data/enemy_decks';
-import { BATTLE_PRESENTATION_DEPLOYMENT } from '../renderer/pixi/flag';
 const CHAPTERS = Object.keys(STORY_ENEMY_DECKS).map(Number).sort((a, b) => a - b);
 
 interface Props {
@@ -27,7 +26,12 @@ export function BattleLabModule({ onLaunchBattle, embedded }: Props) {
   const [chapter, setChapter] = useState(1);
   const [debugState, setDebugState] = useState(() => new URLSearchParams(window.location.search).has('debugState'));
   const [debugCinematics, setDebugCinematics] = useState(() => new URLSearchParams(window.location.search).has('debugCinematics'));
-  const [pixiField, setPixiField] = useState(() => new URLSearchParams(window.location.search).has('pixiField'));
+  // Pixi es la ruta de producción. El interruptor solo activa el fallback DOM
+  // explícito para comparar una regresión; no existe un modo "Pixi opcional".
+  const [domField, setDomField] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.has('domField') || params.get('renderer') === 'dom';
+  });
 
   const charName = (fid: string) => {
     const f = FORMS[fid];
@@ -42,7 +46,11 @@ export function BattleLabModule({ onLaunchBattle, embedded }: Props) {
     };
     setFlag('debugState', debugState);
     setFlag('debugCinematics', debugCinematics);
-    setFlag('pixiField', pixiField);
+    setFlag('domField', domField);
+    // Evita que un enlace histórico ?pixiField=0/1 contradiga la selección
+    // visible del panel. El fallback se expresa con una única clave canónica.
+    url.searchParams.delete('pixiField');
+    url.searchParams.delete('renderer');
     window.history.replaceState(null, '', url.toString());
     if (onLaunchBattle) onLaunchBattle(player, enemy, mode === 'story' ? chapter : null);
   };
@@ -95,8 +103,8 @@ export function BattleLabModule({ onLaunchBattle, embedded }: Props) {
             <button className={`dev-toggle ${debugCinematics ? 'active' : ''}`} onClick={() => setDebugCinematics(v => !v)} type="button" aria-pressed={debugCinematics} aria-label="Activar depurador cinematográfico">
               <Clapperboard size={14} /> Cinemática
             </button>
-            <button className={`dev-toggle ${pixiField ? 'active' : ''}`} onClick={() => setPixiField(v => !v)} type="button" aria-pressed={pixiField} aria-label="Activar renderer Pixi en batalla">
-              <Cpu size={14} /> Pixi
+            <button className={`dev-toggle ${!domField ? 'active' : ''}`} onClick={() => setDomField(v => !v)} type="button" aria-pressed={!domField} aria-label="Usar renderer Pixi ROM por defecto">
+              <Cpu size={14} /> {domField ? 'DOM fallback' : 'Pixi ROM'}
             </button>
           </div>
 
@@ -112,12 +120,12 @@ export function BattleLabModule({ onLaunchBattle, embedded }: Props) {
           <div><label>Debug</label><strong>{[
             debugState ? 'estado' : null,
             debugCinematics ? 'cinematica' : null,
-            pixiField ? 'pixi' : null,
+            domField ? 'dom-fallback' : 'pixi-rom',
           ].filter(Boolean).join(' · ') || 'off'}</strong></div>
           <div><label>Motor</label><strong className="dev-ok">conectado — lanza BattleScreen real</strong></div>
-          <div><label>Renderer de este lanzamiento</label><strong className={pixiField ? 'dev-ok' : ''}>{pixiField ? 'PIXI ROM · CUTOVER POR RUTA' : BATTLE_PRESENTATION_DEPLOYMENT.defaultRenderer}</strong></div>
+          <div><label>Renderer de este lanzamiento</label><strong className={!domField ? 'dev-ok' : ''}>{domField ? 'DOM LEGACY · FALLBACK EXPLÍCITO' : 'PIXI ROM · DEFAULT'}</strong></div>
           <div><label>Ruta por carta</label><strong>ROM_ROUTE / LEGACY — resuelta en runtime</strong></div>
-          <div><label>Completion owner</label><strong>PLAYER STANDARD_DAMAGE → ROM · RESTO → DOM</strong></div>
+          <div><label>Completion owner</label><strong>PLAYER STANDARD_DAMAGE → ROM · RESTO → fallback del adapter</strong></div>
           <div><label>Inspector BattleScreen</label><strong>{debugState && debugCinematics ? 'estado + cue/tick activos' : 'activa Estado + Cinemática'}</strong></div>
           <p className="dev-hint" style={{ marginTop: 12 }}>
             Este panel lanza la BattleScreen real y es el gate end-to-end.{' '}

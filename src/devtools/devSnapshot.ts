@@ -62,10 +62,12 @@ export interface DevSnapshot {
     mixed: number;
   };
   presentationDeployment: {
-    defaultRenderer: 'DOM_LEGACY';
-    pixiActivation: 'DEV_QUERY_FLAG';
+    defaultRenderer: 'PIXI_ROM';
+    pixiActivation: 'DEFAULT';
     pixiQuery: string;
-    pixiActiveByDefault: false;
+    domFallbackQuery: string;
+    domFallbackAlias: string;
+    pixiActiveByDefault: true;
     completionOwnership: 'ROUTE_SCOPED';
     romCompletionRoutes: readonly ['PLAYER_STANDARD_DAMAGE', 'ENEMY_STANDARD_DAMAGE'];
     legacyCompletionFallback: true;
@@ -220,7 +222,7 @@ export function getDevProjectSnapshot(): DevSnapshot {
     production,
     presentationDeployment: {
       ...BATTLE_PRESENTATION_DEPLOYMENT,
-      pixiActiveByDefault: false,
+      pixiActiveByDefault: true,
     },
     runtimeClassification: computeRuntimeClassificationMetrics(),
     physicalCorpus: computePhysicalCorpusMetrics(),

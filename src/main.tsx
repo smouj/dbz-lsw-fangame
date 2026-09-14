@@ -104,7 +104,8 @@ import {
   revealDamageVisualProjection,
   type DamageVisualProjection,
 } from './battle/damageVisualProjection';
-// Code-split: pixi.js (~790KB) solo se descarga cuando ?pixiField=1 está activo.
+// Code-split: pixi.js (~790KB) solo se descarga al entrar en BattleScreen;
+// el renderer Pixi es la ruta de producción y el menú no paga este coste.
 const BattlePixiStage = lazy(() => import('./battle/BattlePixiStage').then((m) => ({ default: m.BattlePixiStage })));
 import { initAudio, Sfx, setSfxEnabled, setVolume as setVolumeSfx } from './audio/sfx';
 import { playMusic, playMusicOnce, stopMusic, musicForScreen, setMusicVolume, setMusicEnabled } from './audio/music';
@@ -1347,8 +1348,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
   // emite eventos por tick (SHOT/ACTOR_POSE/HIT_FRAME/APPLY_DAMAGE/…); los
   // setTimeout NO son autoridad de gameplay (plan del usuario, punto 1-2).
   const cinematicRef = useRef<BattleTimeline | null>(null);
-  // ─── Presentación Pixi (dev flag ?pixiField=1). STANDARD_DAMAGE usa
-  //     ownership ROM; las demás familias conservan fallback progresivo. ───
+  // ─── Presentación Pixi ROM (renderer por defecto). STANDARD_DAMAGE usa
+  //     ownership ROM; las demás familias conservan fallback progresivo hasta
+  //     que cada ruta tenga su evidencia física completa. ───
   // C1.0 — las refs del puente ROM se declaran junto al Runtime, arriba, para
   // que este bloque y el Presenter compartan exactamente la misma instancia.
 
@@ -1494,7 +1496,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
       : card.type === 'support' ? 'support' : 'support';
     const profile = profileFor(kind, card.name);
 
-    // Pixi (dev flag ?pixiField=1): prepara la presentación de esta acción.
+    // Pixi (renderer por defecto; ?domField=1 es el fallback explícito):
+    // prepara la presentación de esta acción.
     const pixiPres = pixiPresRef.current;
     // C1.0 — Production ROM Bridge: si la carta tiene ruta ROM madura
     // (BEAM_BASE $02 / STANDARD_DAMAGE $0A), Pixi se gobierna por cues ROM
@@ -3116,7 +3119,11 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
   // muestra al actor.
   const hideFieldPlayer = hideFieldTarget && cardFx?.side === 'enemy';
   const hideFieldEnemy  = hideFieldTarget && cardFx?.side === 'player';
-  const pixiPresentationActive = isPixiField() && pixiPresentationReady;
+  // Montamos Pixi por defecto, pero mantenemos el DOM visible mientras el
+  // chunk lazy y los atlases ROM terminan de inicializarse. Así no aparece un
+  // frame vacío durante el arranque ni se pierde el fallback si Pixi falla.
+  const pixiFieldEnabled = isPixiField();
+  const pixiPresentationActive = pixiFieldEnabled && pixiPresentationReady;
   const phaseShortLabel =
     phase === 'command' || phase === 'cardSelect' || phase === 'limitSelect' ? 'ATTACK' :
     phase === 'basic' ? 'BASIC' :
@@ -3441,8 +3448,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
       </div>
 
       {/* Campo de batalla */}
-      <div className={`battlefield ${hitShake ? `shake-${hitShake}` : ''} ${viewMode !== 'OVERVIEW' ? 'field-action' : ''} ${isPixiField() ? 'pixi-field-active' : ''}`} ref={battlefieldRef}>
-        {isPixiField() && (
+      <div className={`battlefield ${hitShake ? `shake-${hitShake}` : ''} ${viewMode !== 'OVERVIEW' ? 'field-action' : ''} ${pixiPresentationActive ? 'pixi-field-active' : ''}`} ref={battlefieldRef}>
+        {pixiFieldEnabled && (
           <Suspense fallback={null}>
             <BattlePixiStage
               scenario={scenario}

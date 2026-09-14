@@ -5,10 +5,11 @@
 // campo de batalla: fondo overview del escenario + sprites overworld en sus
 // posiciones lógicas (BattlePosition) — todo vía PixiJS 8 + reloj GBC único.
 //
-// GATED detrás de `?pixiField=1` (ver `isPixiField` en renderer/pixi/flag.ts):
-// por defecto NO se monta, de modo que el camino DOM/CSS existente queda
-// intacto (cero regresión). El módulo se carga con React.lazy (code-split):
-// pixi.js (~790KB) solo se descarga cuando el flag está activo.
+// Se monta por defecto en BattleScreen (ver `isPixiField` en
+// renderer/pixi/flag.ts). El camino DOM/CSS se conserva como fallback explícito
+// `?domField=1` para comparar o recuperar una regresión. El módulo se carga con
+// React.lazy (code-split), de modo que pixi.js (~790KB) no se descarga en el
+// menú ni en las pantallas que no muestran una batalla.
 
 import { useEffect, useRef } from 'react';
 import { BattleRenderer } from '../renderer/pixi/BattleRenderer';

@@ -258,8 +258,8 @@ export default function GameConfigPage() {
           <span className={`dev-tag ${audits.fxCorpus.offensiveFxResources === 28 && audits.fxCorpus.errors === 0 && audits.fxCorpus.runtimeSilentFallback === 0 && audits.fxCorpus.runtimeDistributionErrors === 0 ? 'ok' : 'bad'}`}>FX P0.1A {audits.fxCorpus.offensiveFxResources}/28 · P0.1B {audits.fxCorpus.runtimeWindowCues} windows/{audits.fxCorpus.runtimeCards} cards</span>
           <span className={`dev-tag ${audits.physicalCorpus.schemaVersion === 2 && audits.physicalCorpus.offsetEncoding === 's8' ? 'ok' : 'bad'}`}>ROM physical P0.3B {audits.physicalCorpus.formsRendered}/{audits.physicalCorpus.formsIndexed} · {audits.physicalCorpus.physicalIdentities} promoted IDs</span>
           <span className={`dev-tag ${audits.physicalCorpus.resourcesRendered + audits.physicalCorpus.resourcesRendererPending + audits.physicalCorpus.resourcesEmpty === audits.physicalCorpus.resourcesTotal ? 'ok' : 'bad'}`}>Fighter physical {audits.physicalCorpus.resourcesRendered} rendered · {audits.physicalCorpus.resourcesRendererPending} renderer pending · {audits.physicalCorpus.resourcesEmpty} empty</span>
-          <span className="dev-tag warn">Default renderer {audits.presentationDeployment.defaultRenderer}</span>
-          <span className="dev-tag">Pixi ROM via ?{audits.presentationDeployment.pixiQuery}</span>
+          <span className={`dev-tag ${audits.presentationDeployment.pixiActiveByDefault ? 'ok' : 'warn'}`}>Default renderer {audits.presentationDeployment.defaultRenderer}</span>
+          <span className="dev-tag">DOM fallback via ?{audits.presentationDeployment.domFallbackQuery}</span>
           <span className="dev-tag warn">Completion owner {audits.presentationDeployment.completionOwnership} · {audits.presentationDeployment.romCompletionRoutes.join(', ')} → ROM</span>
           <span className={`dev-tag ${audits.forms.ok ? 'ok' : 'bad'}`}>✓ {audits.forms.n}/{audits.forms.total} character/forms</span>
           <span className="dev-tag ok">✓ backgrounds {audits.scenarios.n}/13</span>

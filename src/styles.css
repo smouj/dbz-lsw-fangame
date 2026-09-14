@@ -1373,7 +1373,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   opacity: .25;
 }
 
-/* Master shot Pixi (dev flag ?pixiField=1): contenedor de letterbox centrado.
+/* Master shot Pixi (renderer de producción; ?domField=1 es fallback):
+   contenedor de letterbox centrado.
    El canvas lógico 320×160 (2:1) se escala a un múltiplo ENTERO y se centra;
    el hueco sobrante queda como barras (letterbox) del propio battlefield. */
 .battle-pixi-stage {
@@ -1389,7 +1390,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   display: block;
   image-rendering: pixelated;
 }
-/* Cuando Pixi renderiza el campo, el fondo y fighters DOM se retiran */
+/* Cuando Pixi termina de inicializar, el fondo y fighters DOM se retiran.
+   Mientras carga el chunk se mantienen visibles para evitar un hueco. */
 .battlefield.pixi-field-active .battle-bg,
 .battlefield.pixi-field-active .battlefield-fighters {
   opacity: 0;

@@ -18,7 +18,7 @@ type LabTab = 'battle' | 'renderer' | 'sequence' | 'trace';
 
 const TABS: { id: LabTab; label: string; icon: typeof Swords; desc: string }[] = [
   { id: 'battle', label: 'Batalla real', icon: Swords, desc: 'Lanza el motor de combate completo (Versus / Historia) con depurador' },
-  { id: 'renderer', label: 'Renderer Pixi', icon: Clapperboard, desc: 'Harness aislado del renderer: demuestra capacidad, no wiring de BattleScreen' },
+  { id: 'renderer', label: 'Renderer Pixi', icon: Clapperboard, desc: 'Inspector aislado de la misma presentación ROM que usa BattleScreen' },
   { id: 'sequence', label: 'Secuencias', icon: Sparkles, desc: 'Pipeline BattleTimeline → presentación determinista' },
   { id: 'trace', label: 'Trace Inspector', icon: Activity, desc: 'Acción golden → rol → frame → ROM → clasificación → fallback' },
 ];

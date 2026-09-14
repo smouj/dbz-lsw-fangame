@@ -103,12 +103,12 @@ export function DashboardModule({ onNavigate }: { onNavigate: (m: DevModuleId) =
       title: 'Deployment de presentacion',
       icon: PlayCircle,
       status: presentationDeployment.pixiActiveByDefault ? 'ok' : 'warn',
-      summary: 'Separa capacidad ROM, consumo del adapter y lo que BattleScreen muestra por defecto. La sonda headless no equivale al renderer activo del jugador.',
+      summary: 'Separa capacidad ROM, consumo del adapter y lo que BattleScreen muestra por defecto. Pixi ROM es la ruta de producción; DOM queda como fallback explícito.',
       stats: [
         { label: 'ROM data available', value: production.romDataAvailable, total: cards.total, status: 'info', progress: pct(production.romDataAvailable, cards.total), hint: 'estructura/perfil disponible' },
         { label: 'ROM route available', value: runtimeClassification.romBacked, total: cards.total, status: runtimeClassification.romBacked === cards.total ? 'ok' : 'warn', progress: pct(runtimeClassification.romBacked, cards.total), hint: `${runtimeClassification.legacy} rutas legacy` },
         { label: 'ROM adapter capable', value: production.romBackedStrict, total: cards.total, status: production.mixed === 0 ? 'info' : 'warn', progress: pct(production.romBackedStrict, cards.total), hint: 'sonda headless, no BattleScreen live' },
-        { label: 'Default player visible', value: presentationDeployment.defaultRenderer, status: 'warn', hint: `Pixi: ?${presentationDeployment.pixiQuery}` },
+        { label: 'Default player visible', value: presentationDeployment.defaultRenderer, status: presentationDeployment.pixiActiveByDefault ? 'ok' : 'warn', hint: `DOM fallback: ?${presentationDeployment.domFallbackQuery}` },
         { label: 'Completion owner', value: presentationDeployment.completionOwnership, status: 'warn', hint: `${presentationDeployment.romCompletionRoutes.join(', ')} → ROM con Pixi` },
       ],
       action: { label: 'Abrir Combat Lab', module: 'lab' },
@@ -174,9 +174,9 @@ export function DashboardModule({ onNavigate }: { onNavigate: (m: DevModuleId) =
       text: `${roster.withoutSpriteDir.length} formas no tienen directorio de sprite de combate: ${roster.withoutSpriteDir.join(', ')}.`,
     }] : []),
     {
-      level: 'warn',
+      level: 'info',
       title: 'Gap ROM -> runtime',
-      text: `${runtimeClassification.legacy} cartas siguen usando ruta LEGACY; el renderer visible por defecto es ${presentationDeployment.defaultRenderer} y Pixi ROM requiere ?${presentationDeployment.pixiQuery}.`,
+      text: `${runtimeClassification.legacy} cartas siguen usando ruta LEGACY dentro del adaptador, pero el renderer visible por defecto es ${presentationDeployment.defaultRenderer}. DOM solo se activa con ?${presentationDeployment.domFallbackQuery}.`,
     },
     {
       level: 'warn',

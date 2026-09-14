@@ -458,7 +458,7 @@ function pollLiveState() {
   try {
     const bridge = window.__ROM_TICKS_BRIDGE__;
     if (!bridge) {
-      rows.innerHTML = '<div style="color:#556;font-size:11px;padding:4px">No BattleScreen detected. Start a battle (with ?pixiField=1) and this panel will show live actor state.</div>';
+      rows.innerHTML = '<div style="color:#556;font-size:11px;padding:4px">No BattleScreen detected. Start a battle (Pixi ROM is the default; use ?domField=1 only for the DOM fallback) and this panel will show live actor state.</div>';
       return;
     }
     const pres = bridge.getPresentation();

@@ -221,9 +221,10 @@ export function ValidationModule() {
     }
     pass('PRODUCTION: physical provenance registrada', prod.romPhysicalFrames > 0 && prod.unresolvedRendered === 0 && prod.mixed === 0, `${prod.romPhysicalFrames} ROM_PHYSICAL_FRAME · unresolved ${prod.unresolvedRendered} · MIXED ${prod.mixed}`);
     const deployment = snap.presentationDeployment;
-    warn('DEFAULT PLAYER VISIBLE: DOM LEGACY', `Pixi no está activo por defecto; deployment declarado: ${deployment.defaultRenderer}.`);
-    warn('PIXI CONSUMPTION: solo flag Dev', `${deployment.pixiActivation} · activar con ?${deployment.pixiQuery}; capacidad del adapter no equivale a wiring visible por defecto.`);
-    info('ACTION COMPLETION OWNER: cutover por ruta', `${deployment.romCompletionRoutes.join(', ')} usa la frontera ROM con Pixi; el resto conserva DOM legacy durante la migración.`);
+    pass('DEFAULT PLAYER VISIBLE: PIXI ROM', deployment.defaultRenderer === 'PIXI_ROM' && deployment.pixiActiveByDefault,
+      `renderer=${deployment.defaultRenderer} · activation=${deployment.pixiActivation}`);
+    info('DOM LEGACY: fallback explícito', `activar con ?${deployment.domFallbackQuery} (alias ${deployment.domFallbackAlias}); no forma parte de la ruta de producción.`);
+    info('ACTION COMPLETION OWNER: cutover por ruta', `${deployment.romCompletionRoutes.join(', ')} usa la frontera ROM con Pixi; el resto conserva fallback legacy dentro del adapter.`);
     // bridge elegible vs estricto: es esperado que no coincidan — el bridge
     // enruta progresivamente más tipos, no solo BEAM_BASE+STANDARD_DAMAGE.
     // Solo advierte si 0 cartas bridge se consumen habiendo perfiles elegibles.
