@@ -79,6 +79,58 @@ export const DEV_MODULES: DevModuleDef[] = [
   { id: 'deck-builder', label: 'Deck Builder', icon: TableProperties, desc: 'Joint Deck workshop', group: 'Tools' },
 ];
 
+/**
+ * Workspaces are the stable information architecture of the internal studio.
+ * DEV_MODULES remains the canonical module registry (and is used by deep
+ * links), while this projection keeps the sidebar focused on six workflows.
+ */
+export type DevAreaId = 'overview' | 'combat' | 'visuals' | 'game-data' | 'content' | 'qa-rom';
+
+export interface DevAreaDef {
+  id: DevAreaId;
+  label: string;
+  icon: LucideIcon;
+  desc: string;
+  modules: DevModuleId[];
+}
+
+export const DEV_AREAS: DevAreaDef[] = [
+  {
+    id: 'overview', label: 'Overview', icon: LayoutDashboard,
+    desc: 'Estado operativo del proyecto y accesos rápidos',
+    modules: ['system-hub', 'dashboard', 'workspace'],
+  },
+  {
+    id: 'combat', label: 'Combat', icon: Swords,
+    desc: 'Runtime real, timeline, HUD y presentación de combate',
+    modules: ['lab', 'timeline', 'combat', 'positions', 'hud'],
+  },
+  {
+    id: 'visuals', label: 'Visuals', icon: Film,
+    desc: 'Personajes, frames, animación y assets ROM físicos',
+    modules: ['characters', 'animation-studio', 'animation', 'romdisplay', 'assets', 'facing', 'pixelart'],
+  },
+  {
+    id: 'game-data', label: 'Game Data', icon: TableProperties,
+    desc: 'Cartas, equipos, mazos y configuración jugable',
+    modules: ['cards', 'team-builder', 'deck-builder', 'gameconfig'],
+  },
+  {
+    id: 'content', label: 'Content', icon: Gamepad2,
+    desc: 'Historia, música y contenido narrativo',
+    modules: ['story', 'music'],
+  },
+  {
+    id: 'qa-rom', label: 'QA & ROM', icon: CheckCircle2,
+    desc: 'Verificación, investigación y trazabilidad ROM',
+    modules: ['validation', 'research'],
+  },
+];
+
+function areaForModule(id: DevModuleId): DevAreaDef {
+  return DEV_AREAS.find(area => area.modules.includes(id)) ?? DEV_AREAS[0];
+}
+
 const DEV_MODULE_STORAGE_KEY = 'dbzlsw_dev_module';
 
 function storedModule(): DevModuleId | null {
@@ -196,7 +248,7 @@ export function DevStudio({ onExit, onLaunchBattle }: DevStudioProps) {
       if (event.key === 'Escape' && navOpen) { event.preventDefault(); setNavOpen(false); }
     }}>
       <div className="dev-mobile-bar">
-        <button type="button" aria-expanded={navOpen} aria-controls="dev-navigation" onClick={() => setNavOpen(open => !open)}>☰ Módulos</button>
+        <button type="button" aria-expanded={navOpen} aria-controls="dev-navigation" onClick={() => setNavOpen(open => !open)}>☰ Áreas</button>
         <strong>{DEV_MODULES.find(item => item.id === module)?.label}</strong>
         <button type="button" onClick={goHome} aria-label="Volver al juego"><ArrowLeft size={20} /></button>
       </div>
@@ -210,26 +262,50 @@ export function DevStudio({ onExit, onLaunchBattle }: DevStudioProps) {
           </div>
           <span className="dev-scope-badge" title="Herramienta interna; no forma parte del juego">DEV ONLY</span>
         </div>
-        <nav className="dev-nav" aria-label="Módulos del Dev Studio">
-          {DEV_MODULES.map((m, i) => {
-            const Icon = m.icon;
-            const prev = i > 0 ? DEV_MODULES[i - 1] : null;
-            return (
-              <div key={m.id} className="dev-nav-entry">
-              {prev && prev.group !== m.group && <div className="dev-nav-group">{m.group}</div>}
-              {i === 0 && <div className="dev-nav-group">{m.group}</div>}
-              <button key={m.id}
-                className={`dev-nav-item ${module === m.id ? 'active' : ''}`}
-                onClick={() => navigate(m.id)}
-                title={m.desc}
-                aria-current={module === m.id ? 'page' : undefined}
-                aria-label={`${m.label}: ${m.desc}`}>
-                <Icon className="dev-nav-icon" size={16} strokeWidth={1.8} />
-                <span className="dev-nav-label">{m.label}</span>
-              </button>
-              </div>
-            );
-          })}
+        <nav className="dev-nav" aria-label="Áreas del Dev Studio">
+          <div className="dev-area-nav" role="tablist" aria-label="Áreas de trabajo">
+            {DEV_AREAS.map(area => {
+              const Icon = area.icon;
+              const active = areaForModule(module).id === area.id;
+              return (
+                <button
+                  key={area.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={active}
+                  className={`dev-area-item ${active ? 'active' : ''}`}
+                  onClick={() => navigate(area.modules[0])}
+                  title={area.desc}
+                >
+                  <Icon className="dev-area-icon" size={16} strokeWidth={1.8} />
+                  <span>{area.label}</span>
+                </button>
+              );
+            })}
+          </div>
+          <div className="dev-subnav" aria-label={`${areaForModule(module).label} modules`}>
+            <div className="dev-nav-group">{areaForModule(module).label}</div>
+            <p className="dev-area-desc">{areaForModule(module).desc}</p>
+            {areaForModule(module).modules.map(id => {
+              const item = DEV_MODULES.find(candidate => candidate.id === id);
+              if (!item) return null;
+              const Icon = item.icon;
+              return (
+                <button
+                  key={item.id}
+                  type="button"
+                  className={`dev-nav-item ${module === item.id ? 'active' : ''}`}
+                  onClick={() => navigate(item.id)}
+                  title={item.desc}
+                  aria-current={module === item.id ? 'page' : undefined}
+                  aria-label={`${item.label}: ${item.desc}`}
+                >
+                  <Icon className="dev-nav-icon" size={16} strokeWidth={1.8} />
+                  <span className="dev-nav-label">{item.label}</span>
+                </button>
+              );
+            })}
+          </div>
         </nav>
         <div className="dev-sidebar-foot">
           <button className="dev-exit" onClick={goHome}><ArrowLeft size={15} /> Volver al juego</button>

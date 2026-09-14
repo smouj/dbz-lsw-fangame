@@ -25,7 +25,8 @@ function check(name: string, cond: boolean, detail?: string) {
 // ── 1. Módulos del Dev Studio (lista real extraída de la fuente — sin
 // importar componentes React que arrastran imports Vite-only) ──
 const devSrc = readFileSync('src/devtools/DevStudio.tsx', 'utf8');
-const idMatch = devSrc.match(/id: '([a-z-]+)'/g) ?? [];
+const modulesSection = devSrc.match(/export const DEV_MODULES:[\s\S]*?\n\];/u)?.[0] ?? '';
+const idMatch = modulesSection.match(/id: '([a-z-]+)'/g) ?? [];
 const moduleIds = idMatch.map(m => m.replace(/id: '|'/g, ''));
 const EXPECTED_MODULES = [
   'system-hub',

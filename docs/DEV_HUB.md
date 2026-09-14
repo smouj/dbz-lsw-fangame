@@ -42,6 +42,18 @@ El primer gate evita imports Dev accidentales desde el juego y valida el
 namespace de URL. El segundo inspecciona el artefacto final para confirmar que
 no expone módulos, endpoints ni datos de desarrollo.
 
+La navegación interna se organiza en seis áreas de trabajo: `Overview`,
+`Combat`, `Visuals`, `Game Data`, `Content` y `QA & ROM`. Cada área muestra
+solo sus módulos contextuales, pero conserva las 23 rutas canónicas y sus
+deep links. `DEV_MODULES` sigue siendo la fuente de módulos; `DEV_AREAS` solo
+define su organización visual.
+
+La estructura se valida con:
+
+```powershell
+npm run verify:dev-studio-navigation
+```
+
 ## Ejecutar en desarrollo
 
 Desde PowerShell, en el repo:
