@@ -31,7 +31,10 @@ const OUTPUTS = [
   'src/data/generated/spriteCanon.generated.ts',
 ];
 function sha(file: string): string {
-  return createHash('sha256').update(readFileSync(file)).digest('hex');
+  // The generators write LF while Windows checkouts may materialize CRLF
+  // (core.autocrlf). Hash semantic text, not the platform line ending.
+  const text = readFileSync(file, 'utf8').replace(/\r\n?/g, '\n');
+  return createHash('sha256').update(text, 'utf8').digest('hex');
 }
 const before = new Map(OUTPUTS.map(f => [f, sha(f)]));
 const beforeContents = new Map(OUTPUTS.map(f => [f, readFileSync(f)]));
@@ -59,6 +62,13 @@ check('F0: build-sprite-canon.py determinista (misma entrada → mismos hashes)'
 if (!deterministic) {
   console.log('  ⚠ canon NO determinista — revisar build-sprite-canon.py antes de continuar');
   for (const [file, contents] of beforeContents) writeFileSync(file, contents);
+}
+// A successful verification must also be side-effect free. Restore the exact
+// bytes that were present on entry (including CRLF) when the generator only
+// changed platform-specific line endings.
+for (const [file, contents] of beforeContents) {
+  const current = readFileSync(file);
+  if (!current.equals(contents)) writeFileSync(file, contents);
 }
 
 // ── 2. Invariantes del canon (sobre el TS recién regenerado) ──
