@@ -37,7 +37,11 @@ for (const beat of ROM_CINEMATIC_BEATS) {
       break;
     }
     case 'CHARA_ENTRY': {
-      const expected = CHARA_ENTRY.settleTicks + CHARA_ENTRY.holdTicks;
+      // CHARA_ENTRY is the complete ROM macro: entry motion (19t), hold
+      // (5t), and the final settle (8t). Comparing only settle+hold used to
+      // report a false 13t runtime duration even though production consumes
+      // the full 32-tick descriptor.
+      const expected = CHARA_ENTRY.entryTicks + CHARA_ENTRY.holdTicks + CHARA_ENTRY.settleTicks;
       crossChecks.push({ beat: beat.id, registryValue: beat.durationTicks, runtimeValue: expected, match: beat.durationTicks === expected });
       break;
     }
@@ -171,3 +175,8 @@ console.log(`  INFERRED_LEGACY must become 0`);
 console.log(`  Known ROM timings must be integrated`);
 console.log(`  Unknowns explicitly classified as PRESENTATION_DERIVED or PENDING_ROM_TRACE`);
 console.log(`  No silent legacy constants`);
+
+if (crossFail > 0) {
+  console.error(`\nFAIL — ${crossFail} cinematic timing cross-check(s) diverge from runtime.`);
+  process.exitCode = 1;
+}
