@@ -25,6 +25,8 @@ function check(name: string, cond: boolean, detail?: string) {
 // ── 1. Módulos del Dev Studio (lista real extraída de la fuente — sin
 // importar componentes React que arrastran imports Vite-only) ──
 const devSrc = readFileSync('src/devtools/DevStudio.tsx', 'utf8');
+const animationStudioSrc = readFileSync('src/devtools/animationStudio.tsx', 'utf8');
+const mainSrc = readFileSync('src/main.tsx', 'utf8');
 const modulesSection = devSrc.match(/export const DEV_MODULES:[\s\S]*?\n\];/u)?.[0] ?? '';
 const idMatch = modulesSection.match(/id: '([a-z-]+)'/g) ?? [];
 const moduleIds = idMatch.map(m => m.replace(/id: '|'/g, ''));
@@ -45,6 +47,18 @@ check('dev: sin módulos sprites/sheets (absorbidos por Character Studio)',
 // El render switch cubre todos los módulos (chequeo de fuente)
 const renderCovers = EXPECTED_MODULES.every(id => devSrc.includes(`module === '${id}'`));
 check(`dev: el render switch cubre los ${EXPECTED_MODULES.length} módulos`, renderCovers);
+// FACING authority must be shared by every ROM preview.  Animation Studio
+// used to flip every LEFT preview unconditionally, which made the player face
+// away from the opponent even though Pixi/DOM used the canonical side rule.
+check('dev: Animation Studio usa facingFlip canónico para previews físicos',
+  animationStudioSrc.includes("import { facingFlip } from '../data/facing';")
+  && animationStudioSrc.includes("facingFlip(formId, side === 'LEFT' ? 'left' : 'right') === -1")
+  && !animationStudioSrc.includes("flipped={side === 'LEFT'}"));
+// A ROM cinematic owns the action exclusively.  The legacy DOM card-fx must
+// not mount during the first React render while Pixi is already running.
+check('dev: cinematics ROM excluyen card-fx DOM durante ownership Pixi',
+  mainSrc.includes("!pixiPresentationActive && presentationSourceRef.current !== 'ROM'")
+  && mainSrc.includes("pixiPresRef.current?.returnToField()"));
 
 // ── 2. Snapshot común (Dashboard ≡ Validation ≡ GameConfig) ──
 {

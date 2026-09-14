@@ -25,6 +25,7 @@ import {
 } from '../battle/animationStudio';
 import { resolveCharacterVisualSequence } from '../battle/characterFrameMap';
 import { resolvePoseFrameSequence } from '../battle/spriteConfig';
+import { facingFlip } from '../data/facing';
 import type { FrameMapping } from '../battle/characterFrameMap';
 import { catalogAnimationBank, catalogResourceBase } from '../data/generated/romAnimationResourceBase.generated';
 import { PhysicalReconciliationSummary } from './PhysicalReconciliationSummary';
@@ -599,7 +600,15 @@ export function AnimationStudioModule() {
                   <span className="dev-tag ok">ROM SEQUENCE CLOSED</span>
                   <span className={`dev-tag ${view.physical.file ? 'ok' : 'warn'}`}>PHYSICAL PNG: {view.physical.file ? 'RENDERED' : 'RENDERER PENDING'}</span>
                 </div>
-                <PhysicalFrameImg formId={formId} file={view.physical.file} zoom={zoom} flipped={side === 'LEFT'} />
+                <PhysicalFrameImg
+                  formId={formId}
+                  file={view.physical.file}
+                  zoom={zoom}
+                  // The physical corpus is normalised to its native ROM
+                  // orientation.  Mirror only for the side that must face the
+                  // centre, using the same authority as Pixi, DOM and HUD.
+                  flipped={facingFlip(formId, side === 'LEFT' ? 'left' : 'right') === -1}
+                />
               </>
             ) : (
               <div className="as-empty-box">

@@ -43,7 +43,10 @@ scaleX       signo finalmente aplicado al sprite
 Así una discrepancia de orientación se puede localizar sin alterar el PNG,
 `physicalId`, hashes, límites ni la procedencia ROM. Los PNG físicos se
 mantienen raw/trimmed; cualquier vista canonical right-facing de otras páginas
-es solo una transformación de presentación.
+es solo una transformación de presentación. `Animation Studio` aplica la misma
+regla al previsualizar una secuencia: el lado izquierdo conserva la orientación
+ROM y el derecho se espeja hacia el centro, sin invertir previews por posición
+de forma incondicional.
 
 La propiedad de la película también es exclusiva: cuando existe una timeline
 ROM, React no monta la película DOM legacy (`card-fx`) y Pixi consume los cues
