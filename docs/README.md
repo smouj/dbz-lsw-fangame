@@ -26,6 +26,7 @@ When two documents disagree, do not silently merge the claims. Check the current
 | [`architecture/ROM_EXECUTION_MODES.md`](architecture/ROM_EXECUTION_MODES.md) | authoritative distinction between ROM research tooling, current remake runtime and future embedded ROM mode |
 | [`development/ENVIRONMENTS.md`](development/ENVIRONMENTS.md) | environment/version source of truth |
 | [`qa/DESKTOP_OFFLINE_SMOKE.md`](qa/DESKTOP_OFFLINE_SMOKE.md) | desktop/offline release-smoke contract |
+| [`DEV_ENGINE_EDITOR.md`](DEV_ENGINE_EDITOR.md) | Dev Engine interno: renderer Pixi real, jerarquía, Inspector y orientación |
 
 Critical rule: **`tools/rom-trace` existing does not mean the application executes a ROM.** The current product is the remake runtime. The embedded GBC core remains a separate future milestone.
 

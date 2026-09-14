@@ -1,7 +1,7 @@
 // ═══════════════════════════════════════════════════════════
 // VERIFY: DEV-STUDIO — contrato del combate + consistencia del Dev Studio.
 // Uso: npm run verify:dev-studio
-//   1. Los 24 módulos del Dev Studio existen (ids canónicos).
+//   1. Los 25 módulos del Dev Studio existen (ids canónicos).
 //   2. El simulador del contrato (combatSim) recorre una ronda completa
 //      con iniciativa PLAYER y ENEMY — readout correcto en cada frontera.
 //   3. El snapshot común (devSnapshot) es consistente: 48 formas · 125
@@ -29,6 +29,7 @@ const modulesSection = devSrc.match(/export const DEV_MODULES:[\s\S]*?\n\];/u)?.
 const idMatch = modulesSection.match(/id: '([a-z-]+)'/g) ?? [];
 const moduleIds = idMatch.map(m => m.replace(/id: '|'/g, ''));
 const EXPECTED_MODULES = [
+  'editor',
   'system-hub',
   'dashboard', 'characters', 'cards', 'animation', 'animation-studio', 'pixelart', 'facing', 'assets', 'hud',
   'lab', 'positions', 'combat', 'timeline', 'story', 'validation', 'research',

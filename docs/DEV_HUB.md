@@ -1,6 +1,6 @@
 # DBZ LSW Dev Hub
 
-`DBZ LSW Dev Hub` es el flavor Tauri interno para desarrollo. Se instala como aplicación separada del juego y abre directamente `#dev/system-hub`.
+`DBZ LSW Dev Hub` es el flavor Tauri interno para desarrollo. Se instala como aplicación separada del juego y abre directamente `#dev/editor`.
 
 ## Objetivo
 
@@ -44,7 +44,7 @@ no expone módulos, endpoints ni datos de desarrollo.
 
 La navegación interna se organiza en seis áreas de trabajo: `Overview`,
 `Combat`, `Visuals`, `Game Data`, `Content` y `QA & ROM`. Cada área muestra
-solo sus módulos contextuales, pero conserva las 24 rutas canónicas y sus
+solo sus módulos contextuales, pero conserva las 25 rutas canónicas y sus
 deep links. `DEV_MODULES` sigue siendo la fuente de módulos; `DEV_AREAS` solo
 define su organización visual.
 

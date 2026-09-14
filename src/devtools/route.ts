@@ -17,5 +17,5 @@ export function isDevRoute(): boolean {
 
 export function initialDevModule(): string {
   const m = window.location.hash.match(/^#dev\/([a-z-]+)/);
-  return m ? m[1] : 'dashboard';
+  return m ? m[1] : 'editor';
 }

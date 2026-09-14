@@ -14,7 +14,7 @@ selección ROM para optimizar.
   `provenance.json`, capturas y páginas de auditoría.
 - `npm run verify:release-content` mide JS/CSS, assets de juego, archivos ROM y
   material Dev, y falla ante cualquier fuga.
-- Dev Studio carga sus 24 módulos con `React.lazy` y una frontera `Suspense`.
+- Dev Studio carga sus 25 módulos con `React.lazy` y una frontera `Suspense`.
   Abrir `/` no descarga los inspectores ROM; cada módulo se solicita solo al
   navegar a su deep link. El release mantiene el stub nulo.
 - `Combat → Performance` aporta una captura Dev-only reproducible para

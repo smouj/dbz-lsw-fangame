@@ -39,6 +39,9 @@ export class FighterActor extends Container {
   private _frameOffsetX = 0;
   private _frameOffsetY = 0;
   private baseFlip = 1;
+  /** Lado físico del luchador. Se conserva para que Dev/Inspector puedan
+   * auditar la orientación efectiva sin duplicar la regla FACING. */
+  private battleSide: BattleSide;
   private scaleMag = 1;
 
   /** Direct ROM frames own the texture until the next physical cue or pose. */
@@ -52,6 +55,7 @@ export class FighterActor extends Container {
     super();
     this.formId = formId;
     this.atlas = atlas;
+    this.battleSide = side;
 
     this.sprite = new Sprite();
     this.sprite.anchor.set(0.5, 1); // abajo-centro → ground line estable
@@ -235,6 +239,15 @@ export class FighterActor extends Container {
     animFrames: number;
     animDurations: number[];
     playbackEnabled: boolean;
+    side: BattleSide;
+    baseFacing: 'left' | 'right';
+    facing: 'left' | 'right';
+    orientationSource: 'ROM_PHYSICAL_FRAME' | 'SEMANTIC_POSE';
+    scaleX: number;
+    scaleY: number;
+    romResource: number | null;
+    romSequence: number | null;
+    physicalFrameLocked: boolean;
   } {
     return {
       formId: this.formId,
@@ -247,10 +260,20 @@ export class FighterActor extends Container {
       animFrames: this.anim?.frames.length ?? 0,
       animDurations: this.anim?.frames.map(f => f.durationTicks ?? 0) ?? [],
       playbackEnabled: this.playbackEnabled,
+      side: this.battleSide,
+      baseFacing: this.baseFlip === 1 ? 'right' : 'left',
+      facing: this.effectiveFacing(),
+      orientationSource: this.physicalFrameLocked ? 'ROM_PHYSICAL_FRAME' : 'SEMANTIC_POSE',
+      scaleX: this.sprite.scale.x,
+      scaleY: this.sprite.scale.y,
+      romResource: this.romResource,
+      romSequence: this.romSequence,
+      physicalFrameLocked: this.physicalFrameLocked,
     };
   }
 
   setFlip(side: BattleSide): void {
+    this.battleSide = side;
     this.baseFlip = facingFlip(this.formId, side);
     this.applyTransform();
   }
@@ -312,15 +335,32 @@ export class FighterActor extends Container {
     // semantic move_back inversion belongs to legacy pose frames; applying it
     // to a ROM_PHYSICAL_FRAME reverses real ROM sequences and makes actors look
     // away from their opponent.
-    const sign = this.physicalFrameLocked
-      ? this.baseFlip
-      : (this.activePose === 'move_back' ? -this.baseFlip : this.baseFlip);
+    const sign = this.effectiveScaleX();
     this.sprite.scale.set(this.scaleMag * sign, this.scaleMag);
     this.flash.scale.set(this.scaleMag, this.scaleMag);
     // ROM-native frame offset: applied alongside durationTicks from same record.
     // This offset shifts the sprite relative to its ground-line anchor position.
     this.sprite.x = this._frameOffsetX * sign;
     this.sprite.y = this._frameOffsetY;
+  }
+
+  /**
+   * Orientación efectiva que llega a Pixi.
+   *
+   * La regla de lado (`facingFlip`) es la base para todos los frames. El
+   * ciclo semántico `move_back` invierte esa base porque reutiliza el ciclo
+   * de avance; una cue `ROM_PHYSICAL_FRAME` tiene prioridad y conserva la
+   * orientación física que ya resolvió la ROM. Mantener esta decisión en un
+   * único método evita que el transform y el Inspector describan sprites
+   * distintos.
+   */
+  private effectiveScaleX(): number {
+    if (this.physicalFrameLocked) return this.baseFlip;
+    return this.activePose === 'move_back' ? -this.baseFlip : this.baseFlip;
+  }
+
+  private effectiveFacing(): 'left' | 'right' {
+    return this.effectiveScaleX() === 1 ? 'right' : 'left';
   }
 
   private applyFrame(elapsedTicks: number): void {

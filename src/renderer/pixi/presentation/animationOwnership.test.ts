@@ -164,6 +164,21 @@ describe('FighterActor track ownership (G7)', () => {
     expect(enemySprite.scale.x).toBe(-1); // physical cue restores right-side facing
   });
 
+  it('el Inspector expone el facing efectivo y la autoridad que lo gobierna', () => {
+    const player = new FighterActor(physicalLatchAtlas(), 'gohan_young', 'left');
+    player.setPose('move_back', 0);
+    expect(player.inspect()).toMatchObject({
+      side: 'left', baseFacing: 'right', facing: 'left',
+      scaleX: -1, orientationSource: 'SEMANTIC_POSE',
+    });
+
+    player.setPhysicalFrame({ resource: 44, sequence: 0, frameIndex: 0, physicalId: 'rom-frame-0' });
+    expect(player.inspect()).toMatchObject({
+      side: 'left', baseFacing: 'right', facing: 'right',
+      scaleX: 1, orientationSource: 'ROM_PHYSICAL_FRAME',
+    });
+  });
+
   it('no reutiliza offsets ni pose cuando el frame físico no está materializado', () => {
     const actor = new FighterActor(physicalLatchAtlas(), 'gohan_young', 'left');
     actor.setPose('attack_fwd', 0);

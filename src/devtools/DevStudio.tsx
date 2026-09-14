@@ -9,7 +9,7 @@ import './dev-layout.css';
 import {
   Activity, ArrowLeft, Brush, CheckCircle2,
   Film, FolderCode, Gamepad2, Gauge, Grid2X2, LayoutDashboard,
-  Search, Swords, TableProperties, Users, Music, Rocket, type LucideIcon,
+  Search, Swords, TableProperties, Users, Music, Rocket, Workflow, type LucideIcon,
 } from 'lucide-react';
 
 // Cada módulo se descarga únicamente al abrirlo. Dev Studio es una herramienta
@@ -38,9 +38,10 @@ const TeamBuilderModule = lazy(() => import('./teamBuilder').then(m => ({ defaul
 const DeckBuilderModule = lazy(() => import('./deckBuilder').then(m => ({ default: m.DeckBuilderModule })));
 const WorkspaceModule = lazy(() => import('./workspace').then(m => ({ default: m.WorkspaceModule })));
 const PerformanceModule = lazy(() => import('./performance').then(m => ({ default: m.PerformanceModule })));
+const EditorModule = lazy(() => import('./editor').then(m => ({ default: m.EditorModule })));
 
 export type DevModuleId =
-  | 'system-hub' | 'dashboard' | 'characters' | 'cards' | 'animation'
+  | 'editor' | 'system-hub' | 'dashboard' | 'characters' | 'cards' | 'animation'
   | 'pixelart' | 'hud' | 'facing' | 'assets'
   | 'lab' | 'story' | 'validation' | 'research' | 'music' | 'gameconfig' | 'positions'
   | 'combat' | 'timeline' | 'romdisplay' | 'animation-studio'
@@ -55,6 +56,7 @@ export interface DevModuleDef {
 }
 
 export const DEV_MODULES: DevModuleDef[] = [
+  { id: 'editor', label: 'Editor', icon: Workflow, desc: 'Dev Engine: runtime Pixi real, hierarchy, inspector y timeline', group: 'Overview' },
   { id: 'system-hub', label: 'System Hub', icon: FolderCode, desc: 'Entornos, repos, procesos, verificadores y accesos del proyecto', group: 'Overview' },
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, desc: 'Estado real: ROM physical, producción, legacy y blockers', group: 'Overview' },
   { id: 'validation', label: 'Validation', icon: CheckCircle2, desc: 'Integridad de datos y cobertura visible', group: 'Overview' },
@@ -104,7 +106,7 @@ export const DEV_AREAS: DevAreaDef[] = [
   {
     id: 'overview', label: 'Overview', icon: LayoutDashboard,
     desc: 'Estado operativo del proyecto y accesos rápidos',
-    modules: ['system-hub', 'dashboard', 'workspace'],
+    modules: ['editor', 'system-hub', 'dashboard', 'workspace'],
   },
   {
     id: 'combat', label: 'Combat', icon: Swords,
@@ -160,11 +162,11 @@ function initialModule(): DevModuleId {
   if (typeof window === 'undefined') return 'dashboard';
   const hashModule = moduleFromHash();
   if (hashModule) return hashModule;
-  if (window.location.hash === '#dev') return 'dashboard';
+  if (window.location.hash === '#dev') return 'editor';
   const isPlainDevQuery = new URLSearchParams(window.location.search).has('dev')
     && (window.location.hash === '' || window.location.hash === '#dev');
-  if (isPlainDevQuery) return 'dashboard';
-  return storedModule() ?? 'dashboard';
+  if (isPlainDevQuery) return 'editor';
+  return storedModule() ?? 'editor';
 }
 
 // Puente Sheets → Pixel Art: frame concreto que abrir en el editor
@@ -326,6 +328,7 @@ export function DevStudio({ onExit, onLaunchBattle }: DevStudioProps) {
         <div className="dev-module" data-module={module}>
           <Suspense fallback={<div className="dev-module-loading" role="status" aria-live="polite">Cargando módulo…</div>}>
             {module === 'system-hub' && <SystemHubModule onNavigate={navigate} />}
+            {module === 'editor' && <EditorModule />}
             {module === 'dashboard' && <DashboardModule onNavigate={navigate} />}
             {module === 'characters' && <CharactersModule onOpenModule={openLinkedModule} />}
             {module === 'cards' && <CardsModule />}
