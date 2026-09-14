@@ -27,7 +27,11 @@ check('performance: no hay imports estáticos de módulos pesados', !/^import .*
 check('performance: profiler usa requestAnimationFrame', profiler.includes('requestAnimationFrame(this.onFrame)'));
 check('performance: profiler mide tareas largas reales', profiler.includes("entryTypes: ['longtask']") && profiler.includes('this.longTasks'));
 check('performance: profiler mide recursos del navegador', profiler.includes("getEntriesByType('resource')") && profiler.includes('resourceBytes'));
-check('performance: heap no soportado se muestra como null', profiler.includes('heapUsedBytes: null') && profiler.includes('typeof memory?.usedJSHeapSize'));
+check(
+  'performance: heap no soportado se muestra como null',
+  profiler.includes('heapUsedBytes: typeof memory?.usedJSHeapSize')
+    && profiler.includes("? memory.usedJSHeapSize : null")
+);
 check('performance: no inventa draw calls ni texturas GPU', panel.includes('no se estiman texturas ni draw calls') && panel.includes('No inventado'));
 check('performance: captura persiste al salir del módulo', panel.includes('keep collecting while the Dev page is unmounted'));
 check('performance: producción mantiene DevStudio stub', stub.includes('export function DevStudio') && !stub.includes('PerformanceModule'));
