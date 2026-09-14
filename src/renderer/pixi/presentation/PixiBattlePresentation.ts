@@ -20,7 +20,7 @@ import type { BattlePresentation, BattleScene, RomMotionSegment } from './Battle
 import { positionFromSegments } from '../../../battle/romMotionMath';
 import { resolveProjectileVisualMode, type ProjectileVisualMode } from './projectileVisual';
 import { RomDisplayPresenter } from '../../../battle/romDisplay/RomDisplayPresenter';
-import { RomDisplayLayer } from '../../../battle/romDisplay/RomDisplayLayer';
+import { RomDisplayLayer, preloadRomDisplayTextures } from '../../../battle/romDisplay/RomDisplayLayer';
 import { CameraPresenter } from './CameraPresenter';
 import { ActionObjectRuntime, applyBindingCue, unapplyBindingCue, type ActionObjectBinding, type ActionObjectSlot } from '../../../battle/engine/presentation/ActionObjectRuntime';
 import { ACTION_WORLD_SCALE } from '../config';
@@ -225,6 +225,7 @@ export class PixiBattlePresentation implements BattlePresentation {
       eOwUrl ? this.renderer.loadTexture(eOwUrl) : Promise.resolve(null),
       this.renderer.addFighter(this.cfg.playerFormId, 'left', this.fighterScale),
       this.renderer.addFighter(this.cfg.enemyFormId, 'right', this.fighterScale),
+      preloadRomDisplayTextures(),
     ]);
 
     dir.tactical.setBackground(overview);

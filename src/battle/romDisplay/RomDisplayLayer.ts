@@ -11,8 +11,20 @@
 // LAYERING, CLEANUP — cada check corresponde a un state observable.
 // ═════════════════════════════════════════════════════════════════════════
 
-import { Container, Graphics, Sprite, Text, Texture } from 'pixi.js';
+import { Assets, Container, Graphics, Sprite, Text, Texture } from 'pixi.js';
 import type { RomDisplayPresenter, RomDisplayState } from './RomDisplayPresenter';
+import { ROM_BG_ASSEMBLY_IMAGES } from '../../data/generated/romBgAssembly.generated';
+import { ROM_FX_CORPUS_BUNDLES } from '../../data/generated/romFxCorpus.generated';
+import { loadPixelTexture } from '../../renderer/pixi/assets/AtlasLoader';
+
+/** Complete before ACTION: Texture.from(string) does not load files in Pixi 8. */
+export async function preloadRomDisplayTextures(): Promise<void> {
+  const urls = new Set([
+    ...ROM_BG_ASSEMBLY_IMAGES.map(image => image.url),
+    ...ROM_FX_CORPUS_BUNDLES.flatMap(bundle => bundle.images.map(image => image.file)),
+  ]);
+  await Promise.all([...urls].map(url => loadPixelTexture(url)));
+}
 
 /** Dimensiones lógicas GBC para el display ROM. */
 const GBC_W = 160;
@@ -139,7 +151,7 @@ export class RomDisplayLayer {
   private readonly scale: number;
   private lastStateJson = '';
 
-  constructor(presenter: RomDisplayPresenter, scale = 1) {
+  constructor(presenter: RomDisplayPresenter, scale = 1, private readonly diagnostics = false) {
     this.presenter = presenter;
     this.scale = scale;
 
@@ -195,6 +207,9 @@ export class RomDisplayLayer {
     this.container.addChild(this.clearOverlay);
     this.container.addChild(this.clearLabel);
     this.container.addChild(this.labelLayer);
+    for (const layer of [this.bgLayer, this.visualLayer, this.composeOverlay, this.clearOverlay, this.clearLabel, this.labelLayer]) {
+      layer.renderable = diagnostics;
+    }
   }
 
   /** Contenedor Pixi para añadir al stage. */
@@ -229,7 +244,7 @@ export class RomDisplayLayer {
     // or a procedural projectile.
     if (st.fxWindow) {
       if (this.fxSourceImage !== st.fxWindow.sourceImage) {
-        this.fxSprite.texture = Texture.from(st.fxWindow.sourceImage);
+        this.fxSprite.texture = Assets.cache.has(st.fxWindow.sourceImage) ? Texture.from(st.fxWindow.sourceImage) : Texture.EMPTY;
         this.fxSourceImage = st.fxWindow.sourceImage;
       }
       this.fxSprite.visible = !st.cleared;
@@ -250,7 +265,7 @@ export class RomDisplayLayer {
     }
 
     // Clear label visibility
-    this.clearLabel.visible = st.cleared;
+    this.clearLabel.visible = this.diagnostics && st.cleared;
 
     // ── BG ASSEMBLY: composición física ROM real ($19/$1A) ──
     // Sin fallback a overview/action/special_action: si el programa existe
@@ -259,10 +274,10 @@ export class RomDisplayLayer {
     this.bgLayer.clear();
     if (st.bgAssembly && st.bgAssembly.imageUrl) {
       if (this.bgSourceImage !== st.bgAssembly.imageUrl) {
-        this.bgSprite.texture = Texture.from(st.bgAssembly.imageUrl);
+        this.bgSprite.texture = Assets.cache.has(st.bgAssembly.imageUrl) ? Texture.from(st.bgAssembly.imageUrl) : Texture.EMPTY;
         this.bgSourceImage = st.bgAssembly.imageUrl;
       }
-      this.bgSprite.visible = true;
+      this.bgSprite.visible = !st.cleared;
       this.bgSprite.x = st.bgAssembly.bgCol * 8 * s;
       this.bgSprite.y = st.bgAssembly.bgRowStart * 8 * s;
       this.bgSprite.width = st.bgAssembly.width * s;

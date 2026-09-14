@@ -205,12 +205,14 @@ export class FighterActor extends Container {
     // 1. physicalId — the canonical key registered by AtlasLoader for ROM physical frames
     if (cue.physicalId && this.atlas.textures.has(cue.physicalId)) {
       this.sprite.texture = this.atlas.textures.get(cue.physicalId)!;
- this.sprite.visible = true;
+      this.applyPhysicalOrigin(cue.physicalId);
+      this.sprite.visible = true;
       return;
     }
     // 2. file — path-based key registered by AtlasLoader
     if (cue.file && this.atlas.textures.has(cue.file)) {
       this.sprite.texture = this.atlas.textures.get(cue.file)!;
+      this.applyPhysicalOrigin(cue.file);
       this.sprite.visible = true;
       return;
     }
@@ -324,6 +326,7 @@ export class FighterActor extends Container {
     // emitted it must be the deliberate owner rather than a stale latch.
     this.physicalFrameLocked = false;
     this.romPhysicalId = null;
+    this.sprite.anchor.set(0.5, 1);
     this.playbackEnabled = true;
     const resolved = resolvePose(this.atlas, pose);
     this.activePose = resolved;
@@ -353,6 +356,18 @@ export class FighterActor extends Container {
     // This offset shifts the sprite relative to its ground-line anchor position.
     this.sprite.x = this._frameOffsetX * sign;
     this.sprite.y = this._frameOffsetY;
+  }
+
+  private applyPhysicalOrigin(key: string): void {
+    const origin = this.atlas.physicalOrigins?.get(key);
+    const { width, height } = this.sprite.texture;
+    if (origin && width > 0 && height > 0) {
+      // A trimmed attack can extend far past the body. Its ROM object origin
+      // must remain fixed when the crop changes or the side is mirrored.
+      this.sprite.anchor.set(origin.x / width, origin.y / height);
+    } else {
+      this.sprite.anchor.set(0.5, 1);
+    }
   }
 
   /**

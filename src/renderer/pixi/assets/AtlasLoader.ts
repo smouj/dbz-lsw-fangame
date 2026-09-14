@@ -37,9 +37,18 @@ export interface FormManifest {
   [pose: string]: PoseAnim;
 }
 
+interface PhysicalManifestFrame {
+  file: string;
+  physicalId: string;
+  originInTrimX?: number;
+  originInTrimY?: number;
+  sourceFileSha256?: string;
+  trimmedPixelHash?: string;
+}
+
 interface RomPhysicalManifest {
-  sequences?: Record<string, { frames: Array<{ file: string; physicalId: string; w?: number; h?: number; sourceFileSha256?: string; trimmedPixelHash?: string }> }>;
-  stageSequences?: Record<string, { frames: Array<{ file: string; physicalId: string; w?: number; h?: number; sourceFileSha256?: string; trimmedPixelHash?: string }> }>;
+  sequences?: Record<string, { frames: PhysicalManifestFrame[] }>;
+  stageSequences?: Record<string, { frames: PhysicalManifestFrame[] }>;
 }
 
 export interface FormAtlas {
@@ -48,6 +57,8 @@ export interface FormAtlas {
   dir: string;
   /** texturas keyed `${pose}:${index}`. */
   textures: Map<string, Texture>;
+  /** ROM object origin within each trimmed image, keyed by physicalId/file. */
+  physicalOrigins?: Map<string, { x: number; y: number }>;
   /** metadatos de animación por pose (fps/loop/frames). */
   anims: Map<string, PoseAnim>;
   /** Ancho máximo de todos los frames (caja de anclaje). */
@@ -144,6 +155,7 @@ async function build(formId: string): Promise<FormAtlas | null> {
   } catch { /* overlay optional */ }
 
   const textures = new Map<string, Texture>();
+  const physicalOrigins = new Map<string, { x: number; y: number }>();
   const anims = new Map<string, PoseAnim>();
   let maxW = 0;
   let maxH = 0;
@@ -178,6 +190,11 @@ async function build(formId: string): Promise<FormAtlas | null> {
   ];
   for (const frame of physicalFrames) {
     if (!frame.file || !frame.physicalId) continue;
+    if (Number.isFinite(frame.originInTrimX) && Number.isFinite(frame.originInTrimY)) {
+      const origin = { x: frame.originInTrimX!, y: frame.originInTrimY! };
+      physicalOrigins.set(frame.physicalId, origin);
+      physicalOrigins.set(frame.file, origin);
+    }
     const version = frame.trimmedPixelHash ?? frame.sourceFileSha256;
     const url = `/assets/sprites/${dir}/${frame.file}${version ? `?v=${encodeURIComponent(version)}` : ''}`;
     jobs.push({ key: frame.file, url });
@@ -204,6 +221,7 @@ async function build(formId: string): Promise<FormAtlas | null> {
     formId,
     dir: spriteDirFor(formId) ?? formId,
     textures,
+    physicalOrigins,
     anims,
     maxW,
     maxH,

@@ -24,6 +24,8 @@ import { ACTION_NATIVE_H, ACTION_NATIVE_W, ACTION_WORLD_SCALE, BATTLE_LOGICAL_H,
 import { ACTION_GROUND_Y } from '../systems/MotionSystem';
 import { ActionObjectRuntime } from '../../../battle/engine/presentation/ActionObjectRuntime';
 import { facingScaleX } from '../../../data/facing';
+import { RomDisplayLayer } from '../../../battle/romDisplay/RomDisplayLayer';
+import { RomDisplayPresenter } from '../../../battle/romDisplay/RomDisplayPresenter';
 
 function fakeAtlas(): FormAtlas {
   return { formId: 'gohan_young', dir: '', anims: new Map(), textures: new Map(), maxW: 16, maxH: 16 };
@@ -48,6 +50,39 @@ function physicalLatchAtlas(): FormAtlas {
 }
 
 describe('FACING único para DOM, Pixi y Dev', () => {
+  it('no dibuja anotaciones de diagnóstico sobre la película de producción', () => {
+    const presenter = new RomDisplayPresenter();
+    const layer = new RomDisplayLayer(presenter);
+    layer.sync(0);
+    for (const label of ['rom-display-bg', 'rom-display-visual', 'rom-display-compose', 'rom-display-clear', 'rom-display-clear-label', 'rom-display-label']) {
+      expect(layer.view.children.find(child => child.label === label)?.renderable).toBe(false);
+    }
+    expect(layer.view.children.find(child => child.label === 'rom-display-bg-assembly')?.renderable).toBe(true);
+    expect(layer.view.children.find(child => child.label === 'rom-display-fx-window')?.renderable).toBe(true);
+    layer.destroy();
+  });
+  it.each(['left', 'right'] as const)('conserva el origen ROM al cambiar el recorte (%s)', side => {
+    const atlas = physicalLatchAtlas();
+    atlas.physicalOrigins = new Map([
+      ['rom-frame-0', { x: 3, y: 7 }],
+      ['rom-frame-1', { x: 12, y: 4 }],
+    ]);
+    atlas.textures.set('rom-frame-1', Texture.WHITE);
+    const actor = new FighterActor(atlas, 'gohan_young', side);
+    actor.setPos(48, 75);
+    const sprite = (actor as any).sprite;
+    for (const [id, origin] of atlas.physicalOrigins) {
+      actor.setPhysicalFrame({ resource: 44, sequence: 0, frameIndex: 0, physicalId: id, offsetX: 2, offsetY: -1 });
+      const x = (origin.x - sprite.anchor.x * sprite.texture.width) * sprite.scale.x + sprite.x;
+      const y = (origin.y - sprite.anchor.y * sprite.texture.height) * sprite.scale.y + sprite.y;
+      expect(x).toBeCloseTo(side === 'left' ? 2 : -2);
+      expect(y).toBeCloseTo(-1);
+    }
+    actor.setPose('attack_fwd', 1);
+    expect(sprite.anchor.x).toBe(0.5);
+    expect(sprite.anchor.y).toBe(1);
+  });
+
   it('mantiene al actor frente al rival y solo invierte move_back semántico', () => {
     expect(facingScaleX('gohan_young', 'left', 'idle', 'SEMANTIC_POSE')).toBe(1);
     expect(facingScaleX('gohan_young', 'right', 'idle', 'SEMANTIC_POSE')).toBe(-1);
