@@ -71,6 +71,22 @@ determinista para la forma seleccionada y queda protegida por:
 npm run verify:rom-sprite-atlas
 ```
 
+El inventario de huecos de presentación ROM se genera desde las timelines
+compiladas, nunca desde una lista manual. `rom-pending-cues.md` resume cada
+ocurrencia `ROM_PENDING` por causa, carta, handler, tick y frontera estática o
+dinámica; el CSV y el JSON conservan el detalle para investigación. Una
+causa nueva sin clasificación hace fallar la CI:
+
+```powershell
+npm run audit:rom-pending-cues
+npm run verify:rom-pending-cues
+```
+
+Que una carta tenga frames físicos no implica que toda su selección temporal
+esté demostrada: las filas `STATIC_CLOSURE_CANDIDATE` y
+`PENDING_ROM_TRACE` permanecen visibles hasta disponer de evidencia ROM. No
+se cierran con `sequence 0`, poses semánticas, PNGs externos ni aproximaciones.
+
 Para materializar las hojas de contacto y los frames por forma (salida
 regenerable e ignorada por Git) se usa:
 
