@@ -10,6 +10,7 @@ import { Container } from 'pixi.js';
 import { TacticalScene } from '../scenes/TacticalScene';
 import { ActionScene } from '../scenes/ActionScene';
 import type { BattleScene } from '../presentation/BattlePresentation';
+import { ACTION_WORLD_SCALE } from '../config';
 
 export class SceneDirector {
   readonly tactical: TacticalScene;
@@ -22,6 +23,10 @@ export class SceneDirector {
     this.tactical = new TacticalScene();
     this.action = new ActionScene();
     this.projectileLayer = new Container();
+    // PROJECTILE pertenece al mismo plano ACTION: sus coordenadas son ROM
+    // nativas y deben recibir exactamente la misma proyección que los actores.
+    this.projectileLayer.scale.set(ACTION_WORLD_SCALE);
+    this.projectileLayer.label = 'projectile-layer-native-action';
     world.addChild(this.tactical, this.action, this.projectileLayer);
   }
 

@@ -289,7 +289,9 @@ export function PixiSequenceModule() {
         actionBackground: `/assets/backgrounds/scenarios/${scenario}_action.png`,
         playerPos: BattlePosition.DOWN_BACK,
         enemyPos: BattlePosition.DOWN_BACK,
-        scale: 3,
+        // Paridad con BattleScreen: el mundo ACTION proyecta ×2 y el actor
+        // consume frames ROM a tamaño nativo (1:1).
+        scale: 1,
       });
       await pres.init();
       if (cancelled) { renderer.destroy(); return; }

@@ -17,19 +17,20 @@
 import { Container, Sprite } from 'pixi.js';
 import type { Texture } from 'pixi.js';
 import type { FighterActor } from '../actors/FighterActor';
-import { BG_SCALE, BATTLE_LOGICAL_W } from '../config';
+import { ACTION_NATIVE_H, ACTION_NATIVE_W, ACTION_WORLD_SCALE } from '../config';
 import { ACTION_GROUND_Y } from '../systems/MotionSystem';
 import type { BattleSide } from '../../../data/facing';
 
-// Posiciones cinematográficas por lado (px lógicos, campo 320×160):
-//   left  (jugador) → x ≈ 96
-//   right (enemigo) → x ≈ 224
-export const ACTION_LEFT_X = 96;
-export const ACTION_RIGHT_X = 224;
+// Posiciones cinematográficas por lado (px nativos ROM, plano 160×80).
+// El contenedor ActionScene aplica ACTION_WORLD_SCALE una sola vez al dibujar.
+//   left  (jugador) → x 48
+//   right (enemigo) → x 112
+export const ACTION_LEFT_X = 48;
+export const ACTION_RIGHT_X = 112;
 /** Optical anchors for SPECIAL_ACTION: move each fighter toward screen
  * centre while preserving the normal ACTION composition. */
-export const ACTION_SPECIAL_LEFT_X = 112;
-export const ACTION_SPECIAL_RIGHT_X = 208;
+export const ACTION_SPECIAL_LEFT_X = 56;
+export const ACTION_SPECIAL_RIGHT_X = 104;
 // Aliases de compatibilidad (consumidores previos)
 export const ACTION_ACTOR_X = ACTION_LEFT_X;
 export const ACTION_TARGET_X = ACTION_RIGHT_X;
@@ -60,6 +61,10 @@ export class ActionScene extends Container {
   constructor() {
     super();
     this.visible = false;
+    // Todos los hijos (BG, actors, ROM display) permanecen en coordenadas
+    // nativas 160×80; la proyección a 320×160 ocurre aquí, una sola vez.
+    this.scale.set(ACTION_WORLD_SCALE);
+    this.label = `action-scene-native-${ACTION_NATIVE_W}x${ACTION_NATIVE_H}`;
   }
 
   setBackground(tex: Texture | null): void {
@@ -70,7 +75,8 @@ export class ActionScene extends Container {
     }
     if (!tex) return;
     const s = new Sprite(tex);
-    s.scale.set(BG_SCALE, BG_SCALE);
+    // La escena ya está escalada ×2. No escalar el asset por separado.
+    s.scale.set(1, 1);
     s.roundPixels = true;
     this.bg = s;
     this.addChildAt(s, 0);
@@ -99,8 +105,15 @@ export class ActionScene extends Container {
   reorderFightersDrawnOrder(firstDrawn: FighterActor | null, secondDrawn: FighterActor | null): void {
     if (!firstDrawn || !secondDrawn) return;
     if (!this.children.includes(firstDrawn) || !this.children.includes(secondDrawn)) return;
-    this.setChildIndex(firstDrawn, 0);
-    this.setChildIndex(secondDrawn, Math.max(0, this.children.indexOf(firstDrawn) + 1));
+    // El BG y la capa ROM Display deben permanecer detrás de los fighters.
+    // Reordenar desde el índice 0 (la implementación anterior) podía poner el
+    // actor por debajo del fondo y hacer que desapareciera en una reacción.
+    const firstIndex = this.children.indexOf(firstDrawn);
+    const secondIndex = this.children.indexOf(secondDrawn);
+    const fighterBaseIndex = this.bg ? 1 : 0;
+    if (firstIndex === secondIndex) return;
+    this.setChildIndex(firstDrawn, fighterBaseIndex);
+    this.setChildIndex(secondDrawn, fighterBaseIndex + 1);
   }
 
   setFighters(left: FighterActor | null, right: FighterActor | null): void {

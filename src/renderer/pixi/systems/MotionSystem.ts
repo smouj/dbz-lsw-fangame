@@ -41,5 +41,5 @@ export function rushX(motion: RushMotion, progress: number): number {
   return lerp(motion.start, motion.end, motion.easing(p));
 }
 
-/** Y del luchador en ACTION (suelo fijo: ground line compartida). */
-export const ACTION_GROUND_Y = 150;
+/** Y nativa del luchador en ACTION (suelo fijo: línea compartida). */
+export const ACTION_GROUND_Y = 75;

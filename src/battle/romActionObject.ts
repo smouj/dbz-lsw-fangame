@@ -345,7 +345,8 @@ export const ACTION_OBJECT_VISIBILITY = {
 // ═══════════════════════════════════════════════════════════════════════
 // 5. CONVERSIÓN DE COORDENADAS GBC → Pixi
 // ═══════════════════════════════════════════════════════════════════════
-// El fondo ACTION pasa de 160×80 (GBC) a 320×160 (Pixi) → escala ×2.
+// El fondo ACTION pasa de 160×80 (GBC) a 320×160 (Pixi) → escala ×2. La
+// escena Pixi aplica esa conversión en el contenedor; sus hijos son nativos.
 //   GBC visible X = rawX - 8
 //   GBC visible Y = rawY - 16
 //   pixiX = 2 * (rawX - 8)

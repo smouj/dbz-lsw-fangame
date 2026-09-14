@@ -17,6 +17,8 @@ import type { RomDisplayPresenter, RomDisplayState } from './RomDisplayPresenter
 /** Dimensiones lógicas GBC para el display ROM. */
 const GBC_W = 160;
 const GBC_H = 144;
+/** El plano ACTION visible ocupa las primeras 80 filas nativas. */
+const ACTION_VIEWPORT_H = 80;
 
 /** Color default GBC palette 0 (white/background). */
 const GBC_BG_COLOR = 0xf8_f8_f8;
@@ -120,6 +122,8 @@ export interface RomDisplayInspectionAssets {
  */
 export class RomDisplayLayer {
   private readonly container: Container;
+  /** Máscara nativa: RomDisplay (160×144) no puede invadir ACTION (160×80). */
+  private readonly viewportMask: Graphics;
   private readonly bgLayer: Graphics;
   /** P0.4R — composición BG física ROM ($19/$1A) montada en su región ROM. */
   private readonly bgSprite: Sprite;
@@ -135,12 +139,17 @@ export class RomDisplayLayer {
   private readonly scale: number;
   private lastStateJson = '';
 
-  constructor(presenter: RomDisplayPresenter, scale = 2) {
+  constructor(presenter: RomDisplayPresenter, scale = 1) {
     this.presenter = presenter;
     this.scale = scale;
 
     this.container = new Container();
     this.container.label = 'rom-display';
+    this.viewportMask = new Graphics();
+    this.viewportMask.label = 'rom-display-action-viewport-mask';
+    this.viewportMask.rect(0, 0, GBC_W, ACTION_VIEWPORT_H).fill(0xffffff);
+    this.viewportMask.renderable = false;
+    this.container.mask = this.viewportMask;
 
     // Capas (z-order: bg → visual → compose → clear → label)
     this.bgLayer = new Graphics();
@@ -175,6 +184,9 @@ export class RomDisplayLayer {
     this.fxSprite.label = 'rom-display-fx-window';
     this.fxSprite.visible = false;
 
+    // La máscara vive en el mismo espacio nativo que todos los layers. El
+    // ActionScene padre la proyecta junto con el display (×2).
+    this.container.addChild(this.viewportMask);
     this.container.addChild(this.bgLayer);
     this.container.addChild(this.bgSprite);
     this.container.addChild(this.visualLayer);

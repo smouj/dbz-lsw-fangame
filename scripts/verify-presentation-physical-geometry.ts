@@ -23,6 +23,15 @@ import { ACTION_ANCHOR_TABLE, ACTION_ANCHOR_CALLSITE_GROUPS } from '../src/battl
 import { POSITION_DATA, BattlePosition, BATTLE_POSITIONS } from '../src/data/positions';
 import { animationResourceById } from '../src/battle/animationResources';
 import { resolveProductionFrame } from '../src/battle/productionFrameResolver';
+import {
+  ACTION_NATIVE_H,
+  ACTION_NATIVE_W,
+  ACTION_WORLD_SCALE,
+  BATTLE_LOGICAL_H,
+  BATTLE_LOGICAL_W,
+} from '../src/renderer/pixi/config';
+import { ACTION_LEFT_X, ACTION_RIGHT_X } from '../src/renderer/pixi/scenes/ActionScene';
+import { ACTION_GROUND_Y } from '../src/renderer/pixi/systems/MotionSystem';
 
 const failures: string[] = [];
 let checks = 0;
@@ -30,6 +39,21 @@ const check = (condition: boolean, message: string): void => {
   checks++;
   if (!condition) failures.push(message);
 };
+
+// ── 0. ACTION geometry contract ──
+// ACTION assets and ROM offsets are native 160×80. The scene container is the
+// only projection to the 320×160 canvas; fighters and display layers must not
+// introduce a second, independent scale.
+check(ACTION_NATIVE_W === 160 && ACTION_NATIVE_H === 80,
+  `ACTION native viewport must be 160×80 (got ${ACTION_NATIVE_W}×${ACTION_NATIVE_H})`);
+check(ACTION_WORLD_SCALE === 2,
+  `ACTION world scale must be ×2 (got ${ACTION_WORLD_SCALE})`);
+check(BATTLE_LOGICAL_W === ACTION_NATIVE_W * ACTION_WORLD_SCALE && BATTLE_LOGICAL_H === ACTION_NATIVE_H * ACTION_WORLD_SCALE,
+  'battle logical canvas must be the single native ACTION projection');
+check(ACTION_LEFT_X === 48 && ACTION_RIGHT_X === 112,
+  `ACTION anchors must be native 48/112 (got ${ACTION_LEFT_X}/${ACTION_RIGHT_X})`);
+check(ACTION_GROUND_Y === 75,
+  `ACTION ground must be native Y=75 (got ${ACTION_GROUND_Y})`);
 
 // ── 1. ACTION_ANCHOR_TABLE consumed correctly ──
 

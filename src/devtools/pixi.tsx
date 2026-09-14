@@ -38,7 +38,9 @@ export function PixiModule() {
   const [playerPos, setPlayerPos] = useState<BattlePosition>(BattlePosition.DOWN_BACK);
   const [enemyPos, setEnemyPos] = useState<BattlePosition>(BattlePosition.DOWN_BACK);
   const [pose, setPose] = useState<string>('gather_power');
-  const [scale, setScale] = useState(3);
+  // ACTION proyecta el mundo completo a ×2; este control solo permite probar
+  // una escala adicional del asset, con 1 como valor canónico de producción.
+  const [scale, setScale] = useState(1);
   const [status, setStatus] = useState<'loading' | 'ready' | 'no-manifest'>('loading');
   const [reloadKey, setReloadKey] = useState(0);
 
@@ -210,7 +212,7 @@ export function PixiModule() {
           </select>
         </label>
         <label className="pixi-control">
-          <span>Escala {scale}×</span>
+          <span>Escala asset {scale}×</span>
           <input type="range" min={1} max={8} step={1} value={scale}
             onChange={e => setScale(Number(e.target.value))} />
         </label>

@@ -10,7 +10,7 @@
 // ═══════════════════════════════════════════════════════════
 
 import { describe, expect, it, vi } from 'vitest';
-import { Container } from 'pixi.js';
+import { Container, Texture } from 'pixi.js';
 import { FighterActor } from '../actors/FighterActor';
 import { PixiBattlePresentation } from './PixiBattlePresentation';
 import { ProductionRomPresentationAdapter } from './ProductionRomPresentationAdapter';
@@ -19,6 +19,9 @@ import { ImpactSystem } from '../systems/ImpactSystem';
 import type { FormAtlas } from '../assets/AtlasLoader';
 import { BattlePosition } from '../../../data/positions';
 import { ACTION_LEFT_X, ACTION_RIGHT_X, ACTION_SPECIAL_LEFT_X, ACTION_SPECIAL_RIGHT_X } from '../scenes/ActionScene';
+import { ActionScene } from '../scenes/ActionScene';
+import { ACTION_NATIVE_H, ACTION_NATIVE_W, ACTION_WORLD_SCALE, BATTLE_LOGICAL_H, BATTLE_LOGICAL_W } from '../config';
+import { ACTION_GROUND_Y } from '../systems/MotionSystem';
 import { ActionObjectRuntime } from '../../../battle/engine/presentation/ActionObjectRuntime';
 
 function fakeAtlas(): FormAtlas {
@@ -31,8 +34,8 @@ function rendererFixture() {
   const sceneDirector: any = {
     setScene: vi.fn(),
     action: {
-      actorHomeX: () => 96,
-      targetHomeX: () => 224,
+      actorHomeX: () => 48,
+      targetHomeX: () => 112,
       setFighters: vi.fn(),
       setRoles: vi.fn(),
     },
@@ -96,11 +99,39 @@ describe('FighterActor track ownership (G7)', () => {
 
 describe('SPECIAL_ACTION optical anchors', () => {
   it('moves only the special plane inward while preserving normal ACTION spacing', () => {
-    expect(ACTION_LEFT_X).toBe(96);
-    expect(ACTION_RIGHT_X).toBe(224);
+    expect(ACTION_LEFT_X).toBe(48);
+    expect(ACTION_RIGHT_X).toBe(112);
     expect(ACTION_SPECIAL_LEFT_X).toBeGreaterThan(ACTION_LEFT_X);
     expect(ACTION_SPECIAL_RIGHT_X).toBeLessThan(ACTION_RIGHT_X);
     expect(ACTION_SPECIAL_LEFT_X + ACTION_SPECIAL_RIGHT_X).toBe(ACTION_LEFT_X + ACTION_RIGHT_X);
+  });
+});
+
+describe('ACTION native geometry projection', () => {
+  it('keeps the scene in 160×80 native space and projects it once to 320×160', () => {
+    const scene = new ActionScene();
+    expect(ACTION_NATIVE_W).toBe(160);
+    expect(ACTION_NATIVE_H).toBe(80);
+    expect(ACTION_WORLD_SCALE).toBe(2);
+    expect(BATTLE_LOGICAL_W).toBe(ACTION_NATIVE_W * ACTION_WORLD_SCALE);
+    expect(BATTLE_LOGICAL_H).toBe(ACTION_NATIVE_H * ACTION_WORLD_SCALE);
+    expect(scene.scale.x).toBe(ACTION_WORLD_SCALE);
+    expect(scene.scale.y).toBe(ACTION_WORLD_SCALE);
+    expect(scene.label).toBe('action-scene-native-160x80');
+    expect(ACTION_GROUND_Y).toBe(75);
+  });
+
+  it('reorders fighters without moving either one below the BG', () => {
+    const scene = new ActionScene();
+    scene.setBackground(Texture.WHITE);
+    const left = new FighterActor(fakeAtlas(), 'gohan_young', 'left');
+    const right = new FighterActor(fakeAtlas(), 'piccolo_evil', 'right');
+    scene.setFighters(left, right);
+    scene.reorderFightersDrawnOrder(right, left);
+    expect(scene.children[0]).not.toBe(right);
+    expect(scene.children[0]).not.toBe(left);
+    expect(scene.children.indexOf(right)).toBe(1);
+    expect(scene.children.indexOf(left)).toBe(2);
   });
 });
 

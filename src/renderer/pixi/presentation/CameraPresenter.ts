@@ -151,8 +151,8 @@ export class CameraPresenter {
    * El X se refleja por lado: SIDE_1 → negativo, SIDE_2 → positivo (net ΔSCX ±156).
    * La Y no se refleja (net ΔSCY -42).
    *
-   * ⚠ Coordenadas en espacio GBC (sin ×2): mismo convenio que SCREEN_MOTION. La
-   * reconciliación de escala (ACTION ×2 vs luchadores ×3) sigue pendiente aparte.
+   * Coordenadas en espacio GBC (sin ×2): mismo convenio que SCREEN_MOTION. La
+   * proyección a píxeles de salida la aplica el contenedor de mundo compartido.
    */
   applyScreenPath(tick: number, durationTicks: number, side: 'SIDE_1' | 'SIDE_2' = 'SIDE_1'): void {
     this.screenPathActive = true;

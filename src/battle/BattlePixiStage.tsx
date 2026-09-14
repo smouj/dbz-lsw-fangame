@@ -77,7 +77,9 @@ export function BattlePixiStage({ scenario, playerFormId, enemyFormId, playerPos
         specialActionBackground: SPECIAL_ACTION_BACKGROUND,
         playerPos,
         enemyPos,
-        scale: 3,
+        // Los frames ROM se mantienen a 1:1 dentro del mundo ACTION nativo;
+        // ActionScene proyecta el plano completo a ×2.
+        scale: 1,
       });
       await pres.init();
       if (disposed) {

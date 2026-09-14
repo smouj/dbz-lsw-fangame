@@ -210,19 +210,31 @@ try {
   const modules=[...moduleBody.matchAll(/id: '([a-z-]+)'/g)].map(m=>m[1]);
   // DEV_MODULES es la fuente única. Mantener este valor alineado con el
   // registro evita que un módulo nuevo quede fuera de la sonda visual.
-  assert.equal(modules.length,23);
+  // The registry currently contains 24 internal modules, including the
+  // Performance and System Hub workspaces. Keep this count explicit so a
+  // module cannot silently disappear from the browser sweep.
+  assert.equal(modules.length,24,`expected 24 Dev modules, found ${modules.length}`);
+  assert.equal(new Set(modules).size,modules.length,'DEV_MODULES contains duplicate ids');
   await page.goto(new URL('#dev/dashboard',url).href,{waitUntil:'domcontentloaded'});
   await page.locator('.devstudio').waitFor({timeout:60000});
   for(const width of [1280,390]) {
     await page.setViewportSize({width,height:width===390?844:720});
     for(const [i,module] of modules.entries()) {
+      // Cada módulo puede vivir en un área distinta. Recorrer los botones por
+      // índice solo funciona mientras el registro y el submenú coinciden; en
+      // cuanto un módulo cambia de área se termina abriendo otro panel. Los
+      // hashes son la API canónica del Dev Studio, así que prueban el mismo
+      // enlace que usan los deep links y el workspace.
+      await page.goto(new URL(`#dev/${module}`,url).href,{waitUntil:'domcontentloaded'});
+      await page.locator(`.dev-module[data-module="${module}"]`).waitFor({timeout:60000});
       if(width===390) {
         await page.locator('.dev-mobile-bar button').first().click();
-        assert.ok(await page.locator('.dev-nav-item').nth(i).locator('.dev-nav-label').isVisible(),'mobile navigation labels visible');
+        const activeNav = page.locator('.dev-nav-item[aria-current="page"]');
+        assert.equal(await activeNav.count(),1,`${module}: mobile navigation exposes one active module`);
+        assert.ok(await activeNav.locator('.dev-nav-label').isVisible(),'mobile navigation labels visible');
         if(i===0) await shot('dev-mobile-navigation');
+        await page.locator('.dev-mobile-bar button').first().click();
       }
-      await page.locator('.dev-nav-item').nth(i).click();
-      await page.locator(`.dev-module[data-module="${module}"]`).waitFor();
       await page.waitForTimeout(600);
       assert.deepEqual([...new Set(errors)],[],`${module}: no JavaScript exceptions after loading resources`);
       assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`${module}: no window overflow`);

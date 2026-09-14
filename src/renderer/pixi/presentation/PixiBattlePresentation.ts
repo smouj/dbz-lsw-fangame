@@ -23,6 +23,7 @@ import { RomDisplayPresenter } from '../../../battle/romDisplay/RomDisplayPresen
 import { RomDisplayLayer } from '../../../battle/romDisplay/RomDisplayLayer';
 import { CameraPresenter } from './CameraPresenter';
 import { ActionObjectRuntime, applyBindingCue, unapplyBindingCue, type ActionObjectBinding, type ActionObjectSlot } from '../../../battle/engine/presentation/ActionObjectRuntime';
+import { ACTION_WORLD_SCALE } from '../config';
 
 export interface PixiPresentationConfig {
   playerFormId: string;
@@ -32,14 +33,17 @@ export interface PixiPresentationConfig {
   specialActionBackground?: string;
   playerPos: BattlePosition;
   enemyPos: BattlePosition;
-  /** Escala del luchador grande en ACTION (px por píxel de asset). */
+  /**
+   * Escala opcional del asset dentro del mundo nativo. El plano ACTION se
+   * proyecta aparte mediante ACTION_WORLD_SCALE; el valor de producción es 1.
+   */
   scale?: number;
 }
 
 export class PixiBattlePresentation implements BattlePresentation {
   private readonly renderer: BattleRenderer;
   private readonly cfg: PixiPresentationConfig;
-  private readonly scale: number;
+  private readonly fighterScale: number;
   private readonly sceneTextures = new Map<string, Texture>();
   private playerTacticalPos: BattlePosition;
   private enemyTacticalPos: BattlePosition;
@@ -185,11 +189,15 @@ export class PixiBattlePresentation implements BattlePresentation {
   constructor(renderer: BattleRenderer, cfg: PixiPresentationConfig) {
     this.renderer = renderer;
     this.cfg = cfg;
-    this.scale = cfg.scale ?? 3;
+    // La escala del mundo ya no se aplica a cada fighter. ACTION_SCENE escala
+    // una sola vez el contenedor; 1 mantiene los frames ROM a tamaño nativo.
+    this.fighterScale = cfg.scale ?? 1;
     this.playerTacticalPos = cfg.playerPos;
     this.enemyTacticalPos = cfg.enemyPos;
     this.romDisplayPresenter = new RomDisplayPresenter();
-    this.romDisplayLayer = new RomDisplayLayer(this.romDisplayPresenter, this.scale);
+    // RomDisplayLayer dibuja la pantalla GBC a 1:1 y queda recortada al
+    // viewport ACTION por su propia máscara. El padre ActionScene proyecta ×2.
+    this.romDisplayLayer = new RomDisplayLayer(this.romDisplayPresenter, 1);
     this.cameraPresenter = new CameraPresenter();
     // Screen-space overlay: it hangs from app.stage, outside the camera/world,
     // so ROM screen motion cannot displace or crop the white transition.
@@ -215,8 +223,8 @@ export class PixiBattlePresentation implements BattlePresentation {
         : Promise.resolve(null),
       pOwUrl ? this.renderer.loadTexture(pOwUrl) : Promise.resolve(null),
       eOwUrl ? this.renderer.loadTexture(eOwUrl) : Promise.resolve(null),
-      this.renderer.addFighter(this.cfg.playerFormId, 'left', this.scale),
-      this.renderer.addFighter(this.cfg.enemyFormId, 'right', this.scale),
+      this.renderer.addFighter(this.cfg.playerFormId, 'left', this.fighterScale),
+      this.renderer.addFighter(this.cfg.enemyFormId, 'right', this.fighterScale),
     ]);
 
     dir.tactical.setBackground(overview);
@@ -498,6 +506,10 @@ export class PixiBattlePresentation implements BattlePresentation {
     this.clearProjectile();
     this.cancelRush();
     this.cameraPresenter.reset();
+    // `returnToField` puede ocurrir entre dos ticks del timeline. Restablece
+    // también la transformación ya aplicada al world, evitando que un pan ROM
+    // deje el FIELD fuera del viewport hasta el siguiente sync.
+    this.resetWorldCamera();
     this.leftActor?.setFlash(0);
     this.rightActor?.setFlash(0);
     // P0 CLEANUP — baseline visual real: offsets/rom-track borrados ANTES de
@@ -544,7 +556,13 @@ export class PixiBattlePresentation implements BattlePresentation {
     const impactSnap = this.renderer.impactSystem.snapshot(this.renderer.currentTick);
     this.cameraPresenter.setTransientOffset(impactSnap.shakeX, impactSnap.shakeY);
     const cameraSnap = this.cameraPresenter.compute(this.renderer.currentTick);
-    this.renderer.world.position.set(cameraSnap.screenX, cameraSnap.screenY);
+    // CameraPresenter devuelve offsets en píxeles nativos ROM. Todo el mundo
+    // (FIELD y ACTION) se proyecta ×2, por lo que la cámara debe usar la misma
+    // conversión y nunca mezclarse con coordenadas lógicas de salida.
+    this.renderer.world.position.set(
+      cameraSnap.screenX * ACTION_WORLD_SCALE,
+      cameraSnap.screenY * ACTION_WORLD_SCALE,
+    );
 
     if (this.projectile && this.projectileSpawnTick != null && this.projectileContactTick != null) {
       const duration = Math.max(1, this.projectileContactTick - this.projectileSpawnTick);
@@ -603,6 +621,7 @@ export class PixiBattlePresentation implements BattlePresentation {
     this.clearProjectile();
     this.cancelRush();
     this.cameraPresenter.reset();
+    this.resetWorldCamera();
     this.whiteFlashStartTick = -1;
     this.whiteFlashDurationTicks = 0;
     this.whiteFlash.clear();
@@ -653,6 +672,10 @@ export class PixiBattlePresentation implements BattlePresentation {
       this.projectile.destroy({ texture: false });
       this.projectile = null;
     }
+  }
+
+  private resetWorldCamera(): void {
+    this.renderer.world.position.set(0, 0);
   }
 
   private cancelRush(): void {

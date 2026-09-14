@@ -27,4 +27,13 @@ export { rushX, lerp, easeOutCubic, easeInOutCubic, easeOutQuad, ACTION_GROUND_Y
 export type { RushMotion, Easing } from './systems/MotionSystem';
 
 // Config
-export { BATTLE_LOGICAL_W, BATTLE_LOGICAL_H, BG_NATIVE_W, BG_NATIVE_H, BG_SCALE } from './config';
+export {
+  BATTLE_LOGICAL_W,
+  BATTLE_LOGICAL_H,
+  BG_NATIVE_W,
+  BG_NATIVE_H,
+  BG_SCALE,
+  ACTION_NATIVE_W,
+  ACTION_NATIVE_H,
+  ACTION_WORLD_SCALE,
+} from './config';
