@@ -73,6 +73,8 @@ check('deployment truth matches current BattleScreen gate', BATTLE_PRESENTATION_
   && BATTLE_PRESENTATION_DEPLOYMENT.legacyCompletionFallback === true
   && mainUi.includes('isPixiField()')
   && mainUi.includes('pixiPresentationActive')
+  && mainUi.includes('pixiActionActive')
+  && mainUi.includes('setPixiActionActive(useRomPixi)')
   && mainUi.includes('if (romOwnsCompletion) return;'));
 check('Card preview renders the card production timeline from physical-ROM files', cardsUi.includes('ROM FRAME PREVIEW')
   && attackPreviewUi.includes('romPresentationTimelineForCard')

@@ -24,6 +24,13 @@ visible. Solo después de `onPresentationReady(true)` se ocultan el fondo y los
 fighters DOM. Si la inicialización falla, el campo DOM sigue disponible para
 que la partida no quede en blanco.
 
+La disponibilidad del chunk Pixi y la propiedad de una acción son estados
+distintos. Una carta solo oculta su película DOM cuando existe `romTimeline` y
+el timeline ROM ha tomado la propiedad (`pixiActionActive`). Las familias que
+todavía usan una película legacy conservan esa película visible aunque Pixi
+esté montado para el campo; así no se produce una acción vacía por el mero
+hecho de cargar el renderer.
+
 ## Geometría única
 
 La escena ACTION usa coordenadas ROM nativas de `160×80`. `ActionScene` aplica
@@ -63,4 +70,3 @@ Para comparar una incidencia visual:
 3. Comparar los snapshots de actor, cue, frame físico y tick ROM.
 4. Corregir la autoridad ROM o la composición Pixi, nunca ajustar el DOM para
    ocultar una discrepancia.
-

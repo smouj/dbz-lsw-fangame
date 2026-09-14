@@ -195,6 +195,23 @@ describe('ACTION native geometry projection', () => {
     expect(scene.children.indexOf(right)).toBe(1);
     expect(scene.children.indexOf(left)).toBe(2);
   });
+
+  it('keeps the ROM display layer behind both fighters when draw order changes', () => {
+    const scene = new ActionScene();
+    scene.setBackground(Texture.WHITE);
+    const left = new FighterActor(fakeAtlas(), 'gohan_young', 'left');
+    const right = new FighterActor(fakeAtlas(), 'piccolo_evil', 'right');
+    scene.setFighters(left, right);
+    const romDisplay = new Container();
+    romDisplay.label = 'rom-display';
+    scene.addChildAt(romDisplay, 1);
+
+    scene.reorderFightersDrawnOrder(right, left);
+
+    expect(scene.children.indexOf(romDisplay)).toBe(1);
+    expect(scene.children.indexOf(right)).toBe(2);
+    expect(scene.children.indexOf(left)).toBe(3);
+  });
 });
 
 describe('ActionObject slot mapping por ROL (P0.4/P0.7)', () => {

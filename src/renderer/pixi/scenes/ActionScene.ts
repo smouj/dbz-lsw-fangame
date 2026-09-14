@@ -105,12 +105,14 @@ export class ActionScene extends Container {
   reorderFightersDrawnOrder(firstDrawn: FighterActor | null, secondDrawn: FighterActor | null): void {
     if (!firstDrawn || !secondDrawn) return;
     if (!this.children.includes(firstDrawn) || !this.children.includes(secondDrawn)) return;
-    // El BG y la capa ROM Display deben permanecer detrás de los fighters.
+    // El BG y cualquier capa de display ROM deben permanecer detrás de los
+    // fighters. No asumimos que el BG sea el único hijo no-fighter: la capa
+    // RomDisplay se inserta entre ambos y debe conservarse ahí al reordenar.
     // Reordenar desde el índice 0 (la implementación anterior) podía poner el
     // actor por debajo del fondo y hacer que desapareciera en una reacción.
     const firstIndex = this.children.indexOf(firstDrawn);
     const secondIndex = this.children.indexOf(secondDrawn);
-    const fighterBaseIndex = this.bg ? 1 : 0;
+    const fighterBaseIndex = this.children.filter(child => child !== this.leftFighter && child !== this.rightFighter).length;
     if (firstIndex === secondIndex) return;
     this.setChildIndex(firstDrawn, fighterBaseIndex);
     this.setChildIndex(secondDrawn, fighterBaseIndex + 1);

@@ -243,8 +243,13 @@ export class PixiBattlePresentation implements BattlePresentation {
     // vez). A partir de aquí los roles cambian por setRoles, sin reparent.
     this.renderer.sceneDirector.action.setFighters(this.leftActor, this.rightActor);
 
-    // V7.8 — ROM display layer: se añade sobre el action scene.
-    this.renderer.sceneDirector.action.addChild(this.romDisplayLayer.view);
+    // V7.8 — ROM display layer: se coloca entre el fondo ACTION y los dos
+    // FighterActor. El display ROM contiene BG/compose/ventanas físicas; si se
+    // añade al final del contenedor puede pintar una textura opaca encima de
+    // los luchadores y hacer que parezca que la secuencia los ha perdido.
+    // Los FX que deban quedar por encima siguen pasando por projectileLayer o
+    // por el flash de pantalla, que tienen su propia prioridad explícita.
+    this.renderer.sceneDirector.action.addChildAt(this.romDisplayLayer.view, 1);
 
     this.renderer.sceneDirector.setScene('FIELD');
   }

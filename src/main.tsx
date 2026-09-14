@@ -911,6 +911,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
   // antes de que React arranque la capa cinematográfica legacy.
   const pixiPresRef = useRef<PixiBattlePresentation | null>(null);
   const [pixiPresentationReady, setPixiPresentationReady] = useState(false);
+  // Pixi puede estar listo mientras una carta concreta sigue usando su
+  // película legacy. No ocultamos esa película hasta que el timeline ROM de
+  // esa acción haya tomado realmente la propiedad visual.
+  const [pixiActionActive, setPixiActionActive] = useState(false);
   const romAdapterRef = useRef<ProductionRomPresentationAdapter | null>(null);
   const romPlayerRef = useRef<RomPresentationPlayer | null>(null);
   const presentationSourceRef = useRef<'ROM' | 'LEGACY'>('LEGACY');
@@ -1443,6 +1447,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
       romAdapterRef.current = null;
       stageRomActiveRef.current = false;
       runtimeTimelineCursorRef.current = 0;
+      setPixiActionActive(false);
     }
   };
   useEffect(() => clearCinematicTimers, []);
@@ -1464,6 +1469,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
     const finishCinematic = () => {
       if (cinematicFinished) return;
       cinematicFinished = true;
+      setPixiActionActive(false);
       setCardFx({ card, side, step: 'return', visual: cardProjectileClass(card) });
       setViewMode('OVERVIEW');
       cinematicTimers.current.push(window.setTimeout(() => {
@@ -1477,6 +1483,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
     const finishRomCinematic = () => {
       if (cinematicFinished) return;
       cinematicFinished = true;
+      setPixiActionActive(false);
       completionOwnerRef.current = 'DOM';
       romAdapterRef.current = null;
       setViewMode('OVERVIEW');
@@ -1520,6 +1527,11 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
     const romTimeline = runtimeStandardDamage?.timeline ?? cardRomRoute?.timeline ?? null;
     const romOwnsCompletion = !!runtimeStandardDamage && !!pixiPres;
     const useRomPixi = continuingRuntimeStage || !!romTimeline;
+    // La ruta de producción solo reclama el plano cuando existe una timeline
+    // ROM reproducible para esta acción. Las familias aún no migradas
+    // permanecen en la película DOM legacy, aunque Pixi siga montado para el
+    // resto de la batalla.
+    setPixiActionActive(useRomPixi);
     presentationSourceRef.current = useRomPixi ? 'ROM' : 'LEGACY';
     completionOwnerRef.current = romOwnsCompletion ? 'ROM' : 'DOM';
     if (pixiPres && !continuingRuntimeStage) {
@@ -1544,6 +1556,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
           romPlayerRef.current = null;
           stageRomActiveRef.current = false;
           runtimeTimelineCursorRef.current = 0;
+          setPixiActionActive(false);
           pixiPres.returnToField();
         },
       });
@@ -1562,6 +1575,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
         onComplete: () => {
           romPlayerRef.current = null;
           pixiPres.returnToField();
+          if (!romOwnsCompletion) setPixiActionActive(false);
           if (romOwnsCompletion) finishRomCinematic();
         },
         onCue: (cue) => {
@@ -2099,6 +2113,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
       romAdapterRef.current = adapter;
       presentationSourceRef.current = 'ROM';
       stageRomActiveRef.current = true;
+      setPixiActionActive(true);
       runtimeTimelineCursorRef.current = 0;
       let cursor = 0;
       while (cursor < rt.timeline.entries.length) {
@@ -3123,7 +3138,12 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
   // chunk lazy y los atlases ROM terminan de inicializarse. Así no aparece un
   // frame vacío durante el arranque ni se pierde el fallback si Pixi falla.
   const pixiFieldEnabled = isPixiField();
-  const pixiPresentationActive = pixiFieldEnabled && pixiPresentationReady;
+  // En FIELD Pixi siempre es la superficie visible cuando está listo. Durante
+  // ACTION solo lo es si la acción actual tiene una timeline ROM efectiva;
+  // una carta legacy conserva su película DOM sin quedar oculta por accidente.
+  const pixiPresentationActive = pixiFieldEnabled
+    && pixiPresentationReady
+    && (viewMode === 'OVERVIEW' || pixiActionActive);
   const phaseShortLabel =
     phase === 'command' || phase === 'cardSelect' || phase === 'limitSelect' ? 'ATTACK' :
     phase === 'basic' ? 'BASIC' :
