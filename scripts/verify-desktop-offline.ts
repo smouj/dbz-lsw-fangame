@@ -74,5 +74,30 @@ check('ENVIRONMENTS.md existe', existsSync('docs/development/ENVIRONMENTS.md'));
 check('.nvmrc existe', existsSync('.nvmrc'), existsSync('.nvmrc') ? readFileSync('.nvmrc', 'utf8').trim() : '');
 check('package-lock.json existe', existsSync('package-lock.json'));
 
+// ── 6. Una sola versión de Node en todos los entornos ──
+// Había CUATRO versiones en juego (20/22/24): el workflow de migración usaba 20
+// mientras .nvmrc y los otros tres usaban 22. Este check impide que vuelva.
+const nvmrc = existsSync('.nvmrc') ? readFileSync('.nvmrc', 'utf8').trim() : '';
+check('.nvmrc define una versión de Node', /^[0-9]+(\.[0-9x]+)?$/.test(nvmrc), nvmrc || '(vacío)');
+const wfDir = '.github/workflows';
+const wfNodes: { file: string; version: string }[] = [];
+if (existsSync(wfDir)) {
+  for (const f of readdirSync(wfDir)) {
+    if (!/\.ya?ml$/.test(f)) continue;
+    const m = readFileSync(join(wfDir, f), 'utf8').match(/node-version:\s*['"]?([0-9][0-9.x]*)/);
+    if (m) wfNodes.push({ file: f, version: m[1] });
+  }
+}
+check('hay workflows que fijan Node', wfNodes.length > 0, `${wfNodes.length} workflows`);
+const nodeMajor = (v: string) => v.split('.')[0];
+const nodeMismatched = wfNodes.filter((w) => nodeMajor(w.version) !== nodeMajor(nvmrc));
+check(
+  'todos los entornos usan el mismo Node que .nvmrc',
+  nodeMismatched.length === 0,
+  nodeMismatched.length
+    ? `desajustados: ${nodeMismatched.map((m) => `${m.file}=${m.version}`).join(', ')}`
+    : `todos = ${nvmrc}`,
+);
+
 console.log(`\n═══ RESULTADO: ${passed} passed · ${failed} failed ═══`);
 process.exit(failed === 0 ? 0 : 1);
