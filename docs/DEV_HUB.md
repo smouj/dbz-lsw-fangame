@@ -82,6 +82,13 @@ npm run audit:rom-pending-cues
 npm run verify:rom-pending-cues
 ```
 
+El contrato de preparación de Beta 0.1 está separado de la deuda arqueológica:
+`verify:beta-readiness` comprueba partida completa, familias representativas,
+integridad visual física y estabilidad de sesión. Los casos ROM que no afectan
+una regresión observable quedan documentados como backlog posterior en
+[`BETA_0.1.md`](BETA_0.1.md), sin inventar frames ni cerrar pendientes con
+aproximaciones.
+
 Que una carta tenga frames físicos no implica que toda su selección temporal
 esté demostrada: las filas `STATIC_CLOSURE_CANDIDATE` y
 `PENDING_ROM_TRACE` permanecen visibles hasta disponer de evidencia ROM. No
