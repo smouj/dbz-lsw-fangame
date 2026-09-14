@@ -8,8 +8,9 @@
 //      vivo (sin filas stale). Films: los 26 dynamic films == filas film.
 //   3. UNKNOWN_REASON == 0: ninguna fila con cause G ni reasonCode
 //      genérico; causa ∈ A-G; evidenceStatus ∈ enum; blocker no vacío.
-//   4. Doc bajo docs/rom/audit/dynamic-film-tracker.{md,csv} byte-idéntico
-//      al generado desde el core (el tracker documentado no puede derivar).
+//   4. Doc bajo docs/rom/audit/dynamic-film-tracker.{md,csv} idéntico al
+//      generado desde el core (normalizando EOL del checkout; el tracker
+//      documentado no puede derivar).
 // Uso: npm run verify:dynamic-film-tracker
 // ═══════════════════════════════════════════════════════════════════════
 
@@ -30,6 +31,15 @@ let failures = 0;
 function check(label: string, ok: boolean, detail = ''): void {
   if (!ok) failures++;
   console.log(`${ok ? 'PASS' : 'FAIL'}  ${label}${detail ? ` — ${detail}` : ''}`);
+}
+
+/**
+ * Git puede materializar los documentos con CRLF en Windows aunque el
+ * generador escriba LF. La semántica del tracker no cambia por el EOL, así
+ * que la frescura debe comparar contenido normalizado y no el formato local.
+ */
+function normalizeEol(value: string): string {
+  return value.replace(/\r\n?/g, '\n');
 }
 
 function main(): void {
@@ -118,10 +128,12 @@ function main(): void {
     const currentMd = readFileSync(mdPath, 'utf8');
     const currentCsv = readFileSync(csvPath, 'utf8');
     const generated = buildGenerator();
-    check('invariante 4: dynamic-film-tracker.md byte-idéntico al generado', currentMd === generated.md,
-      currentMd === generated.md ? '' : 'doc desactualizado — regenerar con scripts/build-dynamic-film-tracker-doc.ts');
-    check('invariante 4: dynamic-film-tracker.csv byte-idéntico al generado', currentCsv === generated.csv,
-      currentCsv === generated.csv ? '' : 'csv desactualizado — regenerar con scripts/build-dynamic-film-tracker-doc.ts');
+    const normalizedMd = normalizeEol(currentMd);
+    const normalizedCsv = normalizeEol(currentCsv);
+    check('invariante 4: dynamic-film-tracker.md idéntico al generado (EOL normalizado)', normalizedMd === generated.md,
+      normalizedMd === generated.md ? '' : 'doc desactualizado — regenerar con scripts/build-dynamic-film-tracker-doc.ts');
+    check('invariante 4: dynamic-film-tracker.csv idéntico al generado (EOL normalizado)', normalizedCsv === generated.csv,
+      normalizedCsv === generated.csv ? '' : 'csv desactualizado — regenerar con scripts/build-dynamic-film-tracker-doc.ts');
   }
 
   console.log(failures === 0 ? '\nverify:dynamic-film-tracker → PASS' : `\nverify:dynamic-film-tracker → FAIL (${failures})`);
