@@ -69,6 +69,7 @@ check('src/ no importa tools/rom-trace', romToolingImports.length === 0, romTool
 check('DESKTOP_OFFLINE_ARCHITECTURE.md existe', existsSync('docs/architecture/DESKTOP_OFFLINE_ARCHITECTURE.md'));
 check('ROM_EXECUTION_MODES.md existe', existsSync('docs/architecture/ROM_EXECUTION_MODES.md'));
 check('ENVIRONMENTS.md existe', existsSync('docs/development/ENVIRONMENTS.md'));
+check('PERFORMANCE_P0.md existe', existsSync('docs/architecture/PERFORMANCE_P0.md'));
 
 // ── 5. Fijado de versiones ──
 check('.nvmrc existe', existsSync('.nvmrc'), existsSync('.nvmrc') ? readFileSync('.nvmrc', 'utf8').trim() : '');

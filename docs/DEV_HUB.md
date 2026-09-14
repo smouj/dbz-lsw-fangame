@@ -97,6 +97,11 @@ aparece cualquier material Dev, ROM/save o archivo de investigación dentro de
 la distribución. El Dev Studio ya se carga de forma diferida y se sustituye
 por un stub vacío en el modo `release`.
 
+El estado y las métricas de este frente están documentados en
+[`PERFORMANCE_P0.md`](architecture/PERFORMANCE_P0.md). Las optimizaciones que
+afecten al reloj GBC, Pixi o memoria quedan condicionadas a una medición real
+de `BattleScreen`; no se aplican cambios especulativos al gameplay.
+
 ## Ejecutar en desarrollo
 
 Desde PowerShell, en el repo:
