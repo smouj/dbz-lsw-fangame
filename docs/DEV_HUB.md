@@ -81,6 +81,22 @@ npm run build:rom-sprite-atlas
 El catálogo conserva la frontera Dev/Juego: no añade una ruta pública ni
 modifica los datos de combate.
 
+### Frontera de distribución
+
+El build `--mode release` aplica una poda determinista al directorio `dist/`:
+conserva las texturas, manifests y datos que consume el juego, y excluye
+`physical-debug/`, `provenance.json`, capturas, fixtures y páginas de auditoría
+del Dev Hub. El límite se verifica con:
+
+```powershell
+npm run verify:release-content
+```
+
+Ese gate imprime el tamaño real de JS/CSS y de los assets de juego, y falla si
+aparece cualquier material Dev, ROM/save o archivo de investigación dentro de
+la distribución. El Dev Studio ya se carga de forma diferida y se sustituye
+por un stub vacío en el modo `release`.
+
 ## Ejecutar en desarrollo
 
 Desde PowerShell, en el repo:

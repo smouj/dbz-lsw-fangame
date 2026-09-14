@@ -38,6 +38,7 @@ check('boundary: DevStudio owns its private layout CSS', studio.includes("import
 check('boundary: DevStudio is lazy-loaded', main.includes("lazy(() => import('./devtools/DevStudio')"));
 check('boundary: release build removes DevStudio branch', main.includes("import.meta.env.MODE === 'release' ? null : DevStudioLazy"));
 check('boundary: release alias points to the null stub', vite.includes('DevStudioStub.tsx'));
+check('boundary: release build prunes Dev-only materializations', vite.includes('release-content-boundary') && vite.includes('physical-debug') && vite.includes('provenance.json'));
 check('boundary: release stub renders no panel', /function DevStudio\([^)]*\): null[\s\S]*?return null/.test(stub));
 check('boundary: Dev route has an explicit release guard', route.includes("import.meta.env.MODE === 'release'"));
 check('boundary: only #dev or #dev/<module> activates Dev', route.includes("hash === '#dev' || hash.startsWith('#dev/')"));

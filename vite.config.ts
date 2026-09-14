@@ -1,7 +1,7 @@
 import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
-import { mkdirSync, writeFileSync, readFileSync, readdirSync, statSync, unlinkSync } from "node:fs";
-import { dirname, resolve } from "node:path";
+import { mkdirSync, writeFileSync, readFileSync, readdirSync, statSync, unlinkSync, rmSync, existsSync } from "node:fs";
+import { dirname, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { deflateSync, inflateSync } from "node:zlib";
 
@@ -279,8 +279,49 @@ function devWritePlugin(): Plugin {
   };
 }
 
+// Release content boundary: the game keeps only runtime-consumable ROM
+// materializations.  Provenance/debug renders stay available in the workspace
+// and Dev Hub, never in the player installer.
+function releaseContentPlugin(): Plugin {
+  return {
+    name: "release-content-boundary",
+    apply: "build",
+    closeBundle() {
+      const dist = resolve(rootDir, "dist");
+      const distPrefix = `${dist}${sep}`;
+      const remove = (relativePath: string) => {
+        const target = resolve(dist, relativePath);
+        if (target !== dist && !target.startsWith(distPrefix)) throw new Error(`release prune escaped dist: ${relativePath}`);
+        rmSync(target, { recursive: true, force: true });
+      };
+
+      // Development verification pages and audit snapshots copied by public/.
+      [
+        "rom-ticks-animator.html",
+        "rom-ticks-validation.html",
+        "golden-visual-gate.html",
+        "golden-gate-detail.html",
+        "cinematic-timing-gate.html",
+        "scene-camera-gate.html",
+        "goku-audit.png",
+      ].forEach(remove);
+
+      // These records are Dev-only inspection material.  Runtime still keeps
+      // manifest.json, rom-physical.manifest.json and the physical PNGs.
+      const sprites = resolve(dist, "assets", "sprites");
+      if (existsSync(sprites)) {
+        for (const entry of readdirSync(sprites, { withFileTypes: true })) {
+          if (!entry.isDirectory()) continue;
+          remove(`assets/sprites/${entry.name}/physical-debug`);
+          remove(`assets/sprites/${entry.name}/provenance.json`);
+        }
+      }
+    },
+  };
+}
+
 export default defineConfig(({ mode }) => ({
-  plugins: [react(), devWritePlugin()],
+  plugins: [react(), devWritePlugin(), ...(mode === "release" ? [releaseContentPlugin()] : [])],
   server: {
     port: 5178
   },
