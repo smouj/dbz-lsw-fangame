@@ -651,8 +651,28 @@ export class PixiBattlePresentation implements BattlePresentation {
   debugState(): {
     tick: number;
     scene: BattleScene;
-    actor: { pose: string | null; frame: number; x: number; y: number; visible: boolean } | null;
-    target: { pose: string | null; frame: number; x: number; y: number; visible: boolean } | null;
+    actor: {
+      pose: string | null;
+      frame: number;
+      x: number;
+      y: number;
+      visible: boolean;
+      facing: 'left' | 'right';
+      scaleX: number;
+      orientationSource: 'ROM_PHYSICAL_FRAME' | 'SEMANTIC_POSE';
+      physicalId: string | null;
+    } | null;
+    target: {
+      pose: string | null;
+      frame: number;
+      x: number;
+      y: number;
+      visible: boolean;
+      facing: 'left' | 'right';
+      scaleX: number;
+      orientationSource: 'ROM_PHYSICAL_FRAME' | 'SEMANTIC_POSE';
+      physicalId: string | null;
+    } | null;
     romDisplay: RomDisplayPresenter['state'];
     camera: ReturnType<CameraPresenter['state']>;
   } {
@@ -661,8 +681,34 @@ export class PixiBattlePresentation implements BattlePresentation {
     return {
       tick: this.renderer.currentTick,
       scene: this.renderer.sceneDirector.scene,
-      actor: a ? { pose: a.pose, frame: a.frameIndex, x: a.position.x, y: a.position.y, visible: a.visible } : null,
-      target: t ? { pose: t.pose, frame: t.frameIndex, x: t.position.x, y: t.position.y, visible: t.visible } : null,
+      actor: a ? (() => {
+        const state = a.inspect();
+        return {
+          pose: a.pose,
+          frame: a.frameIndex,
+          x: a.position.x,
+          y: a.position.y,
+          visible: a.visible,
+          facing: state.facing,
+          scaleX: state.scaleX,
+          orientationSource: state.orientationSource,
+          physicalId: state.physicalId,
+        };
+      })() : null,
+      target: t ? (() => {
+        const state = t.inspect();
+        return {
+          pose: t.pose,
+          frame: t.frameIndex,
+          x: t.position.x,
+          y: t.position.y,
+          visible: t.visible,
+          facing: state.facing,
+          scaleX: state.scaleX,
+          orientationSource: state.orientationSource,
+          physicalId: state.physicalId,
+        };
+      })() : null,
       romDisplay: this.romDisplayPresenter.state,
       camera: this.cameraPresenter.state(),
     };

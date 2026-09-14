@@ -23,6 +23,7 @@ import { ActionScene } from '../scenes/ActionScene';
 import { ACTION_NATIVE_H, ACTION_NATIVE_W, ACTION_WORLD_SCALE, BATTLE_LOGICAL_H, BATTLE_LOGICAL_W } from '../config';
 import { ACTION_GROUND_Y } from '../systems/MotionSystem';
 import { ActionObjectRuntime } from '../../../battle/engine/presentation/ActionObjectRuntime';
+import { facingScaleX } from '../../../data/facing';
 
 function fakeAtlas(): FormAtlas {
   return { formId: 'gohan_young', dir: '', anims: new Map(), textures: new Map(), maxW: 16, maxH: 16 };
@@ -45,6 +46,18 @@ function physicalLatchAtlas(): FormAtlas {
   atlas.textures.set('rom-frame-0', Texture.WHITE);
   return atlas;
 }
+
+describe('FACING único para DOM, Pixi y Dev', () => {
+  it('mantiene al actor frente al rival y solo invierte move_back semántico', () => {
+    expect(facingScaleX('gohan_young', 'left', 'idle', 'SEMANTIC_POSE')).toBe(1);
+    expect(facingScaleX('gohan_young', 'right', 'idle', 'SEMANTIC_POSE')).toBe(-1);
+    expect(facingScaleX('gohan_young', 'left', 'move_back', 'SEMANTIC_POSE')).toBe(-1);
+    expect(facingScaleX('gohan_young', 'right', 'move_back', 'SEMANTIC_POSE')).toBe(1);
+    // Un frame físico nunca hereda la inversión semántica del pose anterior.
+    expect(facingScaleX('gohan_young', 'left', 'move_back', 'ROM_PHYSICAL_FRAME')).toBe(1);
+    expect(facingScaleX('gohan_young', 'right', 'move_back', 'ROM_PHYSICAL_FRAME')).toBe(-1);
+  });
+});
 
 function rendererFixture() {
   const app = { stage: new Container(), screen: { width: 320, height: 160 } };

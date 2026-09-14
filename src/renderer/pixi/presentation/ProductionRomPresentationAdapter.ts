@@ -232,7 +232,12 @@ export class ProductionRomPresentationAdapter {
     if (this.stats.exitFieldRestoredTick !== null) return;
     this.stats.exitFieldRestoredTick = tick;
     this.currentScene = 'FIELD';
-    this.pres.setScene('FIELD');
+    // FIELD restore is a full presentation boundary, not just a scene flag.
+    // Returning through the production contract clears camera, motion,
+    // physical-frame latches, flashes and actor positions in one idempotent
+    // path. Calling setScene('FIELD') alone left the last ROM frame latched
+    // into the tactical view and made the next action look duplicated/stale.
+    this.pres.returnToField();
     // B7B2 — FIELD restore limpia el binding: ningún slot conserva rol/lado.
     const clearBinding = (this.pres as Partial<Pick<BattlePresentation, 'clearActionObjectBinding'>>).clearActionObjectBinding;
     if (typeof clearBinding === 'function') clearBinding.call(this.pres);

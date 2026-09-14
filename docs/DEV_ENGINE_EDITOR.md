@@ -20,7 +20,8 @@ diagnóstico están superpuestos y no reciben eventos del canvas.
 
 ## Orientación de luchadores
 
-La orientación tiene una única autoridad de render:
+La orientación tiene una única autoridad de render (`facingScaleX` en
+`src/data/facing.ts`), compartida por DOM, Pixi y este editor:
 
 1. `facingFlip(formId, side)` establece el facing base: el luchador izquierdo
    mira a la derecha y el derecho a la izquierda.
@@ -43,6 +44,13 @@ Así una discrepancia de orientación se puede localizar sin alterar el PNG,
 `physicalId`, hashes, límites ni la procedencia ROM. Los PNG físicos se
 mantienen raw/trimmed; cualquier vista canonical right-facing de otras páginas
 es solo una transformación de presentación.
+
+La propiedad de la película también es exclusiva: cuando existe una timeline
+ROM, React no monta la película DOM legacy (`card-fx`) y Pixi consume los cues
+ROM. Al alcanzar `FIELD`, el adaptador usa `returnToField()` para limpiar cámara,
+offsets, flashes, movimiento y locks de frames antes de permitir la siguiente
+acción. Esto evita que dos schedulers o un frame físico residual aparezcan a la
+vez.
 
 ## Fronteras
 

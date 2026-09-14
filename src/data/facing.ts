@@ -19,6 +19,7 @@ import { spriteDirFor } from './spriteManifest';
 
 export type StrikeDir = 'left' | 'right';
 export type BattleSide = 'left' | 'right';
+export type FacingAuthority = 'ROM_PHYSICAL_FRAME' | 'SEMANTIC_POSE';
 
 // Dirección NATIVA del golpe por slug de sprite (44 formas).
 // Todas 'right' tras la normalización 2026-08-15 (antes 9 eran 'left' y
@@ -41,6 +42,30 @@ export function facingFlip(formId: string, side: BattleSide): number {
   const wantsRight = side === 'left'; // a la izquierda se mira a la derecha
   const native = nativeStrikeDir(formId) === 'right';
   return (wantsRight === native) ? 1 : -1;
+}
+
+/**
+ * Escala horizontal canónica para cualquier representación de un luchador.
+ *
+ * Hay dos propietarios legítimos de la orientación:
+ *   - ROM_PHYSICAL_FRAME: el frame físico ya está resuelto por ROM; solo se
+ *     aplica el espejo del lado que lo coloca frente al rival.
+ *   - SEMANTIC_POSE: las poses de compatibilidad pueden reutilizar el ciclo
+ *     move_front para `move_back`, por lo que esa pose invierte el espejo de
+ *     lado de forma explícita.
+ *
+ * Centralizar esta decisión evita que DOM, Pixi y Dev apliquen transformaciones
+ * distintas al mismo personaje/pose. Los frames físicos nunca pasan por la
+ * inversión semántica.
+ */
+export function facingScaleX(
+  formId: string,
+  side: BattleSide,
+  pose?: string | null,
+  authority: FacingAuthority = 'SEMANTIC_POSE',
+): number {
+  const base = facingFlip(formId, side);
+  return authority === 'SEMANTIC_POSE' && pose === 'move_back' ? -base : base;
 }
 
 // ─── Compatibilidad (vista de retratos/idle con sheets antiguos) ───

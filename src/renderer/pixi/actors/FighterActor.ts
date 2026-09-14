@@ -13,7 +13,7 @@
 // move_back (espejo del ciclo de andar).
 
 import { Container, Sprite, Texture } from 'pixi.js';
-import { facingFlip, type BattleSide } from '../../../data/facing';
+import { facingFlip, facingScaleX, type BattleSide } from '../../../data/facing';
 import { resolveCombatPose } from '../../../battle/spriteConfig';
 import { currentFrame, detectTimingSource } from '../systems/SpriteAnimator';
 import type { FormAtlas, PoseAnim } from '../assets/AtlasLoader';
@@ -50,6 +50,7 @@ export class FighterActor extends Container {
   /** ROM sequence state per slot (for SPECIAL_HANDLER multi-actor: Purple Comet, P.Comet Z, etc.) */
   private romResource: number | null = null;
   private romSequence: number | null = null;
+  private romPhysicalId: string | null = null;
 
   constructor(atlas: FormAtlas, formId: string, side: BattleSide) {
     super();
@@ -107,6 +108,7 @@ export class FighterActor extends Container {
   setRomSequence(resource: number, sequence: number): void {
     this.romResource = resource;
     this.romSequence = sequence;
+    this.romPhysicalId = null;
     // Invalidate a previous direct frame immediately. The compiler emits the
     // first ROM_PHYSICAL_FRAME at this same boundary when the sequence is
     // decoded; unresolved sequences remain hidden instead of showing stale art.
@@ -137,6 +139,7 @@ export class FighterActor extends Container {
   resetRomTrackState(): void {
     this.romResource = null;
     this.romSequence = null;
+    this.romPhysicalId = null;
     this.physicalFrameLocked = false;
     this._frameOffsetX = 0;
     this._frameOffsetY = 0;
@@ -148,6 +151,10 @@ export class FighterActor extends Container {
       return { resource: this.romResource, sequence: this.romSequence };
     }
     return null;
+  }
+
+  get currentRomPhysicalId(): string | null {
+    return this.romPhysicalId;
   }
 
   /** Direct physical frame from ROM_PHYSICAL_FRAME cue (exact ROM match, no pose fallback).
@@ -175,6 +182,7 @@ export class FighterActor extends Container {
   }): void {
     this.romResource = cue.resource;
     this.romSequence = cue.sequence;
+    this.romPhysicalId = cue.physicalId ?? cue.file ?? null;
     this.lastFrameIndex = cue.frameIndex;
 
     const hasPhysicalIdentity = cue.physicalId != null
@@ -247,6 +255,7 @@ export class FighterActor extends Container {
     scaleY: number;
     romResource: number | null;
     romSequence: number | null;
+    physicalId: string | null;
     physicalFrameLocked: boolean;
   } {
     return {
@@ -268,6 +277,7 @@ export class FighterActor extends Container {
       scaleY: this.sprite.scale.y,
       romResource: this.romResource,
       romSequence: this.romSequence,
+      physicalId: this.romPhysicalId,
       physicalFrameLocked: this.physicalFrameLocked,
     };
   }
@@ -313,6 +323,7 @@ export class FighterActor extends Container {
     // timelines normally stay on direct physical frames; when a pose is
     // emitted it must be the deliberate owner rather than a stale latch.
     this.physicalFrameLocked = false;
+    this.romPhysicalId = null;
     this.playbackEnabled = true;
     const resolved = resolvePose(this.atlas, pose);
     this.activePose = resolved;
@@ -355,8 +366,12 @@ export class FighterActor extends Container {
    * distintos.
    */
   private effectiveScaleX(): number {
-    if (this.physicalFrameLocked) return this.baseFlip;
-    return this.activePose === 'move_back' ? -this.baseFlip : this.baseFlip;
+    return facingScaleX(
+      this.formId,
+      this.battleSide,
+      this.activePose,
+      this.physicalFrameLocked ? 'ROM_PHYSICAL_FRAME' : 'SEMANTIC_POSE',
+    );
   }
 
   private effectiveFacing(): 'left' | 'right' {

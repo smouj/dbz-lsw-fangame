@@ -13,7 +13,7 @@ import { applyHudLayout } from './data/hudLayout';
 import { applyHudButtonVars } from './data/hudAssets';
 import { FORMS, CHARACTERS, ROM_ORDERED_CHARACTERS, getCharacter, getForm, idleSpriteUrl, statAtLevel, LIMIT_DEFAULTS, loadLimits, saveLimits } from './data/roster';
 import { STORY_ENEMY_DECKS, STORY_AI_BOOSTS, TEAM_BATTLES } from './data/enemy_decks';
-import { facingFlip, needsFlip } from './data/facing';
+import { facingScaleX, needsFlip } from './data/facing';
 import { BattlePosition, POSITION_DATA, resolveRelativeDistance, anchorFor, applyMoveAxis, positionLabel, type MoveAxis } from './data/positions';
 import { UNLOCK_KEY, STARTER_DAMAGE_DECK, STARTER_BEAM_DECK, STARTER_CHARACTERS, cardsForLevel, pickRewards, VS_UNLOCKS, isFormUnlocked, FORM_UNLOCK_LEVELS } from './data/unlocks';
 import { CARDS, CARD_COLORS, CARD_COLORS_ON_LIGHT, CARD_TYPE_NAMES, CardDef, CardType, DECK_SIZE, MAX_COPIES, getCard, CardEffect } from './data/cards';
@@ -340,8 +340,7 @@ const FighterSprite = memo(function FighterSprite({ formId, pose, side, scale = 
   const pw = Math.round(anim.w * scale / 8);
   const cw = Math.round(anim.maxW * scale / 8);
   const ch = Math.round(anim.maxH * scale / 8);
-  const baseFlip = side ? facingFlip(formId, side) : 1;
-  const flip = pose === 'move_back' ? -baseFlip : baseFlip;
+  const flip = side ? facingScaleX(formId, side, pose, 'SEMANTIC_POSE') : 1;
   return (
     <div className={`fighter-sprite ${flash ? 'flash' : ''}`}
       style={{ transform: `scaleX(${flip})`, width: cw, height: ch, display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
@@ -365,7 +364,7 @@ const BattleOverworldSprite = memo(function BattleOverworldSprite({ formId, pose
   formId: string; pose: string; side?: 'left' | 'right'; idleSrc?: string;
 }) {
   const [failedSrc, setFailedSrc] = useState<string | null>(null);
-  const flip = side ? facingFlip(formId, side) : 1;
+  const flip = side ? facingScaleX(formId, side, null, 'SEMANTIC_POSE') : 1;
   const isGather = pose === 'gather_power';
   const [gatherPhase, setGatherPhase] = useState<'pose' | 'aura'>('pose');
   const [auraOn, setAuraOn] = useState(false);
@@ -426,7 +425,7 @@ function CharacterSprite({ formId, height = 92, className = '', side }: {
     return <div className={`char-sprite-missing ${className}`} style={{ height }}>?</div>;
   }
   const transform = side
-    ? `scaleX(${facingFlip(formId, side)})`
+    ? `scaleX(${facingScaleX(formId, side, null, 'SEMANTIC_POSE')})`
     : (form.sheet && needsFlip(form.sheet) ? 'scaleX(-1)' : 'none');
   // mantener proporción: width = height * (w/h) del sprite; voltear a la derecha si el sheet lo requiere
   return (
@@ -1483,6 +1482,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
     const finishRomCinematic = () => {
       if (cinematicFinished) return;
       cinematicFinished = true;
+      // The ROM player normally consumes SCENE_LOAD/RESTORE_FIELD, but keep
+      // the completion boundary idempotent so a truncated or trace-only film
+      // cannot leave a physical action frame/camera in the FIELD view.
+      pixiPresRef.current?.returnToField();
       setPixiActionActive(false);
       stageRomActiveRef.current = false;
       runtimeTimelineCursorRef.current = 0;
@@ -3307,7 +3310,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
       )}
 
       {/* ═══ CINEMÁTICA DE ACCIÓN GBC: atacante → habilidad → rival ═══ */}
-      {cardFx && (
+      {cardFx && !pixiPresentationActive && presentationSourceRef.current !== 'ROM' && (
         <div className={`card-fx fx-${cardFx.card.type} ${cardFx.visual} ${cardFx.side} scene-${cardFx.step}`} key={`${cardFx.card.id}-${cardFx.side}-${cardFx.step}`}>
           <div className="fx-vignette" />
           {cardFx.step === 'attacker' && (
@@ -3511,7 +3514,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
             {phase === 'stageInput' && spriteManifestUrl(activeEnemyFormId)
               ? <FighterSprite formId={activeEnemyFormId} pose={qteEnemyPose} side="right" scale={15} flash={qteResolving ? true : false} />
               : (enemyPose === 'idle' && overworldUrl(activeEnemyFormId)
-                  ? <img src={overworldUrl(activeEnemyFormId)!} alt="" className="overworld-sprite" style={{ transform: `scaleX(${facingFlip(activeEnemyFormId, 'right')})` }} />
+                  ? <img src={overworldUrl(activeEnemyFormId)!} alt="" className="overworld-sprite" style={{ transform: `scaleX(${facingScaleX(activeEnemyFormId, 'right', null, 'SEMANTIC_POSE')})` }} />
                   : (spriteManifestUrl(activeEnemyFormId)
                       ? <FighterSprite formId={activeEnemyFormId} pose={enemyPose} side="right" scale={15} flash={flashEnemy} />
                       : <CharacterSprite formId={activeEnemyFormId} className="sheet-sprite" height={152} side="right" />))}
