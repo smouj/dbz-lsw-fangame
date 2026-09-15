@@ -6,7 +6,7 @@
 > `positions`, `cards`, `cardVisuals`, `hudAssets`). Si algo cambia aquí, cambia
 > en el juego — y viceversa.
 >
-> Última canonización: **2026-08-18** (auditoría de paridad studio↔juego).
+> Última canonización: **2026-09-15** (auditoría de paridad studio↔juego).
 
 ## Regla de oro
 
@@ -107,6 +107,10 @@ npm run verify:battle       # 71/71 lógica
   campo OVERVIEW usa `anchorFor`; cualquier película ACTION usa
   `actionPlaneGeometry`. No se cruzan espacios ni se llevan anchors de
   overworld a una secuencia cinematográfica.
+- HUD Studio expone la frontera como `data-plane="OVERVIEW|ACTION"` y solo
+  resuelve los anchors tácticos mientras está en OVERVIEW. En ACTION, si el
+  corpus físico ROM todavía no contiene el beat seleccionado, muestra
+  `ROM FRAME PENDING` y no dibuja un PNG sustituto ni una pose del overworld.
 
 ### Fondos por situación (fuente: `src/data/scenarios.ts` + `src/data/battleBackgrounds.ts`)
 | Situación | Fondo |
