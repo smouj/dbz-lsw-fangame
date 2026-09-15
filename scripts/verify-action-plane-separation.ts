@@ -43,6 +43,9 @@ check(canon.includes('devAids && !isAction') && canon.includes('devAids && isAct
 check(positionLab.includes('actionPlaneAnchorPercentFor'), 'Position Lab must use the ACTION plane SSOT');
 check(positionLab.includes('resolveCharacterVisualSequence') && positionLab.includes('romPhysicalPreviewSequence'), 'Position Lab ACTION preview must use physical ROM frames');
 check(hud.includes('dev-rom-preview-pending') && hud.includes('No se dibuja ningún PNG sustituto'), 'HUD must show an explicit pending state instead of a blank or invented ACTION frame');
+check(hud.includes("const tacticalAnchors = bgMode === 'overview'"), 'HUD must resolve tactical anchors only inside OVERVIEW');
+check(hud.includes("data-plane={bgMode === 'action' ? 'ACTION' : 'OVERVIEW'}"), 'HUD must expose an explicit tactical/cinematic plane boundary');
+check(hud.includes("bgMode === 'action' ? 'view-action' : 'view-overview'"), 'HUD preview root must switch its plane class with the selected mode');
 check(main.includes('actionPlaneAnchorPercentFor'), 'BattleScreen DOM fallback must project ACTION anchors from the shared SSOT');
 check(main.includes('playerFieldAnchor') && main.includes('enemyFieldAnchor'), 'BattleScreen must resolve visual anchors by plane before rendering fighters');
 check(main.includes("viewMode === 'OVERVIEW' ? `${POSITION_DATA[player.battlePos].altitude.toLowerCase()}"), 'BattleScreen must not apply tactical altitude/depth classes inside ACTION');

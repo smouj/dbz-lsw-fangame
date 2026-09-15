@@ -235,6 +235,16 @@ export function HudModule() {
     ? SPECIAL_ACTION_BACKGROUND
     : SCENARIOS[scenarioIdx]?.[bgMode === 'overview' ? 'overviewBackground' : 'actionBackground']
       ?? '/assets/backgrounds/scenarios/01_world.png';
+  // ACTION y OVERVIEW son planos distintos. No resolvemos nunca los anchors
+  // tácticos del overworld mientras estamos en el plano cinematográfico:
+  // además de evitar trabajo innecesario, esto impide que una lectura de
+  // localStorage o un override táctico pueda contaminar la composición ACTION.
+  const tacticalAnchors = bgMode === 'overview'
+    ? {
+      player: anchorFor(BattlePosition.DOWN_BACK, 'LEFT'),
+      enemy: anchorFor(BattlePosition.DOWN_BACK, 'RIGHT'),
+    }
+    : null;
 
   // Cartas reales del catálogo para la vista Mano (como el build)
   const handCards = [13, 7, 5, 1].map(id => getCard(id)).filter((c): c is CardDef => !!c);
@@ -430,7 +440,7 @@ export function HudModule() {
               la ventana igual — misma forma que el resto de vistas y que la
               ventana del juego. dev-intro-view solo congela animaciones y
               oculta debug. */}
-          <div className={`battle-screen view-overview dev-hud-real-preview ${view === 'INTRO' ? (introPhase === 'idle' ? 'dev-intro-view' : 'dev-intro-playing') : ''}`}>
+          <div className={`battle-screen ${bgMode === 'action' ? 'view-action' : 'view-overview'} dev-hud-real-preview ${view === 'INTRO' ? (introPhase === 'idle' ? 'dev-intro-view' : 'dev-intro-playing') : ''}`}>
             {/* INTRO */}
             {view === 'INTRO' && (
               /* VS FULL-SCREEN: los 2 sprites entran desde FUERA hacia su
@@ -562,16 +572,16 @@ export function HudModule() {
               </div>
             </div>
 
-            <div className="battlefield">
+            <div className={`battlefield ${bgMode === 'action' ? 'field-action' : 'field-overview'}`} data-plane={bgMode === 'action' ? 'ACTION' : 'OVERVIEW'}>
               <div className={`battle-bg authentic ${actionSpecial ? 'special' : ''}`} style={{ backgroundImage: `url(${battleBgUrl})` }} />
-              <div className="battlefield-fighters">
+              <div className={`battlefield-fighters ${bgMode === 'action' ? 'action-plane' : 'tactical-plane'}`}>
                 {(() => {
                   // OVERVIEW (tactical): los fighters se posicionan con
                   // anchorFor(pos, side), la fuente que edita Position Lab.
                   // ACTION no entra en esta rama: usa exclusivamente
                   // actionPlaneGeometry, el plano cinematográfico nativo.
-                  const pa = anchorFor(BattlePosition.DOWN_BACK, 'LEFT');
-                  const ea = anchorFor(BattlePosition.DOWN_BACK, 'RIGHT');
+                  const pa = tacticalAnchors?.player;
+                  const ea = tacticalAnchors?.enemy;
                   return (
                     <>
                       {/* ANCLA del sprite: el punto EXACTO donde aparece el
@@ -579,7 +589,7 @@ export function HudModule() {
                           visible como cruz, para saber dónde se ancla y dónde
                           realiza las animaciones. En ACTION se ocultan: el
                           actor va centrado en la escena. */}
-                      {bgMode === 'overview' && devAids && (
+                      {bgMode === 'overview' && devAids && pa && ea && (
                         <>
                           <div className="dev-fighter-anchor player" style={{ left: `${pa.x}%`, top: `${pa.y}%` }}>
                             <span className="dev-anchor-cross" />
@@ -614,14 +624,14 @@ export function HudModule() {
                           className={`dev-hud-ow dev-hud-fighter-sprite dev-hud-anchored player ${bgMode === 'action' ? 'action-mode' : ''} ${bgMode === 'action' && actionSpecial ? 'special-actor' : ''}`}
                           style={bgMode === 'action'
                             ? (() => { const aa = actionPlaneAnchorPercentFor('player', actionSpecial ? 'SPECIAL_ACTION' : 'ACTION'); return { left: `${aa.x}%`, top: `${aa.y}%` }; })()
-                            : { left: `${pa.x}%`, top: `${pa.y}%` }} />
+                            : pa ? { left: `${pa.x}%`, top: `${pa.y}%` } : undefined} />
                       )}
                       {(bgMode === 'overview' ? eIdle : (actionFrames.length > 0 && actor === 'enemy' ? actionPreviewFrame : undefined)) && (
                         <img src={bgMode === 'overview' ? eIdle : actionPreviewFrame?.url} alt=""
                           className={`dev-hud-ow dev-hud-fighter-sprite dev-hud-anchored enemy ${bgMode === 'action' ? 'action-mode' : ''} ${bgMode === 'action' && actionSpecial ? 'special-actor' : ''}`}
                           style={bgMode === 'action'
                             ? (() => { const aa = actionPlaneAnchorPercentFor('enemy', actionSpecial ? 'SPECIAL_ACTION' : 'ACTION'); return { left: `${aa.x}%`, top: `${aa.y}%` }; })()
-                            : { left: `${ea.x}%`, top: `${ea.y}%` }} />
+                            : ea ? { left: `${ea.x}%`, top: `${ea.y}%` } : undefined} />
                       )}
                       {bgMode === 'action' && actionFrames.length === 0 && (
                         <div className="dev-rom-preview-pending" role="status" aria-live="polite">
