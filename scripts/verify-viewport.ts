@@ -159,6 +159,10 @@ check('R4: Pixi output 320×180 separado del mundo ROM 320×160',
   /BATTLE_OUTPUT_H\s*=\s*180/.test(pixiConfigSrc) &&
   /renderer\.resize\(BATTLE_LOGICAL_W, BATTLE_OUTPUT_H\)/.test(pixiStageSrc) &&
   /style=\{\{ width: BATTLE_LOGICAL_W, height: BATTLE_OUTPUT_H \}\}/.test(pixiStageSrc));
+check('R4: panel compacto usa aspect-fit sin canvas 1× diminuto ni overflow',
+  /resolveBattleOutputScale/.test(pixiConfigSrc) &&
+  /const s = resolveBattleOutputScale\(r\.width, r\.height\)/.test(pixiStageSrc) &&
+  /integer >= 2 \? integer : fit/.test(pixiConfigSrc));
 check('R4: mundo ROM centrado dentro del output sin escala adicional',
   /BATTLE_OUTPUT_Y/.test(pixiRendererSrc) &&
   /BATTLE_OUTPUT_Y \+ cameraSnap\.screenY \* ACTION_WORLD_SCALE/.test(pixiPresentationSrc) &&

@@ -32,6 +32,7 @@ export {
   BATTLE_LOGICAL_H,
   BATTLE_OUTPUT_H,
   BATTLE_OUTPUT_Y,
+  resolveBattleOutputScale,
   BG_NATIVE_W,
   BG_NATIVE_H,
   BG_SCALE,

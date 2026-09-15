@@ -30,3 +30,20 @@ export const BATTLE_LOGICAL_H = ACTION_NATIVE_H * ACTION_WORLD_SCALE;
 export const BATTLE_OUTPUT_H = 180;
 /** Desplazamiento vertical del mundo ROM dentro del output 16:9. */
 export const BATTLE_OUTPUT_Y = Math.floor((BATTLE_OUTPUT_H - BATTLE_LOGICAL_H) / 2);
+
+/**
+ * Resuelve el factor de presentación del output Pixi dentro de su panel.
+ *
+ * El buffer sigue siendo siempre 320×180 y sus texturas siguen usando
+ * nearest-neighbour. Preferimos escala entera cuando el panel permite 2× o
+ * más; en el panel compacto de Battle (alto reducido por el HUD inferior),
+ * una escala fraccionaria de aspect-fit evita dejar un canvas 1× diminuto o
+ * provocar overflow vertical. No cambia ninguna coordenada ROM ni el mundo
+ * 320×160: solo determina el tamaño CSS del output final.
+ */
+export function resolveBattleOutputScale(width: number, height: number): number {
+  const fit = Math.min(width / BATTLE_LOGICAL_W, height / BATTLE_OUTPUT_H);
+  if (!Number.isFinite(fit) || fit <= 0) return 1;
+  const integer = Math.floor(fit);
+  return integer >= 2 ? integer : fit;
+}

@@ -14,7 +14,7 @@
 import { useEffect, useRef } from 'react';
 import { BattleRenderer } from '../renderer/pixi/BattleRenderer';
 import { PixiBattlePresentation } from '../renderer/pixi/presentation/PixiBattlePresentation';
-import { BATTLE_LOGICAL_W, BATTLE_OUTPUT_H } from '../renderer/pixi/config';
+import { BATTLE_LOGICAL_W, BATTLE_OUTPUT_H, resolveBattleOutputScale } from '../renderer/pixi/config';
 import type { BattleScenario } from '../data/scenarios';
 import { SPECIAL_ACTION_BACKGROUND } from '../data/scenarios';
 import type { BattlePosition } from '../data/positions';
@@ -35,16 +35,17 @@ export function BattlePixiStage({ scenario, playerFormId, enemyFormId, playerPos
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   // ── Letterbox centrado (aspect-fit de producción) ──
-  // Escala ENTERA máxima que cabe en el contenedor (pixel-perfect, sin
-  // distorsión): el output lógico 320×180 se escala a 2×/3×/4×… y se centra;
-  // el mundo ROM 320×160 queda centrado dentro de esos 180 px, sin estirar.
+  // Aspect-fit sin distorsión: escala ENTERA cuando el panel permite ≥2×;
+  // en el panel compacto (HUD inferior visible) usa la fracción necesaria
+  // para llenar la altura sin dejar un canvas 1× diminuto ni desbordar.
+  // El mundo ROM 320×160 queda centrado dentro del output 320×180.
   useEffect(() => {
     const stage = stageRef.current;
     const canvas = canvasRef.current;
     if (!stage || !canvas) return;
     const apply = () => {
       const r = stage.getBoundingClientRect();
-      const s = Math.max(1, Math.floor(Math.min(r.width / BATTLE_LOGICAL_W, r.height / BATTLE_OUTPUT_H)));
+      const s = resolveBattleOutputScale(r.width, r.height);
       canvas.style.width = `${BATTLE_LOGICAL_W * s}px`;
       canvas.style.height = `${BATTLE_OUTPUT_H * s}px`;
     };
