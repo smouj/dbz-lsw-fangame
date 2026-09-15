@@ -14,10 +14,12 @@ import { PalettesTab } from './palettesTab';
 import { ProvenanceTab } from './provenanceTab';
 import { AssetsTab } from './assetsTab';
 import { SpriteAtlasTab } from './spriteAtlasTab';
+import { VisualMasterTab } from './visualMasterTab';
 
-type LabTab = 'fighters' | 'sprite-atlas' | 'actions' | 'fx' | 'support' | 'defense' | 'palettes' | 'provenance' | 'assets';
+type LabTab = 'visual-master' | 'fighters' | 'sprite-atlas' | 'actions' | 'fx' | 'support' | 'defense' | 'palettes' | 'provenance' | 'assets';
 
 const TABS: { id: LabTab; label: string }[] = [
+  { id: 'visual-master', label: 'ROM ↔ PIXI MASTER' },
   { id: 'fighters', label: 'FIGHTERS' },
   { id: 'sprite-atlas', label: 'ROM SPRITE ATLAS' },
   { id: 'actions', label: 'ACTIONS' },
@@ -30,7 +32,7 @@ const TABS: { id: LabTab; label: string }[] = [
 ];
 
 export function RomDisplayLab() {
-  const [tab, setTab] = useState<LabTab>('fighters');
+  const [tab, setTab] = useState<LabTab>('visual-master');
   const [globalForm, setGlobalForm] = useState<string | null>(null);
   const [globalCard, setGlobalCard] = useState<number | null>(null);
 
@@ -60,6 +62,7 @@ export function RomDisplayLab() {
       </nav>
 
       <div style={{ padding: 4 }}>
+        {tab === 'visual-master' && <VisualMasterTab />}
         {tab === 'fighters' && <FightersTab initialForm={globalForm} onFormChange={setGlobalForm} />}
         {tab === 'sprite-atlas' && <SpriteAtlasTab />}
         {tab === 'actions' && <ActionsTab initialCardId={globalCard} onCardChange={setGlobalCard} />}

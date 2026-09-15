@@ -88,7 +88,7 @@ check('missing generated asset explicit',
   'resource + comando, sin sustitución');
 
 // 12. Tabs existentes preservados, incluyendo ROM Sprite Atlas.
-const tabs = ['fighters', 'sprite-atlas', 'actions', 'fx', 'support', 'defense', 'palettes', 'provenance', 'assets'];
+const tabs = ['visual-master', 'fighters', 'sprite-atlas', 'actions', 'fx', 'support', 'defense', 'palettes', 'provenance', 'assets'];
 const missingTabs = tabs.filter(t => !new RegExp(`id: '${t}'`).test(indexSrc));
 check('existing romdisplay2 tabs preserved', missingTabs.length === 0,
   missingTabs.length ? `faltan: ${missingTabs.join(', ')}` : `${tabs.length} tabs`);
@@ -97,6 +97,16 @@ check('existing romdisplay2 tabs preserved', missingTabs.length === 0,
 check('generated bridge present',
   existsSync('src/devtools/romdisplay2/productionVisualMatrix.generated.ts'),
   'src/devtools/romdisplay2/productionVisualMatrix.generated.ts');
+
+// 14. Visual Master consume evidencia framebuffer ROM; no manifests manuales.
+const visualMasterSrc = existsSync('src/devtools/romdisplay2/visualMasterTab.tsx')
+  ? readFileSync('src/devtools/romdisplay2/visualMasterTab.tsx', 'utf8') : '';
+check('ROM Visual Master panel present and honest',
+  /ROM VISUAL MASTER/.test(visualMasterSrc) &&
+  /PENDING_REMAKE_CAPTURE/.test(visualMasterSrc) &&
+  /docs\/rom\/generated\/visual-master/.test(visualMasterSrc) &&
+  !/spriteManifest|Canonical_Frames_Official|OUT_frames/.test(visualMasterSrc),
+  'ROM framebuffer + pending Pixi, sin autoridad manual');
 
 console.log(`\nDev ROM Asset Explorer: ${checks} checks, ${failures} failed`);
 console.log(failures ? '❌ verify:dev-rom-asset-explorer FAIL' : '✅ verify:dev-rom-asset-explorer PASS');
