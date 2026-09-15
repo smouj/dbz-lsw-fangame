@@ -221,12 +221,20 @@ export class RomDisplayLayer {
    *  Determinista: mismo state → misma representación. */
   sync(tick: number): void {
     const st = this.presenter.state;
+    // Texture loading is asynchronous and is not represented by a presenter
+    // cue. Include cache readiness in the render invalidation key so a layer
+    // that failed closed on the first frame is promoted as soon as its real
+    // ROM materialization finishes loading.
+    const fxTextureReady = st.fxWindow ? Assets.cache.has(st.fxWindow.sourceImage) : false;
+    const bgTextureReady = st.bgAssembly?.imageUrl ? Assets.cache.has(st.bgAssembly.imageUrl) : false;
     // Solo redibujar si el state cambió (evitar draws innecesarios).
     const stateJson = JSON.stringify({
       a: st.activeCardId, p: st.paletteIndex, c: st.composed,
       bg: st.bgAssembled, m: st.macroRuns, cl: st.cleared,
       bga: st.bgAssembly ? `${st.bgAssembly.resource}:${st.bgAssembly.imageUrl ?? 'UNRESOLVED'}` : null,
       fx: st.fxWindow ? `${st.fxWindow.sourceImage}:${st.fxWindow.phase}:${st.fxWindow.sourceMap}` : null,
+      fxTextureReady,
+      bgTextureReady,
     });
     if (stateJson === this.lastStateJson) return;
     this.lastStateJson = stateJson;

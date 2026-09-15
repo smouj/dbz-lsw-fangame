@@ -101,6 +101,13 @@ check(
   'ninguna capa ROM muestra un placeholder por ausencia de textura',
   !/this\.(?:fxSprite|bgSprite)\.visible\s*=\s*!st\.cleared/.test(layerSource),
 );
+check(
+  'la caché de texturas invalida el sync cuando termina la precarga ROM',
+  layerSource.includes('const fxTextureReady = st.fxWindow ? Assets.cache.has(st.fxWindow.sourceImage) : false;')
+    && layerSource.includes('const bgTextureReady = st.bgAssembly?.imageUrl ? Assets.cache.has(st.bgAssembly.imageUrl) : false;')
+    && layerSource.includes('fxTextureReady,')
+    && layerSource.includes('bgTextureReady,'),
+);
 
 if (failures === 0) {
   console.log(`\n✅ v7-presenter-display: ${totalCues} cues Support + ${defenseCues} cues Defense → consecuencias observables; 0 no-ops silenciosos.`);
