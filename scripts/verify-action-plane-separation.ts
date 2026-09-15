@@ -44,6 +44,8 @@ check(positionLab.includes('resolveCharacterVisualSequence') && positionLab.incl
 check(main.includes('actionPlaneAnchorPercentFor'), 'BattleScreen DOM fallback must project ACTION anchors from the shared SSOT');
 check(main.includes('playerFieldAnchor') && main.includes('enemyFieldAnchor'), 'BattleScreen must resolve visual anchors by plane before rendering fighters');
 check(main.includes("viewMode === 'OVERVIEW' ? `${POSITION_DATA[player.battlePos].altitude.toLowerCase()}"), 'BattleScreen must not apply tactical altitude/depth classes inside ACTION');
+check(main.includes("viewMode === 'OVERVIEW' && qtePose === 'idle' && overworldUrl(activePlayerFormId)"), 'player overworld sprite must be restricted to OVERVIEW');
+check(main.includes("viewMode === 'OVERVIEW' && enemyPose === 'idle' && overworldUrl(activeEnemyFormId)"), 'enemy overworld sprite must be restricted to OVERVIEW');
 
 if (failures.length) {
   console.log(`ACTION plane separation: ${checks - failures.length} passed · ${failures.length} failed`);

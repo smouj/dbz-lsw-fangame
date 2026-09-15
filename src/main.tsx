@@ -3581,7 +3581,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
               independiente y nunca hereda BattlePosition. */}
           <div ref={playerRef} className={`fighter-container player ${viewMode === 'OVERVIEW' ? `${POSITION_DATA[player.battlePos].altitude.toLowerCase()} ${POSITION_DATA[player.battlePos].depth.toLowerCase()}` : ''} ${phase === 'stageInput' ? (qteFrozen ? 'qte-frozen' : qteIsDir ? 'qte-lunge' : 'qte-idle') : ''}`}
             style={{ left: `${playerFieldAnchor.x}%`, top: `${playerFieldAnchor.y}%`, ['--lunge-px' as string]: `${lungePx(player.battlePos, enemy.battlePos)}px` }}>
-            {qtePose === 'idle' && overworldUrl(activePlayerFormId) && phase !== 'stageInput'
+            {viewMode === 'OVERVIEW' && qtePose === 'idle' && overworldUrl(activePlayerFormId) && phase !== 'stageInput'
               ? <BattleOverworldSprite
                   formId={activePlayerFormId}
                   pose={playerPose}
@@ -3597,7 +3597,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
             style={{ left: `${enemyFieldAnchor.x}%`, top: `${enemyFieldAnchor.y}%` }}>
             {phase === 'stageInput' && spriteManifestUrl(activeEnemyFormId)
               ? <FighterSprite formId={activeEnemyFormId} pose={qteEnemyPose} side="right" scale={15} flash={qteResolving ? true : false} />
-              : (enemyPose === 'idle' && overworldUrl(activeEnemyFormId)
+              : (viewMode === 'OVERVIEW' && enemyPose === 'idle' && overworldUrl(activeEnemyFormId)
                   ? <img src={overworldUrl(activeEnemyFormId)!} alt="" className="overworld-sprite" style={{ transform: `scaleX(${facingScaleX(activeEnemyFormId, 'right', null, 'SEMANTIC_POSE')})` }} />
                   : (spriteManifestUrl(activeEnemyFormId)
                       ? <FighterSprite formId={activeEnemyFormId} pose={enemyPose} side="right" scale={15} flash={flashEnemy} />
