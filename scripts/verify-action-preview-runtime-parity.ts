@@ -12,6 +12,7 @@ for (const [kind, golden] of [['DAMAGE', 'standard_damage'], ['BEAM', 'kamehameh
   const preview = runtimeActionPreview(kind);
   const trace = traceActionPresentation(golden);
   check(`${kind}:ROM source`, preview.source === 'ROM' && trace.presentation.source === 'ROM');
+  check(`${kind}:card label provenance`, preview.cardName === trace.gameplay.cardName && !!preview.cardName);
   check(`${kind}:same beat count`, preview.beats.length === trace.romFrames.length);
   check(`${kind}:non-empty physical stream`, preview.beats.length > 0);
   for (let i = 0; i < preview.beats.length; i++) {

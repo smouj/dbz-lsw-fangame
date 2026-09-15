@@ -37,6 +37,8 @@ export interface RuntimeActionPreview {
   kind: ActionPreviewKind;
   goldenActionId: GoldenActionId;
   source: 'ROM';
+  /** Card label emitted by the traced production gameplay event. */
+  cardName: string | null;
   actorFormId: string;
   targetFormId: string;
   beats: RuntimeActionPreviewBeat[];
@@ -93,6 +95,7 @@ export function runtimeActionPreview(kind: ActionPreviewKind): RuntimeActionPrev
     kind,
     goldenActionId,
     source: 'ROM',
+    cardName: trace.gameplay.cardName,
     actorFormId: trace.gameplay.attacker,
     targetFormId: trace.gameplay.defender,
     beats,

@@ -202,6 +202,11 @@ export function HudModule() {
       }));
     });
   }, [runtimePreview, actor, view]);
+  // The dialogue card label must come from the same traced production event as
+  // the physical film. Hard-coded names would make the HUD contradict ROM.
+  const actionCardLabel = runtimePreview?.cardName?.toUpperCase() ?? (
+    view === 'BEAM' ? 'KAMEHAMEHA' : view === 'DAMAGE' ? 'CONT. PUNCH' : null
+  );
   const [actionFrameIndex, setActionFrameIndex] = useState(0);
   useEffect(() => {
     setActionFrameIndex(0);
@@ -682,7 +687,7 @@ export function HudModule() {
                   <div className="gbc-dialogue-body">
                     <div className="gbc-dialogue-content">
                       <div className="gbc-dialogue-actor">{dlgSide === 'left' ? 'GOKU' : 'CELL'}</div>
-                      <div className="gbc-dialogue-text">{view === 'GATHER_ACTION' ? 'GATHER POWER!' : view === 'MOVE_ACTION' ? 'MOVE!' : view === 'STAGE_ACTION' ? 'STAGE ATTACK!' : `uses ${view === 'BEAM' ? 'ENERGY BOMB!' : view === 'DAMAGE' ? 'CONT. PUNCH!' : (dlgSide === 'left' ? 'KAMEHAMEHA!' : 'SPECIAL BEAM CANNON!')}`}<span className="gbc-dialogue-cursor">▼</span></div>
+                      <div className="gbc-dialogue-text">{view === 'GATHER_ACTION' ? 'GATHER POWER!' : view === 'MOVE_ACTION' ? 'MOVE!' : view === 'STAGE_ACTION' ? 'STAGE ATTACK!' : `uses ${actionCardLabel ? `${actionCardLabel}!` : (dlgSide === 'left' ? 'KAMEHAMEHA!' : 'SPECIAL BEAM CANNON!')}`}<span className="gbc-dialogue-cursor">▼</span></div>
                     </div>
                   </div>
                 </div>
