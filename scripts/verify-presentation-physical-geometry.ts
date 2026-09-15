@@ -52,8 +52,12 @@ check(BATTLE_LOGICAL_W === ACTION_NATIVE_W * ACTION_WORLD_SCALE && BATTLE_LOGICA
   'battle logical canvas must be the single native ACTION projection');
 check(ACTION_LEFT_X === 48 && ACTION_RIGHT_X === 112,
   `ACTION anchors must be native 48/112 (got ${ACTION_LEFT_X}/${ACTION_RIGHT_X})`);
-check(ACTION_GROUND_Y === 75,
-  `ACTION ground must be native Y=75 (got ${ACTION_GROUND_Y})`);
+// Keep the shared ground line eight native pixels inside the 160×80 ACTION
+// plane.  The parent projection is ×2, so this gives the physical fighter
+// frames a stable 16px visible safety margin without changing their ROM
+// offsets or introducing per-film Y adjustments.
+check(ACTION_GROUND_Y === 72,
+  `ACTION ground must be native Y=72 (got ${ACTION_GROUND_Y})`);
 
 // ── 1. ACTION_ANCHOR_TABLE consumed correctly ──
 

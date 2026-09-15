@@ -22,7 +22,7 @@ player ACTION          x=48
 enemy ACTION           x=112
 special player         x=56
 special enemy          x=104
-ground                 y=75
+ground                 y=72 (8px native safety margin to the 80px plane edge)
 ```
 
 El fondo ACTION y los fighters no se escalan por separado. Así, un frame ROM de
