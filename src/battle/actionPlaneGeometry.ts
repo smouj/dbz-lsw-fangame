@@ -23,6 +23,12 @@ export interface ActionPlaneAnchor {
   readonly y: number;
 }
 
+export interface ActionPlanePercent {
+  /** CSS percentages projected from the native ACTION plane. */
+  readonly x: number;
+  readonly y: number;
+}
+
 export interface ActionPlaneGeometry {
   readonly width: 160;
   readonly height: 80;
@@ -62,7 +68,7 @@ export function actionPlaneAnchorFor(
 export function actionPlaneAnchorPercentFor(
   side: ActionPlaneSide,
   mode: ActionPlaneMode = 'ACTION',
-): ActionPlaneAnchor {
+): ActionPlanePercent {
   const anchor = actionPlaneAnchorFor(side, mode);
   return {
     x: (anchor.x / ACTION_PLANE_GEOMETRY.width) * 100,
@@ -72,4 +78,3 @@ export function actionPlaneAnchorPercentFor(
 
 export const ACTION_PLANE_SOURCE =
   'ACTION_ROM_PRESENTATION_NATIVE_160x80' as const;
-
