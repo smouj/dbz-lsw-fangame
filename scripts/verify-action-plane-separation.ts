@@ -23,6 +23,7 @@ const actionScene = read('src/renderer/pixi/scenes/ActionScene.ts');
 const hud = read('src/devtools/hud.tsx');
 const canon = read('src/devtools/CanonBattleField.tsx');
 const positionLab = read('src/devtools/positions.tsx');
+const main = read('src/main.tsx');
 
 check(actionGeometry.includes('ACTION_PLANE_GEOMETRY'), 'ACTION plane SSOT is missing');
 check(actionGeometry.includes("width: 160") && actionGeometry.includes("height: 80"), 'ACTION SSOT must be native 160×80');
@@ -40,6 +41,9 @@ check(actionScene.includes('ACTION_PLANE_GEOMETRY'), 'ActionScene must consume A
 check(hud.includes('actionPlaneAnchorPercentFor') && canon.includes('actionPlaneAnchorPercentFor'), 'HUD and CanonBattleField must project ACTION anchors from the shared SSOT');
 check(positionLab.includes('actionPlaneAnchorPercentFor'), 'Position Lab must use the ACTION plane SSOT');
 check(positionLab.includes('resolveCharacterVisualSequence') && positionLab.includes('romPhysicalPreviewSequence'), 'Position Lab ACTION preview must use physical ROM frames');
+check(main.includes('actionPlaneAnchorPercentFor'), 'BattleScreen DOM fallback must project ACTION anchors from the shared SSOT');
+check(main.includes('playerFieldAnchor') && main.includes('enemyFieldAnchor'), 'BattleScreen must resolve visual anchors by plane before rendering fighters');
+check(main.includes("viewMode === 'OVERVIEW' ? `${POSITION_DATA[player.battlePos].altitude.toLowerCase()}"), 'BattleScreen must not apply tactical altitude/depth classes inside ACTION');
 
 if (failures.length) {
   console.log(`ACTION plane separation: ${checks - failures.length} passed · ${failures.length} failed`);
@@ -48,4 +52,3 @@ if (failures.length) {
 }
 
 console.log(`ACTION plane separation: ${checks} passed · 0 failed`);
-

@@ -15,6 +15,7 @@ import { FORMS, CHARACTERS, ROM_ORDERED_CHARACTERS, getCharacter, getForm, idleS
 import { STORY_ENEMY_DECKS, STORY_AI_BOOSTS, TEAM_BATTLES } from './data/enemy_decks';
 import { facingScaleX, needsFlip } from './data/facing';
 import { BattlePosition, POSITION_DATA, resolveRelativeDistance, anchorFor, applyMoveAxis, positionLabel, type MoveAxis } from './data/positions';
+import { actionPlaneAnchorPercentFor } from './battle/actionPlaneGeometry';
 import { UNLOCK_KEY, STARTER_DAMAGE_DECK, STARTER_BEAM_DECK, STARTER_CHARACTERS, cardsForLevel, pickRewards, VS_UNLOCKS, isFormUnlocked, FORM_UNLOCK_LEVELS } from './data/unlocks';
 import { CARDS, CARD_COLORS, CARD_COLORS_ON_LIGHT, CARD_TYPE_NAMES, CardDef, CardType, DECK_SIZE, MAX_COPIES, getCard, CardEffect } from './data/cards';
 import {
@@ -3196,6 +3197,17 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
   const battleBgUrl = viewMode === 'ACTION' ? scenario.actionBackground
     : viewMode === 'SPECIAL_ACTION' ? SPECIAL_ACTION_BACKGROUND
     : scenario.overviewBackground;
+  // The DOM path is an explicit fallback, but it must preserve the same
+  // coordinate boundary as Pixi while it is visible (notably during Stage
+  // QTE startup). OVERVIEW owns tactical anchors; ACTION/SPECIAL_ACTION own
+  // the cinematic plane anchors.
+  const actionAnchorMode = viewMode === 'SPECIAL_ACTION' ? 'SPECIAL_ACTION' as const : 'ACTION' as const;
+  const playerFieldAnchor = viewMode === 'OVERVIEW'
+    ? anchorFor(player.battlePos, 'LEFT')
+    : actionPlaneAnchorPercentFor('player', actionAnchorMode);
+  const enemyFieldAnchor = viewMode === 'OVERVIEW'
+    ? anchorFor(enemy.battlePos, 'RIGHT')
+    : actionPlaneAnchorPercentFor('enemy', actionAnchorMode);
   // ── ROM-correct scene visibility ──
   // ACTION_SOLO (attacker step): solo el atacante visible, el defensor OCULTO
   // ACTION_DUEL/IMPACT (travel/target): ambos visibles
@@ -3565,9 +3577,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
             al instante y el cambio de vista era brusco). */}
         <div className={`battlefield-fighters ${suppressFieldActors ? 'suppressed' : ''} ${hideFieldPlayer ? 'hide-player' : ''} ${hideFieldEnemy ? 'hide-enemy' : ''}`}>
           {/* Anchors por lado: LEFT (jugador) y RIGHT (enemigo) usan X
-              reflejadas — BACK apunta al borde propio de cada lado (spec) */}
-          <div ref={playerRef} className={`fighter-container player ${POSITION_DATA[player.battlePos].altitude.toLowerCase()} ${POSITION_DATA[player.battlePos].depth.toLowerCase()} ${phase === 'stageInput' ? (qteFrozen ? 'qte-frozen' : qteIsDir ? 'qte-lunge' : 'qte-idle') : ''}`}
-            style={{ left: `${anchorFor(player.battlePos, 'LEFT').x}%`, top: `${anchorFor(player.battlePos, 'LEFT').y}%`, ['--lunge-px' as string]: `${lungePx(player.battlePos, enemy.battlePos)}px` }}>
+              reflejadas en OVERVIEW. ACTION usa el plano cinematográfico
+              independiente y nunca hereda BattlePosition. */}
+          <div ref={playerRef} className={`fighter-container player ${viewMode === 'OVERVIEW' ? `${POSITION_DATA[player.battlePos].altitude.toLowerCase()} ${POSITION_DATA[player.battlePos].depth.toLowerCase()}` : ''} ${phase === 'stageInput' ? (qteFrozen ? 'qte-frozen' : qteIsDir ? 'qte-lunge' : 'qte-idle') : ''}`}
+            style={{ left: `${playerFieldAnchor.x}%`, top: `${playerFieldAnchor.y}%`, ['--lunge-px' as string]: `${lungePx(player.battlePos, enemy.battlePos)}px` }}>
             {qtePose === 'idle' && overworldUrl(activePlayerFormId) && phase !== 'stageInput'
               ? <BattleOverworldSprite
                   formId={activePlayerFormId}
@@ -3580,8 +3593,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
                   : <CharacterSprite formId={activePlayerFormId} className="sheet-sprite" height={152} side="left" />)}
             <div className="fighter-position-tag hidden">{player.battlePos.replace('_', ' ')}</div>
           </div>
-          <div ref={enemyRef} className={`fighter-container enemy ${POSITION_DATA[enemy.battlePos].altitude.toLowerCase()} ${POSITION_DATA[enemy.battlePos].depth.toLowerCase()}`}
-            style={{ left: `${anchorFor(enemy.battlePos, 'RIGHT').x}%`, top: `${anchorFor(enemy.battlePos, 'RIGHT').y}%` }}>
+          <div ref={enemyRef} className={`fighter-container enemy ${viewMode === 'OVERVIEW' ? `${POSITION_DATA[enemy.battlePos].altitude.toLowerCase()} ${POSITION_DATA[enemy.battlePos].depth.toLowerCase()}` : ''}`}
+            style={{ left: `${enemyFieldAnchor.x}%`, top: `${enemyFieldAnchor.y}%` }}>
             {phase === 'stageInput' && spriteManifestUrl(activeEnemyFormId)
               ? <FighterSprite formId={activeEnemyFormId} pose={qteEnemyPose} side="right" scale={15} flash={qteResolving ? true : false} />
               : (enemyPose === 'idle' && overworldUrl(activeEnemyFormId)
