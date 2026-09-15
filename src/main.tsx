@@ -2156,7 +2156,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
   // propia ventana corta de ENTER COMMAND (A≈0.4s / B≈0.15s, HYPOTHESIS).
   useEffect(() => {
     if (phase !== 'stageInput') return;
-    console.log('[STAGE DEBUG] rAF useEffect started', { phase, qteState: stageQteRef.current?.state });
+    if (isDebugState()) {
+      console.log('[STAGE DEBUG] rAF useEffect started', { phase, qteState: stageQteRef.current?.state });
+    }
     let raf = 0;
     let last = performance.now();
     qteDebugRef.current.stepFrames = 0; // limpia steps residuales de otro QTE
@@ -2187,16 +2189,16 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
         if (rtBefore !== rtAfter.state) {
           const q = rtApi.runtime.state.stageQte;
           if (q.state === 'INPUT_WINDOW') {
-            console.log('[STAGE DEBUG] ENGINE: PREPARING → INPUT_WINDOW', { q });
+            if (isDebugState()) console.log('[STAGE DEBUG] ENGINE: PREPARING → INPUT_WINDOW', { q });
             Sfx.confirm();
             addLog('Stage Attack — ¡inputs!');
           } else if (q.state === 'COUNTER_WINDOW') {
-            console.log('[STAGE DEBUG] ENGINE: → COUNTER_WINDOW (timeout)');
+            if (isDebugState()) console.log('[STAGE DEBUG] ENGINE: → COUNTER_WINDOW (timeout)');
             enterStageFailure('TIMEOUT');
           } else if (q.state === 'WAITING' && rtBefore === 'COUNTER_WINDOW') {
             // El clock resolvió el counter (TIMEOUT) → daño al jugador ya
             // aplicado por el engine; el shadow proyecta y cierra el Stage.
-            console.log('[STAGE DEBUG] ENGINE: COUNTER_WINDOW → WAITING (counter resuelto)');
+            if (isDebugState()) console.log('[STAGE DEBUG] ENGINE: COUNTER_WINDOW → WAITING (counter resuelto)');
             const stNow = stageQteRef.current;
             if (stNow.state === 'COUNTER_WINDOW') {
               commitQte({ ...stNow, state: 'COUNTER_HIT', result: 'COUNTER_HIT' });

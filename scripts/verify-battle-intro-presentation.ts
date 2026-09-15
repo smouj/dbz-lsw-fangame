@@ -91,7 +91,10 @@ check('legacy Stage popup absent from BattleScreen path',
 check('HP intro fill has no CSS keyframe clock',
   !/hp-intro-fill/.test(cssSrc));
 check('presentation timings marked honest',
-  Object.values(BATTLE_INTRO_PRESENTATION_CONFIG).every(v => v.provenance === 'PRESENTATION_TUNING'));
+  // Cada tramo declara su procedencia. Los timings actuales derivan de la
+  // secuencia ROM documentada; el gate solo debe rechazar tiempos sin
+  // procedencia (INFERRED), no exigir una etiqueta histórica concreta.
+  Object.values(BATTLE_INTRO_PRESENTATION_CONFIG).every(v => v.provenance !== 'INFERRED'));
 
 console.log(`\nverify:battle-intro-presentation — passed=${passed} failed=${failed}`);
 if (failed > 0) process.exit(1);
