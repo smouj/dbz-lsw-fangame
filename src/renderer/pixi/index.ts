@@ -30,6 +30,8 @@ export type { RushMotion, Easing } from './systems/MotionSystem';
 export {
   BATTLE_LOGICAL_W,
   BATTLE_LOGICAL_H,
+  BATTLE_OUTPUT_H,
+  BATTLE_OUTPUT_Y,
   BG_NATIVE_W,
   BG_NATIVE_H,
   BG_SCALE,

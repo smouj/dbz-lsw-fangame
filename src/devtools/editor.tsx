@@ -14,7 +14,7 @@ import { BattlePixiStage } from '../battle/BattlePixiStage';
 import { SCENARIOS } from '../data/scenarios';
 import { BattlePosition } from '../data/positions';
 import { PixiBattlePresentation } from '../renderer/pixi/presentation/PixiBattlePresentation';
-import { ACTION_NATIVE_H, ACTION_NATIVE_W, ACTION_WORLD_SCALE, BATTLE_LOGICAL_H, BATTLE_LOGICAL_W } from '../renderer/pixi/config';
+import { ACTION_NATIVE_H, ACTION_NATIVE_W, ACTION_WORLD_SCALE, BATTLE_LOGICAL_H, BATTLE_LOGICAL_W, BATTLE_OUTPUT_H } from '../renderer/pixi/config';
 
 type EditorScene = 'FIELD' | 'ACTION_SOLO' | 'ACTION_DUEL' | 'PROJECTILE' | 'IMPACT';
 type BottomTab = 'PROJECT' | 'SCRIPTS' | 'TIMELINE' | 'CONSOLE' | 'PROFILER' | 'ROM';
@@ -183,7 +183,7 @@ export function EditorModule() {
             <BattlePixiStage key={`${scenario.id}:${playerFormId}:${enemyFormId}`} scenario={scenario} playerFormId={playerFormId} enemyFormId={enemyFormId} playerPos={BattlePosition.DOWN_FRONT} enemyPos={BattlePosition.DOWN_FRONT} presentationRef={presentationRef} onPresentationReady={value => { setReady(value); if (!value) setSnapshot(null); }} />
             {overlays.grid && <div className="dev-editor-grid-overlay" aria-hidden="true" />}
             {overlays.anchors && <><span className="dev-editor-anchor left" /><span className="dev-editor-anchor right" /><span className="dev-editor-ground" /></>}
-            {overlays.bounds && <div className="dev-editor-bounds" aria-hidden="true"><span>ACTION {ACTION_NATIVE_W}×{ACTION_NATIVE_H}</span><span>OUTPUT {BATTLE_LOGICAL_W}×{BATTLE_LOGICAL_H}</span></div>}
+            {overlays.bounds && <div className="dev-editor-bounds" aria-hidden="true"><span>ACTION {ACTION_NATIVE_W}×{ACTION_NATIVE_H}</span><span>WORLD {BATTLE_LOGICAL_W}×{BATTLE_LOGICAL_H}</span><span>OUTPUT {BATTLE_LOGICAL_W}×{BATTLE_OUTPUT_H}</span></div>}
           </div>
           <div className="dev-editor-viewport-status"><span><CirclePlay size={12} /> PIXI PRODUCTION RENDERER</span><span><CirclePause size={12} /> {ready ? 'RUNTIME CONNECTED' : 'WAITING FOR RUNTIME'}</span></div>
         </section>
@@ -208,7 +208,7 @@ export function EditorModule() {
 
       <footer className="dev-editor-dock">
         <div className="dev-editor-dock-tabs">{(['PROJECT', 'SCRIPTS', 'TIMELINE', 'CONSOLE', 'PROFILER', 'ROM'] as BottomTab[]).map(tab => <button type="button" key={tab} className={bottomTab === tab ? 'active' : ''} onClick={() => setBottomTab(tab)}>{tab === 'PROJECT' ? <FileCode2 size={13} /> : tab === 'SCRIPTS' ? <Terminal size={13} /> : tab === 'ROM' ? <Grid3X3 size={13} /> : tab === 'PROFILER' ? <Gauge size={13} /> : <TimerReset size={13} />}{tab}</button>)}</div>
-        <div className="dev-editor-dock-content">{bottomTab === 'PROJECT' && <><b>dbz-lsw-fangame</b><span>src/battle/BattlePixiStage.tsx</span><span>src/renderer/pixi/presentation/PixiBattlePresentation.ts</span><span className="ok">Production renderer · source linked</span></>}{bottomTab === 'SCRIPTS' && <><span>BattleRuntime</span><span>ProductionRomPresentationAdapter</span><span>ActionObjectRuntime</span></>}{bottomTab === 'TIMELINE' && <><span className="mono">T{tick.toString().padStart(4, '0')}</span><span>{scene}</span><span>actor → target → cleanup</span></>}{bottomTab === 'CONSOLE' && <><span className="ok">No runtime errors</span><span>ROM physical ownership active</span></>}{bottomTab === 'PROFILER' && <><span>FPS target 59.7275</span><span>GBC tick {tick}</span><span>Pixi scene {scene}</span></>}{bottomTab === 'ROM' && <><span>Action geometry {ACTION_NATIVE_W}×{ACTION_NATIVE_H} native</span><span>Screen output {BATTLE_LOGICAL_W}×{BATTLE_LOGICAL_H}</span><span>RomDisplay viewport 160×144 clipped</span></>}</div>
+        <div className="dev-editor-dock-content">{bottomTab === 'PROJECT' && <><b>dbz-lsw-fangame</b><span>src/battle/BattlePixiStage.tsx</span><span>src/renderer/pixi/presentation/PixiBattlePresentation.ts</span><span className="ok">Production renderer · source linked</span></>}{bottomTab === 'SCRIPTS' && <><span>BattleRuntime</span><span>ProductionRomPresentationAdapter</span><span>ActionObjectRuntime</span></>}{bottomTab === 'TIMELINE' && <><span className="mono">T{tick.toString().padStart(4, '0')}</span><span>{scene}</span><span>actor → target → cleanup</span></>}{bottomTab === 'CONSOLE' && <><span className="ok">No runtime errors</span><span>ROM physical ownership active</span></>}{bottomTab === 'PROFILER' && <><span>FPS target 59.7275</span><span>GBC tick {tick}</span><span>Pixi scene {scene}</span></>}{bottomTab === 'ROM' && <><span>Action geometry {ACTION_NATIVE_W}×{ACTION_NATIVE_H} native</span><span>World {BATTLE_LOGICAL_W}×{BATTLE_LOGICAL_H} · output {BATTLE_OUTPUT_H}</span><span>RomDisplay viewport 160×144 clipped</span></>}</div>
       </footer>
     </div>
   );

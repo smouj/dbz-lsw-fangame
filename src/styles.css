@@ -1375,8 +1375,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 /* Master shot Pixi (renderer de producción; ?domField=1 es fallback):
    contenedor de letterbox centrado.
-   El canvas lógico 320×160 (2:1) se escala a un múltiplo ENTERO y se centra;
-   el hueco sobrante queda como barras (letterbox) del propio battlefield. */
+   El output lógico 320×180 (16:9) se escala a un múltiplo ENTERO y se centra;
+   el mundo ROM 320×160 conserva su proporción dentro del output. */
 .battle-pixi-stage {
   position: absolute;
   inset: 0;
@@ -1386,9 +1386,9 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   justify-content: center;
   pointer-events: none;
 }
-/* Las barras del aspect-fit pertenecen al plano Pixi activo. Mantenerlas
-   opacas y oscuras evita que el canvas transparente deje ver el blanco del
-   documento en los laterales o bajo el plano 320×160. Durante la carga se
+/* El fondo del output pertenece al plano Pixi activo. Mantenerlo opaco y
+   oscuro evita que el canvas transparente deje ver el blanco del documento
+   en los laterales o bajo el mundo ROM 320×160. Durante la carga se
    conserva el fondo DOM hasta que la presentación esté lista. */
 .battlefield.pixi-field-active .battle-pixi-stage {
   background: #0b0b0d;

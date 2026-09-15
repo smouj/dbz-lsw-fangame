@@ -23,7 +23,7 @@ import { RomDisplayPresenter } from '../../../battle/romDisplay/RomDisplayPresen
 import { RomDisplayLayer, preloadRomDisplayTextures } from '../../../battle/romDisplay/RomDisplayLayer';
 import { CameraPresenter } from './CameraPresenter';
 import { ActionObjectRuntime, applyBindingCue, unapplyBindingCue, type ActionObjectBinding, type ActionObjectSlot } from '../../../battle/engine/presentation/ActionObjectRuntime';
-import { ACTION_WORLD_SCALE } from '../config';
+import { ACTION_WORLD_SCALE, BATTLE_OUTPUT_Y } from '../config';
 
 export interface PixiPresentationConfig {
   playerFormId: string;
@@ -567,7 +567,7 @@ export class PixiBattlePresentation implements BattlePresentation {
     // conversión y nunca mezclarse con coordenadas lógicas de salida.
     this.renderer.world.position.set(
       cameraSnap.screenX * ACTION_WORLD_SCALE,
-      cameraSnap.screenY * ACTION_WORLD_SCALE,
+      BATTLE_OUTPUT_Y + cameraSnap.screenY * ACTION_WORLD_SCALE,
     );
 
     if (this.projectile && this.projectileSpawnTick != null && this.projectileContactTick != null) {
@@ -727,7 +727,7 @@ export class PixiBattlePresentation implements BattlePresentation {
   }
 
   private resetWorldCamera(): void {
-    this.renderer.world.position.set(0, 0);
+    this.renderer.world.position.set(0, BATTLE_OUTPUT_Y);
   }
 
   private cancelRush(): void {

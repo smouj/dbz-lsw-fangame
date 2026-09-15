@@ -14,7 +14,7 @@
 import { useEffect, useRef } from 'react';
 import { BattleRenderer } from '../renderer/pixi/BattleRenderer';
 import { PixiBattlePresentation } from '../renderer/pixi/presentation/PixiBattlePresentation';
-import { BATTLE_LOGICAL_W, BATTLE_LOGICAL_H } from '../renderer/pixi/config';
+import { BATTLE_LOGICAL_W, BATTLE_OUTPUT_H } from '../renderer/pixi/config';
 import type { BattleScenario } from '../data/scenarios';
 import { SPECIAL_ACTION_BACKGROUND } from '../data/scenarios';
 import type { BattlePosition } from '../data/positions';
@@ -36,17 +36,17 @@ export function BattlePixiStage({ scenario, playerFormId, enemyFormId, playerPos
 
   // ── Letterbox centrado (aspect-fit de producción) ──
   // Escala ENTERA máxima que cabe en el contenedor (pixel-perfect, sin
-  // distorsión): el canvas lógico 320×160 se escala a 2×/3×/4×… y se centra;
-  // el hueco sobrante queda como "barras" (letterbox) del propio battlefield.
+  // distorsión): el output lógico 320×180 se escala a 2×/3×/4×… y se centra;
+  // el mundo ROM 320×160 queda centrado dentro de esos 180 px, sin estirar.
   useEffect(() => {
     const stage = stageRef.current;
     const canvas = canvasRef.current;
     if (!stage || !canvas) return;
     const apply = () => {
       const r = stage.getBoundingClientRect();
-      const s = Math.max(1, Math.floor(Math.min(r.width / BATTLE_LOGICAL_W, r.height / BATTLE_LOGICAL_H)));
+      const s = Math.max(1, Math.floor(Math.min(r.width / BATTLE_LOGICAL_W, r.height / BATTLE_OUTPUT_H)));
       canvas.style.width = `${BATTLE_LOGICAL_W * s}px`;
-      canvas.style.height = `${BATTLE_LOGICAL_H * s}px`;
+      canvas.style.height = `${BATTLE_OUTPUT_H * s}px`;
     };
     apply();
     const ro = new ResizeObserver(apply);
@@ -68,7 +68,7 @@ export function BattlePixiStage({ scenario, playerFormId, enemyFormId, playerPos
         renderer.destroy();
         return;
       }
-      renderer.resize(BATTLE_LOGICAL_W, BATTLE_LOGICAL_H);
+      renderer.resize(BATTLE_LOGICAL_W, BATTLE_OUTPUT_H);
 
       const pres = new PixiBattlePresentation(renderer, {
         playerFormId,
@@ -115,7 +115,7 @@ export function BattlePixiStage({ scenario, playerFormId, enemyFormId, playerPos
 
   return (
     <div ref={stageRef} className="battle-pixi-stage">
-      <canvas ref={canvasRef} className="battle-pixi" style={{ width: BATTLE_LOGICAL_W, height: BATTLE_LOGICAL_H }} />
+      <canvas ref={canvasRef} className="battle-pixi" style={{ width: BATTLE_LOGICAL_W, height: BATTLE_OUTPUT_H }} />
     </div>
   );
 }

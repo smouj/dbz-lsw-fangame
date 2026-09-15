@@ -16,6 +16,10 @@ const css = readFileSync('src/styles.css', 'utf8');
 const mainTsx = readFileSync('src/main.tsx', 'utf8');
 const hudTsx = readFileSync('src/devtools/hud.tsx', 'utf8');
 const viewportSrc = readFileSync('src/components/GameViewport.tsx', 'utf8');
+const pixiStageSrc = readFileSync('src/battle/BattlePixiStage.tsx', 'utf8');
+const pixiRendererSrc = readFileSync('src/renderer/pixi/BattleRenderer.ts', 'utf8');
+const pixiPresentationSrc = readFileSync('src/renderer/pixi/presentation/PixiBattlePresentation.ts', 'utf8');
+const pixiConfigSrc = readFileSync('src/renderer/pixi/config.ts', 'utf8');
 
 let pass = 0;
 let fail = 0;
@@ -149,6 +153,16 @@ check('R4: sin stretch del fondo (cover + crop; excluye marcos UI y plano especi
   ));
 check('R4: letterbox Pixi activo con barras oscuras (sin blanco fuera del canvas)',
   /\.battlefield\.pixi-field-active \.battle-pixi-stage\s*\{[^}]*background:\s*#0b0b0d/.test(css));
+// R4 — el output de Pixi ocupa el viewport 16:9 sin alterar el mundo ROM:
+// 320×160 permanece como mundo y se centra en 320×180 con un offset estable.
+check('R4: Pixi output 320×180 separado del mundo ROM 320×160',
+  /BATTLE_OUTPUT_H\s*=\s*180/.test(pixiConfigSrc) &&
+  /renderer\.resize\(BATTLE_LOGICAL_W, BATTLE_OUTPUT_H\)/.test(pixiStageSrc) &&
+  /style=\{\{ width: BATTLE_LOGICAL_W, height: BATTLE_OUTPUT_H \}\}/.test(pixiStageSrc));
+check('R4: mundo ROM centrado dentro del output sin escala adicional',
+  /BATTLE_OUTPUT_Y/.test(pixiRendererSrc) &&
+  /BATTLE_OUTPUT_Y \+ cameraSnap\.screenY \* ACTION_WORLD_SCALE/.test(pixiPresentationSrc) &&
+  /world\.position\.set\(0, BATTLE_OUTPUT_Y\)/.test(pixiPresentationSrc));
 
 console.log(`\n═══ RESULTADO: ${pass} passed · ${fail} failed ═══`);
 if (fail > 0) process.exitCode = 1;

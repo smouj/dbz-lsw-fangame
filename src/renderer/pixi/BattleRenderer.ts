@@ -16,6 +16,7 @@ import { FighterActor } from './actors/FighterActor';
 import { SceneDirector } from './director/SceneDirector';
 import { ImpactSystem } from './systems/ImpactSystem';
 import type { BattleSide } from '../../data/facing';
+import { BATTLE_OUTPUT_Y } from './config';
 
 export class BattleRenderer {
   readonly app: Application;
@@ -32,6 +33,9 @@ export class BattleRenderer {
   private constructor(app: Application) {
     this.app = app;
     this.world = new Container();
+    // El mundo ROM (320×160) vive centrado dentro del output 16:9 (320×180).
+    // CameraPresenter solo añade offsets ROM sobre este origen estable.
+    this.world.position.set(0, BATTLE_OUTPUT_Y);
     app.stage.addChild(this.world);
     this.sceneDirector = new SceneDirector(this.world);
   }
