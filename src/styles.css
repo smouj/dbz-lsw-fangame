@@ -10189,6 +10189,39 @@ button.linklike:hover { background: rgba(216,168,48,.08); text-decoration: none;
   pointer-events: none;
 }
 
+/* Dev-only explicit state for an ACTION preview with no promoted physical
+   frame.  Keep the field legible without drawing an invented/legacy PNG. */
+.dev-rom-preview-pending {
+  position: absolute;
+  inset: 18% 14% auto;
+  z-index: 8;
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  padding: 14px 18px;
+  border: 1px dashed rgba(246,199,68,.7);
+  background: rgba(5,7,12,.78);
+  color: var(--hud-text, #fff4cf);
+  text-align: center;
+  font-family: var(--fpx, monospace);
+  letter-spacing: .06em;
+  pointer-events: none;
+}
+.dev-rom-preview-pending strong {
+  color: var(--gold, #f6c744);
+  font-size: 12px;
+}
+.dev-rom-preview-pending span {
+  font-size: 10px;
+}
+.dev-rom-preview-pending small {
+  max-width: 42ch;
+  color: var(--hud-muted, #cdd6e2);
+  font-size: 9px;
+  line-height: 1.35;
+  letter-spacing: .02em;
+}
+
 /* En el mockup del HUD Studio el cuadro de diálogo se previsualiza
    visible (en el juego solo aparece durante acciones). */
 .dev-hud-preview .gbc-dialogue {

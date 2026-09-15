@@ -623,6 +623,13 @@ export function HudModule() {
                             ? (() => { const aa = actionPlaneAnchorPercentFor('enemy', actionSpecial ? 'SPECIAL_ACTION' : 'ACTION'); return { left: `${aa.x}%`, top: `${aa.y}%` }; })()
                             : { left: `${ea.x}%`, top: `${ea.y}%` }} />
                       )}
+                      {bgMode === 'action' && actionFrames.length === 0 && (
+                        <div className="dev-rom-preview-pending" role="status" aria-live="polite">
+                          <strong>ROM FRAME PENDING</strong>
+                          <span>{view} · {actor === 'player' ? P_FORM : E_FORM}</span>
+                          <small>No se dibuja ningún PNG sustituto: falta evidencia física ROM para este beat.</small>
+                        </div>
+                      )}
                     </>
                   );
                 })()}

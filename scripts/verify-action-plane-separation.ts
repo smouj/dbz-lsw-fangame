@@ -42,6 +42,7 @@ check(hud.includes('actionPlaneAnchorPercentFor') && canon.includes('actionPlane
 check(canon.includes('devAids && !isAction') && canon.includes('devAids && isAction'), 'CanonBattleField must keep tactical markers out of ACTION and expose cinematic markers there');
 check(positionLab.includes('actionPlaneAnchorPercentFor'), 'Position Lab must use the ACTION plane SSOT');
 check(positionLab.includes('resolveCharacterVisualSequence') && positionLab.includes('romPhysicalPreviewSequence'), 'Position Lab ACTION preview must use physical ROM frames');
+check(hud.includes('dev-rom-preview-pending') && hud.includes('No se dibuja ningún PNG sustituto'), 'HUD must show an explicit pending state instead of a blank or invented ACTION frame');
 check(main.includes('actionPlaneAnchorPercentFor'), 'BattleScreen DOM fallback must project ACTION anchors from the shared SSOT');
 check(main.includes('playerFieldAnchor') && main.includes('enemyFieldAnchor'), 'BattleScreen must resolve visual anchors by plane before rendering fighters');
 check(main.includes("viewMode === 'OVERVIEW' ? `${POSITION_DATA[player.battlePos].altitude.toLowerCase()}"), 'BattleScreen must not apply tactical altitude/depth classes inside ACTION');
