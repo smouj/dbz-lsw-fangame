@@ -153,6 +153,9 @@ check('R4: sin stretch del fondo (cover + crop; excluye marcos UI y plano especi
   ));
 check('R4: letterbox Pixi activo con barras oscuras (sin blanco fuera del canvas)',
   /\.battlefield\.pixi-field-active \.battle-pixi-stage\s*\{[^}]*background:\s*#0b0b0d/.test(css));
+check('R4: cinemática Pixi libera el alto ocupado por controles tácticos',
+  /\.battle-screen\.is-cinematic\.pixi-presentation-active\s*\{[^}]*--controls-h:\s*0px;[^}]*grid-template-rows:\s*auto minmax\(0, 1fr\) 0/.test(css) &&
+  /\.battle-screen\.is-cinematic\.pixi-presentation-active \.battle-controls\s*\{[^}]*display:\s*none/.test(css));
 // R4 — el output de Pixi ocupa el viewport 16:9 sin alterar el mundo ROM:
 // 320×160 permanece como mundo y se centra en 320×180 con un offset estable.
 check('R4: Pixi output 320×180 separado del mundo ROM 320×160',

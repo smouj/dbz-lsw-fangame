@@ -1033,6 +1033,19 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .battle-screen.presentation-locked .battle-controls {
   pointer-events: none;
 }
+/* Una película ROM de producción es un plano propio, no una vista táctica
+   comprimida entre HUD y mano. Mientras Pixi gobierna ACTION, el panel de
+   controles no aporta interacción y no debe reservar 104–136 px: en una
+   ventana baja convertía el battlefield en una franja 4:1 y reducía el
+   output 16:9 a menos de 1×. El campo táctico, los QTE y el fallback DOM
+   conservan sus controles y su layout habitual. */
+.battle-screen.is-cinematic.pixi-presentation-active {
+  --controls-h: 0px;
+  grid-template-rows: auto minmax(0, 1fr) 0;
+}
+.battle-screen.is-cinematic.pixi-presentation-active .battle-controls {
+  display: none;
+}
 .battle-screen.qte-resolving {
   --controls-h: 0px;
   grid-template-rows: auto minmax(0, 1fr) 0;
