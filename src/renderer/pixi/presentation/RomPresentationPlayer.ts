@@ -77,6 +77,11 @@ export class RomPresentationPlayer {
   }
 
   cancel(): void {
+    // Invalida también cualquier callback de rAF que ya estuviera encolado.
+    // Cancelar solo el handle no basta si el navegador entrega ese callback
+    // en el mismo frame: sin esta marca un player cancelado podría ejecutar
+    // onCue/onComplete después de que otra acción ya tomara la propiedad.
+    this.done = true;
     if (this.raf) cancelAnimationFrame(this.raf);
     this.raf = 0;
   }

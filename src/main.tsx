@@ -1449,6 +1449,29 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
       setPixiActionActive(false);
     }
   };
+  /**
+   * Cierra una presentación ROM de Stage que terminó fuera de la película
+   * ofensiva (timeout, contraataque o abort seguro). El QTE puede resolver el
+   * Engine sin arrancar un RomPresentationPlayer de ataque; en ese caso no
+   * existe `finishRomCinematic()` que haga el teardown por nosotros. Mantener
+   * este cierre en un único helper evita dejar el plano ACTION activo, un
+   * adapter enlazado a la siguiente acción o la bandera de Pixi encendida en
+   * OVERVIEW. Es idempotente para poder llamarlo también al finalizar el
+   * turno Stage.
+   */
+  const clearStageRomPresentation = () => {
+    romPlayerRef.current?.cancel();
+    romPlayerRef.current = null;
+    pixiPresRef.current?.returnToField();
+    romAdapterRef.current = null;
+    stageRomActiveRef.current = false;
+    runtimeTimelineCursorRef.current = 0;
+    completionOwnerRef.current = 'DOM';
+    presentationSourceRef.current = 'LEGACY';
+    setPixiActionActive(false);
+    setCardFx(null);
+  };
+
   useEffect(() => clearCinematicTimers, []);
   const playCardCinematic = (
     card: CardDef,
@@ -2457,6 +2480,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
       const hpBefore = st.cardHpBefore ?? rt.state.enemy.hp;
       const partialDmg = Math.max(0, hpBefore - rt.state.enemy.hp);
       const resolved = st.correct;
+      clearStageRomPresentation();
       commitQte({ ...st, state: 'SAFE_ABORT', result: 'SAFE_ABORT' });
       setViewMode('OVERVIEW');
       setTimeout(() => {
@@ -2479,6 +2503,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
     // COUNTER_HIT: el Engine ya resolvió y aplicó el contraataque. React solo
     // presenta el delta de HP producido por el Runtime; no recalcula daño.
     commitQte({ ...st, state: 'COUNTER_HIT', result: 'COUNTER_HIT' });
+    clearStageRomPresentation();
     setViewMode('OVERVIEW');
     setTimeout(() => {
       // Proyección del HP ya mutado por el engine (counter del clock).
@@ -2504,6 +2529,11 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
 
   // Variante de finishPlayerTurn para stage attacks (no usar carta de la mano)
   const finishPlayerTurnStage = (ccGained: number) => {
+    // El éxito ROM ya limpia este estado en finishRomCinematic; los caminos de
+    // abort/contraataque no arrancan esa película y llegan aquí directamente.
+    // El helper es idempotente y garantiza que nunca se herede ACTION en el
+    // siguiente exchange.
+    clearStageRomPresentation();
     setSelectedCard(null);
     setStageQte({ state: 'WAITING', seq: [], idx: 0, correct: 0, covering: false, card: null, elapsedFrames: 0, limitFrames: 0, counterFrames: 0, prepFrames: 0, result: null });
     setViewMode('OVERVIEW');
