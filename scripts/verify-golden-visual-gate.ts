@@ -1,170 +1,67 @@
 #!/usr/bin/env node
 /**
- * verify-golden-visual-gate.ts
- * 
- * P0 REAL BROWSER GOLDEN GATE — Headless data integrity check
- * Verifies that each golden form's sprite manifests resolve to
- * actual PNG files with correct dimensions.
+ * ROM Visual Master gate.
+ *
+ * This deliberately verifies emulator framebuffer captures, not historical
+ * sprite manifests. A pass proves the ROM side is immutable, hash-pinned and
+ * backed by the verified Spain ROM. It does not claim ROM↔Pixi parity while
+ * remake captures remain pending.
  */
+import { createHash } from 'node:crypto';
+import { existsSync, readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 
-import * as fs from 'fs';
-import * as path from 'path';
+const ROOT = process.cwd();
+const MASTER_DIR = resolve(ROOT, 'docs/rom/generated/visual-master/kamehameha-left');
+const TIMELINE = resolve(MASTER_DIR, 'timeline.json');
+const SPAIN_ROM_SHA256 = 'bd1df5d6653be9e262f96db3bcdd7bb8ae0cad6186c16f8c1e8eba3f091c8804';
+let pass = 0;
+let fail = 0;
 
-const GOLDEN_FORMS = [
-  'goku_base', 'goku_ssj', 'gohan_young', 'vegeta_base',
-  'piccolo_base', 'krillin_base', 'android_16', 'frieza_final'
-];
-
-const KEY_POSES = [
-  'idle', 'move_front', 'punch_right', 'hurt', 'guard',
-  'beam_charge', 'beam_fire', 'attack_fwd', 'attack_ud',
-  'knockback_back', 'evade', 'gather_power'
-];
-
-const SPRITES_DIR = 'public/assets/sprites';
-
-interface ManifestFrame {
-  name: string;
-  file: string;
-  w: number;
-  h: number;
+function check(condition: unknown, label: string, detail = '') {
+  if (condition) { pass++; console.log(`PASS ${label}${detail ? ` — ${detail}` : ''}`); }
+  else { fail++; console.error(`FAIL ${label}${detail ? ` — ${detail}` : ''}`); }
 }
 
-interface ManifestPose {
-  frame_count: number;
-  fps: number;
-  loop: boolean;
-  frames: ManifestFrame[];
+const sha256 = (data: Buffer) => createHash('sha256').update(data).digest('hex');
+const expectedFrames = [0, 60, ...Array.from({ length: 81 }, (_, i) => 408 + i), ...Array.from({ length: 17 }, (_, i) => 644 + i)];
+
+check(existsSync(TIMELINE), 'timeline.json exists');
+const timeline = JSON.parse(readFileSync(TIMELINE, 'utf8'));
+check(timeline.schema === 'dbzlsw.rom.visual-master.v1', 'canonical visual-master schema');
+check(timeline.source.romSha256 === SPAIN_ROM_SHA256, 'capture bound to verified Spain ROM');
+check(timeline.source.emulator === 'mGBA' && timeline.source.driver.includes('rom-driver.c'), 'native emulator framebuffer source');
+check(timeline.source.identityRebind?.scope === 'mGBA gbAs ROM identity bytes $04..$1f only', 'identity rebind scope explicit');
+check(timeline.source.identityRebind?.gameplayPayload?.includes('byte-identical'), 'gameplay payload preservation explicit');
+check(JSON.stringify(timeline.frames.map((frame: any) => frame.frame)) === JSON.stringify(expectedFrames), 'captured frame set exact', `${timeline.frames.length}/100`);
+check(JSON.stringify(timeline.coverage.activeFrameRanges) === JSON.stringify([[408, 487], [644, 659]]), 'ROM active ranges exact');
+check(JSON.stringify(timeline.coverage.restoreFrames) === JSON.stringify([488, 660]), 'ROM restore boundaries exact');
+
+let brokenImages = 0;
+let wrongDimensions = 0;
+let missingTrace = 0;
+let missingRaster = 0;
+let remakeCaptures = 0;
+for (const frame of timeline.frames) {
+  const imagePath = resolve(MASTER_DIR, frame.romImage);
+  if (!existsSync(imagePath)) { brokenImages++; continue; }
+  const png = readFileSync(imagePath);
+  const isPng = png.subarray(0, 8).toString('hex') === '89504e470d0a1a0a';
+  if (!isPng || sha256(png) !== frame.romImageSha256) brokenImages++;
+  if (isPng && (png.readUInt32BE(16) !== 160 || png.readUInt32BE(20) !== 144)) wrongDimensions++;
+  if (frame.frame >= 408 && frame.frame <= 488 && !frame.actionObjects) missingTrace++;
+  if (frame.frame >= 644 && frame.frame <= 659 && !Array.isArray(frame.scroll?.bands)) missingRaster++;
+  if (frame.remake?.image) remakeCaptures++;
 }
+check(brokenImages === 0, 'all ROM framebuffer hashes valid', `broken=${brokenImages}`);
+check(wrongDimensions === 0, 'all ROM framebuffers are native 160×144', `wrong=${wrongDimensions}`);
+check(missingTrace === 0, 'captured action frames retain ActionObject trace', `missing=${missingTrace}`);
+check(missingRaster === 0, 'projectile frames retain per-scanline raster trace', `missing=${missingRaster}`);
+check(timeline.frames.every((frame: any) => !/manifest|canonical_frames|out_frames/i.test(frame.romImage)), 'manual/external sprite authority = 0');
+check(timeline.frames.filter((frame: any) => frame.phase === 'ACTOR_BEAM_WINDOW').length === 80, 'actor beam window 80 frames');
+check(timeline.frames.filter((frame: any) => frame.phase === 'PROJECTILE_TRAVEL').length === 16, 'projectile travel 16 frames');
 
-type Manifest = Record<string, ManifestPose>;
-
-let passed = 0;
-let failed = 0;
-const errors: string[] = [];
-const results: Record<string, Record<string, { status: string; frames: number; details?: string }>> = {};
-
-for (const form of GOLDEN_FORMS) {
-  results[form] = {};
-  const manifestPath = path.join(SPRITES_DIR, form, 'manifest.json');
-  if (!fs.existsSync(manifestPath)) {
-    console.log(`❌ ${form}: NO manifest.json`);
-    failed++;
-    errors.push(`${form}: missing manifest.json`);
-    continue;
-  }
-
-  let manifest: Manifest;
-  try {
-    manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
-  } catch (e) {
-    console.log(`❌ ${form}: manifest.json parse error`);
-    failed++;
-    errors.push(`${form}: manifest parse error`);
-    continue;
-  }
-
-  const poses = Object.keys(manifest);
-  console.log(`\n═══ ${form}: ${poses.length} poses ═══`);
-
-  // Check key poses
-  for (const pose of KEY_POSES) {
-    if (!poses.includes(pose)) {
-      console.log(`  ⚠️  ${pose}: MISSING from manifest`);
-      results[form][pose] = { status: 'MISSING', frames: 0 };
-      failed++;
-      errors.push(`${form}/${pose}: missing pose in manifest`);
-      continue;
-    }
-
-    const poseData = manifest[pose];
-    const frames = poseData.frames;
-    if (!frames || frames.length === 0) {
-      console.log(`  ❌ ${pose}: empty frames array`);
-      results[form][pose] = { status: 'EMPTY', frames: 0 };
-      failed++;
-      errors.push(`${form}/${pose}: empty frames`);
-      continue;
-    }
-
-    // Check each frame's PNG exists and has content
-    let poseErrors = 0;
-    for (let i = 0; i < frames.length; i++) {
-      const frame = frames[i];
-      const pngPath = path.join(SPRITES_DIR, form, frame.file);
-      if (!fs.existsSync(pngPath)) {
-        poseErrors++;
-        if (i === 0) { // Only report first missing
-          console.log(`  ❌ ${pose}[${i}]: PNG missing: ${frame.file}`);
-          errors.push(`${form}/${pose}[${i}]: missing PNG ${frame.file}`);
-        }
-        continue;
-      }
-
-      const stat = fs.statSync(pngPath);
-      if (stat.size < 100) {
-        poseErrors++;
-        console.log(`  ❌ ${pose}[${i}]: PNG too small (${stat.size} bytes): ${frame.file}`);
-        errors.push(`${form}/${pose}[${i}]: PNG too small`);
-        continue;
-      }
-
-      // Check dimensions are reasonable
-      if (frame.w <= 0 || frame.h <= 0) {
-        poseErrors++;
-        console.log(`  ❌ ${pose}[${i}]: invalid dimensions ${frame.w}x${frame.h}`);
-        errors.push(`${form}/${pose}[${i}]: invalid dims`);
-        continue;
-      }
-
-      passed++;
-    }
-
-    if (poseErrors > 0) {
-      failed += poseErrors;
-      results[form][pose] = { status: 'ERROR', frames: frames.length, details: `${poseErrors} frame errors` };
-    } else {
-      results[form][pose] = { status: 'PASS', frames: frames.length };
-      passed += frames.length;
-    }
-  }
-
-  const formTotal = poses.reduce((acc, p) => acc + (manifest[p]?.frames?.length || 0), 0);
-  const keyTotal = KEY_POSES.reduce((acc, p) => acc + (manifest[p]?.frames?.length || 0), 0);
-  console.log(`  Total: ${formTotal} frames across ${poses.length} poses; key poses: ${keyTotal} frames`);
-}
-
-// Check physical PNG directories
-console.log('\n═══ PHYSICAL PNG INTEGRITY ═══');
-for (const form of GOLDEN_FORMS) {
-  const physDir = path.join(SPRITES_DIR, form, 'physical');
-  if (!fs.existsSync(physDir)) {
-    console.log(`❌ ${form}: NO physical directory`);
-    failed++;
-    errors.push(`${form}: missing physical/ dir`);
-    continue;
-  }
-  const pngs = fs.readdirSync(physDir).filter(f => f.endsWith('.png'));
-  console.log(`  ${form}: ${pngs.length} physical PNGs`);
-  passed += pngs.length;
-}
-
-// Summary
-console.log('\n═══ GOLDEN FORMS SUMMARY ═══');
-for (const form of GOLDEN_FORMS) {
-  const formResults = results[form] || {};
-  const totalPoses = Object.keys(formResults).length;
-  const passCount = Object.values(formResults).filter(r => r.status === 'PASS').length;
-  const missCount = Object.values(formResults).filter(r => r.status === 'MISSING').length;
-  console.log(`  ${form}: ${passCount}/${totalPoses} key poses PASS${missCount > 0 ? `, ${missCount} MISSING` : ''}`);
-}
-
-console.log(`\n═══ RESULTADO: ${passed} ✓ · ${failed} ✗ ═══`);
-if (errors.length > 0 && errors.length <= 20) {
-  console.log('\nERRORS:');
-  errors.forEach(e => console.log(`  ${e}`));
-} else if (errors.length > 20) {
-  console.log(`\n${errors.length} errors (showing first 20):`);
-  errors.slice(0, 20).forEach(e => console.log(`  ${e}`));
-}
-process.exit(failed > 0 ? 1 : 0);
+console.log(`\nROM Visual Master: ${pass} checks passed · ${fail} failed`);
+console.log(`ROM frames: ${timeline.frames.length} · remake frames: ${remakeCaptures}`);
+if (remakeCaptures === 0) console.log('PENDING: Pixi capture + pixel heatmap. ROM reference is closed; parity is not yet claimed.');
+if (fail) process.exitCode = 1;
