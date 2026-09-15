@@ -243,11 +243,17 @@ export class RomDisplayLayer {
     // is mounted as a separate display layer and never treated as a fighter
     // or a procedural projectile.
     if (st.fxWindow) {
-      if (this.fxSourceImage !== st.fxWindow.sourceImage) {
-        this.fxSprite.texture = Assets.cache.has(st.fxWindow.sourceImage) ? Texture.from(st.fxWindow.sourceImage) : Texture.EMPTY;
-        this.fxSourceImage = st.fxWindow.sourceImage;
-      }
-      this.fxSprite.visible = !st.cleared;
+      const hasTexture = Assets.cache.has(st.fxWindow.sourceImage);
+      // Never mount Texture.EMPTY for a ROM window.  Texture.EMPTY is a
+      // white 1×1 texture; scaling it to the decoded viewport makes a
+      // missing ROM asset look like a giant white cinematic plane and can
+      // hide the real ACTION background.  The presenter already exposes the
+      // provenance/pending state, so the render layer must fail closed until
+      // the physical asset is available.  Re-evaluate the texture on every
+      // sync because preload may finish after the first state transition.
+      this.fxSprite.texture = hasTexture ? Texture.from(st.fxWindow.sourceImage) : Texture.EMPTY;
+      this.fxSourceImage = st.fxWindow.sourceImage;
+      this.fxSprite.visible = hasTexture && !st.cleared;
       this.fxSprite.x = st.fxWindow.screenX * s;
       this.fxSprite.y = st.fxWindow.screenY * s;
       this.fxSprite.width = st.fxWindow.width * s;
@@ -273,11 +279,13 @@ export class RomDisplayLayer {
     // (contorno rojo), nunca un fondo genérico.
     this.bgLayer.clear();
     if (st.bgAssembly && st.bgAssembly.imageUrl) {
-      if (this.bgSourceImage !== st.bgAssembly.imageUrl) {
-        this.bgSprite.texture = Assets.cache.has(st.bgAssembly.imageUrl) ? Texture.from(st.bgAssembly.imageUrl) : Texture.EMPTY;
-        this.bgSourceImage = st.bgAssembly.imageUrl;
-      }
-      this.bgSprite.visible = !st.cleared;
+      const hasTexture = Assets.cache.has(st.bgAssembly.imageUrl);
+      // Same fail-closed rule as FX windows.  Keep this assignment in the
+      // sync path so an image that finishes loading after the first frame is
+      // promoted immediately, without requiring a second cue or state change.
+      this.bgSprite.texture = hasTexture ? Texture.from(st.bgAssembly.imageUrl) : Texture.EMPTY;
+      this.bgSourceImage = st.bgAssembly.imageUrl;
+      this.bgSprite.visible = hasTexture && !st.cleared;
       this.bgSprite.x = st.bgAssembly.bgCol * 8 * s;
       this.bgSprite.y = st.bgAssembly.bgRowStart * 8 * s;
       this.bgSprite.width = st.bgAssembly.width * s;

@@ -1386,6 +1386,13 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   justify-content: center;
   pointer-events: none;
 }
+/* Las barras del aspect-fit pertenecen al plano Pixi activo. Mantenerlas
+   opacas y oscuras evita que el canvas transparente deje ver el blanco del
+   documento en los laterales o bajo el plano 320×160. Durante la carga se
+   conserva el fondo DOM hasta que la presentación esté lista. */
+.battlefield.pixi-field-active .battle-pixi-stage {
+  background: #0b0b0d;
+}
 .battle-pixi {
   display: block;
   image-rendering: pixelated;

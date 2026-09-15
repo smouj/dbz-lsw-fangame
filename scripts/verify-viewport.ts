@@ -147,6 +147,8 @@ check('R4: sin stretch del fondo (cover + crop; excluye marcos UI y plano especi
       .replace(/\{[^}]*--btn-basic[^}]*\}/g, '')
       .split('.dev-')[0]
   ));
+check('R4: letterbox Pixi activo con barras oscuras (sin blanco fuera del canvas)',
+  /\.battlefield\.pixi-field-active \.battle-pixi-stage\s*\{[^}]*background:\s*#0b0b0d/.test(css));
 
 console.log(`\n═══ RESULTADO: ${pass} passed · ${fail} failed ═══`);
 if (fail > 0) process.exitCode = 1;

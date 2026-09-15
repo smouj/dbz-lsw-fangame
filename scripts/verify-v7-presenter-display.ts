@@ -5,6 +5,8 @@
 //   - load -> compose -> clear se refleja en el estado del presenter
 //   - 0 mutación de Engine desde el presenter (el presenter no muta nada)
 // Uso: npm run verify:v7-presenter-display
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { RomDisplayPresenter } from '../src/battle/romDisplay/RomDisplayPresenter';
 import { romSupportPresentationProfile } from '../src/battle/romSupportPresentationProfile';
 import { compileRomSupportPresentation } from '../src/battle/romSupportPresentationCompiler';
@@ -78,6 +80,27 @@ check('0 cues silenciosos (11 defensas)', defenseSilent === 0, `silent=${defense
 
 // 4) el presenter no muta Engine: su API solo consume cues y devuelve eventos
 check('RomDisplayPresenter no expone mutación de estado de batalla', true, 'API = consume(cue) -> evento; sin acceso a BattleState');
+
+// 5) render físico fail-closed: un asset ROM ausente nunca puede convertir
+// Texture.EMPTY (1×1 blanco) en una superficie cinematográfica opaca. La
+// precarga puede terminar después del primer sync, por eso la capa debe
+// reevaluar Assets.cache en cada ciclo para promover el recurso en cuanto esté
+// disponible, sin necesitar otro cue.
+const layerSource = readFileSync(resolve(process.cwd(), 'src/battle/romDisplay/RomDisplayLayer.ts'), 'utf8');
+check(
+  'ROM FX window oculta Texture.EMPTY cuando falta el recurso físico',
+  layerSource.includes('const hasTexture = Assets.cache.has(st.fxWindow.sourceImage);')
+    && layerSource.includes('this.fxSprite.visible = hasTexture && !st.cleared;'),
+);
+check(
+  'ROM BG assembly oculta Texture.EMPTY cuando falta el recurso físico',
+  layerSource.includes('const hasTexture = Assets.cache.has(st.bgAssembly.imageUrl);')
+    && layerSource.includes('this.bgSprite.visible = hasTexture && !st.cleared;'),
+);
+check(
+  'ninguna capa ROM muestra un placeholder por ausencia de textura',
+  !/this\.(?:fxSprite|bgSprite)\.visible\s*=\s*!st\.cleared/.test(layerSource),
+);
 
 if (failures === 0) {
   console.log(`\n✅ v7-presenter-display: ${totalCues} cues Support + ${defenseCues} cues Defense → consecuencias observables; 0 no-ops silenciosos.`);
