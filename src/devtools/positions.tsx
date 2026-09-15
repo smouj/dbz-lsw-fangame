@@ -1,8 +1,9 @@
 // ═══════════════════════════════════════════════════════════
 // DEV STUDIO — Position Lab (estilo HUD Studio)
 // Las 4 posiciones GBC + reglas de MOVE (2 ejes) y vulnerabilidades,
-// con el MISMO preview del juego (battle-screen + HUD real + actores
-// overworld anclados con anchorFor — la fuente única que edita el lab).
+// con el MISMO preview del juego (battle-screen + HUD real). El preview
+// táctico usa anchors de overworld; el plano ACTION usa exclusivamente la
+// geometría cinematográfica de actionPlaneGeometry.
 // Click en un marcador P/E del campo recoloca al luchador; los anchors
 // se siguen pudiendo editar (localStorage 'dbzlsw:position-anchors').
 // ═══════════════════════════════════════════════════════════
@@ -12,8 +13,9 @@ import {
   isBeamVulnerable, isDamageVulnerable, attackModifier, defenseModifier,
   resolveRelativeDistance, BattlePosition, type MoveAxis, anchorFor, defaultAnchorFor,
   setPositionAnchorOverride, clearPositionAnchorOverrides, loadPositionAnchorOverrides,
-  type PositionSide, ACTION_CENTER_ANCHOR,
+  type PositionSide,
 } from '../data/positions';
+import { actionPlaneAnchorPercentFor, ACTION_PLANE_GEOMETRY } from '../battle/actionPlaneGeometry';
 import { FORMS, getForm } from '../data/roster';
 import { SCENARIOS } from '../data/scenarios';
 import { battleOverworldActorUrl } from '../data/battleOverworld';
@@ -22,6 +24,8 @@ import { facingFlip } from '../data/facing';
 import { BATTLE_PORTRAITS } from '../data/battlePortraits';
 import { tipBlock } from '../data/tooltips';
 import { Download, RotateCcw, MoveHorizontal, MoveVertical, Crosshair } from 'lucide-react';
+import { resolveCharacterVisualSequence } from '../battle/characterFrameMap';
+import { romPhysicalPreviewSequence } from './romPhysicalPreview';
 
 // Abreviaturas GBC para los marcadores del campo
 const POS_SHORT: Record<BattlePosition, string> = {
@@ -71,6 +75,14 @@ export function PositionsModule() {
   // never substitute a battle-sheet idle whose name was assembled in the UI.
   const pOverworld = battleOverworldActorUrl(playerFormId, 'idle') ?? overworldUrl(playerFormId);
   const eOverworld = battleOverworldActorUrl(enemyFormId, 'idle') ?? overworldUrl(enemyFormId);
+  const pAction = useMemo(() => {
+    const sequence = resolveCharacterVisualSequence({ formId: playerFormId, semanticRole: 'idle' });
+    return romPhysicalPreviewSequence(sequence)[0]?.url;
+  }, [playerFormId]);
+  const eAction = useMemo(() => {
+    const sequence = resolveCharacterVisualSequence({ formId: enemyFormId, semanticRole: 'idle' });
+    return romPhysicalPreviewSequence(sequence)[0]?.url;
+  }, [enemyFormId]);
 
   function updateAnchor(axis: 'x' | 'y', value: number) {
     const next = { ...editingAnchor, [axis]: value };
@@ -339,7 +351,7 @@ export function PositionsModule() {
         </div>
 
         <div className="dev-hud-group">
-          <h2 className="dev-hud-group-title">Planos de anclaje (LEFT / RIGHT) — mismos anchors que el juego</h2>
+          <h2 className="dev-hud-group-title">Planos de anclaje — OVERWORLD y ACTION separados</h2>
           <div className="dev-pos-planes-grid">
             {BATTLE_POSITIONS.map(pos => {
               const la = anchorFor(pos, 'LEFT');
@@ -369,18 +381,22 @@ export function PositionsModule() {
             })}
           </div>
           <div className="dev-pos-plane action-plane">
-            <div className="dev-pos-plane-name">ACTION (primer plano)</div>
+            <div className="dev-pos-plane-name">ACTION (plano cinematográfico ROM · 160×80 nativo)</div>
             <div
               className="dev-pos-plane-field"
               style={{ backgroundImage: `url(${scenario.actionBackground})` }}
             >
-              {pOverworld && (
-                <img src={pOverworld} alt="" className="dev-pos-plane-chibi left action"
-                  style={{ left: `${ACTION_CENTER_ANCHOR.x}%`, top: `${ACTION_CENTER_ANCHOR.y}%`, transform: `translate(-50%, -100%) scaleX(${facingFlip(playerFormId, 'left')})` }} />
+              {pAction && (
+                <img src={pAction} alt="" className="dev-pos-plane-chibi left action"
+                  style={(() => { const a = actionPlaneAnchorPercentFor('player'); return { left: `${a.x}%`, top: `${a.y}%`, transform: `translate(-50%, -100%) scaleX(${facingFlip(playerFormId, 'left')})` }; })()} />
+              )}
+              {eAction && (
+                <img src={eAction} alt="" className="dev-pos-plane-chibi right action"
+                  style={(() => { const a = actionPlaneAnchorPercentFor('enemy'); return { left: `${a.x}%`, top: `${a.y}%`, transform: `translate(-50%, -100%) scaleX(${facingFlip(enemyFormId, 'right')})` }; })()} />
               )}
             </div>
             <div className="dev-pos-plane-anchors">
-              <code>ACTION {ACTION_CENTER_ANCHOR.x}/{ACTION_CENTER_ANCHOR.y} (escenario centrado · especial espejo 20/80)</code>
+              <code>ACTION native P {ACTION_PLANE_GEOMETRY.home.player.x}/{ACTION_PLANE_GEOMETRY.home.player.y} · E {ACTION_PLANE_GEOMETRY.home.enemy.x}/{ACTION_PLANE_GEOMETRY.home.enemy.y} · ×{ACTION_PLANE_GEOMETRY.scale}</code>
             </div>
           </div>
         </div>

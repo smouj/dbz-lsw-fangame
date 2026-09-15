@@ -2,8 +2,9 @@
 // DBZ LSW — ActionScene (vista de ACCIÓN: fondo action + luchadores grandes)
 // ═══════════════════════════════════════════════════════════
 // Plano ACTION_SOLO/ACTION_DUEL/PROJECTILE/IMPACT: fondo action (160×80 → 2×)
-// + atacante y defensor grandes (FighterActor). Anchors/pivots por escenario y
-// lado; separación ABSOLUTA entre posición táctica y posición cinematográfica:
+// + atacante y defensor grandes (FighterActor). Los anchors/pivots salen de
+// actionPlaneGeometry.ts; separación ABSOLUTA entre posición táctica y
+// posición cinematográfica:
 // el luchador grande vive en coordenadas de ACTION, no en las del campo.
 //
 // M8.P0 — FIGHTER IDENTITY / SCENE OWNERSHIP:
@@ -20,17 +21,19 @@ import type { FighterActor } from '../actors/FighterActor';
 import { ACTION_NATIVE_H, ACTION_NATIVE_W, ACTION_WORLD_SCALE } from '../config';
 import { ACTION_GROUND_Y } from '../systems/MotionSystem';
 import type { BattleSide } from '../../../data/facing';
+import { ACTION_PLANE_GEOMETRY } from '../../../battle/actionPlaneGeometry';
 
-// Posiciones cinematográficas por lado (px nativos ROM, plano 160×80).
+// Posiciones cinematográficas por lado (px nativos ROM, plano 160×80),
+// reexportadas aquí solo para compatibilidad con consumidores Pixi existentes.
 // El contenedor ActionScene aplica ACTION_WORLD_SCALE una sola vez al dibujar.
 //   left  (jugador) → x 48
 //   right (enemigo) → x 112
-export const ACTION_LEFT_X = 48;
-export const ACTION_RIGHT_X = 112;
+export const ACTION_LEFT_X = ACTION_PLANE_GEOMETRY.home.player.x;
+export const ACTION_RIGHT_X = ACTION_PLANE_GEOMETRY.home.enemy.x;
 /** Optical anchors for SPECIAL_ACTION: move each fighter toward screen
  * centre while preserving the normal ACTION composition. */
-export const ACTION_SPECIAL_LEFT_X = 56;
-export const ACTION_SPECIAL_RIGHT_X = 104;
+export const ACTION_SPECIAL_LEFT_X = ACTION_PLANE_GEOMETRY.special.player.x;
+export const ACTION_SPECIAL_RIGHT_X = ACTION_PLANE_GEOMETRY.special.enemy.x;
 // Aliases de compatibilidad (consumidores previos)
 export const ACTION_ACTOR_X = ACTION_LEFT_X;
 export const ACTION_TARGET_X = ACTION_RIGHT_X;

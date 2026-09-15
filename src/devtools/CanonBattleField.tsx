@@ -4,20 +4,23 @@
 // visual de producción). Lo consumen el Engine Playground (Timeline en
 // vivo) y el Battle Lab para que el engine se vea EXACTAMENTE como el
 // juego: hud-top (portraits + HP + fase ATTACK/DEFEND + VS ROUND),
-// battlefield con fondo real, fighters anclados con anchorFor (la misma
-// fuente que Position Lab) y sprites overworld/action reales.
+// battlefield con fondo real, fighters OVERVIEW anclados con anchorFor (la
+// misma fuente que Position Lab) y fighters ACTION anclados con el plano
+// cinematográfico compartido.
 //
 // Fuentes compartidas (cero duplicación):
 //   · BATTLE_PORTRAITS (portraits de combate)
 //   · battleOverworldActorUrl (chibi overworld — mismo lookup que el HUD)
 //   · resolveCharacterVisualSequence (frames de acción reconciliados con ROM)
-//   · anchorFor / actionAnchorFor (Position Lab)
+//   · anchorFor (Position Lab, OVERVIEW only)
+//   · actionPlaneAnchorPercentFor (ACTION plane, shared with Pixi)
 //
 // Props: estado del runtime (hp/posiciones/fase) + cues del presenter
 // (fondo/modo/pose) + sprites. Render puro — sin lógica de combate.
 // ═══════════════════════════════════════════════════════════════════════
-import { anchorFor, actionAnchorFor } from '../data/positions';
+import { anchorFor } from '../data/positions';
 import { BattlePosition } from '../data/positions';
+import { actionPlaneAnchorPercentFor } from '../battle/actionPlaneGeometry';
 import { battleOverworldActorUrl } from '../data/battleOverworld';
 import { BATTLE_PORTRAITS } from '../data/battlePortraits';
 import { resolveCharacterVisualSequence } from '../battle/characterFrameMap';
@@ -173,7 +176,9 @@ export function CanonBattleField({ player, enemy, round = 1, background, mode = 
               src={!isAction ? sprites.player.ow : sprites.player.action}
               alt=""
               className={`dev-hud-ow dev-hud-fighter-sprite dev-hud-anchored player ${isAction ? 'action-mode' : ''} ${isAction && special ? 'special-actor' : ''}`}
-              style={isAction ? (() => { const aa = actionAnchorFor(actor, special); return { left: `${aa.x}%`, top: `${aa.y}%` }; })() : { left: `${pa.x}%`, top: `${pa.y}%` }}
+              style={isAction
+                ? (() => { const aa = actionPlaneAnchorPercentFor('player', special ? 'SPECIAL_ACTION' : 'ACTION'); return { left: `${aa.x}%`, top: `${aa.y}%` }; })()
+                : { left: `${pa.x}%`, top: `${pa.y}%` }}
             />
           )}
           {/* Enemy */}
@@ -182,7 +187,9 @@ export function CanonBattleField({ player, enemy, round = 1, background, mode = 
               src={!isAction ? sprites.enemy.ow : sprites.enemy.action}
               alt=""
               className={`dev-hud-ow dev-hud-fighter-sprite dev-hud-anchored enemy ${isAction ? 'action-mode' : ''} ${isAction && special ? 'special-actor' : ''}`}
-              style={isAction ? (() => { const aa = actionAnchorFor(actor, special); return { left: `${aa.x}%`, top: `${aa.y}%` }; })() : { left: `${ea.x}%`, top: `${ea.y}%` }}
+              style={isAction
+                ? (() => { const aa = actionPlaneAnchorPercentFor('enemy', special ? 'SPECIAL_ACTION' : 'ACTION'); return { left: `${aa.x}%`, top: `${aa.y}%` }; })()
+                : { left: `${ea.x}%`, top: `${ea.y}%` }}
             />
           )}
 

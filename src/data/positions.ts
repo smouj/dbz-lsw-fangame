@@ -114,30 +114,10 @@ export const DEFAULT_RIGHT_ANCHORS: Record<BattlePosition, PositionAnchor> = {
 export const LEFT_ANCHORS = DEFAULT_LEFT_ANCHORS;
 export const RIGHT_ANCHORS = DEFAULT_RIGHT_ANCHORS;
 
-// ─── PLANO ACTION (cinemático) ───
-// ESCENARIO (NN_action.png): el actor se compone CENTRADO con los pies en
-// ACTION_CENTER_ANCHOR (50,68) — composición de primer plano, como estaba.
-// Plano ESPECIAL/transición (special_action.png — transformaciones, Beam
-// Ultimate): el actor se compone según QUIÉN ejecuta (espejo, como el GBC):
-//   JUGADOR → IZQUIERDA (x 20) mirando a la derecha
-//   ENEMIGO → DERECHA (x 80, espejo 100−20) mirando a la izquierda
-//   y 1-2px MÁS ABAJO (y 70 — ajuste fino de composición).
-export const ACTION_CENTER_ANCHOR = { x: 50, y: 68 } as const;          // escenario: centrado
-// Optical anchor del plano especial: el centro útil de los metasprites ROM
-// queda unos píxeles hacia dentro respecto al canvas transparente. No es un
-// hitbox de gameplay; es una corrección de composición basada en el bounds
-// físico renderizado (simétrica para ambos lados).
-export const ACTION_SPECIAL_ANCHOR = { x: 24, y: 70 } as const;        // especial: player izquierda
-
-export function actionAnchorFor(side: 'player' | 'enemy', special = false): PositionAnchor {
-  if (!special) return { x: ACTION_CENTER_ANCHOR.x, y: ACTION_CENTER_ANCHOR.y };  // centrado siempre
-  const base = ACTION_SPECIAL_ANCHOR;
-  return side === 'enemy' ? { x: 100 - base.x, y: base.y } : { x: base.x, y: base.y };
-}
-
-export function actionAnchor(): PositionAnchor {
-  return { x: ACTION_CENTER_ANCHOR.x, y: ACTION_CENTER_ANCHOR.y };
-}
+// ACTION/cinematic anchors intentionally do not live in this tactical module.
+// Import them from `src/battle/actionPlaneGeometry.ts`. Keeping the two
+// coordinate spaces separate prevents an overworld position from being used
+// as a cinematic fighter anchor by accident.
 
 const ANCHOR_OVERRIDE_KEY = 'dbzlsw:position-anchors';
 

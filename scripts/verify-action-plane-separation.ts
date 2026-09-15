@@ -1,0 +1,51 @@
+// P0 — ACTION plane / OVERVIEW plane boundary gate
+//
+// ACTION is a cinematic 160×80 native plane. OVERVIEW is the tactical
+// overworld field and owns BattlePosition/anchorFor(). This gate keeps the
+// boundary explicit so a future UI refactor cannot silently place ACTION
+// fighters with tactical anchors or with an overworld sprite.
+
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+
+const root = process.cwd();
+const read = (file: string) => readFileSync(join(root, file), 'utf8');
+const failures: string[] = [];
+let checks = 0;
+const check = (condition: boolean, message: string): void => {
+  checks++;
+  if (!condition) failures.push(message);
+};
+
+const actionGeometry = read('src/battle/actionPlaneGeometry.ts');
+const positions = read('src/data/positions.ts');
+const actionScene = read('src/renderer/pixi/scenes/ActionScene.ts');
+const hud = read('src/devtools/hud.tsx');
+const canon = read('src/devtools/CanonBattleField.tsx');
+const positionLab = read('src/devtools/positions.tsx');
+
+check(actionGeometry.includes('ACTION_PLANE_GEOMETRY'), 'ACTION plane SSOT is missing');
+check(actionGeometry.includes("width: 160") && actionGeometry.includes("height: 80"), 'ACTION SSOT must be native 160×80');
+check(actionGeometry.includes("scale: 2"), 'ACTION SSOT must declare the single ×2 projection');
+check(actionGeometry.includes('actionPlaneAnchorFor') && actionGeometry.includes('actionPlaneAnchorPercentFor'), 'ACTION SSOT must expose native and DOM projections');
+
+check(!positions.includes('export const ACTION_CENTER_ANCHOR'), 'legacy ACTION_CENTER_ANCHOR leaked back into tactical positions');
+check(!positions.includes('export const ACTION_SPECIAL_ANCHOR'), 'legacy ACTION_SPECIAL_ANCHOR leaked back into tactical positions');
+check(!positions.includes('export function actionAnchorFor'), 'legacy actionAnchorFor leaked back into tactical positions');
+
+check(!actionScene.includes("data/positions") && !actionScene.includes('anchorFor('), 'ActionScene must never import/use tactical anchorFor');
+check(!actionScene.includes('BattlePosition'), 'ActionScene must never depend on tactical BattlePosition');
+check(actionScene.includes('ACTION_PLANE_GEOMETRY'), 'ActionScene must consume ACTION plane SSOT');
+
+check(hud.includes('actionPlaneAnchorPercentFor') && canon.includes('actionPlaneAnchorPercentFor'), 'HUD and CanonBattleField must project ACTION anchors from the shared SSOT');
+check(positionLab.includes('actionPlaneAnchorPercentFor'), 'Position Lab must use the ACTION plane SSOT');
+check(positionLab.includes('resolveCharacterVisualSequence') && positionLab.includes('romPhysicalPreviewSequence'), 'Position Lab ACTION preview must use physical ROM frames');
+
+if (failures.length) {
+  console.log(`ACTION plane separation: ${checks - failures.length} passed · ${failures.length} failed`);
+  for (const failure of failures) console.log(`  - ${failure}`);
+  process.exit(1);
+}
+
+console.log(`ACTION plane separation: ${checks} passed · 0 failed`);
+

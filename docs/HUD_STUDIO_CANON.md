@@ -91,12 +91,23 @@ npm run verify:battle       # 71/71 lógica
 | DOWN_FRONT (suelo/cerca) | 32, 72 | 68, 72 |
 
 - Regla de colocación: los PIES del sprite tocan el anchor exacto (`translate(-50%,-100%)`); chibi overworld 16×16 a **×3 = 48px en el preview** (12.2% del campo de 392px ≈ ratio GBC 11.1% del 144 — antes 80px era el doble) y `clamp(48px, 9vmin, 96px)` en el juego (×3 en ventanas pequeñas → ×6 en grandes); Position Lab a ×2 = 32px; facing con `scaleX(±1)` aplicado DESPUÉS del translate (nunca transform inline que pise el anclaje).
-- Position Lab muestra los 4 planos + **plano ACTION** (quinto): el actor centrado con los pies en `ACTION_CENTER_ANCHOR` (50, 68) sobre el fondo `_action`.
+- Position Lab muestra los 4 planos tácticos + **plano ACTION** (quinto). El
+  plano ACTION usa `src/battle/actionPlaneGeometry.ts`; nunca reutiliza los
+  anchors de `anchorFor` ni los sprites del overworld.
 
 ### Plano ACTION (cinemático / QTE / animaciones)
-- **ESCENARIO (`NN_action.png`)**: actor CENTRADO — `ACTION_CENTER_ANCHOR = {x: 50, y: 68}` (constante única en positions.ts) — composición de primer plano, sprite 192px, pies anclados igual que los chibis.
-- **ESPECIAL/transición (`special_action.png` — blanco con bandas azules)**: actor en ESPEJO según quién ejecuta — `actionAnchorFor(side, special)`: JUGADOR a la IZQUIERDA (x 20) mirando a la derecha · ENEMIGO a la DERECHA (x 80 = 100−20) mirando a la izquierda · y 70 (2px más abajo) · 190px (2px menor, CSS `.special-actor`). El fondo especial se escala `auto 100%` + `repeat-x` (bandas siempre visibles, sin recorte ni líneas negras) con atmósfera al 25%.
-- El QTE del juego (stageInput) ejecuta la secuencia con el luchador en SU anchor táctico (no en el centro): el contenedor usa `anchorFor` siempre; `.field-action` funde los fighters salvo `qte-active`.
+- **ESCENARIO (`NN_action.png`)**: composición nativa 160×80, proyección única
+  ×2. Player `48/72`, enemy `112/72` (pies en el anchor).
+- **ESPECIAL/transición (`special_action.png` — blanco con bandas azules)**:
+  player `56/72`, enemy `104/72`; el actor se elige por el rol ROM, no por el
+  slot físico. La proyección DOM deriva de esos mismos valores mediante
+  `actionPlaneAnchorPercentFor`; no existe un segundo conjunto de anchors.
+- El fondo especial se escala `auto 100%` + `repeat-x` (bandas siempre visibles,
+  sin recorte ni líneas negras) con atmósfera al 25%.
+- El QTE del juego (stageInput) usa el plano que corresponda a la fase: el
+  campo OVERVIEW usa `anchorFor`; cualquier película ACTION usa
+  `actionPlaneGeometry`. No se cruzan espacios ni se llevan anchors de
+  overworld a una secuencia cinematográfica.
 
 ### Fondos por situación (fuente: `src/data/scenarios.ts` + `src/data/battleBackgrounds.ts`)
 | Situación | Fondo |

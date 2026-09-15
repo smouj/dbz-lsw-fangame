@@ -10457,6 +10457,14 @@ button.linklike:hover { background: rgba(216,168,48,.08); text-decoration: none;
   filter: drop-shadow(2px 2px 0 rgba(0,0,0,.4));
 }
 .dev-pos-plane-chibi.right { filter: drop-shadow(2px 2px 0 rgba(0,0,0,.4)) brightness(.85); }
+.dev-pos-plane-chibi.action {
+  /* ACTION previews use the physical ROM frame, not the 16×16 overworld
+     chibi. The field is a 150px editorial preview of a 160×80 native plane;
+     the runtime still projects the same anchor once at ×2. */
+  height: 96px;
+  filter: drop-shadow(0 0 8px rgba(255,190,60,.24)) drop-shadow(2px 3px 0 rgba(0,0,0,.45));
+}
+.dev-pos-plane-chibi.action.right { filter: drop-shadow(0 0 8px rgba(255,100,70,.22)) drop-shadow(2px 3px 0 rgba(0,0,0,.45)); }
 .dev-pos-plane-anchors {
   display: flex;
   justify-content: space-between;

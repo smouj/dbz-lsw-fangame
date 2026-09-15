@@ -15,7 +15,8 @@ fighter asset scale    ×1 dentro del mundo nativo
 camera offsets         píxeles nativos, proyectados por ActionScene
 ```
 
-Los anchors de producción viven también en coordenadas nativas:
+Los anchors de producción viven también en coordenadas nativas y tienen una
+fuente separada de los anchors tácticos del overworld:
 
 ```text
 player ACTION          x=48
@@ -24,6 +25,20 @@ special player         x=56
 special enemy          x=104
 ground                 y=72 (8px native safety margin to the 80px plane edge)
 ```
+
+La matriz de esta tabla está centralizada en
+`src/battle/actionPlaneGeometry.ts`. `src/data/positions.ts` solo contiene
+`BattlePosition` y `anchorFor()` para `OVERVIEW`; ninguna escena ACTION importa
+esa función. Los previews DOM convierten la misma matriz a porcentajes con
+`actionPlaneAnchorPercentFor()`, de modo que Dev Studio y Pixi comparten el
+mismo punto de anclaje.
+
+Los anchors físicos que la ROM escribe mediante `SET_OBJECT_POSITION` siguen
+siendo los de `ACTION_ANCHOR_TABLE` en `src/battle/romActionObject.ts`. Esos
+cues pueden mover temporalmente cada ActionObject (entrada, contacto o
+retorno); al terminar la cue, la composición estable vuelve al layout ACTION
+de esta página. No se reinterpretan como posiciones tácticas ni como
+`BattlePosition`.
 
 El fondo ACTION y los fighters no se escalan por separado. Así, un frame ROM de
 `32×48` conserva su densidad y se proyecta a `64×96` junto con el fondo. Los

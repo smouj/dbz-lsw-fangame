@@ -20,7 +20,8 @@ import { getForm } from '../data/roster';
 import { BATTLE_PORTRAITS } from '../data/battlePortraits';
 import { storyPortraitUrlApproximate as storyPortraitUrl } from '../data/storyPortraits';
 import { resolveSpeakerPortrait } from '../data/speakerPortraits';
-import { anchorFor, BattlePosition, actionAnchorFor } from '../data/positions';
+import { anchorFor, BattlePosition } from '../data/positions';
+import { actionPlaneAnchorPercentFor } from '../battle/actionPlaneGeometry';
 import { downloadJson } from './spriteEditing';
 import { getCard, CARD_TYPE_NAMES, CARD_COLORS, CARD_COLORS_ON_LIGHT, CardDef } from '../data/cards';
 import { tipBlock, tipCard, TipPart } from '../data/tooltips';
@@ -565,10 +566,10 @@ export function HudModule() {
               <div className={`battle-bg authentic ${actionSpecial ? 'special' : ''}`} style={{ backgroundImage: `url(${battleBgUrl})` }} />
               <div className="battlefield-fighters">
                 {(() => {
-                  // ANCLAJE REAL (fuente única): los fighters se posicionan con
-                  // anchorFor(pos, side) — los mismos anchors que Position Lab
-                  // edita (localStorage 'dbzlsw:position-anchors'). Si cambias
-                  // una posición en Positions, el preview del HUD la refleja.
+                  // OVERVIEW (tactical): los fighters se posicionan con
+                  // anchorFor(pos, side), la fuente que edita Position Lab.
+                  // ACTION no entra en esta rama: usa exclusivamente
+                  // actionPlaneGeometry, el plano cinematográfico nativo.
                   const pa = anchorFor(BattlePosition.DOWN_BACK, 'LEFT');
                   const ea = anchorFor(BattlePosition.DOWN_BACK, 'RIGHT');
                   return (
@@ -604,21 +605,23 @@ export function HudModule() {
                                      SOLO el actor (el que ejecuta la acción)
                           Ambos anclados igual que Position Lab:
                           translate(-50%,-100%) → los PIES tocan el anchor exacto. */}
-                      {/* ACTION: el actor se compone según QUIÉN EJECUTA
-                          (actionAnchorFor — espejo GBC): JUGADOR a la
-                          izquierda (x 20) mirando a la derecha, ENEMIGO a
-                          la derecha (x 80) mirando a la izquierda; en el
-                          plano ESPECIAL 2px más abajo (y 70) + 2px menor
-                          (190px, CSS .special-actor) */}
+                      {/* ACTION usa su propio plano nativo 160×80. Nunca
+                          reutiliza los anchors tácticos del overworld:
+                          actionPlaneAnchorPercentFor es la proyección DOM
+                          del mismo SSOT que consume ActionScene/Pixi. */}
                       {(bgMode === 'overview' ? pIdle : (actionFrames.length > 0 && actor === 'player' ? actionPreviewFrame : undefined)) && (
                         <img src={bgMode === 'overview' ? pIdle : actionPreviewFrame?.url} alt=""
                           className={`dev-hud-ow dev-hud-fighter-sprite dev-hud-anchored player ${bgMode === 'action' ? 'action-mode' : ''} ${bgMode === 'action' && actionSpecial ? 'special-actor' : ''}`}
-                          style={bgMode === 'action' ? (() => { const aa = actionAnchorFor(actor, actionSpecial); return { left: `${aa.x}%`, top: `${aa.y}%` }; })() : { left: `${pa.x}%`, top: `${pa.y}%` }} />
+                          style={bgMode === 'action'
+                            ? (() => { const aa = actionPlaneAnchorPercentFor('player', actionSpecial ? 'SPECIAL_ACTION' : 'ACTION'); return { left: `${aa.x}%`, top: `${aa.y}%` }; })()
+                            : { left: `${pa.x}%`, top: `${pa.y}%` }} />
                       )}
                       {(bgMode === 'overview' ? eIdle : (actionFrames.length > 0 && actor === 'enemy' ? actionPreviewFrame : undefined)) && (
                         <img src={bgMode === 'overview' ? eIdle : actionPreviewFrame?.url} alt=""
                           className={`dev-hud-ow dev-hud-fighter-sprite dev-hud-anchored enemy ${bgMode === 'action' ? 'action-mode' : ''} ${bgMode === 'action' && actionSpecial ? 'special-actor' : ''}`}
-                          style={bgMode === 'action' ? (() => { const aa = actionAnchorFor(actor, actionSpecial); return { left: `${aa.x}%`, top: `${aa.y}%` }; })() : { left: `${ea.x}%`, top: `${ea.y}%` }} />
+                          style={bgMode === 'action'
+                            ? (() => { const aa = actionPlaneAnchorPercentFor('enemy', actionSpecial ? 'SPECIAL_ACTION' : 'ACTION'); return { left: `${aa.x}%`, top: `${aa.y}%` }; })()
+                            : { left: `${ea.x}%`, top: `${ea.y}%` }} />
                       )}
                     </>
                   );

@@ -22,6 +22,7 @@ import { ACTION_LEFT_X, ACTION_RIGHT_X, ACTION_SPECIAL_LEFT_X, ACTION_SPECIAL_RI
 import { ActionScene } from '../scenes/ActionScene';
 import { ACTION_NATIVE_H, ACTION_NATIVE_W, ACTION_WORLD_SCALE, BATTLE_LOGICAL_H, BATTLE_LOGICAL_W } from '../config';
 import { ACTION_GROUND_Y } from '../systems/MotionSystem';
+import { ACTION_PLANE_GEOMETRY, actionPlaneAnchorPercentFor } from '../../../battle/actionPlaneGeometry';
 import { ActionObjectRuntime } from '../../../battle/engine/presentation/ActionObjectRuntime';
 import { facingScaleX } from '../../../data/facing';
 import { RomDisplayLayer } from '../../../battle/romDisplay/RomDisplayLayer';
@@ -311,6 +312,18 @@ describe('ACTION native geometry projection', () => {
     expect(scene.children.indexOf(romDisplay)).toBe(1);
     expect(scene.children.indexOf(right)).toBe(2);
     expect(scene.children.indexOf(left)).toBe(3);
+  });
+});
+
+describe('ACTION plane / tactical plane separation', () => {
+  it('uses the shared cinematic anchors and never a tactical overworld anchor', () => {
+    expect(ACTION_PLANE_GEOMETRY.width).toBe(160);
+    expect(ACTION_PLANE_GEOMETRY.height).toBe(80);
+    expect(ACTION_PLANE_GEOMETRY.home.player).toEqual({ x: ACTION_LEFT_X, y: ACTION_GROUND_Y });
+    expect(ACTION_PLANE_GEOMETRY.home.enemy).toEqual({ x: ACTION_RIGHT_X, y: ACTION_GROUND_Y });
+    expect(actionPlaneAnchorPercentFor('player')).toEqual({ x: 30, y: 90 });
+    expect(actionPlaneAnchorPercentFor('enemy')).toEqual({ x: 70, y: 90 });
+    expect(actionPlaneAnchorPercentFor('player')).not.toEqual(actionPlaneAnchorPercentFor('enemy'));
   });
 });
 

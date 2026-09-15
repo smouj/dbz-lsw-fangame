@@ -32,6 +32,7 @@ import {
 } from '../src/renderer/pixi/config';
 import { ACTION_LEFT_X, ACTION_RIGHT_X } from '../src/renderer/pixi/scenes/ActionScene';
 import { ACTION_GROUND_Y } from '../src/renderer/pixi/systems/MotionSystem';
+import { ACTION_PLANE_GEOMETRY, actionPlaneAnchorFor, actionPlaneAnchorPercentFor } from '../src/battle/actionPlaneGeometry';
 
 const failures: string[] = [];
 let checks = 0;
@@ -52,6 +53,16 @@ check(BATTLE_LOGICAL_W === ACTION_NATIVE_W * ACTION_WORLD_SCALE && BATTLE_LOGICA
   'battle logical canvas must be the single native ACTION projection');
 check(ACTION_LEFT_X === 48 && ACTION_RIGHT_X === 112,
   `ACTION anchors must be native 48/112 (got ${ACTION_LEFT_X}/${ACTION_RIGHT_X})`);
+check(ACTION_PLANE_GEOMETRY.width === ACTION_NATIVE_W && ACTION_PLANE_GEOMETRY.height === ACTION_NATIVE_H,
+  'ACTION plane geometry must use the native ACTION viewport (160×80)');
+check(ACTION_PLANE_GEOMETRY.scale === ACTION_WORLD_SCALE,
+  'ACTION plane geometry scale must match the single ActionScene projection');
+check(actionPlaneAnchorFor('player').x === ACTION_LEFT_X && actionPlaneAnchorFor('enemy').x === ACTION_RIGHT_X,
+  'Pixi ACTION anchors must come from the shared ACTION-plane SSOT');
+check(actionPlaneAnchorPercentFor('player').x !== actionPlaneAnchorPercentFor('enemy').x,
+  'ACTION player/enemy anchors must remain distinct (never a tactical shared center)');
+check(actionPlaneAnchorPercentFor('player').y === actionPlaneAnchorPercentFor('enemy').y,
+  'ACTION player/enemy anchors must share the ROM ground line');
 // Keep the shared ground line eight native pixels inside the 160×80 ACTION
 // plane.  The parent projection is ×2, so this gives the physical fighter
 // frames a stable 16px visible safety margin without changing their ROM
