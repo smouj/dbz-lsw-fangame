@@ -41,5 +41,15 @@ export function rushX(motion: RushMotion, progress: number): number {
   return lerp(motion.start, motion.end, motion.easing(p));
 }
 
-/** Y nativa del luchador en ACTION (suelo fijo: línea compartida). */
-export const ACTION_GROUND_Y = 75;
+/**
+ * Y nativa del punto de apoyo en ACTION.
+ *
+ * El plano ROM mide 160×80. La línea inferior de los metasprites de combate
+ * queda ocho píxeles por encima del borde del plano (72), dejando el margen
+ * inferior que se ve en la composición GBC. Todos los actores, movimientos y
+ * anclas usan este mismo punto; la escena padre aplica después la escala ×2.
+ * Mantenerlo como una constante derivada del tamaño nativo evita que cada
+ * película vuelva a introducir un `y` distinto y que los sprites queden
+ * pegados al borde inferior.
+ */
+export const ACTION_GROUND_Y = 72;

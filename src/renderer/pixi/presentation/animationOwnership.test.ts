@@ -274,7 +274,13 @@ describe('ACTION native geometry projection', () => {
     expect(scene.scale.x).toBe(ACTION_WORLD_SCALE);
     expect(scene.scale.y).toBe(ACTION_WORLD_SCALE);
     expect(scene.label).toBe('action-scene-native-160x80');
-    expect(ACTION_GROUND_Y).toBe(75);
+    expect(ACTION_GROUND_Y).toBe(72);
+
+    const left = new FighterActor(fakeAtlas(), 'gohan_young', 'left');
+    const right = new FighterActor(fakeAtlas(), 'piccolo_evil', 'right');
+    scene.setFighters(left, right);
+    expect(left.y).toBe(72);
+    expect(right.y).toBe(72);
   });
 
   it('reorders fighters without moving either one below the BG', () => {
