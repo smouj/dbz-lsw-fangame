@@ -2162,6 +2162,17 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
     let raf = 0;
     let last = performance.now();
     qteDebugRef.current.stepFrames = 0; // limpia steps residuales de otro QTE
+    // Un QTE terminal ya no tiene reloj que alimentar. Si el contraataque
+    // llega a WAITING/COUNTER_HIT (o la cadena termina en COMPLETED), el
+    // cierre de la presentación se programa en `resolveStageResult`.
+    // Mantener este RAF vivo llamando a `runtime.advance()` sin deadline hace
+    // que el Engine avance en bloque y puede bloquear el hilo, dejando ACTION
+    // congelado antes de volver a FIELD.
+    const isTerminalQteState = (state: QteState): boolean =>
+      state === 'WAITING'
+      || state === 'COMPLETED'
+      || state === 'SAFE_ABORT'
+      || state === 'COUNTER_HIT';
     // M6 — el reloj REAL alimenta el ENGINE (autoridad): rAF → GbcClockAdapter
     // → rtApi.advance(ticks). El engine transiciona PREPARING→INPUT_WINDOW
     // (QTE_STARTED), expira el deadline global y abre COUNTER_WINDOW. El
@@ -2170,6 +2181,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
     let acc = 0; // acumulador de frames GBC (proyección visual únicamente)
     let counterAcc = 0; // acumulador propio de la ventana de contraataque (visual)
     const tick = (now: number) => {
+      // La transición terminal puede haberse proyectado por React un frame
+      // después de que el Engine la resolviese. La ref evita que ese frame
+      // extra vuelva a invocar `advance()` sin una ventana activa.
+      if (isTerminalQteState(stageQteRef.current.state)) return;
       const realDeltaMs = now - last;
       last = now;
       // Debugger QTE (?debugState=1): congelado ⇒ el reloj real se ignora y
@@ -2203,6 +2218,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
             if (stNow.state === 'COUNTER_WINDOW') {
               commitQte({ ...stNow, state: 'COUNTER_HIT', result: 'COUNTER_HIT' });
               resolveStageResult();
+              // `resolveStageResult` programa el retorno y la limpieza. No
+              // hay que solicitar otro frame: el QTE ya no tiene deadline.
+              return;
             }
           }
         }
@@ -2231,7 +2249,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
         setStageQte(prev => ({ ...prev, counterFrames: cf }));
         // El fin de la ventana A/B lo resuelve el ENGINE (counterDeadlineTick).
       }
-      raf = requestAnimationFrame(tick);
+      if (!isTerminalQteState(stageQteRef.current.state)) {
+        raf = requestAnimationFrame(tick);
+      }
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
