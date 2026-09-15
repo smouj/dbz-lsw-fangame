@@ -39,6 +39,7 @@ check(!actionScene.includes('BattlePosition'), 'ActionScene must never depend on
 check(actionScene.includes('ACTION_PLANE_GEOMETRY'), 'ActionScene must consume ACTION plane SSOT');
 
 check(hud.includes('actionPlaneAnchorPercentFor') && canon.includes('actionPlaneAnchorPercentFor'), 'HUD and CanonBattleField must project ACTION anchors from the shared SSOT');
+check(canon.includes('devAids && !isAction') && canon.includes('devAids && isAction'), 'CanonBattleField must keep tactical markers out of ACTION and expose cinematic markers there');
 check(positionLab.includes('actionPlaneAnchorPercentFor'), 'Position Lab must use the ACTION plane SSOT');
 check(positionLab.includes('resolveCharacterVisualSequence') && positionLab.includes('romPhysicalPreviewSequence'), 'Position Lab ACTION preview must use physical ROM frames');
 check(main.includes('actionPlaneAnchorPercentFor'), 'BattleScreen DOM fallback must project ACTION anchors from the shared SSOT');

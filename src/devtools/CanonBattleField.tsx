@@ -102,6 +102,9 @@ export function CanonBattleField({ player, enemy, round = 1, background, mode = 
   const ea = anchorFor(enemy.pos, 'RIGHT');
   const isAction = mode !== 'OVERVIEW';
   const special = mode === 'SPECIAL_ACTION';
+  const actionAnchorMode = special ? 'SPECIAL_ACTION' as const : 'ACTION' as const;
+  const actionPlayerAnchor = actionPlaneAnchorPercentFor('player', actionAnchorMode);
+  const actionEnemyAnchor = actionPlaneAnchorPercentFor('enemy', actionAnchorMode);
 
   return (
     <div className={`battle-screen view-overview dev-hud-real-preview ${className ?? ''}`}>
@@ -157,7 +160,7 @@ export function CanonBattleField({ player, enemy, round = 1, background, mode = 
       <div className="battlefield">
         <div className={`battle-bg authentic ${special ? 'special' : ''}`} style={{ backgroundImage: `url(${background})` }} />
         <div className="battlefield-fighters">
-          {devAids && (
+          {devAids && !isAction && (
             <>
               <div className="dev-fighter-anchor player" style={{ left: `${pa.x}%`, top: `${pa.y}%` }}>
                 <span className="dev-anchor-cross" />
@@ -166,6 +169,18 @@ export function CanonBattleField({ player, enemy, round = 1, background, mode = 
               <div className="dev-fighter-anchor enemy" style={{ left: `${ea.x}%`, top: `${ea.y}%` }}>
                 <span className="dev-anchor-cross" />
                 <span className="dev-anchor-label">E · {ea.x},{ea.y}</span>
+              </div>
+            </>
+          )}
+          {devAids && isAction && (
+            <>
+              <div className="dev-fighter-anchor player action-anchor" style={{ left: `${actionPlayerAnchor.x}%`, top: `${actionPlayerAnchor.y}%` }}>
+                <span className="dev-anchor-cross" />
+                <span className="dev-anchor-label">P · ACTION</span>
+              </div>
+              <div className="dev-fighter-anchor enemy action-anchor" style={{ left: `${actionEnemyAnchor.x}%`, top: `${actionEnemyAnchor.y}%` }}>
+                <span className="dev-anchor-cross" />
+                <span className="dev-anchor-label">E · ACTION</span>
               </div>
             </>
           )}
