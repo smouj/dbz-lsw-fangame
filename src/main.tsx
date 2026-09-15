@@ -2196,9 +2196,28 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
       // 1) Alimentar el ENGINE con el tiempo real (única fuente de verdad).
       const ticks = clockAdapter.push(dbg.frozen ? delta * (1000 / GBC_NATIVE_FPS) : realDeltaMs);
       if (ticks > 0) {
+        // Conservamos el estado de la sombra antes de avanzar. Una ráfaga de
+        // tiempo (pestaña en segundo plano, primer frame tardío, etc.) puede
+        // atravesar más de un deadline en una sola llamada: INPUT_WINDOW →
+        // COUNTER_WINDOW → WAITING. Comparar únicamente el estado final con
+        // el estado del runtime antes del avance pierde el cierre terminal.
+        const shadowBefore = stageQteRef.current;
         const rtBefore = rtApi.runtime.state.stageQte.state;
         rtApi.advance(ticks);
         const rtAfter = rtApi.runtime.state.stageQte;
+        const runtimeTerminal = isTerminalQteState(rtAfter.state);
+
+        // Si el Engine terminó durante esta ráfaga, la presentación debe
+        // abandonar ACTION en el mismo frame lógico. El resultado se deriva
+        // del estado terminal ROM del Engine; nunca se inventa una transición
+        // visual ni se vuelve a resolver daño desde React.
+        if (runtimeTerminal && shadowBefore.card && !isTerminalQteState(shadowBefore.state)) {
+          const terminalResult = rtAfter.state === 'COMPLETED' ? 'FULL_SUCCESS' : 'COUNTER_HIT';
+          commitQte({ ...shadowBefore, state: rtAfter.state, result: terminalResult });
+          resolveStageResult();
+          return;
+        }
+
         // QTE_STARTED / QTE_TIMEOUT / counter-resolved los emite el ENGINE;
         // el shadow proyecta.
         if (rtBefore !== rtAfter.state) {
