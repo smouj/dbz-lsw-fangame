@@ -72,10 +72,9 @@ npm run verify:battle       # 71/71 lógica
   MOVE (3 botones, sin texto), STAGE (chips + layout estable 3-6), INTRO
   (full-screen GBC, sprites desde ±42vw + VS, sin texto), tooltips
   estructurados (`tipBlock`/`tipCard`), hovers únicos, ventana estable.
-- **2026-08-18 (2ª)**: canónica de POSICIONES y FONDOS — `ACTION_CENTER_ANCHOR`
-  (50,68) como constante única; Position Lab con 4 planos tácticos + plano
-  ACTION; fondos por situación (OVERVIEW→`NN_world`, ACTION→`NN_action`,
-  SPECIAL_ACTION→`special_action`); anchors simétricos documentados.
+- **2026-08-18 (2ª)**: canónica de POSICIONES y FONDOS — introdujo los 4
+  planos tácticos y el plano ACTION. La implementación vigente separa ambos
+  espacios en `data/positions.ts` y `battle/actionPlaneGeometry.ts`.
 
 ## Canónica de POSICIONES y FONDOS (planos)
 
