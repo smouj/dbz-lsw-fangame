@@ -1,0 +1,64 @@
+{
+  "schema": "dbzlsw.rom.anim-slot-card-resolve.v1",
+  "artifact": "tools/rom-trace/r31a/artifacts/anim-slot-card-resolve-01.json",
+  "question": "technique address -> card, and identification of the action-capable states",
+  "corpus": {
+    "table": "ROM_CATALOG_RESOURCE_BASES",
+    "documented_in": "src/data/generated/romAnimationResourceBase.generated.ts:16 \u2014 \"Cat\u00e1logo de 66 t\u00e9cnicas (banks $62/$63/$64)\"",
+    "entryCount": 66,
+    "banks": [
+      98,
+      99,
+      100
+    ],
+    "entryShape": "{ resourceId, animationBank, localId, resourceBase }",
+    "status": "FOUND"
+  },
+  "chain": "slot triple [b0,b1,b2] -> bank $b0, addr (b2<<8)|b1 -> ROM_CATALOG_RESOURCE_BASES entry by (animationBank, resourceBase) -> resourceId -> card via ROM_BEAM_SEQUENCE_SELECTORS(animationResource)",
+  "states": [
+    {
+      "state": "tools/rom-trace/r31a/kame_left_base.ss0",
+      "slot6": "62 94 44",
+      "bank": "$62",
+      "address": "$4494",
+      "resourceBase": 17556,
+      "catalogEntry": {
+        "resourceId": 3,
+        "animationBank": 98,
+        "localId": 3,
+        "resourceBase": 17556
+      },
+      "beamSelector": "animationResource 3 -> cardId 12 Kamehameha (sequence 0 among others)",
+      "identifiedCard": 12,
+      "confidence": "RECEIPTED \u2014 independently confirms the fixture-declared cardId 12 from the state alone"
+    },
+    {
+      "state": "tools/rom-trace/r31a/tail_left_base.ss0",
+      "slot6": "64 48 77",
+      "bank": "$64",
+      "address": "$7748",
+      "resourceBase": 30536,
+      "catalogEntry": {
+        "resourceId": 63,
+        "animationBank": 100,
+        "localId": 13,
+        "resourceBase": 30536
+      },
+      "beamSelector": "animationResource 63 -> NO rows (the beam selector table only covers beam cards)",
+      "identifiedCard": null,
+      "confidence": "resource identity RECEIPTED (resourceId 63, bank $64 localId 13); CARD NOT DETERMINED \u2014 requires a card<->resource table beyond the beam selectors"
+    },
+    {
+      "state": "tools/rom-trace/r31a/tail_left_move.ss0",
+      "slot6": "64 48 77",
+      "bank": "$64",
+      "address": "$7748",
+      "resourceBase": 30536,
+      "identicalTo": "tail_left_base",
+      "identifiedCard": null,
+      "confidence": "same resource as tail_left_base; card NOT determined"
+    }
+  ],
+  "rule": "no card is named from a filename; card 12 is named only because resourceId 3 -> cardId 12 comes from the generated selector table",
+  "residualGap": "card identification for non-beam technique resources (e.g. resourceId 63) needs a resource->card table; the beam selector table is beam-only"
+}
