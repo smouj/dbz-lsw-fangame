@@ -16,6 +16,7 @@ import { createHash } from 'node:crypto';
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import {
+  ACTOR_COLUMN_BAND,
   COMPARE_SCALE,
   EXPECTED_CONTRACT,
   REMAKE_WORLD_CROP,
@@ -135,6 +136,7 @@ if (remakeCaptures > 0) {
       sampleWorld(romDecoded, ROM_WORLD_CROP, 1),
       sampleWorld(decoded, REMAKE_WORLD_CROP, 1 / COMPARE_SCALE),
       bandedRows,
+      ACTOR_COLUMN_BAND,
     );
     viewportTotals.bandedPixels += diff.viewport.bandedPixels;
     viewportTotals.bandedMismatchPx += diff.viewport.bandedMismatchPx;

@@ -18,6 +18,7 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import {
+  ACTOR_COLUMN_BAND,
   EXPECTED_CONTRACT,
   bandedRowsFromScroll,
   causesFor,
@@ -47,7 +48,7 @@ for (const frame of timeline.frames) {
   // Comparator option (b), interim: rows the ROM composites per scanline are
   // counted and refused, never dropped.
   const bandedRows = bandedRowsFromScroll(frame.scroll);
-  const diff = diffCaptureFiles(MASTER_DIR, frame.romImage, frame.remake.image, readFileSync, bandedRows);
+  const diff = diffCaptureFiles(MASTER_DIR, frame.romImage, frame.remake.image, readFileSync, bandedRows, ACTOR_COLUMN_BAND);
   const captureFrame = captureByRomFrame.get(frame.frame);
   const view = {
     romFrame: frame.frame,

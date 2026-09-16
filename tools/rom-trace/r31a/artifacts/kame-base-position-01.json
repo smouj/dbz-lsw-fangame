@@ -1,586 +1,375 @@
 {
-  "schema": "dbzlsw.rom.action-object-base-position.v1",
+  "schema": "dbzlsw.rom.action-object-base-position.v2",
   "artifact": "tools/rom-trace/r31a/artifacts/kame-base-position-01.json",
-  "source": {
+  "provenance": {
     "rom": "dbz-lsw-spain.gbc",
-    "romPath": "/home/local-user/.openclaw/workspace/dbz-lsw-decomp/13_raw_rom/dbz-lsw-spain.gbc",
-    "bootstrapState": "tools/rom-trace/r31a/artifacts/kame_left_base.ss0",
-    "identityRebind": "rebind-savestate-rom-identity.mjs kame_left_base.ss0 <spain-identity> -> kame_left_base.spain.ss0",
-    "driver": "tools/rom-trace/rom-driver (prebuilt) via read 0xC3C8 4",
+    "romSha256": "bd1df5d6653be9e262f96db3bcdd7bb8ae0cad6186c16f8c1e8eba3f091c8804",
+    "bootstrapStateSha256": "6bc112e9a1a20b8c9e796344d314f5f7fcfda0525bb0fab502e7b059128019d5",
+    "bootstrapStatePath": "tools/rom-trace/r31a/kame_left_base.ss0",
+    "identityRebind": "rebind-savestate-rom-identity.mjs (USA identity -> Spain identity)",
+    "driver": "tools/rom-trace/rom-driver (prebuilt) via `read 0xC3C8 4`",
+    "method": "loadstate <rebound>; frames 1 <keys> per frame; read 0xC3C8 4 every frame",
     "input": "60:1:8",
-    "framesReplayed": 700
+    "framesReplayed": 700,
+    "readsOk": 700,
+    "addresses": {
+      "object0": {
+        "baseY": "0xC3C8",
+        "baseX": "0xC3C9"
+      },
+      "object1": {
+        "baseY": "0xC3CA",
+        "baseX": "0xC3CB"
+      }
+    }
   },
-  "addresses": {
-    "object0": {
-      "baseY": "0xC3C8",
-      "baseX": "0xC3C9"
+  "reachability": {
+    "actionSceneFamily": {
+      "kinds": [
+        "BEAM_BASE",
+        "STANDARD_DAMAGE",
+        "BEAM_VARIANT",
+        "PROJECTILE_SCROLL",
+        "SPECIAL_HANDLER"
+      ],
+      "cardCount": 83,
+      "ofCards": 125,
+      "source": "src/battle/romPresentationForCard.ts:32-38 BRIDGE_ELIGIBLE_KINDS"
     },
-    "object1": {
-      "baseY": "0xC3CA",
-      "baseX": "0xC3CB"
+    "reachable": [
+      {
+        "card": 12,
+        "cardName": "Kamehameha",
+        "side": "LEFT",
+        "savestate": "tools/rom-trace/r31a/kame_left_base.ss0",
+        "input": "60:1:8",
+        "status": "CAPTURED"
+      }
+    ],
+    "documentedButUnreachable": [
+      {
+        "card": 8,
+        "cardName": "Energy Bomb",
+        "side": "LEFT",
+        "input": "60:1:8",
+        "activeFrameRanges": [
+          [
+            349,
+            369
+          ],
+          [
+            605,
+            620
+          ]
+        ],
+        "needsBootstrapStateSha256": "5c3958d16fb2ca2e2d201c3a8ff1a94bd7a091b476c51f7348e2053eae14a446",
+        "status": "BLOCKED_NO_ON_HAND_SAVESTATE"
+      },
+      {
+        "card": 17,
+        "cardName": "S.Beam Can.",
+        "side": "RIGHT",
+        "input": "",
+        "activeFrameRanges": [
+          [
+            324,
+            403
+          ],
+          [
+            560,
+            575
+          ]
+        ],
+        "needsBootstrapStateSha256": "d4fe2faf1119ea8735b499f15758b5f72a30b400450bf89e40fa4bf1520dadd5",
+        "status": "BLOCKED_NO_ON_HAND_SAVESTATE"
+      }
+    ],
+    "noData": {
+      "cardCount": 80,
+      "note": "no fixture and no bootstrap savestate; requires a savestate that reaches the action (the menu->battle navigation the rom-trace README flags as unresolved)"
     },
-    "evidence": "src/battle/romActionObject.ts ACTION_OBJECT_BASE_POSITION ($C3C8/$C3C9 obj0, $C3CA/$C3CB obj1)"
+    "savestatesOnHand": 18
   },
-  "frames": [
+  "series": [
     {
-      "frame": 408,
       "obj0_baseY": 96,
       "obj0_baseX": 61,
       "obj1_baseY": 96,
-      "obj1_baseX": 136
+      "obj1_baseX": 105,
+      "frameCount": 210,
+      "frameRuns": [
+        [
+          490,
+          699
+        ]
+      ],
+      "animates": true
     },
     {
-      "frame": 409,
       "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 410,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 411,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 412,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 413,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 414,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 415,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 416,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 417,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 418,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 419,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 420,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 421,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 422,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 423,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 424,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 425,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 426,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 427,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 428,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 429,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 430,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 431,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 432,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 433,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 434,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 435,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 436,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 437,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 438,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 439,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 440,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 441,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 442,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 443,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 444,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 445,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 446,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 447,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 448,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 449,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 450,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 451,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 452,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 453,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 454,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 455,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 456,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 457,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 458,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 459,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 460,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 461,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 462,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 463,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 464,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 465,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 466,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 467,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 468,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
-      "obj1_baseY": 96,
-      "obj1_baseX": 136
-    },
-    {
-      "frame": 469,
-      "obj0_baseY": 96,
-      "obj0_baseX": 61,
+      "obj0_baseX": 88,
       "obj1_baseY": 96,
-      "obj1_baseX": 136
+      "obj1_baseX": 136,
+      "frameCount": 186,
+      "frameRuns": [
+        [
+          107,
+          292
+        ]
+      ],
+      "animates": true
     },
     {
-      "frame": 470,
       "obj0_baseY": 96,
       "obj0_baseX": 61,
       "obj1_baseY": 96,
-      "obj1_baseX": 136
+      "obj1_baseX": 136,
+      "frameCount": 181,
+      "frameRuns": [
+        [
+          309,
+          489
+        ]
+      ],
+      "animates": true
     },
     {
-      "frame": 471,
       "obj0_baseY": 96,
-      "obj0_baseX": 61,
+      "obj0_baseX": 40,
       "obj1_baseY": 96,
-      "obj1_baseX": 136
+      "obj1_baseX": 136,
+      "frameCount": 107,
+      "frameRuns": [
+        [
+          0,
+          106
+        ]
+      ],
+      "animates": true
     },
     {
-      "frame": 472,
       "obj0_baseY": 96,
-      "obj0_baseX": 61,
+      "obj0_baseX": 87,
       "obj1_baseY": 96,
-      "obj1_baseX": 136
+      "obj1_baseX": 136,
+      "frameCount": 1,
+      "frameRuns": [
+        [
+          293,
+          293
+        ]
+      ],
+      "animates": true
     },
     {
-      "frame": 473,
       "obj0_baseY": 96,
-      "obj0_baseX": 61,
+      "obj0_baseX": 86,
       "obj1_baseY": 96,
-      "obj1_baseX": 136
+      "obj1_baseX": 136,
+      "frameCount": 1,
+      "frameRuns": [
+        [
+          294,
+          294
+        ]
+      ],
+      "animates": true
     },
     {
-      "frame": 474,
       "obj0_baseY": 96,
-      "obj0_baseX": 61,
+      "obj0_baseX": 84,
       "obj1_baseY": 96,
-      "obj1_baseX": 136
+      "obj1_baseX": 136,
+      "frameCount": 1,
+      "frameRuns": [
+        [
+          295,
+          295
+        ]
+      ],
+      "animates": true
     },
     {
-      "frame": 475,
       "obj0_baseY": 96,
-      "obj0_baseX": 61,
+      "obj0_baseX": 82,
       "obj1_baseY": 96,
-      "obj1_baseX": 136
+      "obj1_baseX": 136,
+      "frameCount": 1,
+      "frameRuns": [
+        [
+          296,
+          296
+        ]
+      ],
+      "animates": true
     },
     {
-      "frame": 476,
       "obj0_baseY": 96,
-      "obj0_baseX": 61,
+      "obj0_baseX": 80,
       "obj1_baseY": 96,
-      "obj1_baseX": 136
+      "obj1_baseX": 136,
+      "frameCount": 1,
+      "frameRuns": [
+        [
+          297,
+          297
+        ]
+      ],
+      "animates": true
     },
     {
-      "frame": 477,
       "obj0_baseY": 96,
-      "obj0_baseX": 61,
+      "obj0_baseX": 78,
       "obj1_baseY": 96,
-      "obj1_baseX": 136
+      "obj1_baseX": 136,
+      "frameCount": 1,
+      "frameRuns": [
+        [
+          298,
+          298
+        ]
+      ],
+      "animates": true
     },
     {
-      "frame": 478,
       "obj0_baseY": 96,
-      "obj0_baseX": 61,
+      "obj0_baseX": 76,
       "obj1_baseY": 96,
-      "obj1_baseX": 136
+      "obj1_baseX": 136,
+      "frameCount": 1,
+      "frameRuns": [
+        [
+          299,
+          299
+        ]
+      ],
+      "animates": true
     },
     {
-      "frame": 479,
       "obj0_baseY": 96,
-      "obj0_baseX": 61,
+      "obj0_baseX": 74,
       "obj1_baseY": 96,
-      "obj1_baseX": 136
+      "obj1_baseX": 136,
+      "frameCount": 1,
+      "frameRuns": [
+        [
+          300,
+          300
+        ]
+      ],
+      "animates": true
     },
     {
-      "frame": 480,
       "obj0_baseY": 96,
-      "obj0_baseX": 61,
+      "obj0_baseX": 72,
       "obj1_baseY": 96,
-      "obj1_baseX": 136
+      "obj1_baseX": 136,
+      "frameCount": 1,
+      "frameRuns": [
+        [
+          301,
+          301
+        ]
+      ],
+      "animates": true
     },
     {
-      "frame": 481,
       "obj0_baseY": 96,
-      "obj0_baseX": 61,
+      "obj0_baseX": 70,
       "obj1_baseY": 96,
-      "obj1_baseX": 136
+      "obj1_baseX": 136,
+      "frameCount": 1,
+      "frameRuns": [
+        [
+          302,
+          302
+        ]
+      ],
+      "animates": true
     },
     {
-      "frame": 482,
       "obj0_baseY": 96,
-      "obj0_baseX": 61,
+      "obj0_baseX": 68,
       "obj1_baseY": 96,
-      "obj1_baseX": 136
+      "obj1_baseX": 136,
+      "frameCount": 1,
+      "frameRuns": [
+        [
+          303,
+          303
+        ]
+      ],
+      "animates": true
     },
     {
-      "frame": 483,
       "obj0_baseY": 96,
-      "obj0_baseX": 61,
+      "obj0_baseX": 66,
       "obj1_baseY": 96,
-      "obj1_baseX": 136
+      "obj1_baseX": 136,
+      "frameCount": 1,
+      "frameRuns": [
+        [
+          304,
+          304
+        ]
+      ],
+      "animates": true
     },
     {
-      "frame": 484,
       "obj0_baseY": 96,
-      "obj0_baseX": 61,
+      "obj0_baseX": 65,
       "obj1_baseY": 96,
-      "obj1_baseX": 136
+      "obj1_baseX": 136,
+      "frameCount": 1,
+      "frameRuns": [
+        [
+          305,
+          305
+        ]
+      ],
+      "animates": true
     },
     {
-      "frame": 485,
       "obj0_baseY": 96,
-      "obj0_baseX": 61,
+      "obj0_baseX": 64,
       "obj1_baseY": 96,
-      "obj1_baseX": 136
+      "obj1_baseX": 136,
+      "frameCount": 1,
+      "frameRuns": [
+        [
+          306,
+          306
+        ]
+      ],
+      "animates": true
     },
     {
-      "frame": 486,
       "obj0_baseY": 96,
-      "obj0_baseX": 61,
+      "obj0_baseX": 63,
       "obj1_baseY": 96,
-      "obj1_baseX": 136
+      "obj1_baseX": 136,
+      "frameCount": 1,
+      "frameRuns": [
+        [
+          307,
+          307
+        ]
+      ],
+      "animates": true
     },
     {
-      "frame": 487,
       "obj0_baseY": 96,
-      "obj0_baseX": 61,
+      "obj0_baseX": 62,
       "obj1_baseY": 96,
-      "obj1_baseX": 136
+      "obj1_baseX": 136,
+      "frameCount": 1,
+      "frameRuns": [
+        [
+          308,
+          308
+        ]
+      ],
+      "animates": true
     }
   ]
 }

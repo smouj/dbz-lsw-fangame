@@ -139,8 +139,16 @@ export interface WorldDiff {
    * Cause-oriented pixel classes. `remakeExtra` = the remake paints where the
    * ROM is blank/white; `romMissing` = the ROM has content the remake leaves
    * blank/white; `bothDiffer` = both have content with different values.
+   * `romMissing*` split by the actor column band so a cause group cannot
+   * claim composite content (the ROM beam) as an actor defect.
    */
-  pixelClass: { remakeExtra: number; romMissing: number; bothDiffer: number };
+  pixelClass: {
+    remakeExtra: number;
+    romMissing: number;
+    romMissingInActorColumns: number;
+    romMissingOutsideActorColumns: number;
+    bothDiffer: number;
+  };
   /** Non-white census of each side over the 160×80 world. */
   census: { romNonWhite: number; remakeNonWhite: number };
   /**
@@ -165,7 +173,12 @@ const WHITE_5BIT = 31;
 const isWhite = (world: Uint8Array, i: number) =>
   world[i] === WHITE_5BIT && world[i + 1] === WHITE_5BIT && world[i + 2] === WHITE_5BIT;
 
-export function diffWorlds(rom: Uint8Array, remake: Uint8Array, bandedRows?: readonly boolean[] | null): WorldDiff {
+export function diffWorlds(
+  rom: Uint8Array,
+  remake: Uint8Array,
+  bandedRows?: readonly boolean[] | null,
+  actorColumns?: readonly [number, number] | null,
+): WorldDiff {
   let mismatchPixels = 0;
   let x0 = COMPARE_W, y0 = COMPARE_H, x1 = -1, y1 = -1;
   const rows = new Uint8Array(COMPARE_H);
@@ -174,7 +187,10 @@ export function diffWorlds(rom: Uint8Array, remake: Uint8Array, bandedRows?: rea
     leftHalf: 0, rightHalf: 0, topHalf: 0, bottomHalf: 0,
     quadrants: { tl: 0, tr: 0, bl: 0, br: 0 },
   };
-  const pixelClass = { remakeExtra: 0, romMissing: 0, bothDiffer: 0 };
+  const pixelClass = {
+    remakeExtra: 0, romMissing: 0, romMissingInActorColumns: 0,
+    romMissingOutsideActorColumns: 0, bothDiffer: 0,
+  };
   let romNonWhite = 0;
   let remakeNonWhite = 0;
   let bandedMismatchPx = 0;
@@ -192,7 +208,11 @@ export function diffWorlds(rom: Uint8Array, remake: Uint8Array, bandedRows?: rea
       const remakeWhite = isWhite(remake, i);
       if (!romWhite) romNonWhite++;
       if (!remakeWhite) remakeNonWhite++;
-      if (!romWhite && remakeWhite) pixelClass.romMissing++;
+      if (!romWhite && remakeWhite) {
+        pixelClass.romMissing++;
+        if (!actorColumns || (x >= actorColumns[0] && x <= actorColumns[1])) pixelClass.romMissingInActorColumns++;
+        else pixelClass.romMissingOutsideActorColumns++;
+      }
       else if (romWhite && !remakeWhite) pixelClass.remakeExtra++;
       else if (!same) pixelClass.bothDiffer++;
       if (same) continue;
@@ -258,6 +278,7 @@ export function diffCaptureFiles(
   remakeImage: string,
   readFile: (p: string) => Buffer,
   bandedRows?: readonly boolean[] | null,
+  actorColumns?: readonly [number, number] | null,
 ): WorldDiff {
   const rom = decodePng(readFile(resolve(masterDir, romImage)));
   const remake = decodePng(readFile(resolve(masterDir, remakeImage)));
@@ -265,8 +286,17 @@ export function diffCaptureFiles(
     sampleWorld(rom, ROM_WORLD_CROP, 1),
     sampleWorld(remake, REMAKE_WORLD_CROP, 1 / COMPARE_SCALE),
     bandedRows,
+    actorColumns,
   );
 }
+
+/**
+ * The actor's column band in plane coordinates, derived from the PROVEN anchor
+ * geometry (3g.1: anchor col 53, sprite extents left 12 / right 16) widened to
+ * cover every measured pose. ROM content the remake lacks OUTSIDE this band
+ * cannot be attributed to the actor.
+ */
+export const ACTOR_COLUMN_BAND: readonly [number, number] = [32, 78];
 
 /**
  * Plane rows that the ROM composites per scanline (differential HBlank viewport),
@@ -304,7 +334,13 @@ export interface CauseFrameView {
   mismatchPixels: number;
   mismatchPercent: number;
   bbox: { x0: number; y0: number; x1: number; y1: number } | null;
-  pixelClass: { remakeExtra: number; romMissing: number; bothDiffer: number };
+  pixelClass: {
+    remakeExtra: number;
+    romMissing: number;
+    romMissingInActorColumns: number;
+    romMissingOutsideActorColumns: number;
+    bothDiffer: number;
+  };
   census: { romNonWhite: number; remakeNonWhite: number };
   adapter: Record<string, any> | null;
 }
@@ -349,17 +385,32 @@ export const CAUSE_RULES: CauseRule[] = [
     id: 'ACTOR_FRAME_POSITION',
     cause:
       'Actor physical-frame/position divergence: the actor IS rendered from ROM physical frames, but ' +
-      'the frame chosen and/or its offset differs from the ROM at the same beat.',
+      'the frame chosen and/or its offset differs from the ROM at the same beat. Counts only ROM ' +
+      'content INSIDE the actor column band; composite content (the beam) is NOT claimed here.',
     matches: (f) =>
-      f.phase === 'ACTOR_BEAM_WINDOW' && (f.pixelClass.romMissing + f.pixelClass.bothDiffer) > 0,
-    px: (f) => f.pixelClass.romMissing + f.pixelClass.bothDiffer,
+      f.phase === 'ACTOR_BEAM_WINDOW' && (f.pixelClass.romMissingInActorColumns + f.pixelClass.bothDiffer) > 0,
+    px: (f) => f.pixelClass.romMissingInActorColumns + f.pixelClass.bothDiffer,
     proof: (f) => {
       const lpf = f.adapter?.lastPhysicalFrame;
       return `adapter physicalFrames=${f.adapter?.physicalFrames} pendingCues=${f.adapter?.pendingCues} ` +
         `seqBySlot=${JSON.stringify(f.adapter?.romSequenceBySlot)} ` +
         `lastPhysicalFrame=${lpf ? `res ${lpf.resource} seq ${lpf.sequence} fi ${lpf.frameIndex} offX ${lpf.offsetX} src ${lpf.source}` : 'none'}; ` +
-        `ROM content missing/different=${f.pixelClass.romMissing}+${f.pixelClass.bothDiffer}px`;
+        `actor-band missing=${f.pixelClass.romMissingInActorColumns}px + bothDiffer=${f.pixelClass.bothDiffer}px ` +
+        `(beam-class pixels excluded: ${f.pixelClass.romMissingOutsideActorColumns}px)`;
     },
+  },
+  {
+    id: 'BEAM_CONTENT_ABSENT',
+    cause:
+      'Beam content absent: the ROM draws beam content OUTSIDE the actor column band (the Kamehameha ' +
+      'reaching the screen edge from frame 411) that the remake does not draw at those ticks. ' +
+      'Separated from ACTOR_FRAME_POSITION so a per-group px attribution cannot conflate actor and beam.',
+    matches: (f) => f.phase === 'ACTOR_BEAM_WINDOW' && f.pixelClass.romMissingOutsideActorColumns > 0,
+    px: (f) => f.pixelClass.romMissingOutsideActorColumns,
+    proof: (f) =>
+      `ROM content the remake lacks outside the actor column band = ${f.pixelClass.romMissingOutsideActorColumns}px ` +
+      `(band x32..78 anchored on the proven ACTION anchor col 53); adapter fxWindows=${f.adapter?.fxWindows} ` +
+      `(remake beam FX window opens at tick 84, ROM beam is present from frame 411)`,
   },
   {
     id: 'PROJECTILE_PLANE_ABSENT',
