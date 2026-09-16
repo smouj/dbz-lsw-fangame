@@ -106,7 +106,9 @@ const output = {
     captured: capture.frames?.length ?? 0,
     captureFailures: (capture.failures ?? []).length,
     totalMismatchPx,
-    meanMismatchPercent: frames.reduce((sum, frame) => sum + frame.mismatchPercent, 0) / frames.length,
+    meanMismatchPercent: frames.length
+      ? frames.reduce((sum, frame) => sum + frame.mismatchPercent, 0) / frames.length
+      : null,
     identicalFrames: frames.filter((frame) => frame.mismatchPixels === 0).length,
     // Distinct RENDERED remake images behind the 100 ROM frames (by capture hash).
     distinctRemakeImages: new Set(timeline.frames.filter((f: any) => f.remake?.image).map((f: any) => f.remake.imageSha256)).size,
@@ -132,7 +134,9 @@ const output = {
       'totalMismatchPx still covers the whole measured set, so the cause groups keep partitioning it.',
     comparablePixels: viewportTotals.comparablePixels,
     comparableMismatchPx: viewportTotals.comparableMismatchPx,
-    comparableMismatchPercent: (viewportTotals.comparableMismatchPx / Math.max(1, viewportTotals.comparablePixels)) * 100,
+    comparableMismatchPercent: viewportTotals.comparablePixels > 0
+      ? (viewportTotals.comparableMismatchPx / viewportTotals.comparablePixels) * 100
+      : Number.NaN,
     notComparableBandedPixels: viewportTotals.bandedPixels,
     notComparableBandedMismatchPx: viewportTotals.bandedMismatchPx,
   },
@@ -146,7 +150,7 @@ console.log(
   `distinctRemakeImages=${output.summary.distinctRemakeImages}/${output.summary.distinctRemakeTicks} ticks`,
 );
 console.log(
-  `total mismatch=${totalMismatchPx}px · mean=${output.summary.meanMismatchPercent.toFixed(2)}% · ` +
+  `total mismatch=${totalMismatchPx}px · mean=${output.summary.meanMismatchPercent === null ? 'n/a (no captures)' : output.summary.meanMismatchPercent.toFixed(2) + '%'} · ` +
   `identical=${output.summary.identicalFrames} · grouped=${output.summary.groupedPx}px`,
 );
 const cs = output.summary.comparableSet;

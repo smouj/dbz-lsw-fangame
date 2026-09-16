@@ -51,7 +51,21 @@ check(timeline.schema === 'dbzlsw.rom.visual-master.v1', 'canonical visual-maste
 check(timeline.source.romSha256 === SPAIN_ROM_SHA256, 'capture bound to verified Spain ROM');
 check(timeline.source.emulator === 'mGBA' && timeline.source.driver.includes('rom-driver.c'), 'native emulator framebuffer source');
 check(timeline.source.identityRebind?.scope === 'mGBA gbAs ROM identity bytes $04..$1f only', 'identity rebind scope explicit');
-check(timeline.source.identityRebind?.gameplayPayload?.includes('byte-identical'), 'gameplay payload preservation explicit');
+// C5 repair (audit row 4): the previous check was satisfied by a PROSE string in the
+// record ('byte-identical to bootstrap outside identity bytes'), which proves nothing.
+// It now requires the claim to be HASH-BACKED: two 64-hex payload digests that are
+// equal. Absent evidence fails loudly rather than passing on wording.
+const preservation = (timeline.source.identityRebind as Record<string, any> | undefined)?.payloadPreservation;
+const hex64 = (v: unknown): v is string => typeof v === 'string' && /^[0-9a-f]{64}$/.test(v);
+check(
+  hex64(preservation?.sourcePayloadSha256) &&
+  hex64(preservation?.reboundPayloadSha256) &&
+  preservation.sourcePayloadSha256 === preservation.reboundPayloadSha256,
+  'gameplay payload preservation PROVEN by payload hash (not by prose)',
+  preservation
+    ? `source=${String(preservation.sourcePayloadSha256).slice(0, 16)} rebound=${String(preservation.reboundPayloadSha256).slice(0, 16)}`
+    : 'no identityRebind.payloadPreservation hashes in the record — preservation is ASSERTED, not proven',
+);
 check(JSON.stringify(timeline.frames.map((frame: any) => frame.frame)) === JSON.stringify(expectedFrames), 'captured frame set exact', `${timeline.frames.length}/100`);
 check(JSON.stringify(timeline.coverage.activeFrameRanges) === JSON.stringify([[408, 487], [644, 659]]), 'ROM active ranges exact');
 check(JSON.stringify(timeline.coverage.restoreFrames) === JSON.stringify([488, 660]), 'ROM restore boundaries exact');
@@ -106,12 +120,35 @@ if (remakeCaptures > 0) {
       contractMismatch.length ? `drifted keys: ${contractMismatch.join(', ')}` : 'crop+scale bound',
     );
     check(block.determinism?.failures === 0, 'remake capture determinism failures = 0', `failures=${block.determinism?.failures}`);
-    check(block.determinism?.framesVerified === block.determinism?.framesExpected,
-      'every mapped frame was verified for determinism (full set, not a sample)',
-      `${block.determinism?.framesVerified}/${block.determinism?.framesExpected}`);
+    // C5 repair (audit row 5): `undefined === undefined` used to pass.
+    const det = block.determinism as Record<string, any> | undefined;
+    const capturedCount = (capture?.frames ?? []).length;
+    check(
+      Number.isInteger(det?.framesVerified) && Number.isInteger(det?.framesExpected) &&
+      det.framesVerified === det.framesExpected && det.framesVerified === capturedCount,
+      'every CAPTURED frame was verified for determinism (full set, not a sample)',
+      `${det?.framesVerified}/${det?.framesExpected} verified vs ${capturedCount} captured`,
+    );
     check((block.pageErrors ?? []).length === 0, 'remake capture page errors = 0', `errors=${(block.pageErrors ?? []).length}`);
-    check(Array.isArray(block.tickMapping?.anchors) && block.tickMapping.anchors.length > 0, 'ROM→remake tick mapping is explicit');
-    check((capture?.failures ?? []).length === 0, 'no frame failed to capture', `failures=${(capture?.failures ?? []).length}`);
+    // C5 repair (audit row 6): any non-empty anchors used to pass. Now every
+    // compared frame must be covered by an anchor with a numeric tick and a phase.
+    const anchors = (block.tickMapping as Record<string, any> | undefined)?.anchors;
+    const anchorList = Array.isArray(anchors) ? anchors : [];
+    const anchorFrames = new Set(anchorList.map((a: any) => a?.romFrame));
+    const comparedFrames = (capture?.frames ?? []).map((f: any) => f.romFrame);
+    check(
+      anchorList.length > 0 &&
+      anchorList.every((a: any) => Number.isFinite(a?.romFrame) && Number.isFinite(a?.remakeTick) && typeof a?.phase === 'string') &&
+      comparedFrames.length > 0 && comparedFrames.every((f: number) => anchorFrames.has(f)),
+      'ROM→remake tick mapping covers every compared frame',
+      `${anchorFrames.size} anchors vs ${comparedFrames.length} compared frames`,
+    );
+    // C5 repair (audit row 7): an absent `failures` array used to read as zero failures.
+    check(
+      !!capture && Array.isArray((capture as Record<string, any>).failures) && (capture as Record<string, any>).failures.length === 0,
+      'no frame failed to capture (failures array present and empty)',
+      capture ? `failures=${Array.isArray((capture as Record<string, any>).failures) ? (capture as Record<string, any>).failures.length : 'ABSENT'}` : 'capture.json missing',
+    );
   }
 
   for (const frame of timeline.frames.filter((candidate: any) => candidate.remake?.image)) {
@@ -151,6 +188,8 @@ if (remakeCaptures > 0) {
       mismatchPixels: diff.mismatchPixels,
       mismatchPercent: diff.mismatchPercent,
       bbox: diff.bbox,
+      bboxInActorColumns: diff.bboxInActorColumns,
+      bboxOutsideActorColumns: diff.bboxOutsideActorColumns,
       pixelClass: diff.pixelClass,
       census: diff.census,
       adapter: captureFrame?.stats ?? null,
@@ -163,13 +202,27 @@ const groups = groupFrames(frameViews);
 const totalMismatchPx = frameViews.reduce((sum, frame) => sum + frame.mismatchPixels, 0);
 
 if (groups.length) {
+  // C5 repair (audit row 8): the old check (`count===0 || ranges>0`) was vacuous for
+  // empty groups. Now ranges must MATCH the group's frame count, and every compared
+  // frame must be attributed to at least one cause — a group can no longer pass by
+  // existing.
+  const coveredFrames = new Set<number>();
   for (const group of groups) {
+    const covered = group.frameRanges.reduce((sum, [a, b]) => sum + (b - a + 1), 0);
     check(
-      group.frameCount === 0 || group.frameRanges.length > 0,
-      `cause group ${group.id} has frame ranges`,
-      `${group.frameCount} frames`,
+      group.frameCount === 0
+        ? group.frameRanges.length === 0
+        : (group.frameRanges.length > 0 && covered === group.frameCount),
+      `cause group ${group.id}: ranges match its frame count`,
+      `${group.frameCount} frames vs ${covered} covered by ${JSON.stringify(group.frameRanges)}`,
     );
+    for (const [a, b] of group.frameRanges) for (let f = a; f <= b; f++) coveredFrames.add(f);
   }
+  check(
+    frameViews.length > 0 && frameViews.every((f) => coveredFrames.has(f.romFrame)),
+    'every compared frame is attributed to at least one cause',
+    `${coveredFrames.size} covered of ${frameViews.length} compared`,
+  );
 }
 
 const captured = remakeCaptures;
@@ -183,7 +236,11 @@ for (const frame of frameViews) {
     // VM_GATE_FULL=1 to force the per-frame dump.
     break;
   }
-  const bbox = frame.bbox ? `bbox x${frame.bbox.x0}..${frame.bbox.x1} y${frame.bbox.y0}..${frame.bbox.y1}` : 'bbox —';
+  // C4 repair (audit row 9): never print the all-content box unqualified. Each box
+  // is labelled with the content class it belongs to.
+  const box = (b: { x0: number; y0: number; x1: number; y1: number } | null | undefined) =>
+    b ? `x${b.x0}..${b.x1} y${b.y0}..${b.y1}` : '—';
+  const bbox = `box[actor]=${box((frame as any).bboxInActorColumns)} box[outside-actor]=${box((frame as any).bboxOutsideActorColumns)}`;
   console.log(
     `frame ${String(frame.romFrame).padStart(3)} · remake tick ${String(frame.remakeTick ?? '?').padStart(3)} · ` +
     `mismatch ${frame.mismatchPercent.toFixed(2)}% (${frame.mismatchPixels} px) · ${bbox} · ` +
@@ -205,7 +262,13 @@ if (groups.length) {
 
   // Comparator option (b), interim: the verdict may only quote the region where a
   // tick-framebuffer compare is well-defined; the banded region is stated.
-  const comparablePercent = (viewportTotals.comparableMismatchPx / Math.max(1, viewportTotals.comparablePixels)) * 100;
+  // C2 repair (audit row 11): no Math.max(1, ...) guard — a zero denominator is an
+  // undefined ratio and must fail loudly instead of silently reading 0%.
+  const comparableDenominator = viewportTotals.comparablePixels;
+  check(comparableDenominator > 0, 'comparable-region denominator is non-zero', `${comparableDenominator}px`);
+  const comparablePercent = comparableDenominator > 0
+    ? (viewportTotals.comparableMismatchPx / comparableDenominator) * 100
+    : Number.NaN;
   console.log('\n── INTERIM VERDICT (comparator b: verdict restricted to non-scrolled regions) ──');
   console.log(
     `comparable region: ${comparablePercent.toFixed(2)}% mismatch (${viewportTotals.comparableMismatchPx}/${viewportTotals.comparablePixels}px)`,
@@ -214,10 +277,12 @@ if (groups.length) {
     `NOT COMPARABLE in this space: banded region ${viewportTotals.bandedMismatchPx}px of ${viewportTotals.bandedPixels}px ` +
     `(differential HBlank viewport rows; refused, not dropped)`,
   );
+  // C2 repair (audit row 12): the compare size comes from the contract, not a literal.
+  const comparePixels = EXPECTED_CONTRACT.compareWidth * EXPECTED_CONTRACT.compareHeight;
   check(
-    viewportTotals.comparablePixels + viewportTotals.bandedPixels === frameViews.length * 12800,
+    viewportTotals.comparablePixels + viewportTotals.bandedPixels === frameViews.length * comparePixels,
     'viewport split accounts for every compared pixel (no silent drop)',
-    `${viewportTotals.comparablePixels}+${viewportTotals.bandedPixels} vs ${frameViews.length * 12800}`,
+    `${viewportTotals.comparablePixels}+${viewportTotals.bandedPixels} vs ${frameViews.length * comparePixels}`,
   );
 }
 

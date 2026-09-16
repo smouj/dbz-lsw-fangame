@@ -126,11 +126,22 @@ export interface WorldDiff {
   mismatchPixels: number;
   mismatchPercent: number;
   bbox: { x0: number; y0: number; x1: number; y1: number } | null;
+  /**
+   * C4 repair: `bbox` above covers ALL mismatch content (actor + beam + plane)
+   * and must not be read as an actor measure. These two split it by the actor
+   * column band, so a consumer quoting a box gets the class it actually named.
+   */
+  bboxInActorColumns: { x0: number; y0: number; x1: number; y1: number } | null;
+  bboxOutsideActorColumns: { x0: number; y0: number; x1: number; y1: number } | null;
   rowSpread: number;
   colSpread: number;
   classification: DiffClassification;
   dominantAxis: 'none' | 'horizontal' | 'vertical';
-  /** Per-region mismatch counts (160×80 world). */
+  /**
+   * Per-region mismatch counts (160×80 world).
+   * C4 note: CONTENT-AGNOSTIC — halves/quadrants say where mismatch fell, never
+   * which content class produced it. Do not read them as a cause.
+   */
   regions: {
     leftHalf: number; rightHalf: number; topHalf: number; bottomHalf: number;
     quadrants: { tl: number; tr: number; bl: number; br: number };
@@ -183,6 +194,9 @@ export function diffWorlds(
   let x0 = COMPARE_W, y0 = COMPARE_H, x1 = -1, y1 = -1;
   const rows = new Uint8Array(COMPARE_H);
   const cols = new Uint8Array(COMPARE_W);
+  // C4 repair: separate extents per content class, so a box is never a mix.
+  let ax0 = COMPARE_W, ay0 = COMPARE_H, ax1 = -1, ay1 = -1;
+  let ox0 = COMPARE_W, oy0 = COMPARE_H, ox1 = -1, oy1 = -1;
   const regions = {
     leftHalf: 0, rightHalf: 0, topHalf: 0, bottomHalf: 0,
     quadrants: { tl: 0, tr: 0, bl: 0, br: 0 },
@@ -210,8 +224,16 @@ export function diffWorlds(
       if (!remakeWhite) remakeNonWhite++;
       if (!romWhite && remakeWhite) {
         pixelClass.romMissing++;
-        if (!actorColumns || (x >= actorColumns[0] && x <= actorColumns[1])) pixelClass.romMissingInActorColumns++;
-        else pixelClass.romMissingOutsideActorColumns++;
+        const inBand = !actorColumns || (x >= actorColumns[0] && x <= actorColumns[1]);
+        if (inBand) {
+          pixelClass.romMissingInActorColumns++;
+          if (x < ax0) ax0 = x; if (x > ax1) ax1 = x;
+          if (y < ay0) ay0 = y; if (y > ay1) ay1 = y;
+        } else {
+          pixelClass.romMissingOutsideActorColumns++;
+          if (x < ox0) ox0 = x; if (x > ox1) ox1 = x;
+          if (y < oy0) oy0 = y; if (y > oy1) oy1 = y;
+        }
       }
       else if (romWhite && !remakeWhite) pixelClass.remakeExtra++;
       else if (!same) pixelClass.bothDiffer++;
@@ -253,6 +275,8 @@ export function diffWorlds(
     mismatchPixels,
     mismatchPercent: (mismatchPixels / total) * 100,
     bbox: mismatchPixels > 0 ? { x0, y0, x1, y1 } : null,
+    bboxInActorColumns: ax1 >= 0 ? { x0: ax0, y0: ay0, x1: ax1, y1: ay1 } : null,
+    bboxOutsideActorColumns: ox1 >= 0 ? { x0: ox0, y0: oy0, x1: ox1, y1: oy1 } : null,
     rowSpread,
     colSpread,
     classification,
@@ -266,7 +290,9 @@ export function diffWorlds(
       bandedMismatchPx,
       comparablePixels: COMPARE_W * COMPARE_H - bandedPixels,
       comparableMismatchPx,
-      comparableMismatchPercent: (comparableMismatchPx / Math.max(1, COMPARE_W * COMPARE_H - bandedPixels)) * 100,
+      comparableMismatchPercent: (COMPARE_W * COMPARE_H - bandedPixels) > 0
+        ? (comparableMismatchPx / (COMPARE_W * COMPARE_H - bandedPixels)) * 100
+        : Number.NaN,
     },
   };
 }
@@ -334,6 +360,8 @@ export interface CauseFrameView {
   mismatchPixels: number;
   mismatchPercent: number;
   bbox: { x0: number; y0: number; x1: number; y1: number } | null;
+  bboxInActorColumns: { x0: number; y0: number; x1: number; y1: number } | null;
+  bboxOutsideActorColumns: { x0: number; y0: number; x1: number; y1: number } | null;
   pixelClass: {
     remakeExtra: number;
     romMissing: number;
