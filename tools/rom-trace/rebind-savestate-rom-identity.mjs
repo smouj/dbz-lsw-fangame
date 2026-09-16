@@ -87,6 +87,24 @@ const reboundChunks = sourceChunks.map((chunk) => chunk.type === 'gbAs'
 writeFileSync(outputPath, encodePng(reboundChunks));
 
 const sha256 = (buffer) => createHash('sha256').update(buffer).digest('hex');
+
+// Evidence for this tool's own invariant: the gameplay payload must be
+// byte-identical OUTSIDE the identity range, and must actually differ INSIDE it.
+// The two whole-payload digests can never be equal — the identity bytes are
+// replaced by design and the digest covers the whole payload — so digest
+// equality is NOT a preservation witness. The out-of-range byte diff is.
+let differingBytes = 0;
+let differingInsideIdentityRange = 0;
+let differingOutsideIdentityRange = 0;
+if (sourcePayload.length === reboundPayload.length) {
+  for (let i = 0; i < sourcePayload.length; i++) {
+    if (sourcePayload[i] === reboundPayload[i]) continue;
+    differingBytes++;
+    if (i >= IDENTITY_START && i < IDENTITY_END) differingInsideIdentityRange++;
+    else differingOutsideIdentityRange++;
+  }
+}
+
 console.log(JSON.stringify({
   source: sourcePath,
   identity: identityPath,
@@ -94,4 +112,13 @@ console.log(JSON.stringify({
   sourcePayloadSha256: sha256(sourcePayload),
   reboundPayloadSha256: sha256(reboundPayload),
   identityHex: identityPayload.subarray(IDENTITY_START, IDENTITY_END).toString('hex'),
+  payloadPreservation: {
+    identityRange: { start: IDENTITY_START, end: IDENTITY_END },
+    sourceBytes: sourcePayload.length,
+    reboundBytes: reboundPayload.length,
+    lengthsEqual: sourcePayload.length === reboundPayload.length,
+    differingBytes,
+    differingInsideIdentityRange,
+    differingOutsideIdentityRange,
+  },
 }, null, 2));

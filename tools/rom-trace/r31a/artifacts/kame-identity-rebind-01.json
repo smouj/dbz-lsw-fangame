@@ -1,0 +1,20 @@
+{
+  "source": "tools/rom-trace/r31a/artifacts/kame_left_base.ss0",
+  "identity": ".openclaw/tmp/spain_identity.ss0",
+  "output": ".openclaw/tmp/rebind-fix.ss0",
+  "sourcePayloadSha256": "0d24a5ce2577070c9f657bedb2f4ffc9d5c1502a4a3db5d478be547afb73adf6",
+  "reboundPayloadSha256": "1658446029c15c8b147fefc2ce99e2663741b661de9d1e83da19b08a84592fa0",
+  "identityHex": "236ead9d80000000d8450400445241474f4e42414c4c3a42425a53c0",
+  "payloadPreservation": {
+    "identityRange": {
+      "start": 4,
+      "end": 32
+    },
+    "sourceBytes": 71680,
+    "reboundBytes": 71680,
+    "lengthsEqual": true,
+    "differingBytes": 20,
+    "differingInsideIdentityRange": 20,
+    "differingOutsideIdentityRange": 0
+  }
+}

@@ -8,6 +8,7 @@ const ROM_FRAMES_DIR = join(OUT_DIR, 'rom');
 const SCANLINE_FIXTURE = resolve(ROOT, 'fixtures/rom-trace/beam-kame-left-scanline.json');
 const ACTION_TRACE = resolve(ROOT, 'tools/rom-trace/r31a/artifacts/kame-trace-01.json');
 const BOOTSTRAP_STATE = resolve(ROOT, 'tools/rom-trace/r31a/artifacts/kame_left_base.ss0');
+const IDENTITY_REBIND_EVIDENCE = resolve(ROOT, 'tools/rom-trace/r31a/artifacts/kame-identity-rebind-01.json');
 const OUTPUT = join(OUT_DIR, 'timeline.json');
 
 const sha256 = (data: Buffer) => createHash('sha256').update(data).digest('hex');
@@ -88,6 +89,18 @@ if (bootstrapSha !== scanline.source.bootstrapStateSha256) {
   throw new Error(`Bootstrap hash mismatch: ${bootstrapSha} != ${scanline.source.bootstrapStateSha256}`);
 }
 
+// Preservation of the gameplay payload is PROVEN by the out-of-range byte diff
+// emitted by the rebind tool itself, never asserted by prose. Missing evidence is
+// a hard failure: a record without it cannot claim preservation.
+if (!existsSync(IDENTITY_REBIND_EVIDENCE)) {
+  throw new Error(`Missing identity-rebind evidence at ${IDENTITY_REBIND_EVIDENCE}. Run tools/rom-trace/rebind-savestate-rom-identity.mjs and persist its JSON output: preservation must be proven, never asserted.`);
+}
+const identityRebindEvidence = readJson(IDENTITY_REBIND_EVIDENCE) as {
+  sourcePayloadSha256: string;
+  reboundPayloadSha256: string;
+  payloadPreservation: Record<string, unknown>;
+};
+
 /** Remake side of one ROM frame. PENDING unless a real capture exists. */
 const remakeFor = (frame: number) => {
   const entry = remakeCapture?.frames.find((candidate) => candidate.romFrame === frame) ?? null;
@@ -154,7 +167,16 @@ const output = {
       tool: 'tools/rom-trace/rebind-savestate-rom-identity.mjs',
       targetRomSha256: scanline.source.romSha256,
       scope: 'mGBA gbAs ROM identity bytes $04..$1f only',
-      gameplayPayload: 'byte-identical to bootstrap outside identity bytes',
+      // Hash-backed evidence, read from the rebind tool's own output. The two
+      // whole-payload digests DIFFER by construction (the identity bytes are
+      // replaced and the digest covers everything); preservation is carried by
+      // the out-of-range byte diff, not by digest equality.
+      payloadPreservation: {
+        evidence: 'tools/rom-trace/r31a/artifacts/kame-identity-rebind-01.json',
+        sourcePayloadSha256: identityRebindEvidence.sourcePayloadSha256,
+        reboundPayloadSha256: identityRebindEvidence.reboundPayloadSha256,
+        ...identityRebindEvidence.payloadPreservation,
+      },
     },
     scanlineFixture: 'fixtures/rom-trace/beam-kame-left-scanline.json',
     rawActionTrace: 'tools/rom-trace/r31a/artifacts/kame-trace-01.json',

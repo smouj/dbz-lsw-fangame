@@ -17,7 +17,21 @@
       "tool": "tools/rom-trace/rebind-savestate-rom-identity.mjs",
       "targetRomSha256": "bd1df5d6653be9e262f96db3bcdd7bb8ae0cad6186c16f8c1e8eba3f091c8804",
       "scope": "mGBA gbAs ROM identity bytes $04..$1f only",
-      "gameplayPayload": "byte-identical to bootstrap outside identity bytes"
+      "payloadPreservation": {
+        "evidence": "tools/rom-trace/r31a/artifacts/kame-identity-rebind-01.json",
+        "sourcePayloadSha256": "0d24a5ce2577070c9f657bedb2f4ffc9d5c1502a4a3db5d478be547afb73adf6",
+        "reboundPayloadSha256": "1658446029c15c8b147fefc2ce99e2663741b661de9d1e83da19b08a84592fa0",
+        "identityRange": {
+          "start": 4,
+          "end": 32
+        },
+        "sourceBytes": 71680,
+        "reboundBytes": 71680,
+        "lengthsEqual": true,
+        "differingBytes": 20,
+        "differingInsideIdentityRange": 20,
+        "differingOutsideIdentityRange": 0
+      }
     },
     "scanlineFixture": "fixtures/rom-trace/beam-kame-left-scanline.json",
     "rawActionTrace": "tools/rom-trace/r31a/artifacts/kame-trace-01.json"

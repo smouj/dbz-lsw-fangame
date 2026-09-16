@@ -51,20 +51,38 @@ check(timeline.schema === 'dbzlsw.rom.visual-master.v1', 'canonical visual-maste
 check(timeline.source.romSha256 === SPAIN_ROM_SHA256, 'capture bound to verified Spain ROM');
 check(timeline.source.emulator === 'mGBA' && timeline.source.driver.includes('rom-driver.c'), 'native emulator framebuffer source');
 check(timeline.source.identityRebind?.scope === 'mGBA gbAs ROM identity bytes $04..$1f only', 'identity rebind scope explicit');
-// C5 repair (audit row 4): the previous check was satisfied by a PROSE string in the
-// record ('byte-identical to bootstrap outside identity bytes'), which proves nothing.
-// It now requires the claim to be HASH-BACKED: two 64-hex payload digests that are
-// equal. Absent evidence fails loudly rather than passing on wording.
+// C5 repair (audit row 4), corrected. The original check was satisfied by a PROSE
+// string ('byte-identical to bootstrap outside identity bytes'). The first repair then
+// demanded equal whole-payload digests, which is IMPOSSIBLE by construction: the
+// rebind replaces $04..$1f by design and the digest covers the whole payload. The
+// witness is therefore the byte diff OUTSIDE the identity range, emitted by the rebind
+// tool itself and persisted as evidence. It must be able to fail: any byte differing
+// outside the range turns this red, and so does a rebind that changed nothing.
 const preservation = (timeline.source.identityRebind as Record<string, any> | undefined)?.payloadPreservation;
 const hex64 = (v: unknown): v is string => typeof v === 'string' && /^[0-9a-f]{64}$/.test(v);
+const identityRange = preservation?.identityRange as { start?: number; end?: number } | undefined;
+const rangeIsDeclaredScope = identityRange?.start === 4 && identityRange?.end === 32;
+const hex2 = (v: unknown) => String(v).padStart(2, '0');
 check(
   hex64(preservation?.sourcePayloadSha256) &&
   hex64(preservation?.reboundPayloadSha256) &&
-  preservation.sourcePayloadSha256 === preservation.reboundPayloadSha256,
-  'gameplay payload preservation PROVEN by payload hash (not by prose)',
+  preservation.sourceBytes === preservation.reboundBytes &&
+  preservation.lengthsEqual === true &&
+  rangeIsDeclaredScope &&
+  preservation.differingBytes === preservation.differingInsideIdentityRange + preservation.differingOutsideIdentityRange &&
+  preservation.differingOutsideIdentityRange === 0,
+  'gameplay payload preservation PROVEN by out-of-range byte diff (not by prose)',
   preservation
-    ? `source=${String(preservation.sourcePayloadSha256).slice(0, 16)} rebound=${String(preservation.reboundPayloadSha256).slice(0, 16)}`
-    : 'no identityRebind.payloadPreservation hashes in the record — preservation is ASSERTED, not proven',
+    ? `${preservation.sourceBytes}B · diff ${preservation.differingBytes} = inside ${preservation.differingInsideIdentityRange} + outside ${preservation.differingOutsideIdentityRange} · range $${hex2(identityRange?.start)}..$${hex2((identityRange?.end ?? 0) - 1)}`
+    : 'no identityRebind.payloadPreservation evidence in the record — preservation is ASSERTED, not proven',
+);
+check(
+  preservation?.differingInsideIdentityRange > 0 &&
+  preservation?.sourcePayloadSha256 !== preservation?.reboundPayloadSha256,
+  'identity rebind is not a no-op (identity bytes actually replaced)',
+  preservation
+    ? `inside=${preservation.differingInsideIdentityRange} · digests differ=${preservation.sourcePayloadSha256 !== preservation.reboundPayloadSha256}`
+    : 'no identityRebind.payloadPreservation evidence in the record',
 );
 check(JSON.stringify(timeline.frames.map((frame: any) => frame.frame)) === JSON.stringify(expectedFrames), 'captured frame set exact', `${timeline.frames.length}/100`);
 check(JSON.stringify(timeline.coverage.activeFrameRanges) === JSON.stringify([[408, 487], [644, 659]]), 'ROM active ranges exact');
