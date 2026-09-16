@@ -1,0 +1,57 @@
+{
+  "schema": "dbzlsw.rom.anim-slot-descriptor-decode.v1",
+  "artifact": "tools/rom-trace/r31a/artifacts/anim-slot-descriptor-decode-01.json",
+  "question": "animation slot -> content mapping (needed to identify a loaded state)",
+  "descriptorTable": {
+    "address": "$CA0D",
+    "stride": 3,
+    "layout": "[bank][ptr-lo][ptr-hi]",
+    "documented_in": "src/data/generated/romStage.generated.ts:1388 ROM_STAGE_CHAR_ANIM_DESCRIPTOR",
+    "index_reg": "c returned by Call_000_3501 (arg3: $20-$23->c=1..4, $24->c=4, <$20->c=0)",
+    "loader": "Call_000_2fe7 (Bank00): hl = $CA0D + c*3",
+    "consumer": "Call_000_0914 -> $C3CC/$C3CD -> Call_000_0b8d -> $C3CE/$C3CF",
+    "grammar": {
+      "byte0": "bank (bankswitch via Call_000_0f9b -> $2000)",
+      "byte1": "ptr-lo -> $C3CE",
+      "byte2": "ptr-hi -> $C3CF"
+    },
+    "pointee": "resource base with 3 relative roots: +0 sequence table (u16), +2 metasprite table (u16), +4 frame-graphics table (u16)",
+    "bankSeparation": "$61 basic/Stage vs $62/$63/$64 techniques of the 66-resource corpus (stated in the same generated doc)"
+  },
+  "decodeRule": "slot triple [b0,b1,b2] -> bank $b0, CPU address (b2<<8)|b1",
+  "measured": {
+    "state": "tools/rom-trace/r31a/kame_left_base.ss0 (rebound, loadstate OK)",
+    "atLoad_and_frame100": [
+      "61 30 40",
+      "61 70 49",
+      "61 08 4C",
+      "61 74 51",
+      "61 04 58",
+      "61 7C 5D",
+      "00 00 00",
+      "61 20 5E"
+    ],
+    "afterAction_frame129": [
+      "61 30 40",
+      "61 70 49",
+      "61 08 4C",
+      "61 74 51",
+      "61 04 58",
+      "61 7C 5D",
+      "62 94 44",
+      "61 20 5E"
+    ],
+    "decoded": {
+      "slots_0_5_and_7": "bank $61 at $4030,$4970,$4C08,$5174,$5804,$5D7C,$5E20",
+      "slot6_after_action": "bank $62 at $4494"
+    },
+    "crossCheck": "the $61 addresses equal ROM_BANK61_RESOURCE_BASES = [16432,18800,19464,20852,22532,23932,24096] = $4030,$4970,$4C08,$5174,$5804,$5D7C,$5E20 exactly (src/data/generated/romAnimationResourceBase.generated.ts:7)",
+    "correction": "the earlier reported \"slot6 -> 0x62,0x94\" was a 2-of-3-byte mis-decode; the full triple is 62 94 44 -> bank $62 addr $4494"
+  },
+  "verdict": {
+    "addressDecode": "FOUND and receipted: slot -> (bank, address) -> resource base, cross-checked against the generated bank-$61 base table",
+    "cardMapping": "STILL MISSING: mapping a technique-bank address ($62:$4494) to a card requires the 66-resource corpus named in the same generated doc; that table was NOT located in this pass",
+    "consequence": "3i.1 correctly refused to name cards from slot bytes; it can now name the resource ADDRESS but not the card, until the 66-resource corpus is located or derived"
+  },
+  "noFilenameInference": "card identities are not inferred from savestate filenames anywhere in this artifact"
+}
