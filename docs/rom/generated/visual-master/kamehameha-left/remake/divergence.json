@@ -586,7 +586,8 @@
     "totalMismatchPx": 415055,
     "meanMismatchPercent": 32.426171875,
     "identicalFrames": 0,
-    "distinctRemakeFrames": 99,
+    "distinctRemakeImages": 11,
+    "distinctRemakeTicks": 99,
     "groupedPx": 415055
   },
   "groups": [

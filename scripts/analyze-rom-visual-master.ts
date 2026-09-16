@@ -80,7 +80,9 @@ const output = {
     totalMismatchPx,
     meanMismatchPercent: frames.reduce((sum, frame) => sum + frame.mismatchPercent, 0) / frames.length,
     identicalFrames: frames.filter((frame) => frame.mismatchPixels === 0).length,
-    distinctRemakeFrames: new Set(frames.map((frame) => frame.remakeTick)).size,
+    // Distinct RENDERED remake images behind the 100 ROM frames (by capture hash).
+    distinctRemakeImages: new Set(timeline.frames.filter((f: any) => f.remake?.image).map((f: any) => f.remake.imageSha256)).size,
+    distinctRemakeTicks: new Set(frames.map((frame) => frame.remakeTick)).size,
     groupedPx: groups.reduce((sum, group) => sum + group.totalMismatchPx, 0),
   },
   groups,
@@ -91,7 +93,7 @@ writeFileSync(OUTPUT, `${JSON.stringify(output, null, 2)}\n`);
 console.log(`ROM Visual Master divergence — ${timeline.id}`);
 console.log(
   `frames=${output.summary.frames} captured=${output.summary.captured} failures=${output.summary.captureFailures} ` +
-  `distinctRemakeFrames=${output.summary.distinctRemakeFrames}`,
+  `distinctRemakeImages=${output.summary.distinctRemakeImages}/${output.summary.distinctRemakeTicks} ticks`,
 );
 console.log(
   `total mismatch=${totalMismatchPx}px · mean=${output.summary.meanMismatchPercent.toFixed(2)}% · ` +
