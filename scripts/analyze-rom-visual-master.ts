@@ -22,6 +22,7 @@ import {
   causesFor,
   diffCaptureFiles,
   groupFrames,
+  rangesOf,
   type CauseFrameView,
 } from './lib/visual-master-diff';
 
@@ -66,6 +67,13 @@ for (const frame of timeline.frames) {
 const groups = groupFrames(frames);
 const totalMismatchPx = frames.reduce((sum, frame) => sum + frame.mismatchPixels, 0);
 
+// Frames with no comparable remake beat are EXCLUDED, not scored: the record must
+// say what left the comparable set so no total is presented as if it covered all
+// 100 ROM frames.
+const excludedFrames = timeline.frames
+  .filter((frame: any) => !frame.remake?.image)
+  .map((frame: any) => frame.frame);
+
 const output = {
   schema: 'dbzlsw.rom.visual-master.divergence.v1',
   id: timeline.id,
@@ -83,6 +91,15 @@ const output = {
     // Distinct RENDERED remake images behind the 100 ROM frames (by capture hash).
     distinctRemakeImages: new Set(timeline.frames.filter((f: any) => f.remake?.image).map((f: any) => f.remake.imageSha256)).size,
     distinctRemakeTicks: new Set(frames.map((frame) => frame.remakeTick)).size,
+    comparableSet: {
+      compared: frames.length,
+      romFramesTotal: timeline.frames.length,
+      excludedByMapping: {
+        frames: excludedFrames.length,
+        romRanges: rangesOf(excludedFrames),
+        reason: 'OTHER_ROUTE: the ROM window belongs to another presentation route (defender/result), so it has no comparable remake beat',
+      },
+    },
     groupedPx: groups.reduce((sum, group) => sum + group.totalMismatchPx, 0),
   },
   groups,
@@ -98,6 +115,11 @@ console.log(
 console.log(
   `total mismatch=${totalMismatchPx}px · mean=${output.summary.meanMismatchPercent.toFixed(2)}% · ` +
   `identical=${output.summary.identicalFrames} · grouped=${output.summary.groupedPx}px`,
+);
+const cs = output.summary.comparableSet;
+console.log(
+  `comparable set: ${cs.compared}/${cs.romFramesTotal} ROM frames · ` +
+  `excludedByMapping=${cs.excludedByMapping.frames} (rom ${JSON.stringify(cs.excludedByMapping.romRanges)})`,
 );
 console.log('\nCAUSE GROUPS');
 for (const group of groups) {

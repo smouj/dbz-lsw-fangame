@@ -62,9 +62,13 @@ const SEGMENTS = [
   // slot-0 beam physical-frame hold starts at 22 (phase-1 anchor, accepted).
   { rom: 408, tick: 22, phase: 'ACTOR_BEAM_WINDOW', counterpart: 'ANCHORED' },
   { rom: 488, tick: 102, phase: 'SCREEN_RESTORE', counterpart: 'DERIVED' },
-  // the film declares no projectile beat; anchored at the film exit (145).
-  { rom: 644, tick: 145, phase: 'PROJECTILE_TRAVEL', counterpart: 'NO_REMAKE_BEAT' },
-  { rom: 660, tick: 161, phase: 'SCREEN_RESTORE', counterpart: 'NO_REMAKE_BEAT' },
+  // 644..660 is NOT the attacker's film: the ROM there shows a visible scrolling
+  // plane (matches scenarios/special_action.png at 8.3% vs 36.0% for 01_action.png)
+  // while 408..487 is a blank plane. It belongs to another route (defender/result),
+  // so it carries no comparable remake tick and leaves the comparable set.
+  // LABEL ONLY — nothing is routed by this change.
+  { rom: 644, tick: null, phase: 'OTHER_ROUTE', counterpart: 'OTHER_ROUTE' },
+  { rom: 660, tick: null, phase: 'OTHER_ROUTE', counterpart: 'OTHER_ROUTE' },
 ];
 
 const PHASE_FOR = (romFrame) => {
@@ -87,6 +91,8 @@ function mapRomToRemakeTick(romFrame) {
   for (const candidate of SEGMENTS) {
     if (candidate.rom <= romFrame) segment = candidate;
   }
+  // OTHER_ROUTE segments declare no comparable remake beat.
+  if (segment.tick === null) return null;
   return segment.tick + (romFrame - segment.rom);
 }
 
@@ -94,7 +100,13 @@ function buildMap(romFrames) {
   return romFrames.map((romFrame) => {
     const remakeTick = mapRomToRemakeTick(romFrame);
     const segment = [...SEGMENTS].reverse().find((candidate) => candidate.rom <= romFrame) ?? SEGMENTS[0];
-    return { romFrame, remakeTick, phase: PHASE_FOR(romFrame), counterpart: segment.counterpart };
+    return {
+      romFrame,
+      remakeTick,
+      // phase label follows the segment that owns the frame
+      phase: segment.tick === null ? segment.phase : PHASE_FOR(romFrame),
+      counterpart: segment.counterpart,
+    };
   });
 }
 
@@ -153,7 +165,11 @@ if (map.length === 0) {
   console.error('no ROM frames to capture');
   process.exit(1);
 }
-const ticks = [...new Set(map.map((p) => p.remakeTick))].sort((a, b) => a - b);
+// Frames whose segment declares no comparable remake beat leave the comparable
+// set explicitly (recorded, counted, never silently dropped or substituted).
+const comparable = map.filter((pair) => pair.remakeTick !== null);
+const excluded = map.filter((pair) => pair.remakeTick === null);
+const ticks = [...new Set(comparable.map((p) => p.remakeTick))].sort((a, b) => a - b);
 const batches = [];
 for (let i = 0; i < ticks.length; i += args.batch) batches.push(ticks.slice(i, i + args.batch));
 
@@ -231,7 +247,7 @@ const frames = [];
 const failures = [];
 let verified = 0;
 
-for (const pair of map) {
+for (const pair of comparable) {
   const a = passA.get(pair.remakeTick);
   const b = passB.get(pair.remakeTick);
   const base = {
@@ -270,8 +286,10 @@ const determinismFailures = failures.filter((f) => f.status !== 'CAPTURE_FAILED'
 if (!args.json) {
   const wobble = frames.filter((f) => !f.byteIdentical).map((f) => f.remakeTick);
   console.log(
-    `\ncaptured ${frames.length}/${map.length} frames · byte-identical ${verified}/${map.length}` +
-    (wobble.length ? ` · DIVERGENT ticks: ${wobble.join(',')}` : ''),
+    `\ncaptured ${frames.length}/${comparable.length} comparable frames · byte-identical ${verified}/${comparable.length}` +
+    (wobble.length ? ` · DIVERGENT ticks: ${wobble.join(',')}` : '') +
+    `\nexcluded by mapping (OTHER_ROUTE): ${excluded.length} frames` +
+    (excluded.length ? ` — rom ${excluded[0].romFrame}..${excluded[excluded.length - 1].romFrame}` : ''),
   );
 }
 
@@ -284,9 +302,17 @@ const capture = {
   determinism: {
     passes: 2,
     framesVerified: verified,
-    framesExpected: map.length,
+    framesExpected: comparable.length,
     failures: determinismFailures,
-    statement: 'two independent runs of every mapped tick produced byte-identical PNGs (full set, not a sample)',
+    statement: 'two independent runs of every comparable mapped tick produced byte-identical PNGs (full set, not a sample)',
+  },
+  comparableSet: {
+    frames: comparable.length,
+    excludedByMapping: {
+      frames: excluded.length,
+      counterpart: 'OTHER_ROUTE',
+      romRanges: excluded.length ? [[excluded[0].romFrame, excluded[excluded.length - 1].romFrame]] : [],
+    },
   },
   contract: CONTRACT,
   tickMapping: {
@@ -302,7 +328,7 @@ const capture = {
       remakeTickFrom: segment.tick,
       counterpart: segment.counterpart,
     })),
-    anchors: map.map((p) => ({ romFrame: p.romFrame, remakeTick: p.remakeTick, phase: p.phase })),
+    anchors: comparable.map((p) => ({ romFrame: p.romFrame, remakeTick: p.remakeTick, phase: p.phase })),
   },
   pageErrors,
   failures,

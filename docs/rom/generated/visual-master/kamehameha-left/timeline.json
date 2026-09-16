@@ -56,7 +56,7 @@
       488,
       660
     ],
-    "remakeCapturedFrames": 100
+    "remakeCapturedFrames": 83
   },
   "remakeCapture": {
     "schema": "dbzlsw.rom.visual-master.capture.v1",
@@ -72,10 +72,10 @@
     },
     "determinism": {
       "passes": 2,
-      "framesVerified": 100,
-      "framesExpected": 100,
+      "framesVerified": 83,
+      "framesExpected": 83,
       "failures": 0,
-      "statement": "two independent runs of every mapped tick produced byte-identical PNGs (full set, not a sample)"
+      "statement": "two independent runs of every comparable mapped tick produced byte-identical PNGs (full set, not a sample)"
     },
     "contract": {
       "romNative": {
@@ -134,15 +134,15 @@
         },
         {
           "romFrom": 644,
-          "phase": "PROJECTILE_TRAVEL",
-          "remakeTickFrom": 145,
-          "counterpart": "NO_REMAKE_BEAT"
+          "phase": "OTHER_ROUTE",
+          "remakeTickFrom": null,
+          "counterpart": "OTHER_ROUTE"
         },
         {
           "romFrom": 660,
-          "phase": "SCREEN_RESTORE",
-          "remakeTickFrom": 161,
-          "counterpart": "NO_REMAKE_BEAT"
+          "phase": "OTHER_ROUTE",
+          "remakeTickFrom": null,
+          "counterpart": "OTHER_ROUTE"
         }
       ],
       "anchors": [
@@ -559,91 +559,6 @@
         {
           "romFrame": 488,
           "remakeTick": 102,
-          "phase": "SCREEN_RESTORE"
-        },
-        {
-          "romFrame": 644,
-          "remakeTick": 145,
-          "phase": "PROJECTILE_TRAVEL"
-        },
-        {
-          "romFrame": 645,
-          "remakeTick": 146,
-          "phase": "PROJECTILE_TRAVEL"
-        },
-        {
-          "romFrame": 646,
-          "remakeTick": 147,
-          "phase": "PROJECTILE_TRAVEL"
-        },
-        {
-          "romFrame": 647,
-          "remakeTick": 148,
-          "phase": "PROJECTILE_TRAVEL"
-        },
-        {
-          "romFrame": 648,
-          "remakeTick": 149,
-          "phase": "PROJECTILE_TRAVEL"
-        },
-        {
-          "romFrame": 649,
-          "remakeTick": 150,
-          "phase": "PROJECTILE_TRAVEL"
-        },
-        {
-          "romFrame": 650,
-          "remakeTick": 151,
-          "phase": "PROJECTILE_TRAVEL"
-        },
-        {
-          "romFrame": 651,
-          "remakeTick": 152,
-          "phase": "PROJECTILE_TRAVEL"
-        },
-        {
-          "romFrame": 652,
-          "remakeTick": 153,
-          "phase": "PROJECTILE_TRAVEL"
-        },
-        {
-          "romFrame": 653,
-          "remakeTick": 154,
-          "phase": "PROJECTILE_TRAVEL"
-        },
-        {
-          "romFrame": 654,
-          "remakeTick": 155,
-          "phase": "PROJECTILE_TRAVEL"
-        },
-        {
-          "romFrame": 655,
-          "remakeTick": 156,
-          "phase": "PROJECTILE_TRAVEL"
-        },
-        {
-          "romFrame": 656,
-          "remakeTick": 157,
-          "phase": "PROJECTILE_TRAVEL"
-        },
-        {
-          "romFrame": 657,
-          "remakeTick": 158,
-          "phase": "PROJECTILE_TRAVEL"
-        },
-        {
-          "romFrame": 658,
-          "remakeTick": 159,
-          "phase": "PROJECTILE_TRAVEL"
-        },
-        {
-          "romFrame": 659,
-          "remakeTick": 160,
-          "phase": "PROJECTILE_TRAVEL"
-        },
-        {
-          "romFrame": 660,
-          "remakeTick": 161,
           "phase": "SCREEN_RESTORE"
         }
       ]
@@ -17210,12 +17125,10 @@
       },
       "animationSlots": null,
       "remake": {
-        "status": "CAPTURED",
-        "image": "remake/frame_644.png",
-        "imageSha256": "7bd902972c3baf260726e9dcba42a944ee421bb19a5b4db4995c8b7275587b2c",
-        "pixelsSha256": "df806946d4207fc9c9573e81aab300aebc36518914fa8d3cd0e07df827df0e4f",
-        "remakeTick": 145,
-        "byteIdenticalOnRerun": true
+        "status": "PENDING_REMAKE_CAPTURE",
+        "image": null,
+        "imageSha256": null,
+        "remakeTick": null
       }
     },
     {
@@ -17243,12 +17156,10 @@
       },
       "animationSlots": null,
       "remake": {
-        "status": "CAPTURED",
-        "image": "remake/frame_645.png",
-        "imageSha256": "e765d02572eae1ca1532f8a548ac02abde68a706518b79e7c667772704eaf4d2",
-        "pixelsSha256": "98357446ae9324bee0ee1063ea554b12657dded4d2f69551e8d40f74b00b5fbe",
-        "remakeTick": 146,
-        "byteIdenticalOnRerun": true
+        "status": "PENDING_REMAKE_CAPTURE",
+        "image": null,
+        "imageSha256": null,
+        "remakeTick": null
       }
     },
     {
@@ -17276,12 +17187,10 @@
       },
       "animationSlots": null,
       "remake": {
-        "status": "CAPTURED",
-        "image": "remake/frame_646.png",
-        "imageSha256": "e765d02572eae1ca1532f8a548ac02abde68a706518b79e7c667772704eaf4d2",
-        "pixelsSha256": "98357446ae9324bee0ee1063ea554b12657dded4d2f69551e8d40f74b00b5fbe",
-        "remakeTick": 147,
-        "byteIdenticalOnRerun": true
+        "status": "PENDING_REMAKE_CAPTURE",
+        "image": null,
+        "imageSha256": null,
+        "remakeTick": null
       }
     },
     {
@@ -17309,12 +17218,10 @@
       },
       "animationSlots": null,
       "remake": {
-        "status": "CAPTURED",
-        "image": "remake/frame_647.png",
-        "imageSha256": "8110d5c8fc7e0dbccb5f89da57208842c6f09ebacdc4efb414f6275d5f57eea1",
-        "pixelsSha256": "c025e40e0e5ca6a68180dad13b2d7840595b0525ec03da88e90d0fb76863b0ee",
-        "remakeTick": 148,
-        "byteIdenticalOnRerun": true
+        "status": "PENDING_REMAKE_CAPTURE",
+        "image": null,
+        "imageSha256": null,
+        "remakeTick": null
       }
     },
     {
@@ -17342,12 +17249,10 @@
       },
       "animationSlots": null,
       "remake": {
-        "status": "CAPTURED",
-        "image": "remake/frame_648.png",
-        "imageSha256": "8110d5c8fc7e0dbccb5f89da57208842c6f09ebacdc4efb414f6275d5f57eea1",
-        "pixelsSha256": "c025e40e0e5ca6a68180dad13b2d7840595b0525ec03da88e90d0fb76863b0ee",
-        "remakeTick": 149,
-        "byteIdenticalOnRerun": true
+        "status": "PENDING_REMAKE_CAPTURE",
+        "image": null,
+        "imageSha256": null,
+        "remakeTick": null
       }
     },
     {
@@ -17375,12 +17280,10 @@
       },
       "animationSlots": null,
       "remake": {
-        "status": "CAPTURED",
-        "image": "remake/frame_649.png",
-        "imageSha256": "8110d5c8fc7e0dbccb5f89da57208842c6f09ebacdc4efb414f6275d5f57eea1",
-        "pixelsSha256": "c025e40e0e5ca6a68180dad13b2d7840595b0525ec03da88e90d0fb76863b0ee",
-        "remakeTick": 150,
-        "byteIdenticalOnRerun": true
+        "status": "PENDING_REMAKE_CAPTURE",
+        "image": null,
+        "imageSha256": null,
+        "remakeTick": null
       }
     },
     {
@@ -17408,12 +17311,10 @@
       },
       "animationSlots": null,
       "remake": {
-        "status": "CAPTURED",
-        "image": "remake/frame_650.png",
-        "imageSha256": "8110d5c8fc7e0dbccb5f89da57208842c6f09ebacdc4efb414f6275d5f57eea1",
-        "pixelsSha256": "c025e40e0e5ca6a68180dad13b2d7840595b0525ec03da88e90d0fb76863b0ee",
-        "remakeTick": 151,
-        "byteIdenticalOnRerun": true
+        "status": "PENDING_REMAKE_CAPTURE",
+        "image": null,
+        "imageSha256": null,
+        "remakeTick": null
       }
     },
     {
@@ -17441,12 +17342,10 @@
       },
       "animationSlots": null,
       "remake": {
-        "status": "CAPTURED",
-        "image": "remake/frame_651.png",
-        "imageSha256": "8110d5c8fc7e0dbccb5f89da57208842c6f09ebacdc4efb414f6275d5f57eea1",
-        "pixelsSha256": "c025e40e0e5ca6a68180dad13b2d7840595b0525ec03da88e90d0fb76863b0ee",
-        "remakeTick": 152,
-        "byteIdenticalOnRerun": true
+        "status": "PENDING_REMAKE_CAPTURE",
+        "image": null,
+        "imageSha256": null,
+        "remakeTick": null
       }
     },
     {
@@ -17474,12 +17373,10 @@
       },
       "animationSlots": null,
       "remake": {
-        "status": "CAPTURED",
-        "image": "remake/frame_652.png",
-        "imageSha256": "8110d5c8fc7e0dbccb5f89da57208842c6f09ebacdc4efb414f6275d5f57eea1",
-        "pixelsSha256": "c025e40e0e5ca6a68180dad13b2d7840595b0525ec03da88e90d0fb76863b0ee",
-        "remakeTick": 153,
-        "byteIdenticalOnRerun": true
+        "status": "PENDING_REMAKE_CAPTURE",
+        "image": null,
+        "imageSha256": null,
+        "remakeTick": null
       }
     },
     {
@@ -17507,12 +17404,10 @@
       },
       "animationSlots": null,
       "remake": {
-        "status": "CAPTURED",
-        "image": "remake/frame_653.png",
-        "imageSha256": "8110d5c8fc7e0dbccb5f89da57208842c6f09ebacdc4efb414f6275d5f57eea1",
-        "pixelsSha256": "c025e40e0e5ca6a68180dad13b2d7840595b0525ec03da88e90d0fb76863b0ee",
-        "remakeTick": 154,
-        "byteIdenticalOnRerun": true
+        "status": "PENDING_REMAKE_CAPTURE",
+        "image": null,
+        "imageSha256": null,
+        "remakeTick": null
       }
     },
     {
@@ -17540,12 +17435,10 @@
       },
       "animationSlots": null,
       "remake": {
-        "status": "CAPTURED",
-        "image": "remake/frame_654.png",
-        "imageSha256": "8110d5c8fc7e0dbccb5f89da57208842c6f09ebacdc4efb414f6275d5f57eea1",
-        "pixelsSha256": "c025e40e0e5ca6a68180dad13b2d7840595b0525ec03da88e90d0fb76863b0ee",
-        "remakeTick": 155,
-        "byteIdenticalOnRerun": true
+        "status": "PENDING_REMAKE_CAPTURE",
+        "image": null,
+        "imageSha256": null,
+        "remakeTick": null
       }
     },
     {
@@ -17573,12 +17466,10 @@
       },
       "animationSlots": null,
       "remake": {
-        "status": "CAPTURED",
-        "image": "remake/frame_655.png",
-        "imageSha256": "8110d5c8fc7e0dbccb5f89da57208842c6f09ebacdc4efb414f6275d5f57eea1",
-        "pixelsSha256": "c025e40e0e5ca6a68180dad13b2d7840595b0525ec03da88e90d0fb76863b0ee",
-        "remakeTick": 156,
-        "byteIdenticalOnRerun": true
+        "status": "PENDING_REMAKE_CAPTURE",
+        "image": null,
+        "imageSha256": null,
+        "remakeTick": null
       }
     },
     {
@@ -17606,12 +17497,10 @@
       },
       "animationSlots": null,
       "remake": {
-        "status": "CAPTURED",
-        "image": "remake/frame_656.png",
-        "imageSha256": "8110d5c8fc7e0dbccb5f89da57208842c6f09ebacdc4efb414f6275d5f57eea1",
-        "pixelsSha256": "c025e40e0e5ca6a68180dad13b2d7840595b0525ec03da88e90d0fb76863b0ee",
-        "remakeTick": 157,
-        "byteIdenticalOnRerun": true
+        "status": "PENDING_REMAKE_CAPTURE",
+        "image": null,
+        "imageSha256": null,
+        "remakeTick": null
       }
     },
     {
@@ -17639,12 +17528,10 @@
       },
       "animationSlots": null,
       "remake": {
-        "status": "CAPTURED",
-        "image": "remake/frame_657.png",
-        "imageSha256": "8110d5c8fc7e0dbccb5f89da57208842c6f09ebacdc4efb414f6275d5f57eea1",
-        "pixelsSha256": "c025e40e0e5ca6a68180dad13b2d7840595b0525ec03da88e90d0fb76863b0ee",
-        "remakeTick": 158,
-        "byteIdenticalOnRerun": true
+        "status": "PENDING_REMAKE_CAPTURE",
+        "image": null,
+        "imageSha256": null,
+        "remakeTick": null
       }
     },
     {
@@ -17672,12 +17559,10 @@
       },
       "animationSlots": null,
       "remake": {
-        "status": "CAPTURED",
-        "image": "remake/frame_658.png",
-        "imageSha256": "8110d5c8fc7e0dbccb5f89da57208842c6f09ebacdc4efb414f6275d5f57eea1",
-        "pixelsSha256": "c025e40e0e5ca6a68180dad13b2d7840595b0525ec03da88e90d0fb76863b0ee",
-        "remakeTick": 159,
-        "byteIdenticalOnRerun": true
+        "status": "PENDING_REMAKE_CAPTURE",
+        "image": null,
+        "imageSha256": null,
+        "remakeTick": null
       }
     },
     {
@@ -17705,12 +17590,10 @@
       },
       "animationSlots": null,
       "remake": {
-        "status": "CAPTURED",
-        "image": "remake/frame_659.png",
-        "imageSha256": "8110d5c8fc7e0dbccb5f89da57208842c6f09ebacdc4efb414f6275d5f57eea1",
-        "pixelsSha256": "c025e40e0e5ca6a68180dad13b2d7840595b0525ec03da88e90d0fb76863b0ee",
-        "remakeTick": 160,
-        "byteIdenticalOnRerun": true
+        "status": "PENDING_REMAKE_CAPTURE",
+        "image": null,
+        "imageSha256": null,
+        "remakeTick": null
       }
     },
     {
@@ -17725,12 +17608,10 @@
       "scroll": null,
       "animationSlots": null,
       "remake": {
-        "status": "CAPTURED",
-        "image": "remake/frame_660.png",
-        "imageSha256": "8110d5c8fc7e0dbccb5f89da57208842c6f09ebacdc4efb414f6275d5f57eea1",
-        "pixelsSha256": "c025e40e0e5ca6a68180dad13b2d7840595b0525ec03da88e90d0fb76863b0ee",
-        "remakeTick": 161,
-        "byteIdenticalOnRerun": true
+        "status": "PENDING_REMAKE_CAPTURE",
+        "image": null,
+        "imageSha256": null,
+        "remakeTick": null
       }
     }
   ]
