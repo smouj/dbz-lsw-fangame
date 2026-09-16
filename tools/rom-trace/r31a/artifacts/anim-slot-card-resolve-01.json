@@ -60,5 +60,13 @@
     }
   ],
   "rule": "no card is named from a filename; card 12 is named only because resourceId 3 -> cardId 12 comes from the generated selector table",
-  "residualGap": "card identification for non-beam technique resources (e.g. resourceId 63) needs a resource->card table; the beam selector table is beam-only"
+  "residualGap": "card identification for non-beam technique resources (e.g. resourceId 63) needs a resource->card table; the beam selector table is beam-only",
+  "nonBeamJoin": {
+    "question": "does a resource->card table exist for NON-beam techniques (e.g. resourceId 63)?",
+    "answer": "NO",
+    "evidence": "grep -rln 'animationResource' src/data/generated/*.ts -> only romBeamSequenceSelectors.generated.ts (BEAM only) and romOffensiveFxPaletteBindings.generated.ts (palette bindings, not card mapping)",
+    "consequence": "resourceId 63 ($7748, bank $64) keeps a receipted RESOURCE identity and NO card identity. No card is named from the address and none from a filename.",
+    "wouldBeDerivedFrom": "a new decomp pass over the card -> technique-record binding in the ROM, the same structure that produced the beam table (whose own evidence string is \"Bank00:$3966 + Bank7E opcode0D + Bank00:$0DA2\"), extended from the beam subset to the 66 technique resources of ROM_CATALOG_RESOURCE_BASES",
+    "cost": "comparable to the existing beam-selector extraction: one pass over the card/technique record tables plus a verify script; bounded, but not done here"
+  }
 }
