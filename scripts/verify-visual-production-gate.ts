@@ -352,7 +352,9 @@ for (const beam of BEAM_CARDS) {
     } else if (route.pendingCues > 0) {
       result = 'BLOCKED_ROM_TRACE';
       detail = `kind=${route.kind}, ${route.pendingCues} pending cues, physical=${physicalCues.length}`;
-      blockedCount++;
+      // NOTE: no counter increment here. addRow() below is the single
+      // authority for every count; incrementing here counted this row twice
+      // and the gate printed "5 BLOCKED" for 3 blocked rows.
     } else {
       result = 'PASS';
       detail = `kind=${route.kind}, no physical cues (non-physical route), scene=${sceneCues.length}, pose=${fighterPoseCues.length}`;
@@ -771,6 +773,15 @@ for (const section of sections) {
   const passRows = rows.filter(r => r.result === 'PASS').length;
   const totalRows = rows.length;
   console.log(`${section.name}: ${passRows}/${totalRows} PASS`);
+}
+
+// Instrument invariant: the printed count must equal the blocked rows in the
+// matrix. addRow() is the only counter; if a branch ever increments again the
+// gate fails loudly instead of publishing a number the table contradicts.
+const blockedRows = MATRIX.filter(r => r.result === 'BLOCKED_ROM_TRACE').length;
+if (blockedRows !== blockedCount) {
+  console.log(`❌ INSTRUMENT FAIL: blockedCount=${blockedCount} but ${blockedRows} BLOCKED_ROM_TRACE rows in the matrix`);
+  process.exit(1);
 }
 
 console.log();
