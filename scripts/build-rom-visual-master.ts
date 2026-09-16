@@ -14,6 +14,55 @@ const sha256 = (data: Buffer) => createHash('sha256').update(data).digest('hex')
 const readJson = (path: string) => JSON.parse(readFileSync(path, 'utf8'));
 const frameNumber = (name: string) => Number(name.match(/^frame_(\d+)\.png$/)?.[1] ?? NaN);
 
+// ── Remake (Pixi) capture fold ──────────────────────────────────────────
+// The remake side is written ONLY by scripts/capture-pixi-visual-master.mjs
+// (remake/capture.json + remake/frame_NNN.png). This builder never generates
+// remake pixels: with no capture present the frames stay PENDING explicitly.
+const REMAKE_MANIFEST = join(OUT_DIR, 'remake/capture.json');
+interface RemakeFrameEntry {
+  romFrame: number;
+  remakeTick: number;
+  file: string;
+  sha256: string;
+  byteIdentical: boolean;
+  pixelsSha256: string | null;
+}
+interface RemakeCapture {
+  schema: string;
+  generator: string;
+  harness: string;
+  actor: Record<string, unknown>;
+  determinism: { passes: number; failures: number; statement: string };
+  contract: Record<string, unknown>;
+  tickMapping: Record<string, unknown>;
+  pageErrors?: string[];
+  frames: RemakeFrameEntry[];
+}
+
+let remakeCapture: RemakeCapture | null = null;
+if (existsSync(REMAKE_MANIFEST)) {
+  const raw = readJson(REMAKE_MANIFEST) as RemakeCapture;
+  if (raw.schema !== 'dbzlsw.rom.visual-master.capture.v1') {
+    throw new Error(`Unknown remake capture schema: ${raw.schema}`);
+  }
+  // Hash every remake PNG here: the manifest records what the capturer wrote,
+  // the builder records what is actually on disk for each frame.
+  const byRomFrame = new Map<number, RemakeFrameEntry>();
+  for (const entry of raw.frames) {
+    const file = resolve(OUT_DIR, entry.file);
+    if (!existsSync(file)) throw new Error(`Remake capture missing: ${entry.file}`);
+    const png = readFileSync(file);
+    if (png.subarray(0, 8).toString('hex') !== '89504e470d0a1a0a') {
+      throw new Error(`Remake capture is not a PNG: ${entry.file}`);
+    }
+    if (sha256(png) !== entry.sha256) {
+      throw new Error(`Remake capture hash drift: ${entry.file}`);
+    }
+    byRomFrame.set(entry.romFrame, entry);
+  }
+  remakeCapture = { ...raw, frames: [...byRomFrame.values()] };
+}
+
 const scanline = readJson(SCANLINE_FIXTURE);
 const actionTrace = readJson(ACTION_TRACE);
 const traceByFrame = new Map(actionTrace.frames.map((frame: any) => [frame.frame, frame]));
@@ -39,6 +88,27 @@ if (bootstrapSha !== scanline.source.bootstrapStateSha256) {
   throw new Error(`Bootstrap hash mismatch: ${bootstrapSha} != ${scanline.source.bootstrapStateSha256}`);
 }
 
+/** Remake side of one ROM frame. PENDING unless a real capture exists. */
+const remakeFor = (frame: number) => {
+  const entry = remakeCapture?.frames.find((candidate) => candidate.romFrame === frame) ?? null;
+  if (!entry) {
+    return {
+      status: 'PENDING_REMAKE_CAPTURE',
+      image: null,
+      imageSha256: null,
+      remakeTick: null,
+    };
+  }
+  return {
+    status: 'CAPTURED',
+    image: entry.file,
+    imageSha256: entry.sha256,
+    pixelsSha256: entry.pixelsSha256,
+    remakeTick: entry.remakeTick,
+    byteIdenticalOnRerun: entry.byteIdentical,
+  };
+};
+
 const frames = pngFiles.map((file) => {
   const frame = frameNumber(file);
   const png = readFileSync(join(ROM_FRAMES_DIR, file));
@@ -61,7 +131,7 @@ const frames = pngFiles.map((file) => {
       bands: raster.bands,
     } : trace?.scroll ?? null,
     animationSlots: trace?.slots ?? null,
-    remake: { status: 'PENDING_REMAKE_CAPTURE', image: null },
+    remake: remakeFor(frame),
   };
 });
 
@@ -94,8 +164,20 @@ const output = {
     ranges: [[0, 0], [60, 60], [408, 488], [644, 660]],
     activeFrameRanges: scanline.observed.activeFrameRanges,
     restoreFrames: scanline.observed.restoreFrames,
-    remakeCapturedFrames: 0,
+    remakeCapturedFrames: frames.filter((frame) => frame.remake.image).length,
   },
+  ...(remakeCapture ? {
+    remakeCapture: {
+      schema: remakeCapture.schema,
+      generator: remakeCapture.generator,
+      harness: remakeCapture.harness,
+      actor: remakeCapture.actor,
+      determinism: remakeCapture.determinism,
+      contract: remakeCapture.contract,
+      tickMapping: remakeCapture.tickMapping,
+      pageErrors: remakeCapture.pageErrors ?? [],
+    },
+  } : {}),
   frames,
 };
 

@@ -4,7 +4,7 @@
 // Canonical_Frames_Official queda como corpus histórico/remake-source hasta
 // reconciliación P0.3C. Ningún fallback se etiqueta ROM_PHYSICAL; ningún
 // UNRESOLVED se oculta (PENDING explícito siempre).
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { FightersTab } from './fightersTab';
 import { ActionsTab } from './actionsTab';
 import { OffensiveFxTab } from './fxTab';
@@ -15,6 +15,7 @@ import { ProvenanceTab } from './provenanceTab';
 import { AssetsTab } from './assetsTab';
 import { SpriteAtlasTab } from './spriteAtlasTab';
 import { VisualMasterTab } from './visualMasterTab';
+import { VisualMasterCaptureRoute, readCaptureRequest } from './visualMasterCapture';
 
 type LabTab = 'visual-master' | 'fighters' | 'sprite-atlas' | 'actions' | 'fx' | 'support' | 'defense' | 'palettes' | 'provenance' | 'assets';
 
@@ -35,6 +36,15 @@ export function RomDisplayLab() {
   const [tab, setTab] = useState<LabTab>('visual-master');
   const [globalForm, setGlobalForm] = useState<string | null>(null);
   const [globalCard, setGlobalCard] = useState<number | null>(null);
+
+  // DEV-ONLY deterministic capture route (see visualMasterCapture.tsx).
+  // `?vmCapture=1&vmTick=<n>` replaces the browsing UI with a single-shot
+  // production Pixi capture published on window.__VISUAL_MASTER_CAPTURE__.
+  const captureRequest = useMemo(
+    () => readCaptureRequest(window.location.search, window.location.hash),
+    [],
+  );
+  if (captureRequest) return <VisualMasterCaptureRoute request={captureRequest} />;
 
   return (
     <div className="dev-panel">

@@ -1,0 +1,161 @@
+{
+  "schema": "dbzlsw.rom.visual-master.capture.v1",
+  "generator": "scripts/capture-pixi-visual-master.mjs",
+  "harness": "src/devtools/romdisplay2/visualMasterCapture.tsx",
+  "baseUrl": "http://127.0.0.1:5178/",
+  "actor": {
+    "card": 12,
+    "player": "gohan_kid",
+    "enemy": "piccolo_base",
+    "scenario": 1,
+    "seed": 23089
+  },
+  "determinism": {
+    "passes": 2,
+    "failures": 0,
+    "statement": "two independent runs of the same tick produced byte-identical PNGs"
+  },
+  "contract": {
+    "romNative": {
+      "width": 160,
+      "height": 144
+    },
+    "romWorldCrop": {
+      "x": 0,
+      "y": 24,
+      "width": 160,
+      "height": 80
+    },
+    "remakeOutput": {
+      "width": 320,
+      "height": 180
+    },
+    "remakeWorldCrop": {
+      "x": 0,
+      "y": 10,
+      "width": 320,
+      "height": 160
+    },
+    "compareScale": 0.5,
+    "compareWidth": 160,
+    "compareHeight": 80,
+    "compareSpace": "gbc-5bit",
+    "note": "ROM reference is the native 160x144 framebuffer; its battle world is rows 24..103 (80 rows, ACTION_NATIVE_H). The remake output is 320x180 with the ROM world 320x160 centred at output y=10 (BATTLE_OUTPUT_Y). Comparison downscales the remake world crop x0.5 to 160x80 and quantises both sides to GBC 5-bit colour, which removes the 5-bit->8-bit expansion convention difference (ROM PNGs use round(v*255/31); the remake uses v<<3)."
+  },
+  "tickMapping": {
+    "kind": "romFrame -> remake presentation tick",
+    "note": "The ROM frame counter and the remake BattleRuntime GBC tick share no clock. Anchors map BEAT boundaries declared by each side; the ROM frame pair 0/60 is byte-identical in the ROM, so no anchor may separate it.",
+    "anchors": [
+      {
+        "romFrame": 0,
+        "remakeTick": 0
+      },
+      {
+        "romFrame": 60,
+        "remakeTick": 0
+      },
+      {
+        "romFrame": 408,
+        "remakeTick": 22
+      }
+    ]
+  },
+  "pageErrors": [],
+  "frames": [
+    {
+      "romFrame": 0,
+      "remakeTick": 0,
+      "file": "remake/frame_000.png",
+      "bytes": 8223,
+      "sha256": "72ec6c69db6148b868bee1827ff867394681e6f05c8e2229b28dcaf0e082b9a2",
+      "rerunSha256": "72ec6c69db6148b868bee1827ff867394681e6f05c8e2229b28dcaf0e082b9a2",
+      "byteIdentical": true,
+      "pixelsSha256": "5f5f5da163e9be307de9d9832e251328f33ecbeeaa8c03b9693bccd6dd275df1",
+      "stats": {
+        "source": "ROM",
+        "cuesTotal": 15,
+        "cuesConsumed": 15,
+        "visibleEffects": 8,
+        "displayEffects": 1,
+        "traceCues": 5,
+        "pendingCues": 0,
+        "pendingReasons": [],
+        "sceneChanges": 0,
+        "scenePrepares": 1,
+        "physicalFrames": 0,
+        "physicalFrameSources": {},
+        "lastPhysicalFrame": null,
+        "impacts": 0,
+        "fxWindows": 0,
+        "romSequenceBySlot": [
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "romFrame": 60,
+      "remakeTick": 0,
+      "file": "remake/frame_060.png",
+      "bytes": 8223,
+      "sha256": "72ec6c69db6148b868bee1827ff867394681e6f05c8e2229b28dcaf0e082b9a2",
+      "rerunSha256": "72ec6c69db6148b868bee1827ff867394681e6f05c8e2229b28dcaf0e082b9a2",
+      "byteIdentical": true,
+      "pixelsSha256": "5f5f5da163e9be307de9d9832e251328f33ecbeeaa8c03b9693bccd6dd275df1",
+      "stats": {
+        "source": "ROM",
+        "cuesTotal": 15,
+        "cuesConsumed": 15,
+        "visibleEffects": 8,
+        "displayEffects": 1,
+        "traceCues": 5,
+        "pendingCues": 0,
+        "pendingReasons": [],
+        "sceneChanges": 0,
+        "scenePrepares": 1,
+        "physicalFrames": 0,
+        "physicalFrameSources": {},
+        "lastPhysicalFrame": null,
+        "impacts": 0,
+        "fxWindows": 0,
+        "romSequenceBySlot": [
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "romFrame": 408,
+      "remakeTick": 22,
+      "file": "remake/frame_408.png",
+      "bytes": 5221,
+      "sha256": "3904aa39826919aef2d7d85fc89ee8a1ed5ca2dac7c28d9aff32eccd939690c8",
+      "rerunSha256": "3904aa39826919aef2d7d85fc89ee8a1ed5ca2dac7c28d9aff32eccd939690c8",
+      "byteIdentical": true,
+      "pixelsSha256": "fa2bd1e303ee4aec6def476bc7d27ff4d9b7857cf0cfae8e8369071110a42679",
+      "stats": {
+        "source": "ROM",
+        "cuesTotal": 23,
+        "cuesConsumed": 23,
+        "visibleEffects": 9,
+        "displayEffects": 2,
+        "traceCues": 10,
+        "pendingCues": 1,
+        "pendingReasons": [
+          "START_ACTOR_ANIMATION: ProductionFrameResolver blocked because actorFormId/sequenceSelector is not proven"
+        ],
+        "sceneChanges": 1,
+        "scenePrepares": 1,
+        "physicalFrames": 0,
+        "physicalFrameSources": {},
+        "lastPhysicalFrame": null,
+        "impacts": 0,
+        "fxWindows": 1,
+        "romSequenceBySlot": [
+          null,
+          null
+        ]
+      }
+    }
+  ]
+}
