@@ -20,6 +20,7 @@ import {
   EXPECTED_CONTRACT,
   REMAKE_WORLD_CROP,
   ROM_WORLD_CROP,
+  bandedRowsFromScroll,
   causesFor,
   decodePng,
   diffWorlds,
@@ -84,6 +85,7 @@ check(timeline.frames.filter((frame: any) => frame.phase === 'PROJECTILE_TRAVEL'
 // still refuses to claim ROM↔Pixi parity — the cause-grouped inventory is
 // data, and it is only as complete as the captures behind it.
 const frameViews: Array<CauseFrameView & { causes: string[] }> = [];
+const viewportTotals = { bandedPixels: 0, bandedMismatchPx: 0, comparablePixels: 0, comparableMismatchPx: 0 };
 const capturePath = resolve(MASTER_DIR, 'remake/capture.json');
 const capture = existsSync(capturePath) ? JSON.parse(readFileSync(capturePath, 'utf8')) : null;
 const captureByRomFrame = new Map<number, any>();
@@ -126,10 +128,18 @@ if (remakeCaptures > 0) {
       `${decoded.width}×${decoded.height}`,
     );
     const romDecoded = decodePng(readFileSync(resolve(MASTER_DIR, frame.romImage)));
+    // Comparator option (b), interim: rows the ROM composites per scanline are
+    // counted and refused, never dropped.
+    const bandedRows = bandedRowsFromScroll(frame.scroll);
     const diff = diffWorlds(
       sampleWorld(romDecoded, ROM_WORLD_CROP, 1),
       sampleWorld(decoded, REMAKE_WORLD_CROP, 1 / COMPARE_SCALE),
+      bandedRows,
     );
+    viewportTotals.bandedPixels += diff.viewport.bandedPixels;
+    viewportTotals.bandedMismatchPx += diff.viewport.bandedMismatchPx;
+    viewportTotals.comparablePixels += diff.viewport.comparablePixels;
+    viewportTotals.comparableMismatchPx += diff.viewport.comparableMismatchPx;
     const captureFrame = captureByRomFrame.get(frame.frame);
     const view = {
       romFrame: frame.frame,
@@ -190,6 +200,23 @@ if (groups.length) {
   }
   const groupedPx = groups.reduce((sum, group) => sum + group.totalMismatchPx, 0);
   check(groupedPx === totalMismatchPx, 'cause groups partition the measured mismatch', `${groupedPx}/${totalMismatchPx}`);
+
+  // Comparator option (b), interim: the verdict may only quote the region where a
+  // tick-framebuffer compare is well-defined; the banded region is stated.
+  const comparablePercent = (viewportTotals.comparableMismatchPx / Math.max(1, viewportTotals.comparablePixels)) * 100;
+  console.log('\n── INTERIM VERDICT (comparator b: verdict restricted to non-scrolled regions) ──');
+  console.log(
+    `comparable region: ${comparablePercent.toFixed(2)}% mismatch (${viewportTotals.comparableMismatchPx}/${viewportTotals.comparablePixels}px)`,
+  );
+  console.log(
+    `NOT COMPARABLE in this space: banded region ${viewportTotals.bandedMismatchPx}px of ${viewportTotals.bandedPixels}px ` +
+    `(differential HBlank viewport rows; refused, not dropped)`,
+  );
+  check(
+    viewportTotals.comparablePixels + viewportTotals.bandedPixels === frameViews.length * 12800,
+    'viewport split accounts for every compared pixel (no silent drop)',
+    `${viewportTotals.comparablePixels}+${viewportTotals.bandedPixels} vs ${frameViews.length * 12800}`,
+  );
 }
 
 console.log(`\nROM Visual Master: ${pass} checks passed · ${fail} failed`);

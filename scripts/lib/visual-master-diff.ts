@@ -143,13 +143,29 @@ export interface WorldDiff {
   pixelClass: { remakeExtra: number; romMissing: number; bothDiffer: number };
   /** Non-white census of each side over the 160×80 world. */
   census: { romNonWhite: number; remakeNonWhite: number };
+  /**
+   * Verdict split for the differential HBlank viewport (comparator option (b)).
+   * The ROM composites the scrolled bands per scanline; inside them a
+   * tick-framebuffer comparison is not well-defined while the renderer does not
+   * apply the viewport program. Those pixels are counted and REFUSED, never
+   * dropped: `comparableMismatchPercent` is the only percentage the interim
+   * verdict may quote.
+   */
+  viewport: {
+    bandedRows: number;
+    bandedPixels: number;
+    bandedMismatchPx: number;
+    comparablePixels: number;
+    comparableMismatchPx: number;
+    comparableMismatchPercent: number;
+  };
 }
 
 const WHITE_5BIT = 31;
 const isWhite = (world: Uint8Array, i: number) =>
   world[i] === WHITE_5BIT && world[i + 1] === WHITE_5BIT && world[i + 2] === WHITE_5BIT;
 
-export function diffWorlds(rom: Uint8Array, remake: Uint8Array): WorldDiff {
+export function diffWorlds(rom: Uint8Array, remake: Uint8Array, bandedRows?: readonly boolean[] | null): WorldDiff {
   let mismatchPixels = 0;
   let x0 = COMPARE_W, y0 = COMPARE_H, x1 = -1, y1 = -1;
   const rows = new Uint8Array(COMPARE_H);
@@ -161,8 +177,14 @@ export function diffWorlds(rom: Uint8Array, remake: Uint8Array): WorldDiff {
   const pixelClass = { remakeExtra: 0, romMissing: 0, bothDiffer: 0 };
   let romNonWhite = 0;
   let remakeNonWhite = 0;
+  let bandedMismatchPx = 0;
+  let comparableMismatchPx = 0;
+  let bandedRowCount = 0;
+  for (let y = 0; y < COMPARE_H; y++) if (bandedRows?.[y]) bandedRowCount++;
+  const bandedPixels = bandedRowCount * COMPARE_W;
 
   for (let y = 0; y < COMPARE_H; y++) {
+    const isBandedRow = bandedRows?.[y] === true;
     for (let x = 0; x < COMPARE_W; x++) {
       const i = (y * COMPARE_W + x) * 3;
       const same = rom[i] === remake[i] && rom[i + 1] === remake[i + 1] && rom[i + 2] === remake[i + 2];
@@ -174,6 +196,7 @@ export function diffWorlds(rom: Uint8Array, remake: Uint8Array): WorldDiff {
       else if (romWhite && !remakeWhite) pixelClass.remakeExtra++;
       else if (!same) pixelClass.bothDiffer++;
       if (same) continue;
+      if (isBandedRow) bandedMismatchPx++; else comparableMismatchPx++;
       mismatchPixels++;
       rows[y] = 1; cols[x] = 1;
       if (x < x0) x0 = x; if (x > x1) x1 = x;
@@ -217,17 +240,53 @@ export function diffWorlds(rom: Uint8Array, remake: Uint8Array): WorldDiff {
     regions,
     pixelClass,
     census: { romNonWhite, remakeNonWhite },
+    viewport: {
+      bandedRows: bandedRowCount,
+      bandedPixels,
+      bandedMismatchPx,
+      comparablePixels: COMPARE_W * COMPARE_H - bandedPixels,
+      comparableMismatchPx,
+      comparableMismatchPercent: (comparableMismatchPx / Math.max(1, COMPARE_W * COMPARE_H - bandedPixels)) * 100,
+    },
   };
 }
 
 /** Decode both sides of a capture and diff them under the contract. */
-export function diffCaptureFiles(masterDir: string, romImage: string, remakeImage: string, readFile: (p: string) => Buffer): WorldDiff {
+export function diffCaptureFiles(
+  masterDir: string,
+  romImage: string,
+  remakeImage: string,
+  readFile: (p: string) => Buffer,
+  bandedRows?: readonly boolean[] | null,
+): WorldDiff {
   const rom = decodePng(readFile(resolve(masterDir, romImage)));
   const remake = decodePng(readFile(resolve(masterDir, remakeImage)));
   return diffWorlds(
     sampleWorld(rom, ROM_WORLD_CROP, 1),
     sampleWorld(remake, REMAKE_WORLD_CROP, 1 / COMPARE_SCALE),
+    bandedRows,
   );
+}
+
+/**
+ * Plane rows that the ROM composites per scanline (differential HBlank viewport),
+ * derived from a frame's `scroll.bands`. A band whose scx/scy differ from the
+ * unscrolled default is composited off-grid, so it is not comparable in
+ * tick-framebuffer space. Rows are returned in plane coordinates (0..79).
+ */
+export function bandedRowsFromScroll(scroll: { bands?: Array<{ lyStart: number; lyEnd: number; scx: number; scy: number }> } | null | undefined): boolean[] | null {
+  const bands = scroll?.bands;
+  if (!Array.isArray(bands) || bands.length === 0) return null;
+  const rows = new Array<boolean>(COMPARE_H).fill(false);
+  let any = false;
+  for (const band of bands) {
+    if (band.scx === 0 && band.scy === 0) continue;   // unscrolled band: comparable
+    for (let ly = band.lyStart; ly <= band.lyEnd; ly++) {
+      const planeRow = ly - ROM_WORLD_CROP.y;
+      if (planeRow >= 0 && planeRow < COMPARE_H) { rows[planeRow] = true; any = true; }
+    }
+  }
+  return any ? rows : null;
 }
 
 // ═══════════════════════════════════════════════════════════════════════

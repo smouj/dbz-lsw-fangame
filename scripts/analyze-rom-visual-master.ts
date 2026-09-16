@@ -19,6 +19,7 @@ import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import {
   EXPECTED_CONTRACT,
+  bandedRowsFromScroll,
   causesFor,
   diffCaptureFiles,
   groupFrames,
@@ -43,7 +44,10 @@ for (const frame of capture.frames ?? []) captureByRomFrame.set(frame.romFrame, 
 const frames: Array<CauseFrameView & { adapter: Record<string, any> | null; causes: string[] }> = [];
 for (const frame of timeline.frames) {
   if (!frame.remake?.image) continue;
-  const diff = diffCaptureFiles(MASTER_DIR, frame.romImage, frame.remake.image, readFileSync);
+  // Comparator option (b), interim: rows the ROM composites per scanline are
+  // counted and refused, never dropped.
+  const bandedRows = bandedRowsFromScroll(frame.scroll);
+  const diff = diffCaptureFiles(MASTER_DIR, frame.romImage, frame.remake.image, readFileSync, bandedRows);
   const captureFrame = captureByRomFrame.get(frame.frame);
   const view = {
     romFrame: frame.frame,
@@ -60,12 +64,27 @@ for (const frame of timeline.frames) {
     dominantAxis: diff.dominantAxis,
     classification: diff.classification,
     regions: diff.regions,
+    viewport: diff.viewport,
   } as CauseFrameView & Record<string, unknown>;
   frames.push({ ...view, causes: causesFor(view) });
 }
 
 const groups = groupFrames(frames);
 const totalMismatchPx = frames.reduce((sum, frame) => sum + frame.mismatchPixels, 0);
+
+// Interim verdict (comparator option (b)): the only percentage the record may
+// quote is over the region where a tick-framebuffer compare is well-defined.
+const viewportTotals = frames.reduce(
+  (acc, frame) => {
+    const v = (frame as any).viewport as { bandedPixels: number; bandedMismatchPx: number; comparablePixels: number; comparableMismatchPx: number };
+    acc.bandedPixels += v.bandedPixels;
+    acc.bandedMismatchPx += v.bandedMismatchPx;
+    acc.comparablePixels += v.comparablePixels;
+    acc.comparableMismatchPx += v.comparableMismatchPx;
+    return acc;
+  },
+  { bandedPixels: 0, bandedMismatchPx: 0, comparablePixels: 0, comparableMismatchPx: 0 },
+);
 
 // Frames with no comparable remake beat are EXCLUDED, not scored: the record must
 // say what left the comparable set so no total is presented as if it covered all
@@ -103,6 +122,19 @@ const output = {
     groupedPx: groups.reduce((sum, group) => sum + group.totalMismatchPx, 0),
   },
   groups,
+  viewportVerdict: {
+    mode: 'INTERIM_NOT_COMPARABLE_BANDED',
+    note:
+      'Comparator option (b), interim: rows the ROM composites per scanline (differential HBlank ' +
+      'viewport, from each frame scroll.bands) are NOT comparable in tick-framebuffer space while the ' +
+      'renderer does not apply the viewport program. They are counted and refused, never dropped. ' +
+      'totalMismatchPx still covers the whole measured set, so the cause groups keep partitioning it.',
+    comparablePixels: viewportTotals.comparablePixels,
+    comparableMismatchPx: viewportTotals.comparableMismatchPx,
+    comparableMismatchPercent: (viewportTotals.comparableMismatchPx / Math.max(1, viewportTotals.comparablePixels)) * 100,
+    notComparableBandedPixels: viewportTotals.bandedPixels,
+    notComparableBandedMismatchPx: viewportTotals.bandedMismatchPx,
+  },
   frames,
 };
 writeFileSync(OUTPUT, `${JSON.stringify(output, null, 2)}\n`);
@@ -120,6 +152,12 @@ const cs = output.summary.comparableSet;
 console.log(
   `comparable set: ${cs.compared}/${cs.romFramesTotal} ROM frames · ` +
   `excludedByMapping=${cs.excludedByMapping.frames} (rom ${JSON.stringify(cs.excludedByMapping.romRanges)})`,
+);
+const vv = output.viewportVerdict;
+console.log(
+  `INTERIM VERDICT (comparator b) · comparable region ${vv.comparableMismatchPercent.toFixed(2)}% ` +
+  `(${vv.comparableMismatchPx}/${vv.comparablePixels}px) · NOT COMPARABLE banded ` +
+  `${vv.notComparableBandedMismatchPx}px of ${vv.notComparableBandedPixels}px`,
 );
 console.log('\nCAUSE GROUPS');
 for (const group of groups) {
