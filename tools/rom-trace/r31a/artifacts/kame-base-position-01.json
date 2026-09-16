@@ -423,7 +423,7 @@
           "20",
           "5E"
         ],
-        "actionUnder_input_60_1_8": false,
+        "actionUnder_input_60_1_8": "NOT_PROBED_UNDER_INPUT",
         "actionSlot6_after": null
       },
       {
@@ -513,7 +513,7 @@
           "20",
           "5E"
         ],
-        "actionUnder_input_60_1_8": false,
+        "actionUnder_input_60_1_8": true,
         "actionSlot6_after": null
       },
       {
@@ -558,7 +558,7 @@
           "20",
           "5E"
         ],
-        "actionUnder_input_60_1_8": false,
+        "actionUnder_input_60_1_8": true,
         "actionSlot6_after": null
       },
       {
@@ -603,7 +603,7 @@
           "20",
           "5E"
         ],
-        "actionUnder_input_60_1_8": true,
+        "actionUnder_input_60_1_8": false,
         "actionSlot6_after": 0
       },
       {
@@ -648,7 +648,7 @@
           "20",
           "5E"
         ],
-        "actionUnder_input_60_1_8": false,
+        "actionUnder_input_60_1_8": "NOT_PROBED_UNDER_INPUT",
         "actionSlot6_after": null
       },
       {
@@ -693,7 +693,7 @@
           "20",
           "5E"
         ],
-        "actionUnder_input_60_1_8": true,
+        "actionUnder_input_60_1_8": false,
         "actionSlot6_after": 0
       },
       {
@@ -738,7 +738,7 @@
           "20",
           "5E"
         ],
-        "actionUnder_input_60_1_8": true,
+        "actionUnder_input_60_1_8": false,
         "actionSlot6_after": 0
       },
       {
@@ -783,7 +783,7 @@
           "20",
           "5E"
         ],
-        "actionUnder_input_60_1_8": false,
+        "actionUnder_input_60_1_8": "NOT_PROBED_UNDER_INPUT",
         "actionSlot6_after": null
       },
       {
@@ -828,7 +828,7 @@
           "20",
           "5E"
         ],
-        "actionUnder_input_60_1_8": true,
+        "actionUnder_input_60_1_8": false,
         "actionSlot6_after": 0
       },
       {
@@ -918,7 +918,7 @@
           "00",
           "00"
         ],
-        "actionUnder_input_60_1_8": false,
+        "actionUnder_input_60_1_8": "NOT_PROBED_UNDER_INPUT",
         "actionSlot6_after": null
       },
       {
@@ -963,7 +963,7 @@
           "00",
           "00"
         ],
-        "actionUnder_input_60_1_8": false,
+        "actionUnder_input_60_1_8": "NOT_PROBED_UNDER_INPUT",
         "actionSlot6_after": null
       },
       {
@@ -1008,7 +1008,7 @@
           "00",
           "00"
         ],
-        "actionUnder_input_60_1_8": false,
+        "actionUnder_input_60_1_8": "NOT_PROBED_UNDER_INPUT",
         "actionSlot6_after": null
       },
       {
@@ -1053,7 +1053,7 @@
           "20",
           "5E"
         ],
-        "actionUnder_input_60_1_8": true,
+        "actionUnder_input_60_1_8": false,
         "actionSlot6_after": 0
       },
       {
@@ -1098,7 +1098,7 @@
           "20",
           "5E"
         ],
-        "actionUnder_input_60_1_8": true,
+        "actionUnder_input_60_1_8": false,
         "actionSlot6_after": 0
       },
       {
@@ -1197,9 +1197,11 @@
       "read 0xC3C8 4 is answerable in every state (4 bytes returned; zeros in non-battle states).",
       "The load-time state does NOT identify the action: 11 of 14 distinct states share an identical base-position AND animation-slot block, so card/side cannot be read off at load time.",
       "Non-battle states (C0A0=02, all-zero base/slots): list-base, list-gohan, nav1/battle-checkpoint - not ACTION-capable.",
-      "Playing each state with input 60:1:8: kame_left_base and tail_left_base/tail_left_move START an action (obj0 baseX 0x28->0x58, one animation-slot register changes); pc_left_base and every offense/base state do NOT start an action under this input.",
+      "Playing each probed state with input 60:1:8: exactly THREE reachable paths START an action - kame_left_base and tail_left_base + tail_left_move (slot 6 goes 0 -> 0x62,0x94 for kame vs 0x64,0x48 for both tail states, and obj0 baseX moves 0x28->0x58). pc_left_base and all five offense/battle bases do NOT start any action under this input (slot 6 stays 0), so their reachability needs their own input script.",
       "The distinguishing register between the kame and tail states is animation slot 6 (0x62,0x94 vs 0x64,0x48). Naming the card from that register needs a slot decoder that does not exist yet, so card ids beyond card 12 are NOT receipted from the state."
-    ]
+    ],
+    "actionFlagDefinition": "true only when animation slot 6 CHANGED after input 60:1:8 (slot went 0 -> non-zero); NOT_PROBED_UNDER_INPUT when that path was not played",
+    "correction": "Earlier revision of this artifact flagged actionUnder_input_60_1_8 as \"was probed in the candidate list\" instead of \"action actually started\"; corrected here. Caught by the sibling-path contradiction (artifacts/kame_left_base.ss0 vs kame_left_base.ss0, same sha, opposite flag)."
   },
   "anchorModelConclusion": {
     "status": "DOCUMENTED - not implemented (shared-code hold)",
