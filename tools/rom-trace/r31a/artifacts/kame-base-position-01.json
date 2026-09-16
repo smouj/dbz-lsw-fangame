@@ -1,5 +1,5 @@
 {
-  "schema": "dbzlsw.rom.action-object-base-position.v2",
+  "schema": "dbzlsw.rom.action-object-base-position.v3",
   "artifact": "tools/rom-trace/r31a/artifacts/kame-base-position-01.json",
   "provenance": {
     "rom": "dbz-lsw-spain.gbc",
@@ -370,6 +370,1142 @@
         ]
       ],
       "animates": true
+    }
+  ],
+  "savestateRebindProbe": {
+    "question": "do the 18 on-hand savestates load against the Spain ROM once identity-rebound?",
+    "method": "rebind-savestate-rom-identity.mjs (identity bytes $04..$1f only) -> loadstate -> state/read; no filename inference",
+    "distinctStates": 14,
+    "filesProbed": 18,
+    "reboundOk": 18,
+    "loadstateOk": 18,
+    "readC3C8_answerable": 18,
+    "files": [
+      {
+        "path": "tools/rom-trace/r31a/artifacts/gohan-battle-base.ss0",
+        "sha256_16": "53945a2c02372c92",
+        "rebound": true,
+        "loadstateOk": true,
+        "errors": [
+          "Savestate: Loading savedata"
+        ],
+        "stateAtLoad": "C0A0=06 CA01=00 CA02=00 CA03=04 CA04=00 CA06=00 CA7E=00 CB77=00 CA53=00 C3C6=01 C3C7=00 CA39=00 SCX=00 C405=00 C406=00 C407=00 C408=00 C409=00 C40A=00 C2D0=00 C2D1=00",
+        "readC3C8_answerable": true,
+        "baseC3C8_atLoad": [
+          "60",
+          "28",
+          "60",
+          "88"
+        ],
+        "slotCA0D_atLoad": [
+          "61",
+          "30",
+          "40",
+          "61",
+          "70",
+          "49",
+          "61",
+          "08",
+          "4C",
+          "61",
+          "74",
+          "51",
+          "61",
+          "04",
+          "58",
+          "61",
+          "7C",
+          "5D",
+          "00",
+          "00",
+          "00",
+          "61",
+          "20",
+          "5E"
+        ],
+        "actionUnder_input_60_1_8": false,
+        "actionSlot6_after": null
+      },
+      {
+        "path": "tools/rom-trace/r31a/artifacts/gohan-offense-base.ss0",
+        "sha256_16": "2280d226ae94f4b5",
+        "rebound": true,
+        "loadstateOk": true,
+        "errors": [
+          "Savestate: Loading savedata"
+        ],
+        "stateAtLoad": "C0A0=05 CA01=00 CA02=00 CA03=04 CA04=00 CA06=00 CA7E=00 CB77=00 CA53=01 C3C6=00 C3C7=00 CA39=02 SCX=00 C405=00 C406=00 C407=00 C408=00 C409=00 C40A=00 C2D0=00 C2D1=01",
+        "readC3C8_answerable": true,
+        "baseC3C8_atLoad": [
+          "60",
+          "28",
+          "60",
+          "88"
+        ],
+        "slotCA0D_atLoad": [
+          "61",
+          "30",
+          "40",
+          "61",
+          "70",
+          "49",
+          "61",
+          "08",
+          "4C",
+          "61",
+          "74",
+          "51",
+          "61",
+          "04",
+          "58",
+          "61",
+          "7C",
+          "5D",
+          "00",
+          "00",
+          "00",
+          "61",
+          "20",
+          "5E"
+        ],
+        "actionUnder_input_60_1_8": false,
+        "actionSlot6_after": null
+      },
+      {
+        "path": "tools/rom-trace/r31a/artifacts/kame_left_base.ss0",
+        "sha256_16": "6bc112e9a1a20b8c",
+        "rebound": true,
+        "loadstateOk": true,
+        "errors": [
+          "Savestate: Loading savedata"
+        ],
+        "stateAtLoad": "C0A0=05 CA01=00 CA02=00 CA03=15 CA04=00 CA06=00 CA7E=00 CB77=00 CA53=01 C3C6=00 C3C7=00 CA39=02 SCX=00 C405=00 C406=00 C407=00 C408=00 C409=00 C40A=00 C2D0=00 C2D1=02",
+        "readC3C8_answerable": true,
+        "baseC3C8_atLoad": [
+          "60",
+          "28",
+          "60",
+          "88"
+        ],
+        "slotCA0D_atLoad": [
+          "61",
+          "30",
+          "40",
+          "61",
+          "70",
+          "49",
+          "61",
+          "08",
+          "4C",
+          "61",
+          "74",
+          "51",
+          "61",
+          "04",
+          "58",
+          "61",
+          "7C",
+          "5D",
+          "00",
+          "00",
+          "00",
+          "61",
+          "20",
+          "5E"
+        ],
+        "actionUnder_input_60_1_8": false,
+        "actionSlot6_after": null
+      },
+      {
+        "path": "tools/rom-trace/r31a/artifacts/tail_left_base.ss0",
+        "sha256_16": "c739369651fc0f22",
+        "rebound": true,
+        "loadstateOk": true,
+        "errors": [
+          "Savestate: Loading savedata"
+        ],
+        "stateAtLoad": "C0A0=05 CA01=00 CA02=00 CA03=15 CA04=00 CA06=00 CA7E=00 CB77=00 CA53=01 C3C6=00 C3C7=00 CA39=02 SCX=00 C405=00 C406=00 C407=00 C408=00 C409=00 C40A=00 C2D0=00 C2D1=03",
+        "readC3C8_answerable": true,
+        "baseC3C8_atLoad": [
+          "60",
+          "28",
+          "60",
+          "88"
+        ],
+        "slotCA0D_atLoad": [
+          "61",
+          "30",
+          "40",
+          "61",
+          "70",
+          "49",
+          "61",
+          "08",
+          "4C",
+          "61",
+          "74",
+          "51",
+          "61",
+          "04",
+          "58",
+          "61",
+          "7C",
+          "5D",
+          "00",
+          "00",
+          "00",
+          "61",
+          "20",
+          "5E"
+        ],
+        "actionUnder_input_60_1_8": false,
+        "actionSlot6_after": null
+      },
+      {
+        "path": "tools/rom-trace/r31a/battle-base.ss0",
+        "sha256_16": "e55083737531edcb",
+        "rebound": true,
+        "loadstateOk": true,
+        "errors": [
+          "Savestate: Loading savedata"
+        ],
+        "stateAtLoad": "C0A0=06 CA01=00 CA02=00 CA03=04 CA04=00 CA06=00 CA7E=00 CB77=00 CA53=00 C3C6=01 C3C7=00 CA39=00 SCX=00 C405=00 C406=00 C407=00 C408=00 C409=00 C40A=00 C2D0=00 C2D1=00",
+        "readC3C8_answerable": true,
+        "baseC3C8_atLoad": [
+          "60",
+          "28",
+          "60",
+          "88"
+        ],
+        "slotCA0D_atLoad": [
+          "61",
+          "30",
+          "40",
+          "61",
+          "70",
+          "49",
+          "61",
+          "08",
+          "4C",
+          "61",
+          "74",
+          "51",
+          "61",
+          "04",
+          "58",
+          "61",
+          "7C",
+          "5D",
+          "00",
+          "00",
+          "00",
+          "61",
+          "20",
+          "5E"
+        ],
+        "actionUnder_input_60_1_8": true,
+        "actionSlot6_after": 0
+      },
+      {
+        "path": "tools/rom-trace/r31a/gohan-battle-base.ss0",
+        "sha256_16": "53945a2c02372c92",
+        "rebound": true,
+        "loadstateOk": true,
+        "errors": [
+          "Savestate: Loading savedata"
+        ],
+        "stateAtLoad": "C0A0=06 CA01=00 CA02=00 CA03=04 CA04=00 CA06=00 CA7E=00 CB77=00 CA53=00 C3C6=01 C3C7=00 CA39=00 SCX=00 C405=00 C406=00 C407=00 C408=00 C409=00 C40A=00 C2D0=00 C2D1=00",
+        "readC3C8_answerable": true,
+        "baseC3C8_atLoad": [
+          "60",
+          "28",
+          "60",
+          "88"
+        ],
+        "slotCA0D_atLoad": [
+          "61",
+          "30",
+          "40",
+          "61",
+          "70",
+          "49",
+          "61",
+          "08",
+          "4C",
+          "61",
+          "74",
+          "51",
+          "61",
+          "04",
+          "58",
+          "61",
+          "7C",
+          "5D",
+          "00",
+          "00",
+          "00",
+          "61",
+          "20",
+          "5E"
+        ],
+        "actionUnder_input_60_1_8": false,
+        "actionSlot6_after": null
+      },
+      {
+        "path": "tools/rom-trace/r31a/gohan-offense-base.ss0",
+        "sha256_16": "2280d226ae94f4b5",
+        "rebound": true,
+        "loadstateOk": true,
+        "errors": [
+          "Savestate: Loading savedata"
+        ],
+        "stateAtLoad": "C0A0=05 CA01=00 CA02=00 CA03=04 CA04=00 CA06=00 CA7E=00 CB77=00 CA53=01 C3C6=00 C3C7=00 CA39=02 SCX=00 C405=00 C406=00 C407=00 C408=00 C409=00 C40A=00 C2D0=00 C2D1=01",
+        "readC3C8_answerable": true,
+        "baseC3C8_atLoad": [
+          "60",
+          "28",
+          "60",
+          "88"
+        ],
+        "slotCA0D_atLoad": [
+          "61",
+          "30",
+          "40",
+          "61",
+          "70",
+          "49",
+          "61",
+          "08",
+          "4C",
+          "61",
+          "74",
+          "51",
+          "61",
+          "04",
+          "58",
+          "61",
+          "7C",
+          "5D",
+          "00",
+          "00",
+          "00",
+          "61",
+          "20",
+          "5E"
+        ],
+        "actionUnder_input_60_1_8": true,
+        "actionSlot6_after": 0
+      },
+      {
+        "path": "tools/rom-trace/r31a/jeice-battle-base.ss0",
+        "sha256_16": "14a7381ed43e4ff6",
+        "rebound": true,
+        "loadstateOk": true,
+        "errors": [
+          "Savestate: Loading savedata"
+        ],
+        "stateAtLoad": "C0A0=06 CA01=00 CA02=00 CA03=04 CA04=00 CA06=00 CA7E=00 CB77=00 CA53=00 C3C6=01 C3C7=00 CA39=00 SCX=00 C405=00 C406=00 C407=00 C408=00 C409=00 C40A=00 C2D0=00 C2D1=00",
+        "readC3C8_answerable": true,
+        "baseC3C8_atLoad": [
+          "60",
+          "28",
+          "60",
+          "88"
+        ],
+        "slotCA0D_atLoad": [
+          "61",
+          "30",
+          "40",
+          "61",
+          "70",
+          "49",
+          "61",
+          "08",
+          "4C",
+          "61",
+          "74",
+          "51",
+          "61",
+          "04",
+          "58",
+          "61",
+          "7C",
+          "5D",
+          "00",
+          "00",
+          "00",
+          "61",
+          "20",
+          "5E"
+        ],
+        "actionUnder_input_60_1_8": true,
+        "actionSlot6_after": 0
+      },
+      {
+        "path": "tools/rom-trace/r31a/jeice-battle-saved.ss0",
+        "sha256_16": "ef0d5cacd44a71c0",
+        "rebound": true,
+        "loadstateOk": true,
+        "errors": [
+          "Savestate: Loading savedata"
+        ],
+        "stateAtLoad": "C0A0=06 CA01=00 CA02=00 CA03=04 CA04=00 CA06=00 CA7E=00 CB77=00 CA53=00 C3C6=01 C3C7=00 CA39=00 SCX=00 C405=00 C406=00 C407=00 C408=00 C409=00 C40A=00 C2D0=00 C2D1=00",
+        "readC3C8_answerable": true,
+        "baseC3C8_atLoad": [
+          "60",
+          "28",
+          "60",
+          "88"
+        ],
+        "slotCA0D_atLoad": [
+          "61",
+          "30",
+          "40",
+          "61",
+          "70",
+          "49",
+          "61",
+          "08",
+          "4C",
+          "61",
+          "74",
+          "51",
+          "61",
+          "04",
+          "58",
+          "61",
+          "7C",
+          "5D",
+          "00",
+          "00",
+          "00",
+          "61",
+          "20",
+          "5E"
+        ],
+        "actionUnder_input_60_1_8": false,
+        "actionSlot6_after": null
+      },
+      {
+        "path": "tools/rom-trace/r31a/jeice-offense-base.ss0",
+        "sha256_16": "7bf658c8b03e2d50",
+        "rebound": true,
+        "loadstateOk": true,
+        "errors": [
+          "Savestate: Loading savedata"
+        ],
+        "stateAtLoad": "C0A0=05 CA01=00 CA02=00 CA03=04 CA04=00 CA06=00 CA7E=0F CB77=00 CA53=01 C3C6=00 C3C7=00 CA39=02 SCX=00 C405=00 C406=00 C407=00 C408=00 C409=00 C40A=00 C2D0=00 C2D1=01",
+        "readC3C8_answerable": true,
+        "baseC3C8_atLoad": [
+          "60",
+          "28",
+          "60",
+          "88"
+        ],
+        "slotCA0D_atLoad": [
+          "61",
+          "30",
+          "40",
+          "61",
+          "70",
+          "49",
+          "61",
+          "08",
+          "4C",
+          "61",
+          "74",
+          "51",
+          "61",
+          "04",
+          "58",
+          "61",
+          "7C",
+          "5D",
+          "00",
+          "00",
+          "00",
+          "61",
+          "20",
+          "5E"
+        ],
+        "actionUnder_input_60_1_8": true,
+        "actionSlot6_after": 0
+      },
+      {
+        "path": "tools/rom-trace/r31a/kame_left_base.ss0",
+        "sha256_16": "6bc112e9a1a20b8c",
+        "rebound": true,
+        "loadstateOk": true,
+        "errors": [
+          "Savestate: Loading savedata"
+        ],
+        "stateAtLoad": "C0A0=05 CA01=00 CA02=00 CA03=15 CA04=00 CA06=00 CA7E=00 CB77=00 CA53=01 C3C6=00 C3C7=00 CA39=02 SCX=00 C405=00 C406=00 C407=00 C408=00 C409=00 C40A=00 C2D0=00 C2D1=02",
+        "readC3C8_answerable": true,
+        "baseC3C8_atLoad": [
+          "60",
+          "28",
+          "60",
+          "88"
+        ],
+        "slotCA0D_atLoad": [
+          "61",
+          "30",
+          "40",
+          "61",
+          "70",
+          "49",
+          "61",
+          "08",
+          "4C",
+          "61",
+          "74",
+          "51",
+          "61",
+          "04",
+          "58",
+          "61",
+          "7C",
+          "5D",
+          "00",
+          "00",
+          "00",
+          "61",
+          "20",
+          "5E"
+        ],
+        "actionUnder_input_60_1_8": true,
+        "actionSlot6_after": 37986
+      },
+      {
+        "path": "tools/rom-trace/r31a/list-base.ss0",
+        "sha256_16": "e35b62d69ff6f267",
+        "rebound": true,
+        "loadstateOk": true,
+        "errors": [
+          "Savestate: Loading savedata"
+        ],
+        "stateAtLoad": "C0A0=02 CA01=00 CA02=00 CA03=00 CA04=00 CA06=00 CA7E=00 CB77=00 CA53=00 C3C6=00 C3C7=00 CA39=00 SCX=00 C405=00 C406=00 C407=00 C408=00 C409=00 C40A=00 C2D0=04 C2D1=00",
+        "readC3C8_answerable": true,
+        "baseC3C8_atLoad": [
+          "00",
+          "00",
+          "00",
+          "00"
+        ],
+        "slotCA0D_atLoad": [
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00"
+        ],
+        "actionUnder_input_60_1_8": false,
+        "actionSlot6_after": null
+      },
+      {
+        "path": "tools/rom-trace/r31a/list-gohan.ss0",
+        "sha256_16": "426f7cd65264086d",
+        "rebound": true,
+        "loadstateOk": true,
+        "errors": [
+          "Savestate: Loading savedata"
+        ],
+        "stateAtLoad": "C0A0=02 CA01=00 CA02=00 CA03=00 CA04=00 CA06=00 CA7E=00 CB77=00 CA53=00 C3C6=00 C3C7=00 CA39=00 SCX=00 C405=00 C406=00 C407=00 C408=00 C409=00 C40A=00 C2D0=04 C2D1=00",
+        "readC3C8_answerable": true,
+        "baseC3C8_atLoad": [
+          "00",
+          "00",
+          "00",
+          "00"
+        ],
+        "slotCA0D_atLoad": [
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00"
+        ],
+        "actionUnder_input_60_1_8": false,
+        "actionSlot6_after": null
+      },
+      {
+        "path": "tools/rom-trace/r31a/nav1/battle-checkpoint.ss0",
+        "sha256_16": "0c9e89a5c9a6aa6d",
+        "rebound": true,
+        "loadstateOk": true,
+        "errors": [
+          "Savestate: Loading savedata"
+        ],
+        "stateAtLoad": "C0A0=02 CA01=00 CA02=00 CA03=00 CA04=00 CA06=00 CA7E=00 CB77=00 CA53=00 C3C6=00 C3C7=00 CA39=00 SCX=00 C405=00 C406=00 C407=00 C408=00 C409=00 C40A=00 C2D0=00 C2D1=00",
+        "readC3C8_answerable": true,
+        "baseC3C8_atLoad": [
+          "00",
+          "00",
+          "00",
+          "00"
+        ],
+        "slotCA0D_atLoad": [
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00",
+          "00"
+        ],
+        "actionUnder_input_60_1_8": false,
+        "actionSlot6_after": null
+      },
+      {
+        "path": "tools/rom-trace/r31a/offense-base.ss0",
+        "sha256_16": "af1bb7553910f687",
+        "rebound": true,
+        "loadstateOk": true,
+        "errors": [
+          "Savestate: Loading savedata"
+        ],
+        "stateAtLoad": "C0A0=05 CA01=00 CA02=00 CA03=04 CA04=00 CA06=00 CA7E=05 CB77=00 CA53=01 C3C6=00 C3C7=00 CA39=02 SCX=00 C405=00 C406=00 C407=00 C408=00 C409=00 C40A=00 C2D0=00 C2D1=01",
+        "readC3C8_answerable": true,
+        "baseC3C8_atLoad": [
+          "60",
+          "28",
+          "60",
+          "88"
+        ],
+        "slotCA0D_atLoad": [
+          "61",
+          "30",
+          "40",
+          "61",
+          "70",
+          "49",
+          "61",
+          "08",
+          "4C",
+          "61",
+          "74",
+          "51",
+          "61",
+          "04",
+          "58",
+          "61",
+          "7C",
+          "5D",
+          "00",
+          "00",
+          "00",
+          "61",
+          "20",
+          "5E"
+        ],
+        "actionUnder_input_60_1_8": true,
+        "actionSlot6_after": 0
+      },
+      {
+        "path": "tools/rom-trace/r31a/pc_left_base.ss0",
+        "sha256_16": "f40a7b8080814130",
+        "rebound": true,
+        "loadstateOk": true,
+        "errors": [
+          "Savestate: Loading savedata"
+        ],
+        "stateAtLoad": "C0A0=05 CA01=00 CA02=00 CA03=15 CA04=00 CA06=00 CA7E=0F CB77=00 CA53=01 C3C6=00 C3C7=00 CA39=02 SCX=00 C405=00 C406=00 C407=00 C408=00 C409=00 C40A=00 C2D0=00 C2D1=04",
+        "readC3C8_answerable": true,
+        "baseC3C8_atLoad": [
+          "60",
+          "28",
+          "60",
+          "88"
+        ],
+        "slotCA0D_atLoad": [
+          "61",
+          "30",
+          "40",
+          "61",
+          "70",
+          "49",
+          "61",
+          "08",
+          "4C",
+          "61",
+          "74",
+          "51",
+          "61",
+          "04",
+          "58",
+          "61",
+          "7C",
+          "5D",
+          "00",
+          "00",
+          "00",
+          "61",
+          "20",
+          "5E"
+        ],
+        "actionUnder_input_60_1_8": true,
+        "actionSlot6_after": 0
+      },
+      {
+        "path": "tools/rom-trace/r31a/tail_left_base.ss0",
+        "sha256_16": "c739369651fc0f22",
+        "rebound": true,
+        "loadstateOk": true,
+        "errors": [
+          "Savestate: Loading savedata"
+        ],
+        "stateAtLoad": "C0A0=05 CA01=00 CA02=00 CA03=15 CA04=00 CA06=00 CA7E=00 CB77=00 CA53=01 C3C6=00 C3C7=00 CA39=02 SCX=00 C405=00 C406=00 C407=00 C408=00 C409=00 C40A=00 C2D0=00 C2D1=03",
+        "readC3C8_answerable": true,
+        "baseC3C8_atLoad": [
+          "60",
+          "28",
+          "60",
+          "88"
+        ],
+        "slotCA0D_atLoad": [
+          "61",
+          "30",
+          "40",
+          "61",
+          "70",
+          "49",
+          "61",
+          "08",
+          "4C",
+          "61",
+          "74",
+          "51",
+          "61",
+          "04",
+          "58",
+          "61",
+          "7C",
+          "5D",
+          "00",
+          "00",
+          "00",
+          "61",
+          "20",
+          "5E"
+        ],
+        "actionUnder_input_60_1_8": true,
+        "actionSlot6_after": 18532
+      },
+      {
+        "path": "tools/rom-trace/r31a/tail_left_move.ss0",
+        "sha256_16": "e9de4ecae85c198e",
+        "rebound": true,
+        "loadstateOk": true,
+        "errors": [
+          "Savestate: Loading savedata"
+        ],
+        "stateAtLoad": "C0A0=05 CA01=00 CA02=00 CA03=15 CA04=00 CA06=00 CA7E=00 CB77=00 CA53=01 C3C6=00 C3C7=00 CA39=02 SCX=00 C405=00 C406=00 C407=00 C408=00 C409=00 C40A=00 C2D0=00 C2D1=03",
+        "readC3C8_answerable": true,
+        "baseC3C8_atLoad": [
+          "60",
+          "28",
+          "60",
+          "88"
+        ],
+        "slotCA0D_atLoad": [
+          "61",
+          "30",
+          "40",
+          "61",
+          "70",
+          "49",
+          "61",
+          "08",
+          "4C",
+          "61",
+          "74",
+          "51",
+          "61",
+          "04",
+          "58",
+          "61",
+          "7C",
+          "5D",
+          "00",
+          "00",
+          "00",
+          "61",
+          "20",
+          "5E"
+        ],
+        "actionUnder_input_60_1_8": true,
+        "actionSlot6_after": 18532
+      }
+    ],
+    "findings": [
+      "ALL 18 rebound and loaded (0 ERR): the earlier rejection was identity fingerprint only, never payload.",
+      "read 0xC3C8 4 is answerable in every state (4 bytes returned; zeros in non-battle states).",
+      "The load-time state does NOT identify the action: 11 of 14 distinct states share an identical base-position AND animation-slot block, so card/side cannot be read off at load time.",
+      "Non-battle states (C0A0=02, all-zero base/slots): list-base, list-gohan, nav1/battle-checkpoint - not ACTION-capable.",
+      "Playing each state with input 60:1:8: kame_left_base and tail_left_base/tail_left_move START an action (obj0 baseX 0x28->0x58, one animation-slot register changes); pc_left_base and every offense/base state do NOT start an action under this input.",
+      "The distinguishing register between the kame and tail states is animation slot 6 (0x62,0x94 vs 0x64,0x48). Naming the card from that register needs a slot decoder that does not exist yet, so card ids beyond card 12 are NOT receipted from the state."
+    ]
+  },
+  "anchorModelConclusion": {
+    "status": "DOCUMENTED - not implemented (shared-code hold)",
+    "statement": "The ACTION anchor is wrong as a MODEL, not merely as a value. Measured across a 700-frame replay of the card-12 bootstrap: obj0 base = (baseY 96, baseX 40) over frames 0..106, (96, 88) over 107..292, a 16-frame RAMP 87->61 at frames 293..308 (one distinct value per frame), then (96, 61) over 309..489; obj1 baseX holds 136 until it jumps to 105 at frame 490. So the ROM base position is CONSTANT inside the beam window (408..487, the window 3g.1 measured: 0 change points) but demonstrably ANIMATES elsewhere in the same film.",
+    "consequence": "A bare global constant (ACTION_GROUND_Y = 72 / ACTION_PLANE_GEOMETRY.home.player = {x:48,y:72}) cannot express this: it is correct for at most one beat of one card. The correct model is the FILM carrying the ROM base position per beat (base read at $C3C8..$C3CB, rendered = base + animation frame offset, per src/battle/romActionObject.ts positionModel), with the anchor constant as a fallback rather than an authority.",
+    "therefore": [
+      "No ACTION_OBJECT_POSITION cue emission is needed for 408..487: the base is constant there, so a cue would carry a constant and add surface on an 83-card shared path for zero fidelity gain.",
+      "The anchor conversion alone fixes the proven (-5,+16) divergence inside that window.",
+      "A per-beat position cue IS the right model for the beats where the base animates (e.g. 293..308), but that is a separate change and remains held.",
+      "Blast radius remains family-wide (83 cards / 5 profile kinds) and only 1 of 83 is currently capturable, so the family needs baseline captures before any global change."
+    ],
+    "evidence": {
+      "runs": [
+        {
+          "obj0_baseY": 96,
+          "obj0_baseX": 61,
+          "obj1_baseY": 96,
+          "obj1_baseX": 105,
+          "frameCount": 210,
+          "frameRuns": [
+            [
+              490,
+              699
+            ]
+          ],
+          "animates": true
+        },
+        {
+          "obj0_baseY": 96,
+          "obj0_baseX": 88,
+          "obj1_baseY": 96,
+          "obj1_baseX": 136,
+          "frameCount": 186,
+          "frameRuns": [
+            [
+              107,
+              292
+            ]
+          ],
+          "animates": true
+        },
+        {
+          "obj0_baseY": 96,
+          "obj0_baseX": 61,
+          "obj1_baseY": 96,
+          "obj1_baseX": 136,
+          "frameCount": 181,
+          "frameRuns": [
+            [
+              309,
+              489
+            ]
+          ],
+          "animates": true
+        },
+        {
+          "obj0_baseY": 96,
+          "obj0_baseX": 40,
+          "obj1_baseY": 96,
+          "obj1_baseX": 136,
+          "frameCount": 107,
+          "frameRuns": [
+            [
+              0,
+              106
+            ]
+          ],
+          "animates": true
+        },
+        {
+          "obj0_baseY": 96,
+          "obj0_baseX": 87,
+          "obj1_baseY": 96,
+          "obj1_baseX": 136,
+          "frameCount": 1,
+          "frameRuns": [
+            [
+              293,
+              293
+            ]
+          ],
+          "animates": true
+        },
+        {
+          "obj0_baseY": 96,
+          "obj0_baseX": 86,
+          "obj1_baseY": 96,
+          "obj1_baseX": 136,
+          "frameCount": 1,
+          "frameRuns": [
+            [
+              294,
+              294
+            ]
+          ],
+          "animates": true
+        },
+        {
+          "obj0_baseY": 96,
+          "obj0_baseX": 84,
+          "obj1_baseY": 96,
+          "obj1_baseX": 136,
+          "frameCount": 1,
+          "frameRuns": [
+            [
+              295,
+              295
+            ]
+          ],
+          "animates": true
+        },
+        {
+          "obj0_baseY": 96,
+          "obj0_baseX": 82,
+          "obj1_baseY": 96,
+          "obj1_baseX": 136,
+          "frameCount": 1,
+          "frameRuns": [
+            [
+              296,
+              296
+            ]
+          ],
+          "animates": true
+        },
+        {
+          "obj0_baseY": 96,
+          "obj0_baseX": 80,
+          "obj1_baseY": 96,
+          "obj1_baseX": 136,
+          "frameCount": 1,
+          "frameRuns": [
+            [
+              297,
+              297
+            ]
+          ],
+          "animates": true
+        },
+        {
+          "obj0_baseY": 96,
+          "obj0_baseX": 78,
+          "obj1_baseY": 96,
+          "obj1_baseX": 136,
+          "frameCount": 1,
+          "frameRuns": [
+            [
+              298,
+              298
+            ]
+          ],
+          "animates": true
+        },
+        {
+          "obj0_baseY": 96,
+          "obj0_baseX": 76,
+          "obj1_baseY": 96,
+          "obj1_baseX": 136,
+          "frameCount": 1,
+          "frameRuns": [
+            [
+              299,
+              299
+            ]
+          ],
+          "animates": true
+        },
+        {
+          "obj0_baseY": 96,
+          "obj0_baseX": 74,
+          "obj1_baseY": 96,
+          "obj1_baseX": 136,
+          "frameCount": 1,
+          "frameRuns": [
+            [
+              300,
+              300
+            ]
+          ],
+          "animates": true
+        },
+        {
+          "obj0_baseY": 96,
+          "obj0_baseX": 72,
+          "obj1_baseY": 96,
+          "obj1_baseX": 136,
+          "frameCount": 1,
+          "frameRuns": [
+            [
+              301,
+              301
+            ]
+          ],
+          "animates": true
+        },
+        {
+          "obj0_baseY": 96,
+          "obj0_baseX": 70,
+          "obj1_baseY": 96,
+          "obj1_baseX": 136,
+          "frameCount": 1,
+          "frameRuns": [
+            [
+              302,
+              302
+            ]
+          ],
+          "animates": true
+        },
+        {
+          "obj0_baseY": 96,
+          "obj0_baseX": 68,
+          "obj1_baseY": 96,
+          "obj1_baseX": 136,
+          "frameCount": 1,
+          "frameRuns": [
+            [
+              303,
+              303
+            ]
+          ],
+          "animates": true
+        },
+        {
+          "obj0_baseY": 96,
+          "obj0_baseX": 66,
+          "obj1_baseY": 96,
+          "obj1_baseX": 136,
+          "frameCount": 1,
+          "frameRuns": [
+            [
+              304,
+              304
+            ]
+          ],
+          "animates": true
+        },
+        {
+          "obj0_baseY": 96,
+          "obj0_baseX": 65,
+          "obj1_baseY": 96,
+          "obj1_baseX": 136,
+          "frameCount": 1,
+          "frameRuns": [
+            [
+              305,
+              305
+            ]
+          ],
+          "animates": true
+        },
+        {
+          "obj0_baseY": 96,
+          "obj0_baseX": 64,
+          "obj1_baseY": 96,
+          "obj1_baseX": 136,
+          "frameCount": 1,
+          "frameRuns": [
+            [
+              306,
+              306
+            ]
+          ],
+          "animates": true
+        },
+        {
+          "obj0_baseY": 96,
+          "obj0_baseX": 63,
+          "obj1_baseY": 96,
+          "obj1_baseX": 136,
+          "frameCount": 1,
+          "frameRuns": [
+            [
+              307,
+              307
+            ]
+          ],
+          "animates": true
+        },
+        {
+          "obj0_baseY": 96,
+          "obj0_baseX": 62,
+          "obj1_baseY": 96,
+          "obj1_baseX": 136,
+          "frameCount": 1,
+          "frameRuns": [
+            [
+              308,
+              308
+            ]
+          ],
+          "animates": true
+        }
+      ],
+      "artifact": "tools/rom-trace/r31a/artifacts/kame-base-position-01.json"
+    }
+  },
+  "closedItems": [
+    {
+      "item": "rom 644..660 owner",
+      "status": "UNDETERMINED / EXCLUDED FROM THE COMPARABLE SET",
+      "negatives": [
+        "NOT the attacker film: the card-12 BEAM_BASE film ends at tick 145 on ACTION_OBJECT_STOP and carries no plane/scroll beat.",
+        "NOT the defense profiles: 11 profiles, 3-4 cues, span 0..30, types ACTION_OBJECT_BIND x2 + DEFENSE_FX + ROM_WAIT, no plane/scroll/scene cue; defenseCardForChoice(GUARD) is null."
+      ],
+      "residual": "no producer exists in the current model; OTHER_ROUTE is the ceiling. Re-opens only with a concrete question from a beam-family task."
     }
   ]
 }
