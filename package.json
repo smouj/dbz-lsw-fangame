@@ -55,6 +55,7 @@
     "verify:visual-production-gate": "node scripts/run-bundled-script.mjs scripts/verify-visual-production-gate.ts .vvpg.mjs",
     "build:rom-visual-master": "npx tsx scripts/build-rom-visual-master.ts",
     "capture:pixi-visual-master": "node scripts/capture-pixi-visual-master.mjs",
+    "analyze:rom-visual-master": "npx tsx scripts/analyze-rom-visual-master.ts",
     "verify:golden-visual-gate": "node scripts/run-bundled-script.mjs scripts/verify-golden-visual-gate.ts .vgyg.mjs",
     "verify:special-handler-physical-pixi": "node scripts/run-bundled-script.mjs scripts/verify-special-handler-physical-pixi.ts .vshpp.mjs",
     "verify:stage-production-route": "node scripts/run-bundled-script.mjs scripts/verify-stage-production-route.ts .vspr.mjs",

@@ -56,7 +56,7 @@
       488,
       660
     ],
-    "remakeCapturedFrames": 3
+    "remakeCapturedFrames": 100
   },
   "remakeCapture": {
     "schema": "dbzlsw.rom.visual-master.capture.v1",
@@ -64,15 +64,18 @@
     "harness": "src/devtools/romdisplay2/visualMasterCapture.tsx",
     "actor": {
       "card": 12,
-      "player": "gohan_kid",
+      "form": "gohan_young",
+      "character": "gohan_kid",
       "enemy": "piccolo_base",
       "scenario": 1,
       "seed": 23089
     },
     "determinism": {
       "passes": 2,
+      "framesVerified": 100,
+      "framesExpected": 100,
       "failures": 0,
-      "statement": "two independent runs of the same tick produced byte-identical PNGs"
+      "statement": "two independent runs of every mapped tick produced byte-identical PNGs (full set, not a sample)"
     },
     "contract": {
       "romNative": {
@@ -102,20 +105,546 @@
       "note": "ROM reference is the native 160x144 framebuffer; its battle world is rows 24..103 (80 rows, ACTION_NATIVE_H). The remake output is 320x180 with the ROM world 320x160 centred at output y=10 (BATTLE_OUTPUT_Y). Comparison downscales the remake world crop x0.5 to 160x80 and quantises both sides to GBC 5-bit colour, which removes the 5-bit->8-bit expansion convention difference (ROM PNGs use round(v*255/31); the remake uses v<<3)."
     },
     "tickMapping": {
-      "kind": "romFrame -> remake presentation tick",
-      "note": "The ROM frame counter and the remake BattleRuntime GBC tick share no clock. Anchors map BEAT boundaries declared by each side; the ROM frame pair 0/60 is byte-identical in the ROM, so no anchor may separate it.",
+      "kind": "romFrame -> remake presentation tick (piecewise 1:1 GBC-frame offset table)",
+      "note": "The ROM frame counter (savestate-relative) and the remake BattleRuntime GBC tick share no clock. Each segment anchors a ROM phase on the beat the remake declares for the same phase and advances 1:1 because both sides count GBC frames. Frames whose phase has NO_REMAKE_BEAT are still captured and are expected to diverge — that divergence is the measurement, not an artifact.",
+      "segments": [
+        {
+          "romFrom": 0,
+          "phase": "FIELD_REFERENCE",
+          "remakeTickFrom": 0,
+          "counterpart": "ANCHORED"
+        },
+        {
+          "romFrom": 60,
+          "phase": "CONFIRM_BOUNDARY",
+          "remakeTickFrom": 0,
+          "counterpart": "ANCHORED"
+        },
+        {
+          "romFrom": 408,
+          "phase": "ACTOR_BEAM_WINDOW",
+          "remakeTickFrom": 22,
+          "counterpart": "ANCHORED"
+        },
+        {
+          "romFrom": 488,
+          "phase": "SCREEN_RESTORE",
+          "remakeTickFrom": 102,
+          "counterpart": "DERIVED"
+        },
+        {
+          "romFrom": 644,
+          "phase": "PROJECTILE_TRAVEL",
+          "remakeTickFrom": 145,
+          "counterpart": "NO_REMAKE_BEAT"
+        },
+        {
+          "romFrom": 660,
+          "phase": "SCREEN_RESTORE",
+          "remakeTickFrom": 161,
+          "counterpart": "NO_REMAKE_BEAT"
+        }
+      ],
       "anchors": [
         {
           "romFrame": 0,
-          "remakeTick": 0
+          "remakeTick": 0,
+          "phase": "FIELD_REFERENCE"
         },
         {
           "romFrame": 60,
-          "remakeTick": 0
+          "remakeTick": 0,
+          "phase": "CONFIRM_BOUNDARY"
         },
         {
           "romFrame": 408,
-          "remakeTick": 22
+          "remakeTick": 22,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 409,
+          "remakeTick": 23,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 410,
+          "remakeTick": 24,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 411,
+          "remakeTick": 25,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 412,
+          "remakeTick": 26,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 413,
+          "remakeTick": 27,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 414,
+          "remakeTick": 28,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 415,
+          "remakeTick": 29,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 416,
+          "remakeTick": 30,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 417,
+          "remakeTick": 31,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 418,
+          "remakeTick": 32,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 419,
+          "remakeTick": 33,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 420,
+          "remakeTick": 34,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 421,
+          "remakeTick": 35,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 422,
+          "remakeTick": 36,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 423,
+          "remakeTick": 37,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 424,
+          "remakeTick": 38,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 425,
+          "remakeTick": 39,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 426,
+          "remakeTick": 40,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 427,
+          "remakeTick": 41,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 428,
+          "remakeTick": 42,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 429,
+          "remakeTick": 43,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 430,
+          "remakeTick": 44,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 431,
+          "remakeTick": 45,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 432,
+          "remakeTick": 46,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 433,
+          "remakeTick": 47,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 434,
+          "remakeTick": 48,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 435,
+          "remakeTick": 49,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 436,
+          "remakeTick": 50,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 437,
+          "remakeTick": 51,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 438,
+          "remakeTick": 52,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 439,
+          "remakeTick": 53,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 440,
+          "remakeTick": 54,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 441,
+          "remakeTick": 55,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 442,
+          "remakeTick": 56,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 443,
+          "remakeTick": 57,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 444,
+          "remakeTick": 58,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 445,
+          "remakeTick": 59,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 446,
+          "remakeTick": 60,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 447,
+          "remakeTick": 61,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 448,
+          "remakeTick": 62,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 449,
+          "remakeTick": 63,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 450,
+          "remakeTick": 64,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 451,
+          "remakeTick": 65,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 452,
+          "remakeTick": 66,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 453,
+          "remakeTick": 67,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 454,
+          "remakeTick": 68,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 455,
+          "remakeTick": 69,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 456,
+          "remakeTick": 70,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 457,
+          "remakeTick": 71,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 458,
+          "remakeTick": 72,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 459,
+          "remakeTick": 73,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 460,
+          "remakeTick": 74,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 461,
+          "remakeTick": 75,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 462,
+          "remakeTick": 76,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 463,
+          "remakeTick": 77,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 464,
+          "remakeTick": 78,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 465,
+          "remakeTick": 79,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 466,
+          "remakeTick": 80,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 467,
+          "remakeTick": 81,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 468,
+          "remakeTick": 82,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 469,
+          "remakeTick": 83,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 470,
+          "remakeTick": 84,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 471,
+          "remakeTick": 85,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 472,
+          "remakeTick": 86,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 473,
+          "remakeTick": 87,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 474,
+          "remakeTick": 88,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 475,
+          "remakeTick": 89,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 476,
+          "remakeTick": 90,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 477,
+          "remakeTick": 91,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 478,
+          "remakeTick": 92,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 479,
+          "remakeTick": 93,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 480,
+          "remakeTick": 94,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 481,
+          "remakeTick": 95,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 482,
+          "remakeTick": 96,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 483,
+          "remakeTick": 97,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 484,
+          "remakeTick": 98,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 485,
+          "remakeTick": 99,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 486,
+          "remakeTick": 100,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 487,
+          "remakeTick": 101,
+          "phase": "ACTOR_BEAM_WINDOW"
+        },
+        {
+          "romFrame": 488,
+          "remakeTick": 102,
+          "phase": "SCREEN_RESTORE"
+        },
+        {
+          "romFrame": 644,
+          "remakeTick": 145,
+          "phase": "PROJECTILE_TRAVEL"
+        },
+        {
+          "romFrame": 645,
+          "remakeTick": 146,
+          "phase": "PROJECTILE_TRAVEL"
+        },
+        {
+          "romFrame": 646,
+          "remakeTick": 147,
+          "phase": "PROJECTILE_TRAVEL"
+        },
+        {
+          "romFrame": 647,
+          "remakeTick": 148,
+          "phase": "PROJECTILE_TRAVEL"
+        },
+        {
+          "romFrame": 648,
+          "remakeTick": 149,
+          "phase": "PROJECTILE_TRAVEL"
+        },
+        {
+          "romFrame": 649,
+          "remakeTick": 150,
+          "phase": "PROJECTILE_TRAVEL"
+        },
+        {
+          "romFrame": 650,
+          "remakeTick": 151,
+          "phase": "PROJECTILE_TRAVEL"
+        },
+        {
+          "romFrame": 651,
+          "remakeTick": 152,
+          "phase": "PROJECTILE_TRAVEL"
+        },
+        {
+          "romFrame": 652,
+          "remakeTick": 153,
+          "phase": "PROJECTILE_TRAVEL"
+        },
+        {
+          "romFrame": 653,
+          "remakeTick": 154,
+          "phase": "PROJECTILE_TRAVEL"
+        },
+        {
+          "romFrame": 654,
+          "remakeTick": 155,
+          "phase": "PROJECTILE_TRAVEL"
+        },
+        {
+          "romFrame": 655,
+          "remakeTick": 156,
+          "phase": "PROJECTILE_TRAVEL"
+        },
+        {
+          "romFrame": 656,
+          "remakeTick": 157,
+          "phase": "PROJECTILE_TRAVEL"
+        },
+        {
+          "romFrame": 657,
+          "remakeTick": 158,
+          "phase": "PROJECTILE_TRAVEL"
+        },
+        {
+          "romFrame": 658,
+          "remakeTick": 159,
+          "phase": "PROJECTILE_TRAVEL"
+        },
+        {
+          "romFrame": 659,
+          "remakeTick": 160,
+          "phase": "PROJECTILE_TRAVEL"
+        },
+        {
+          "romFrame": 660,
+          "remakeTick": 161,
+          "phase": "SCREEN_RESTORE"
         }
       ]
     },
@@ -294,8 +823,8 @@
       "remake": {
         "status": "CAPTURED",
         "image": "remake/frame_000.png",
-        "imageSha256": "72ec6c69db6148b868bee1827ff867394681e6f05c8e2229b28dcaf0e082b9a2",
-        "pixelsSha256": "5f5f5da163e9be307de9d9832e251328f33ecbeeaa8c03b9693bccd6dd275df1",
+        "imageSha256": "465127e113958440a56536f7226cf1ac84f6c41bd9e710a7f428283fa459de69",
+        "pixelsSha256": "9e08039fb989a69c53ce7baba9d0dc980f573d2c13cac53994fed8708eff1fff",
         "remakeTick": 0,
         "byteIdenticalOnRerun": true
       }
@@ -472,8 +1001,8 @@
       "remake": {
         "status": "CAPTURED",
         "image": "remake/frame_060.png",
-        "imageSha256": "72ec6c69db6148b868bee1827ff867394681e6f05c8e2229b28dcaf0e082b9a2",
-        "pixelsSha256": "5f5f5da163e9be307de9d9832e251328f33ecbeeaa8c03b9693bccd6dd275df1",
+        "imageSha256": "465127e113958440a56536f7226cf1ac84f6c41bd9e710a7f428283fa459de69",
+        "pixelsSha256": "9e08039fb989a69c53ce7baba9d0dc980f573d2c13cac53994fed8708eff1fff",
         "remakeTick": 0,
         "byteIdenticalOnRerun": true
       }
@@ -672,8 +1201,8 @@
       "remake": {
         "status": "CAPTURED",
         "image": "remake/frame_408.png",
-        "imageSha256": "3904aa39826919aef2d7d85fc89ee8a1ed5ca2dac7c28d9aff32eccd939690c8",
-        "pixelsSha256": "fa2bd1e303ee4aec6def476bc7d27ff4d9b7857cf0cfae8e8369071110a42679",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
         "remakeTick": 22,
         "byteIdenticalOnRerun": true
       }
@@ -870,10 +1399,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_409.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 23,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -1068,10 +1599,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_410.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 24,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -1266,10 +1799,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_411.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 25,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -1464,10 +1999,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_412.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 26,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -1662,10 +2199,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_413.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 27,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -1860,10 +2399,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_414.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 28,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -2058,10 +2599,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_415.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 29,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -2256,10 +2799,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_416.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 30,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -2454,10 +2999,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_417.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 31,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -2652,10 +3199,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_418.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 32,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -2850,10 +3399,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_419.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 33,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -3048,10 +3599,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_420.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 34,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -3246,10 +3799,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_421.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 35,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -3444,10 +3999,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_422.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 36,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -3642,10 +4199,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_423.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 37,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -3840,10 +4399,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_424.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 38,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -4038,10 +4599,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_425.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 39,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -4236,10 +4799,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_426.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 40,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -4434,10 +4999,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_427.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 41,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -4632,10 +5199,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_428.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 42,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -4830,10 +5399,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_429.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 43,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -5028,10 +5599,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_430.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 44,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -5226,10 +5799,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_431.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 45,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -5424,10 +5999,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_432.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 46,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -5622,10 +6199,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_433.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 47,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -5820,10 +6399,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_434.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 48,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -6018,10 +6599,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_435.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 49,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -6216,10 +6799,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_436.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 50,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -6414,10 +6999,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_437.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 51,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -6612,10 +7199,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_438.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 52,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -6810,10 +7399,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_439.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 53,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -7008,10 +7599,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_440.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 54,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -7206,10 +7799,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_441.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 55,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -7404,10 +7999,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_442.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 56,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -7602,10 +8199,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_443.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 57,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -7800,10 +8399,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_444.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 58,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -7998,10 +8599,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_445.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 59,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -8196,10 +8799,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_446.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 60,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -8394,10 +8999,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_447.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 61,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -8592,10 +9199,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_448.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 62,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -8790,10 +9399,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_449.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 63,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -8988,10 +9599,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_450.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 64,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -9186,10 +9799,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_451.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 65,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -9384,10 +9999,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_452.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 66,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -9582,10 +10199,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_453.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 67,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -9780,10 +10399,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_454.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 68,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -9978,10 +10599,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_455.png",
+        "imageSha256": "d9453ae451c1b94352ee3578e91a6bb2b817880b3188e22410102de7e0c1bec3",
+        "pixelsSha256": "3dbb1cea8ad68fa0212129ac9cdfc3e153b4f71d3fbc7639f41acd2780ccfcf2",
+        "remakeTick": 69,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -10176,10 +10799,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_456.png",
+        "imageSha256": "bce26a9259d6dd097b5a90dddec7afe70e76ee42e8f63bce5d71cb3b605037f5",
+        "pixelsSha256": "42c196c9035000c9e772bd0cae472317d7f722d756efd615e3b633e6a147c452",
+        "remakeTick": 70,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -10374,10 +10999,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_457.png",
+        "imageSha256": "bce26a9259d6dd097b5a90dddec7afe70e76ee42e8f63bce5d71cb3b605037f5",
+        "pixelsSha256": "42c196c9035000c9e772bd0cae472317d7f722d756efd615e3b633e6a147c452",
+        "remakeTick": 71,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -10572,10 +11199,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_458.png",
+        "imageSha256": "bce26a9259d6dd097b5a90dddec7afe70e76ee42e8f63bce5d71cb3b605037f5",
+        "pixelsSha256": "42c196c9035000c9e772bd0cae472317d7f722d756efd615e3b633e6a147c452",
+        "remakeTick": 72,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -10770,10 +11399,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_459.png",
+        "imageSha256": "bce26a9259d6dd097b5a90dddec7afe70e76ee42e8f63bce5d71cb3b605037f5",
+        "pixelsSha256": "42c196c9035000c9e772bd0cae472317d7f722d756efd615e3b633e6a147c452",
+        "remakeTick": 73,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -10968,10 +11599,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_460.png",
+        "imageSha256": "bce26a9259d6dd097b5a90dddec7afe70e76ee42e8f63bce5d71cb3b605037f5",
+        "pixelsSha256": "42c196c9035000c9e772bd0cae472317d7f722d756efd615e3b633e6a147c452",
+        "remakeTick": 74,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -11166,10 +11799,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_461.png",
+        "imageSha256": "bce26a9259d6dd097b5a90dddec7afe70e76ee42e8f63bce5d71cb3b605037f5",
+        "pixelsSha256": "42c196c9035000c9e772bd0cae472317d7f722d756efd615e3b633e6a147c452",
+        "remakeTick": 75,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -11364,10 +11999,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_462.png",
+        "imageSha256": "bce26a9259d6dd097b5a90dddec7afe70e76ee42e8f63bce5d71cb3b605037f5",
+        "pixelsSha256": "42c196c9035000c9e772bd0cae472317d7f722d756efd615e3b633e6a147c452",
+        "remakeTick": 76,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -11562,10 +12199,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_463.png",
+        "imageSha256": "bce26a9259d6dd097b5a90dddec7afe70e76ee42e8f63bce5d71cb3b605037f5",
+        "pixelsSha256": "42c196c9035000c9e772bd0cae472317d7f722d756efd615e3b633e6a147c452",
+        "remakeTick": 77,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -11760,10 +12399,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_464.png",
+        "imageSha256": "bce26a9259d6dd097b5a90dddec7afe70e76ee42e8f63bce5d71cb3b605037f5",
+        "pixelsSha256": "42c196c9035000c9e772bd0cae472317d7f722d756efd615e3b633e6a147c452",
+        "remakeTick": 78,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -11958,10 +12599,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_465.png",
+        "imageSha256": "bce26a9259d6dd097b5a90dddec7afe70e76ee42e8f63bce5d71cb3b605037f5",
+        "pixelsSha256": "42c196c9035000c9e772bd0cae472317d7f722d756efd615e3b633e6a147c452",
+        "remakeTick": 79,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -12156,10 +12799,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_466.png",
+        "imageSha256": "ece6c4b627aff0cdf50caa747347f7ba846e2d0f16f13c9101aa3a47f7ab1b27",
+        "pixelsSha256": "f6b938055248054041b386c5556257ac52af290ed38b51cb857e9f01e9e7accb",
+        "remakeTick": 80,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -12354,10 +12999,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_467.png",
+        "imageSha256": "ece6c4b627aff0cdf50caa747347f7ba846e2d0f16f13c9101aa3a47f7ab1b27",
+        "pixelsSha256": "f6b938055248054041b386c5556257ac52af290ed38b51cb857e9f01e9e7accb",
+        "remakeTick": 81,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -12552,10 +13199,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_468.png",
+        "imageSha256": "b05a462162c4ba25dca4f77f16429550d6a85e1f3e28044376fab2ac2acfbb83",
+        "pixelsSha256": "ca66a1e0f5185b19311200fa21d7b3448d5b10f00cdc10792e9ce4a4ec3c15f5",
+        "remakeTick": 82,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -12750,10 +13399,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_469.png",
+        "imageSha256": "b05a462162c4ba25dca4f77f16429550d6a85e1f3e28044376fab2ac2acfbb83",
+        "pixelsSha256": "ca66a1e0f5185b19311200fa21d7b3448d5b10f00cdc10792e9ce4a4ec3c15f5",
+        "remakeTick": 83,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -12948,10 +13599,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_470.png",
+        "imageSha256": "ac42efcc663a596ddb7ab8981dad172a516a655ec18fb23de61c822034478b8a",
+        "pixelsSha256": "13caca65c60e91095168d9358ab6a7343bebaebda43fbb6f06972021ffee80f9",
+        "remakeTick": 84,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -13146,10 +13799,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_471.png",
+        "imageSha256": "ac42efcc663a596ddb7ab8981dad172a516a655ec18fb23de61c822034478b8a",
+        "pixelsSha256": "13caca65c60e91095168d9358ab6a7343bebaebda43fbb6f06972021ffee80f9",
+        "remakeTick": 85,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -13344,10 +13999,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_472.png",
+        "imageSha256": "8110d5c8fc7e0dbccb5f89da57208842c6f09ebacdc4efb414f6275d5f57eea1",
+        "pixelsSha256": "c025e40e0e5ca6a68180dad13b2d7840595b0525ec03da88e90d0fb76863b0ee",
+        "remakeTick": 86,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -13542,10 +14199,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_473.png",
+        "imageSha256": "8110d5c8fc7e0dbccb5f89da57208842c6f09ebacdc4efb414f6275d5f57eea1",
+        "pixelsSha256": "c025e40e0e5ca6a68180dad13b2d7840595b0525ec03da88e90d0fb76863b0ee",
+        "remakeTick": 87,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -13740,10 +14399,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_474.png",
+        "imageSha256": "75f757cfa0543cfffd44b3edd746f0c4549420f6ab37359bf42e563e9d7265ec",
+        "pixelsSha256": "49d55aa67f22209256d91d6ddf3a401333ed2fe87d6de285dc6f3dfe278c2f35",
+        "remakeTick": 88,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -13938,10 +14599,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_475.png",
+        "imageSha256": "75f757cfa0543cfffd44b3edd746f0c4549420f6ab37359bf42e563e9d7265ec",
+        "pixelsSha256": "49d55aa67f22209256d91d6ddf3a401333ed2fe87d6de285dc6f3dfe278c2f35",
+        "remakeTick": 89,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -14136,10 +14799,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_476.png",
+        "imageSha256": "69a80294c3497dfc00cebab9d9e65cb44cbd26b8a81d2e7e25d7530572c9de39",
+        "pixelsSha256": "81722529670bf4bf3a5812d47ef647cc5b0e88c50037206dec229a51ff38ff4b",
+        "remakeTick": 90,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -14334,10 +14999,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_477.png",
+        "imageSha256": "69a80294c3497dfc00cebab9d9e65cb44cbd26b8a81d2e7e25d7530572c9de39",
+        "pixelsSha256": "81722529670bf4bf3a5812d47ef647cc5b0e88c50037206dec229a51ff38ff4b",
+        "remakeTick": 91,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -14532,10 +15199,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_478.png",
+        "imageSha256": "69a80294c3497dfc00cebab9d9e65cb44cbd26b8a81d2e7e25d7530572c9de39",
+        "pixelsSha256": "81722529670bf4bf3a5812d47ef647cc5b0e88c50037206dec229a51ff38ff4b",
+        "remakeTick": 92,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -14730,10 +15399,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_479.png",
+        "imageSha256": "69a80294c3497dfc00cebab9d9e65cb44cbd26b8a81d2e7e25d7530572c9de39",
+        "pixelsSha256": "81722529670bf4bf3a5812d47ef647cc5b0e88c50037206dec229a51ff38ff4b",
+        "remakeTick": 93,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -14928,10 +15599,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_480.png",
+        "imageSha256": "69a80294c3497dfc00cebab9d9e65cb44cbd26b8a81d2e7e25d7530572c9de39",
+        "pixelsSha256": "81722529670bf4bf3a5812d47ef647cc5b0e88c50037206dec229a51ff38ff4b",
+        "remakeTick": 94,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -15126,10 +15799,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_481.png",
+        "imageSha256": "69a80294c3497dfc00cebab9d9e65cb44cbd26b8a81d2e7e25d7530572c9de39",
+        "pixelsSha256": "81722529670bf4bf3a5812d47ef647cc5b0e88c50037206dec229a51ff38ff4b",
+        "remakeTick": 95,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -15324,10 +15999,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_482.png",
+        "imageSha256": "69a80294c3497dfc00cebab9d9e65cb44cbd26b8a81d2e7e25d7530572c9de39",
+        "pixelsSha256": "81722529670bf4bf3a5812d47ef647cc5b0e88c50037206dec229a51ff38ff4b",
+        "remakeTick": 96,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -15522,10 +16199,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_483.png",
+        "imageSha256": "69a80294c3497dfc00cebab9d9e65cb44cbd26b8a81d2e7e25d7530572c9de39",
+        "pixelsSha256": "81722529670bf4bf3a5812d47ef647cc5b0e88c50037206dec229a51ff38ff4b",
+        "remakeTick": 97,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -15720,10 +16399,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_484.png",
+        "imageSha256": "69a80294c3497dfc00cebab9d9e65cb44cbd26b8a81d2e7e25d7530572c9de39",
+        "pixelsSha256": "81722529670bf4bf3a5812d47ef647cc5b0e88c50037206dec229a51ff38ff4b",
+        "remakeTick": 98,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -15918,10 +16599,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_485.png",
+        "imageSha256": "69a80294c3497dfc00cebab9d9e65cb44cbd26b8a81d2e7e25d7530572c9de39",
+        "pixelsSha256": "81722529670bf4bf3a5812d47ef647cc5b0e88c50037206dec229a51ff38ff4b",
+        "remakeTick": 99,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -16116,10 +16799,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_486.png",
+        "imageSha256": "8110d5c8fc7e0dbccb5f89da57208842c6f09ebacdc4efb414f6275d5f57eea1",
+        "pixelsSha256": "c025e40e0e5ca6a68180dad13b2d7840595b0525ec03da88e90d0fb76863b0ee",
+        "remakeTick": 100,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -16314,10 +16999,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_487.png",
+        "imageSha256": "8110d5c8fc7e0dbccb5f89da57208842c6f09ebacdc4efb414f6275d5f57eea1",
+        "pixelsSha256": "c025e40e0e5ca6a68180dad13b2d7840595b0525ec03da88e90d0fb76863b0ee",
+        "remakeTick": 101,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -16490,10 +17177,12 @@
         }
       ],
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_488.png",
+        "imageSha256": "8110d5c8fc7e0dbccb5f89da57208842c6f09ebacdc4efb414f6275d5f57eea1",
+        "pixelsSha256": "c025e40e0e5ca6a68180dad13b2d7840595b0525ec03da88e90d0fb76863b0ee",
+        "remakeTick": 102,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -16521,10 +17210,12 @@
       },
       "animationSlots": null,
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_644.png",
+        "imageSha256": "7bd902972c3baf260726e9dcba42a944ee421bb19a5b4db4995c8b7275587b2c",
+        "pixelsSha256": "df806946d4207fc9c9573e81aab300aebc36518914fa8d3cd0e07df827df0e4f",
+        "remakeTick": 145,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -16552,10 +17243,12 @@
       },
       "animationSlots": null,
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_645.png",
+        "imageSha256": "e765d02572eae1ca1532f8a548ac02abde68a706518b79e7c667772704eaf4d2",
+        "pixelsSha256": "98357446ae9324bee0ee1063ea554b12657dded4d2f69551e8d40f74b00b5fbe",
+        "remakeTick": 146,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -16583,10 +17276,12 @@
       },
       "animationSlots": null,
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_646.png",
+        "imageSha256": "e765d02572eae1ca1532f8a548ac02abde68a706518b79e7c667772704eaf4d2",
+        "pixelsSha256": "98357446ae9324bee0ee1063ea554b12657dded4d2f69551e8d40f74b00b5fbe",
+        "remakeTick": 147,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -16614,10 +17309,12 @@
       },
       "animationSlots": null,
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_647.png",
+        "imageSha256": "8110d5c8fc7e0dbccb5f89da57208842c6f09ebacdc4efb414f6275d5f57eea1",
+        "pixelsSha256": "c025e40e0e5ca6a68180dad13b2d7840595b0525ec03da88e90d0fb76863b0ee",
+        "remakeTick": 148,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -16645,10 +17342,12 @@
       },
       "animationSlots": null,
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_648.png",
+        "imageSha256": "8110d5c8fc7e0dbccb5f89da57208842c6f09ebacdc4efb414f6275d5f57eea1",
+        "pixelsSha256": "c025e40e0e5ca6a68180dad13b2d7840595b0525ec03da88e90d0fb76863b0ee",
+        "remakeTick": 149,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -16676,10 +17375,12 @@
       },
       "animationSlots": null,
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_649.png",
+        "imageSha256": "8110d5c8fc7e0dbccb5f89da57208842c6f09ebacdc4efb414f6275d5f57eea1",
+        "pixelsSha256": "c025e40e0e5ca6a68180dad13b2d7840595b0525ec03da88e90d0fb76863b0ee",
+        "remakeTick": 150,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -16707,10 +17408,12 @@
       },
       "animationSlots": null,
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_650.png",
+        "imageSha256": "8110d5c8fc7e0dbccb5f89da57208842c6f09ebacdc4efb414f6275d5f57eea1",
+        "pixelsSha256": "c025e40e0e5ca6a68180dad13b2d7840595b0525ec03da88e90d0fb76863b0ee",
+        "remakeTick": 151,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -16738,10 +17441,12 @@
       },
       "animationSlots": null,
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_651.png",
+        "imageSha256": "8110d5c8fc7e0dbccb5f89da57208842c6f09ebacdc4efb414f6275d5f57eea1",
+        "pixelsSha256": "c025e40e0e5ca6a68180dad13b2d7840595b0525ec03da88e90d0fb76863b0ee",
+        "remakeTick": 152,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -16769,10 +17474,12 @@
       },
       "animationSlots": null,
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_652.png",
+        "imageSha256": "8110d5c8fc7e0dbccb5f89da57208842c6f09ebacdc4efb414f6275d5f57eea1",
+        "pixelsSha256": "c025e40e0e5ca6a68180dad13b2d7840595b0525ec03da88e90d0fb76863b0ee",
+        "remakeTick": 153,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -16800,10 +17507,12 @@
       },
       "animationSlots": null,
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_653.png",
+        "imageSha256": "8110d5c8fc7e0dbccb5f89da57208842c6f09ebacdc4efb414f6275d5f57eea1",
+        "pixelsSha256": "c025e40e0e5ca6a68180dad13b2d7840595b0525ec03da88e90d0fb76863b0ee",
+        "remakeTick": 154,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -16831,10 +17540,12 @@
       },
       "animationSlots": null,
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_654.png",
+        "imageSha256": "8110d5c8fc7e0dbccb5f89da57208842c6f09ebacdc4efb414f6275d5f57eea1",
+        "pixelsSha256": "c025e40e0e5ca6a68180dad13b2d7840595b0525ec03da88e90d0fb76863b0ee",
+        "remakeTick": 155,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -16862,10 +17573,12 @@
       },
       "animationSlots": null,
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_655.png",
+        "imageSha256": "8110d5c8fc7e0dbccb5f89da57208842c6f09ebacdc4efb414f6275d5f57eea1",
+        "pixelsSha256": "c025e40e0e5ca6a68180dad13b2d7840595b0525ec03da88e90d0fb76863b0ee",
+        "remakeTick": 156,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -16893,10 +17606,12 @@
       },
       "animationSlots": null,
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_656.png",
+        "imageSha256": "8110d5c8fc7e0dbccb5f89da57208842c6f09ebacdc4efb414f6275d5f57eea1",
+        "pixelsSha256": "c025e40e0e5ca6a68180dad13b2d7840595b0525ec03da88e90d0fb76863b0ee",
+        "remakeTick": 157,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -16924,10 +17639,12 @@
       },
       "animationSlots": null,
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_657.png",
+        "imageSha256": "8110d5c8fc7e0dbccb5f89da57208842c6f09ebacdc4efb414f6275d5f57eea1",
+        "pixelsSha256": "c025e40e0e5ca6a68180dad13b2d7840595b0525ec03da88e90d0fb76863b0ee",
+        "remakeTick": 158,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -16955,10 +17672,12 @@
       },
       "animationSlots": null,
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_658.png",
+        "imageSha256": "8110d5c8fc7e0dbccb5f89da57208842c6f09ebacdc4efb414f6275d5f57eea1",
+        "pixelsSha256": "c025e40e0e5ca6a68180dad13b2d7840595b0525ec03da88e90d0fb76863b0ee",
+        "remakeTick": 159,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -16986,10 +17705,12 @@
       },
       "animationSlots": null,
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_659.png",
+        "imageSha256": "8110d5c8fc7e0dbccb5f89da57208842c6f09ebacdc4efb414f6275d5f57eea1",
+        "pixelsSha256": "c025e40e0e5ca6a68180dad13b2d7840595b0525ec03da88e90d0fb76863b0ee",
+        "remakeTick": 160,
+        "byteIdenticalOnRerun": true
       }
     },
     {
@@ -17004,10 +17725,12 @@
       "scroll": null,
       "animationSlots": null,
       "remake": {
-        "status": "PENDING_REMAKE_CAPTURE",
-        "image": null,
-        "imageSha256": null,
-        "remakeTick": null
+        "status": "CAPTURED",
+        "image": "remake/frame_660.png",
+        "imageSha256": "8110d5c8fc7e0dbccb5f89da57208842c6f09ebacdc4efb414f6275d5f57eea1",
+        "pixelsSha256": "c025e40e0e5ca6a68180dad13b2d7840595b0525ec03da88e90d0fb76863b0ee",
+        "remakeTick": 161,
+        "byteIdenticalOnRerun": true
       }
     }
   ]

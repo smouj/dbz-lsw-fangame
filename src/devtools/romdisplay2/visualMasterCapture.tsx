@@ -65,6 +65,7 @@ export interface VisualMasterCaptureResult {
   cueTicks?: number[];
   stateTick?: number;
   dispatchedOk?: boolean;
+  opaquePixels?: number;
   measured?: { webglCanvas: { width: number; height: number }; extracted: { width: number; height: number } };
 }
 
@@ -78,7 +79,10 @@ export function readCaptureRequest(search: string, hash: string): VisualMasterCa
   return {
     tick: Number(get('vmTick') ?? 0),
     cardId: Number(get('vmCard') ?? 12),
-    playerFormId: get('vmPlayer') ?? 'gohan_kid',
+    // vmPlayer carries a roster FORM id (e.g. gohan_young), never a CHARACTER id
+    // (gohan_kid). The character id is derived from the form, exactly as
+    // production does (`getForm(activeFormId).character` in main.tsx).
+    playerFormId: get('vmForm') ?? get('vmPlayer') ?? 'gohan_young',
     enemyFormId: get('vmEnemy') ?? 'piccolo_base',
     seed: Number(get('vmSeed') ?? FIXED_SEED),
     scenarioIndex: Number(get('vmScenario') ?? 1),
@@ -119,6 +123,7 @@ async function sha256HexOfBytes(bytes: Uint8Array): Promise<string> {
 export async function runVisualMasterCapture(
   canvas: HTMLCanvasElement,
   request: VisualMasterCaptureRequest,
+  opts: { dispose?: boolean } = {},
 ): Promise<VisualMasterCaptureResult> {
   const base: VisualMasterCaptureResult = {
     status: 'error', tick: request.tick, width: BATTLE_LOGICAL_W, height: BATTLE_OUTPUT_H, dataUrl: '',
@@ -137,9 +142,19 @@ export async function runVisualMasterCapture(
     },
   });
   runtime.state = { ...runtime.state, phase: 'cardSelect' as never };
-  // La carta se valida contra el PERSONAJE (no el form id): misma autoridad
-  // que Production (`getForm(formId).character` en main.tsx).
-  const characterId = getForm(request.playerFormId)?.character ?? request.playerFormId;
+  // La carta se valida contra el PERSONAJE, y el personaje se deriva del FORM
+  // (misma autoridad que producción: getForm(formId).character en main.tsx).
+  // Un id de personaje pasado como formId deja al actor sin perfil ROM físico
+  // (profileForForm → null) y el film emite ROM_PENDING en vez de frames
+  // físicos. Se falla explícitamente en lugar de capturar un actor ausente.
+  const actorForm = getForm(request.playerFormId);
+  if (!actorForm) {
+    throw new Error(
+      `'${request.playerFormId}' is not a roster FORM id (characters such as 'gohan_kid' are not forms); ` +
+      'pass the form id, e.g. vmForm=gohan_young',
+    );
+  }
+  const characterId = actorForm.character;
   const dispatched = runtime.dispatch(
     { type: 'PLAY_CARD', handIndex: 0 },
     { side: 'player', characterId },
@@ -199,11 +214,24 @@ export async function runVisualMasterCapture(
   const dataUrl = extracted.toDataURL('image/png');
 
   const stats = adapter.snapshot as unknown as Record<string, unknown>;
+  // Opaque-pixel census: a frame with 0 opaque pixels is BLANK (never written
+  // as a capture, never substituted by a neighbour).
+  let opaquePixels = 0;
+  if (ectx) {
+    const img = ectx.getImageData(0, 0, extracted.width, extracted.height).data;
+    for (let i = 3; i < img.length; i += 4) if (img[i] > 0) opaquePixels++;
+  }
+  if (opts.dispose) {
+    // Libera el contexto WebGL: un sweep de 100 ticks no puede acumular uno
+    // por tick (los navegadores limitan los contextos vivos).
+    try { renderer.destroy(); } catch { /* ya destruido */ }
+  }
   return {
     ...base,
     status: 'ok',
     dataUrl,
     pixelsSha256,
+    opaquePixels,
     stats,
     timelineStartTick: timeline.startTick,
     timelineEndTick: timeline.endTick,
@@ -239,18 +267,35 @@ export function VisualMasterCaptureRoute({ request }: { request: VisualMasterCap
         if (request.sweepTicks && request.sweepTicks.length > 0) {
           // Exploratory sweep: fresh canvas + renderer per tick (no state bleed),
           // same deterministic replay. Not the official capture path.
-          const out: Array<{ tick: number; dataUrl: string; pixelsSha256?: string; stats?: Record<string, unknown>; dispatchedOk?: boolean }> = [];
+          const out: Array<{
+            tick: number;
+            dataUrl?: string;
+            pixelsSha256?: string;
+            opaquePixels?: number;
+            stats?: Record<string, unknown>;
+            dispatchedOk?: boolean;
+            error?: string;
+          }> = [];
           for (const sweepTick of request.sweepTicks) {
+            // Una captura por tick con su propio contexto WebGL, liberado al
+            // terminar. Un tick que falla se registra como FALLO explícito y el
+            // sweep continúa: nunca se sustituye por un frame vecino.
             const fresh = document.createElement('canvas');
-            const result = await runVisualMasterCapture(fresh, { ...request, tick: sweepTick });
-            if (result.status !== 'ok') throw new Error(`sweep tick ${sweepTick}: ${result.error}`);
-            out.push({
-              tick: sweepTick,
-              dataUrl: result.dataUrl,
-              pixelsSha256: result.pixelsSha256,
-              stats: result.stats,
-              dispatchedOk: result.dispatchedOk,
-            });
+            try {
+              const result = await runVisualMasterCapture(fresh, { ...request, tick: sweepTick }, { dispose: true });
+              if (result.status !== 'ok') throw new Error(result.error ?? 'unknown capture error');
+              if (!result.opaquePixels) throw new Error('blank frame (0 opaque pixels)');
+              out.push({
+                tick: sweepTick,
+                dataUrl: result.dataUrl,
+                pixelsSha256: result.pixelsSha256,
+                opaquePixels: result.opaquePixels,
+                stats: result.stats,
+                dispatchedOk: result.dispatchedOk,
+              });
+            } catch (error) {
+              out.push({ tick: sweepTick, error: error instanceof Error ? error.message : String(error) });
+            }
           }
           if (cancelled) return;
           (window as unknown as Record<string, unknown>).__VISUAL_MASTER_SWEEP__ = { status: 'ok', frames: out };

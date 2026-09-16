@@ -4,13 +4,29 @@
  *
  * This deliberately verifies emulator framebuffer captures, not historical
  * sprite manifests. A pass proves the ROM side is immutable, hash-pinned and
- * backed by the verified Spain ROM. It does not claim ROM↔Pixi parity while
- * remake captures remain pending.
+ * backed by the verified Spain ROM.
+ *
+ * The remake side is verified only as far as it is CAPTURED: the gate decodes
+ * both PNGs under the shared coordinate/scale contract and prints the measured
+ * pixel diff per frame plus the cause-grouped roll-up. It never invents a
+ * comparison and never claims ROM↔Pixi parity — parity is a per-frame verdict
+ * reported as data, not a gate constant.
  */
 import { createHash } from 'node:crypto';
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { inflateSync } from 'node:zlib';
+import {
+  COMPARE_SCALE,
+  EXPECTED_CONTRACT,
+  REMAKE_WORLD_CROP,
+  ROM_WORLD_CROP,
+  causesFor,
+  decodePng,
+  diffWorlds,
+  groupFrames,
+  sampleWorld,
+  type CauseFrameView,
+} from './lib/visual-master-diff';
 
 const ROOT = process.cwd();
 const MASTER_DIR = resolve(ROOT, 'docs/rom/generated/visual-master/kamehameha-left');
@@ -25,156 +41,6 @@ function check(condition: unknown, label: string, detail = '') {
 }
 
 const sha256 = (data: Buffer) => createHash('sha256').update(data).digest('hex');
-
-// ── Coordinate/scale contract the gate REFUSES to drift from ───────────
-// ROM reference is the native 160×144 framebuffer; its battle world is rows
-// 24..103. The remake renders a 320×180 output with the ROM world 320×160
-// centred at y=10 (BATTLE_OUTPUT_Y). A naive full-page diff would be dominated
-// by framing/letterbox, so the comparison is contract-bound.
-const EXPECTED_CONTRACT = {
-  romNative: { width: 160, height: 144 },
-  romWorldCrop: { x: 0, y: 24, width: 160, height: 80 },
-  remakeOutput: { width: 320, height: 180 },
-  remakeWorldCrop: { x: 0, y: 10, width: 320, height: 160 },
-  compareScale: 0.5,
-  compareWidth: 160,
-  compareHeight: 80,
-  compareSpace: 'gbc-5bit',
-};
-
-// ── Minimal dependency-free PNG decoder (8-bit, non-interlaced, RGB/RGBA) ──
-interface DecodedPng { width: number; height: number; channels: number; data: Uint8Array }
-
-function decodePng(buffer: Buffer): DecodedPng {
-  if (buffer.subarray(0, 8).toString('hex') !== '89504e470d0a1a0a') throw new Error('not a PNG');
-  let offset = 8;
-  let width = 0, height = 0, bitDepth = 0, colorType = 0, interlace = 0;
-  const idat: Buffer[] = [];
-  while (offset + 8 <= buffer.length) {
-    const length = buffer.readUInt32BE(offset);
-    const type = buffer.subarray(offset + 4, offset + 8).toString('ascii');
-    const data = buffer.subarray(offset + 8, offset + 8 + length);
-    if (type === 'IHDR') {
-      width = data.readUInt32BE(0); height = data.readUInt32BE(4);
-      bitDepth = data[8]; colorType = data[9]; interlace = data[12];
-    } else if (type === 'IDAT') idat.push(data);
-    else if (type === 'IEND') break;
-    offset += 12 + length;
-  }
-  if (bitDepth !== 8) throw new Error(`unsupported bit depth ${bitDepth}`);
-  if (interlace !== 0) throw new Error('interlaced PNG unsupported');
-  const channels = colorType === 2 ? 3 : colorType === 6 ? 4 : 0;
-  if (channels === 0) throw new Error(`unsupported color type ${colorType}`);
-  const raw = inflateSync(Buffer.concat(idat));
-  const stride = width * channels;
-  const out = new Uint8Array(height * stride);
-  let pos = 0;
-  for (let y = 0; y < height; y++) {
-    const filter = raw[pos++];
-    const line = y * stride;
-    const prev = line - stride;
-    for (let x = 0; x < stride; x++) {
-      const value = raw[pos + x];
-      const a = x >= channels ? out[line + x - channels] : 0;
-      const b = y > 0 ? out[prev + x] : 0;
-      const c = x >= channels && y > 0 ? out[prev + x - channels] : 0;
-      let result: number;
-      switch (filter) {
-        case 0: result = value; break;
-        case 1: result = value + a; break;
-        case 2: result = value + b; break;
-        case 3: result = value + ((a + b) >> 1); break;
-        case 4: {
-          const p = a + b - c;
-          const pa = Math.abs(p - a), pb = Math.abs(p - b), pc = Math.abs(p - c);
-          result = value + (pa <= pb && pa <= pc ? a : pb <= pc ? b : c);
-          break;
-        }
-        default: throw new Error(`bad PNG filter ${filter}`);
-      }
-      out[line + x] = result & 0xff;
-    }
-    pos += stride;
-  }
-  return { width, height, channels, data: out };
-}
-
-/**
- * Sample the battle world of a PNG into 160×80 GBC 5-bit RGB.
- * Both sides are quantised to 5 bits so the 5-bit→8-bit expansion convention
- * (ROM PNGs: round(v*255/31); remake: v<<3) cannot masquerade as a difference.
- */
-function sampleWorld(png: DecodedPng, crop: { x: number; y: number }, step: number): Uint8Array {
-  const out = new Uint8Array(160 * 80 * 3);
-  for (let y = 0; y < 80; y++) {
-    for (let x = 0; x < 160; x++) {
-      const sx = crop.x + x * step;
-      const sy = crop.y + y * step;
-      const index = (sy * png.width + sx) * png.channels;
-      const target = (y * 160 + x) * 3;
-      for (let ch = 0; ch < 3; ch++) {
-        const value = png.data[index + ch];
-        out[target + ch] = step === 1
-          ? Math.round((value * 31) / 255)   // ROM PNG: 8-bit → 5-bit (round)
-          : value >> 3;                      // remake Pixi output: already v<<3
-      }
-    }
-  }
-  return out;
-}
-
-interface FrameDiff {
-  mismatchPixels: number;
-  mismatchPercent: number;
-  bbox: { x0: number; y0: number; x1: number; y1: number } | null;
-  rowSpread: number;
-  colSpread: number;
-  classification: 'IDENTICAL' | 'GLOBAL' | 'HORIZONTAL_BAND' | 'VERTICAL_BAND' | 'LOCALIZED';
-  dominantAxis: 'none' | 'horizontal' | 'vertical';
-}
-
-function diffWorlds(rom: Uint8Array, remake: Uint8Array): FrameDiff {
-  let mismatchPixels = 0;
-  let x0 = 160, y0 = 80, x1 = -1, y1 = -1;
-  const rows = new Uint8Array(80);
-  const cols = new Uint8Array(160);
-  for (let y = 0; y < 80; y++) {
-    for (let x = 0; x < 160; x++) {
-      const i = (y * 160 + x) * 3;
-      if (rom[i] === remake[i] && rom[i + 1] === remake[i + 1] && rom[i + 2] === remake[i + 2]) continue;
-      mismatchPixels++;
-      rows[y] = 1; cols[x] = 1;
-      if (x < x0) x0 = x; if (x > x1) x1 = x;
-      if (y < y0) y0 = y; if (y > y1) y1 = y;
-    }
-  }
-  const total = 160 * 80;
-  const rowSpread = rows.reduce((sum, v) => sum + v, 0) / 80;
-  const colSpread = cols.reduce((sum, v) => sum + v, 0) / 160;
-  let classification: FrameDiff['classification'];
-  let dominantAxis: FrameDiff['dominantAxis'];
-  if (mismatchPixels === 0) {
-    classification = 'IDENTICAL'; dominantAxis = 'none';
-  } else if (rowSpread >= 0.75 && colSpread >= 0.75) {
-    classification = 'GLOBAL'; dominantAxis = rowSpread >= colSpread ? 'horizontal' : 'vertical';
-  } else if (colSpread >= 0.75 && rowSpread < 0.5) {
-    classification = 'HORIZONTAL_BAND'; dominantAxis = 'horizontal';
-  } else if (rowSpread >= 0.75 && colSpread < 0.5) {
-    classification = 'VERTICAL_BAND'; dominantAxis = 'vertical';
-  } else {
-    classification = 'LOCALIZED';
-    dominantAxis = colSpread >= rowSpread ? 'horizontal' : 'vertical';
-  }
-  return {
-    mismatchPixels,
-    mismatchPercent: (mismatchPixels / total) * 100,
-    bbox: mismatchPixels > 0 ? { x0, y0, x1, y1 } : null,
-    rowSpread,
-    colSpread,
-    classification,
-    dominantAxis,
-  };
-}
 const expectedFrames = [0, 60, ...Array.from({ length: 81 }, (_, i) => 408 + i), ...Array.from({ length: 17 }, (_, i) => 644 + i)];
 
 check(existsSync(TIMELINE), 'timeline.json exists');
@@ -215,34 +81,36 @@ check(timeline.frames.filter((frame: any) => frame.phase === 'PROJECTILE_TRAVEL'
 // ── Remake capture: contract, hashes and the REAL pixel diff ───────────
 // The gate never invents a comparison. Without captures it prints PENDING;
 // with captures it reports the measured diff of exactly those frames and
-// still refuses to claim ROM↔Pixi parity until 100/100 are captured.
-interface FrameDiffRow {
-  frame: number;
-  remakeTick: number | null;
-  diff: FrameDiff;
-}
-const frameDiffs: FrameDiffRow[] = [];
+// still refuses to claim ROM↔Pixi parity — the cause-grouped inventory is
+// data, and it is only as complete as the captures behind it.
+const frameViews: Array<CauseFrameView & { causes: string[] }> = [];
+const capturePath = resolve(MASTER_DIR, 'remake/capture.json');
+const capture = existsSync(capturePath) ? JSON.parse(readFileSync(capturePath, 'utf8')) : null;
+const captureByRomFrame = new Map<number, any>();
+for (const frame of capture?.frames ?? []) captureByRomFrame.set(frame.romFrame, frame);
 
 if (remakeCaptures > 0) {
-  const capture = timeline.remakeCapture;
-  check(!!capture, 'remake capture block present when frames are captured');
-  if (capture) {
-    check(capture.schema === 'dbzlsw.rom.visual-master.capture.v1', 'remake capture schema canonical');
+  const block = timeline.remakeCapture;
+  check(!!block, 'remake capture block present when frames are captured');
+  if (block) {
+    check(block.schema === 'dbzlsw.rom.visual-master.capture.v1', 'remake capture schema canonical');
     const contractMismatch = Object.entries(EXPECTED_CONTRACT)
-      .filter(([key, value]) => JSON.stringify((capture.contract as Record<string, unknown>)?.[key]) !== JSON.stringify(value))
+      .filter(([key, value]) => JSON.stringify((block.contract as Record<string, unknown>)?.[key]) !== JSON.stringify(value))
       .map(([key]) => key);
     check(
       contractMismatch.length === 0,
       'remake coordinate/scale contract matches the gate',
       contractMismatch.length ? `drifted keys: ${contractMismatch.join(', ')}` : 'crop+scale bound',
     );
-    check(capture.determinism?.failures === 0, 'remake capture determinism failures = 0', `failures=${capture.determinism?.failures}`);
-    check((capture.pageErrors ?? []).length === 0, 'remake capture page errors = 0', `errors=${(capture.pageErrors ?? []).length}`);
-    check(Array.isArray(capture.tickMapping?.anchors) && capture.tickMapping.anchors.length > 0, 'ROM→remake tick mapping is explicit');
+    check(block.determinism?.failures === 0, 'remake capture determinism failures = 0', `failures=${block.determinism?.failures}`);
+    check(block.determinism?.framesVerified === block.determinism?.framesExpected,
+      'every mapped frame was verified for determinism (full set, not a sample)',
+      `${block.determinism?.framesVerified}/${block.determinism?.framesExpected}`);
+    check((block.pageErrors ?? []).length === 0, 'remake capture page errors = 0', `errors=${(block.pageErrors ?? []).length}`);
+    check(Array.isArray(block.tickMapping?.anchors) && block.tickMapping.anchors.length > 0, 'ROM→remake tick mapping is explicit');
+    check((capture?.failures ?? []).length === 0, 'no frame failed to capture', `failures=${(capture?.failures ?? []).length}`);
   }
 
-  const remakeCrop = EXPECTED_CONTRACT.remakeWorldCrop;
-  const romCrop = EXPECTED_CONTRACT.romWorldCrop;
   for (const frame of timeline.frames.filter((candidate: any) => candidate.remake?.image)) {
     const remakePath = resolve(MASTER_DIR, frame.remake.image);
     if (!existsSync(remakePath)) {
@@ -259,10 +127,36 @@ if (remakeCaptures > 0) {
     );
     const romDecoded = decodePng(readFileSync(resolve(MASTER_DIR, frame.romImage)));
     const diff = diffWorlds(
-      sampleWorld(romDecoded, romCrop, 1),
-      sampleWorld(decoded, remakeCrop, 1 / EXPECTED_CONTRACT.compareScale),
+      sampleWorld(romDecoded, ROM_WORLD_CROP, 1),
+      sampleWorld(decoded, REMAKE_WORLD_CROP, 1 / COMPARE_SCALE),
     );
-    frameDiffs.push({ frame: frame.frame, remakeTick: frame.remake.remakeTick ?? null, diff });
+    const captureFrame = captureByRomFrame.get(frame.frame);
+    const view = {
+      romFrame: frame.frame,
+      phase: frame.phase,
+      remakeTick: frame.remake.remakeTick ?? null,
+      counterpart: captureFrame?.counterpart ?? 'UNKNOWN',
+      mismatchPixels: diff.mismatchPixels,
+      mismatchPercent: diff.mismatchPercent,
+      bbox: diff.bbox,
+      pixelClass: diff.pixelClass,
+      census: diff.census,
+      adapter: captureFrame?.stats ?? null,
+    } as CauseFrameView;
+    frameViews.push({ ...view, causes: causesFor(view) });
+  }
+}
+
+const groups = groupFrames(frameViews);
+const totalMismatchPx = frameViews.reduce((sum, frame) => sum + frame.mismatchPixels, 0);
+
+if (groups.length) {
+  for (const group of groups) {
+    check(
+      group.frameCount === 0 || group.frameRanges.length > 0,
+      `cause group ${group.id} has frame ranges`,
+      `${group.frameCount} frames`,
+    );
   }
 }
 
@@ -270,17 +164,33 @@ const captured = remakeCaptures;
 const totalFrames = timeline.frames.length;
 
 console.log('\n── ROM ↔ REMAKE pixel diff (160×80 world, GBC 5-bit space) ──');
-for (const row of frameDiffs) {
-  const bbox = row.diff.bbox
-    ? `bbox x${row.diff.bbox.x0}..${row.diff.bbox.x1} y${row.diff.bbox.y0}..${row.diff.bbox.y1}`
-    : 'bbox —';
+console.log(`captured ${captured}/${totalFrames} · total mismatch ${totalMismatchPx}px · mean ${frameViews.length ? (frameViews.reduce((s, f) => s + f.mismatchPercent, 0) / frameViews.length).toFixed(2) : '0'}%`);
+for (const frame of frameViews) {
+  if (captured === totalFrames && !process.env.VM_GATE_FULL) {
+    // Full-set runs print groups instead of 100 identical-looking lines; set
+    // VM_GATE_FULL=1 to force the per-frame dump.
+    break;
+  }
+  const bbox = frame.bbox ? `bbox x${frame.bbox.x0}..${frame.bbox.x1} y${frame.bbox.y0}..${frame.bbox.y1}` : 'bbox —';
   console.log(
-    `frame ${String(row.frame).padStart(3)} · remake tick ${String(row.remakeTick ?? '?').padStart(3)} · ` +
-    `mismatch ${row.diff.mismatchPercent.toFixed(2)}% (${row.diff.mismatchPixels} px) · ${bbox} · ` +
-    `axis=${row.diff.dominantAxis} · class=${row.diff.classification}`,
+    `frame ${String(frame.romFrame).padStart(3)} · remake tick ${String(frame.remakeTick ?? '?').padStart(3)} · ` +
+    `mismatch ${frame.mismatchPercent.toFixed(2)}% (${frame.mismatchPixels} px) · ${bbox} · ` +
+    `axis=${frame.pixelClass.remakeExtra > frame.pixelClass.romMissing ? 'plane-extra' : 'rom-missing'} · causes=[${frame.causes.join(', ')}]`,
   );
 }
-if (frameDiffs.length === 0) console.log('(no captured frames to diff)');
+
+if (groups.length) {
+  console.log('\n── CAUSE GROUPS (must partition the mismatch: grouped == total) ──');
+  for (const group of groups) {
+    console.log(
+      `▸ ${group.id} · ${group.frameCount} frames · rom ${JSON.stringify(group.frameRanges)} · ` +
+      `${group.totalMismatchPx}px · mean ${group.meanMismatchPercent.toFixed(2)}% · rep rom ${group.representativeFrame} (tick ${group.representativeRemakeTick})`,
+    );
+    console.log(`   proof: ${group.provingReadout}`);
+  }
+  const groupedPx = groups.reduce((sum, group) => sum + group.totalMismatchPx, 0);
+  check(groupedPx === totalMismatchPx, 'cause groups partition the measured mismatch', `${groupedPx}/${totalMismatchPx}`);
+}
 
 console.log(`\nROM Visual Master: ${pass} checks passed · ${fail} failed`);
 console.log(`ROM frames: ${totalFrames} · remake frames: ${captured}/${totalFrames}`);
@@ -289,6 +199,6 @@ if (captured === 0) {
 } else if (captured < totalFrames) {
   console.log(`PENDING: ${captured}/${totalFrames} remake frames captured. Diffs above are real measurements of those frames only; ROM↔Pixi parity is not claimed.`);
 } else {
-  console.log('Captured 100/100. Per-frame diffs above are measured, not asserted: parity is a per-frame verdict, not a gate constant.');
+  console.log('Captured 100/100. The diffs and cause groups above are measured, not asserted: parity is a per-frame verdict, not a gate constant.');
 }
 if (fail) process.exitCode = 1;

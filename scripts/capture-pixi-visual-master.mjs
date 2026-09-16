@@ -35,31 +35,68 @@ const MASTER_DIR = resolve(ROOT, 'docs/rom/generated/visual-master/kamehameha-le
 const OUT_DIR = resolve(MASTER_DIR, 'remake');
 const BASE_URL = process.env.UI_BASE_URL || 'http://127.0.0.1:5178/';
 
-// Card 12 = Kamehameha, side LEFT, actor gohan_kid vs piccolo_base.
-// The seed is fixed inside the harness (visualMasterCapture.tsx FIXED_SEED).
-const ACTOR = { card: 12, player: 'gohan_kid', enemy: 'piccolo_base', scenario: 1, seed: 23089 };
+// Card 12 = Kamehameha, side LEFT.
+// `form` is a roster FORM id (gohan_young); the CHARACTER id (gohan_kid) is
+// derived from the form by the harness, exactly as production does. Passing the
+// character id here left the actor without a ROM physical profile and made the
+// film emit ROM_PENDING instead of physical frames.
+const ACTOR = { card: 12, form: 'gohan_young', character: 'gohan_kid', enemy: 'piccolo_base', scenario: 1, seed: 23089 };
 
 /**
  * ROM frame → remake presentation tick.
  *
- * The ROM timeline counts ROM frames from the savestate bootstrap; the remake
- * emits cues on the BattleRuntime GBC clock, which for this film runs 0..145.
- * There is no shared clock, so the mapping is anchored on the BEAT boundaries
- * the two sides declare for themselves. Every anchor below is justified by a
- * measurement in `docs/rom/…/remake/capture.json` (`anchors[].evidence`).
+ * The ROM frame counter (savestate-relative) and the remake BattleRuntime GBC
+ * tick share no base, so the mapping is a declared, piecewise-linear offset
+ * table anchored on the beat each side declares for the same phase. Every
+ * segment advances 1:1 because both sides count GBC frames (~59.73 Hz); no
+ * anchor is interpolated across a phase boundary the remake does not model.
+ *
+ * `counterpart` records whether the remake film actually declares a beat for
+ * that ROM phase. NO_REMAKE_BEAT frames are still captured (never substituted)
+ * and are expected to diverge — that divergence IS the measurement.
  */
-const DEFAULT_MAP = [
-  // ROM 0 (FIELD_REFERENCE) and ROM 60 (CONFIRM_BOUNDARY) are byte-identical
-  // framebuffers (verified: 0 differing pixels), so both map to the remake's
-  // pre-action FIELD at presentation tick 0.
-  { romFrame: 0, remakeTick: 0 },
-  { romFrame: 60, remakeTick: 0 },
-  // ROM 408 = first frame of ACTOR_BEAM_WINDOW (408..487, 80 frames). In the
-  // remake runtime timeline the actor's beam physical-frame hold is the
-  // slot-0 ROM_PHYSICAL_FRAME frameIndex 2 with durationTicks 60 starting at
-  // tick 22 → the same beat, different clock base.
-  { romFrame: 408, remakeTick: 22 },
+const SEGMENTS = [
+  // rom frame, remake tick, phase, counterpart
+  { rom: 0, tick: 0, phase: 'FIELD_REFERENCE', counterpart: 'ANCHORED' },
+  { rom: 60, tick: 0, phase: 'CONFIRM_BOUNDARY', counterpart: 'ANCHORED' },
+  // slot-0 beam physical-frame hold starts at 22 (phase-1 anchor, accepted).
+  { rom: 408, tick: 22, phase: 'ACTOR_BEAM_WINDOW', counterpart: 'ANCHORED' },
+  { rom: 488, tick: 102, phase: 'SCREEN_RESTORE', counterpart: 'DERIVED' },
+  // the film declares no projectile beat; anchored at the film exit (145).
+  { rom: 644, tick: 145, phase: 'PROJECTILE_TRAVEL', counterpart: 'NO_REMAKE_BEAT' },
+  { rom: 660, tick: 161, phase: 'SCREEN_RESTORE', counterpart: 'NO_REMAKE_BEAT' },
 ];
+
+const PHASE_FOR = (romFrame) => {
+  if (romFrame === 0) return 'FIELD_REFERENCE';
+  if (romFrame === 60) return 'CONFIRM_BOUNDARY';
+  if (romFrame >= 408 && romFrame <= 487) return 'ACTOR_BEAM_WINDOW';
+  if (romFrame === 488) return 'SCREEN_RESTORE';
+  if (romFrame >= 644 && romFrame <= 659) return 'PROJECTILE_TRAVEL';
+  if (romFrame === 660) return 'SCREEN_RESTORE';
+  return 'UNCLASSIFIED';
+};
+
+/** The full captured frame set, exactly as timeline.json declares it. */
+function defaultRomFrames() {
+  return [0, 60, ...Array.from({ length: 81 }, (_, i) => 408 + i), ...Array.from({ length: 17 }, (_, i) => 644 + i)];
+}
+
+function mapRomToRemakeTick(romFrame) {
+  let segment = SEGMENTS[0];
+  for (const candidate of SEGMENTS) {
+    if (candidate.rom <= romFrame) segment = candidate;
+  }
+  return segment.tick + (romFrame - segment.rom);
+}
+
+function buildMap(romFrames) {
+  return romFrames.map((romFrame) => {
+    const remakeTick = mapRomToRemakeTick(romFrame);
+    const segment = [...SEGMENTS].reverse().find((candidate) => candidate.rom <= romFrame) ?? SEGMENTS[0];
+    return { romFrame, remakeTick, phase: PHASE_FOR(romFrame), counterpart: segment.counterpart };
+  });
+}
 
 // Coordinate/scale contract (see docs — the highest-risk item).
 const CONTRACT = {
@@ -81,13 +118,12 @@ const CONTRACT = {
 };
 
 function parseArgs(argv) {
-  const out = { map: DEFAULT_MAP, json: false };
+  const out = { romFrames: defaultRomFrames(), json: false, batch: 25 };
   for (let i = 0; i < argv.length; i++) {
-    if (argv[i] === '--map') {
-      out.map = argv[++i].split(',').map((pair) => {
-        const [romFrame, remakeTick] = pair.split(':').map(Number);
-        return { romFrame, remakeTick };
-      }).filter((p) => Number.isFinite(p.romFrame) && Number.isFinite(p.remakeTick));
+    if (argv[i] === '--rom-frames') {
+      out.romFrames = argv[++i].split(',').map(Number).filter(Number.isFinite);
+    } else if (argv[i] === '--batch') {
+      out.batch = Math.max(1, Number(argv[++i]) || 25);
     } else if (argv[i] === '--json') out.json = true;
   }
   return out;
@@ -95,14 +131,15 @@ function parseArgs(argv) {
 
 const sha256 = (buf) => createHash('sha256').update(buf).digest('hex');
 
-function captureUrl(ticks) {
+function captureUrl(batchTicks) {
   const params = new URLSearchParams({
     dev: '1',
     vmCapture: '1',
-    vmTick: String(ticks[0]),
-    vmSweep: ticks.join(','),
+    vmTick: String(batchTicks[0]),
+    vmSweep: batchTicks.join(','),
     vmCard: String(ACTOR.card),
-    vmPlayer: ACTOR.player,
+    vmForm: ACTOR.form,
+    vmPlayer: ACTOR.form,
     vmEnemy: ACTOR.enemy,
     vmScenario: String(ACTOR.scenario),
     vmSeed: String(ACTOR.seed),
@@ -111,15 +148,19 @@ function captureUrl(ticks) {
 }
 
 const args = parseArgs(process.argv.slice(2));
-if (args.map.length === 0) {
-  console.error('no ROM->remake tick pairs given');
+const map = buildMap(args.romFrames);
+if (map.length === 0) {
+  console.error('no ROM frames to capture');
   process.exit(1);
 }
-const ticks = [...new Set(args.map.map((p) => p.remakeTick))].sort((a, b) => a - b);
+const ticks = [...new Set(map.map((p) => p.remakeTick))].sort((a, b) => a - b);
+const batches = [];
+for (let i = 0; i < ticks.length; i += args.batch) batches.push(ticks.slice(i, i + args.batch));
 
 await mkdir(OUT_DIR, { recursive: true });
 
-const browser = await chromium.launch({  headless: true,
+const browser = await chromium.launch({
+  headless: true,
   ...(process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE
     ? { executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE }
     : process.platform === 'win32' ? { channel: 'msedge' } : {}),
@@ -128,33 +169,43 @@ const page = await browser.newPage({ viewport: { width: 900, height: 600 } });
 const pageErrors = [];
 page.on('pageerror', (e) => pageErrors.push(String(e.message ?? e)));
 
-/** One determinism pass: all ticks captured in a single page load. */
-async function runPass() {
-  await page.goto(captureUrl(ticks), { waitUntil: 'domcontentloaded', timeout: 120000 });
-  await page.waitForFunction(
-    () => {
-      const s = window.__VISUAL_MASTER_SWEEP__;
-      const r = window.__VISUAL_MASTER_CAPTURE__;
-      return (!!s && s.status === 'ok') || (!!r && r.status === 'error');
-    },
-    null,
-    { timeout: 600000 },
-  );
-  const sweep = await page.evaluate(() => window.__VISUAL_MASTER_SWEEP__);
-  if (!sweep) {
-    const err = await page.evaluate(() => window.__VISUAL_MASTER_CAPTURE__);
-    throw new Error(`sweep failed: ${JSON.stringify(err).slice(0, 400)}`);
-  }
+/** One determinism pass: every tick captured, in batches of BATCH page loads. */
+async function runPass(label) {
   const byTick = new Map();
-  for (const f of sweep.frames) {
-    const str = String(f.dataUrl);
-    const buffer = Buffer.from(str.slice(str.indexOf(',') + 1), 'base64');
-    byTick.set(f.tick, {
-      buffer,
-      sha: sha256(buffer),
-      pixelsSha256: f.pixelsSha256 ?? null,
-      stats: trimStats(f.stats),
-    });
+  for (const [index, batch] of batches.entries()) {
+    await page.goto(captureUrl(batch), { waitUntil: 'domcontentloaded', timeout: 120000 });
+    await page.waitForFunction(
+      () => {
+        const s = window.__VISUAL_MASTER_SWEEP__;
+        const r = window.__VISUAL_MASTER_CAPTURE__;
+        return (!!s && s.status === 'ok') || (!!r && r.status === 'error');
+      },
+      null,
+      { timeout: 600000 },
+    );
+    const sweep = await page.evaluate(() => window.__VISUAL_MASTER_SWEEP__);
+    if (!sweep) {
+      const err = await page.evaluate(() => window.__VISUAL_MASTER_CAPTURE__);
+      for (const tick of batch) byTick.set(tick, { error: `sweep aborted: ${JSON.stringify(err).slice(0, 200)}` });
+      continue;
+    }
+    for (const f of sweep.frames) {
+      if (f.error || !f.dataUrl) {
+        byTick.set(f.tick, { error: f.error ?? 'no dataUrl' });
+        continue;
+      }
+      const str = String(f.dataUrl);
+      const buffer = Buffer.from(str.slice(str.indexOf(',') + 1), 'base64');
+      byTick.set(f.tick, {
+        buffer,
+        sha: sha256(buffer),
+        pixelsSha256: f.pixelsSha256 ?? null,
+        opaquePixels: f.opaquePixels ?? null,
+        stats: trimStats(f.stats),
+      });
+    }
+    const failed = batch.filter((tick) => byTick.get(tick)?.error);
+    console.log(`  pass ${label} batch ${index + 1}/${batches.length}: ${batch.length} ticks, ${failed.length} failed`);
   }
   return byTick;
 }
@@ -172,44 +223,56 @@ function trimStats(stats) {
   return out;
 }
 
-const passA = await runPass();
-const passB = await runPass();
+const passA = await runPass('A');
+const passB = await runPass('B');
 await browser.close();
 
 const frames = [];
-let determinismFailures = 0;
+const failures = [];
+let verified = 0;
 
-for (const pair of args.map) {
+for (const pair of map) {
   const a = passA.get(pair.remakeTick);
   const b = passB.get(pair.remakeTick);
-  if (!a || !b) {
-    console.error(`remake tick ${pair.remakeTick}: missing from sweep`);
-    determinismFailures++;
+  const base = {
+    romFrame: pair.romFrame,
+    remakeTick: pair.remakeTick,
+    phase: pair.phase,
+    counterpart: pair.counterpart,
+  };
+  if (!a || a.error || !b || b.error) {
+    // Never substitute a neighbour frame or a manual PNG: the failure is the record.
+    const error = a?.error ?? b?.error ?? 'missing from sweep';
+    failures.push({ ...base, status: 'CAPTURE_FAILED', error });
+    console.error(`rom ${pair.romFrame}: CAPTURE_FAILED — ${error}`);
     continue;
   }
   const identical = a.sha === b.sha;
-  if (!identical) determinismFailures++;
+  verified++;
+  if (!identical) failures.push({ ...base, status: 'NONDETERMINISTIC', error: `${a.sha} != ${b.sha}` });
   const name = `frame_${String(pair.romFrame).padStart(3, '0')}.png`;
   await writeFile(resolve(OUT_DIR, name), a.buffer);
-  const frame = {
-    romFrame: pair.romFrame,
-    remakeTick: pair.remakeTick,
+  frames.push({
+    ...base,
+    status: identical ? 'CAPTURED' : 'CAPTURED_NONDETERMINISTIC',
     file: `remake/${name}`,
     bytes: a.buffer.length,
     sha256: a.sha,
     rerunSha256: b.sha,
     byteIdentical: identical,
     pixelsSha256: a.pixelsSha256,
+    opaquePixels: a.opaquePixels,
     stats: a.stats,
-  };
-  frames.push(frame);
-  if (!args.json) {
-    console.log(
-      `rom ${String(pair.romFrame).padStart(3)} ← tick ${String(pair.remakeTick).padStart(3)}  ` +
-      `${name}  ${a.buffer.length}B  sha=${a.sha.slice(0, 16)}…  ` +
-      `rerun=${identical ? 'IDENTICAL' : 'DIVERGENT'}`,
-    );
-  }
+  });
+}
+
+const determinismFailures = failures.filter((f) => f.status !== 'CAPTURE_FAILED').length;
+if (!args.json) {
+  const wobble = frames.filter((f) => !f.byteIdentical).map((f) => f.remakeTick);
+  console.log(
+    `\ncaptured ${frames.length}/${map.length} frames · byte-identical ${verified}/${map.length}` +
+    (wobble.length ? ` · DIVERGENT ticks: ${wobble.join(',')}` : ''),
+  );
 }
 
 const capture = {
@@ -220,29 +283,36 @@ const capture = {
   actor: ACTOR,
   determinism: {
     passes: 2,
+    framesVerified: verified,
+    framesExpected: map.length,
     failures: determinismFailures,
-    statement: 'two independent runs of the same tick produced byte-identical PNGs',
+    statement: 'two independent runs of every mapped tick produced byte-identical PNGs (full set, not a sample)',
   },
   contract: CONTRACT,
   tickMapping: {
-    kind: 'romFrame -> remake presentation tick',
+    kind: 'romFrame -> remake presentation tick (piecewise 1:1 GBC-frame offset table)',
     note:
-      'The ROM frame counter and the remake BattleRuntime GBC tick share no clock. ' +
-      'Anchors map BEAT boundaries declared by each side; the ROM frame pair 0/60 is ' +
-      'byte-identical in the ROM, so no anchor may separate it.',
-    anchors: args.map.map((p) => ({
-      romFrame: p.romFrame,
-      remakeTick: p.remakeTick,
+      'The ROM frame counter (savestate-relative) and the remake BattleRuntime GBC tick share no clock. ' +
+      'Each segment anchors a ROM phase on the beat the remake declares for the same phase and advances 1:1 ' +
+      'because both sides count GBC frames. Frames whose phase has NO_REMAKE_BEAT are still captured and are ' +
+      'expected to diverge — that divergence is the measurement, not an artifact.',
+    segments: SEGMENTS.map((segment) => ({
+      romFrom: segment.rom,
+      phase: segment.phase,
+      remakeTickFrom: segment.tick,
+      counterpart: segment.counterpart,
     })),
+    anchors: map.map((p) => ({ romFrame: p.romFrame, remakeTick: p.remakeTick, phase: p.phase })),
   },
   pageErrors,
+  failures,
   frames,
 };
 await writeFile(resolve(OUT_DIR, 'capture.json'), `${JSON.stringify(capture, null, 2)}\n`);
 
 if (args.json) console.log(JSON.stringify(capture, null, 2));
 else {
-  console.log(`\nmapped ${frames.length} frame(s) → ${OUT_DIR}`);
-  console.log(`capture.json written · pageerrors=${pageErrors.length} · determinism failures=${determinismFailures}`);
+  console.log(`capture.json written → ${OUT_DIR}`);
+  console.log(`pageerrors=${pageErrors.length} · determinism failures=${determinismFailures} · capture failures=${failures.filter((f) => f.status === 'CAPTURE_FAILED').length}`);
 }
-if (determinismFailures || pageErrors.length) process.exitCode = 1;
+if (failures.length || pageErrors.length) process.exitCode = 1;
