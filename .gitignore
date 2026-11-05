@@ -51,3 +51,4 @@ public/assets/sprites/*/physical/
 public/assets/sprites/*/physical-debug/
 public/assets/sprites/*/rom-physical.manifest.json
 media/
+tools/rom-trace/rom-driver-dbg
