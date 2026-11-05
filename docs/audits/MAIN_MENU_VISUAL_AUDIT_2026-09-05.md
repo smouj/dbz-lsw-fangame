@@ -2,8 +2,8 @@
 
 **Alcance**: Main menu + Story (select), Versus/Battle (team setup), Deck, Cards, Characters, Settings.
 **Estado auditado**: build de producción `dist/` servido en :5178 — HEAD `251eee81` (incluye el pase visual de menú del desktop).
-**Método**: sonda Playwright (`.openclaw/tmp/audit-menu3.mjs`) — métricas DOM por página (recortes vs `.game-viewport`, scroll interno, alturas de fila, `img` duplicadas, errores de consola) a 1280×720 y 800×600 + screenshots recortados al viewport 16:9 analizados con visión.
-**Evidencia cruda**: `.openclaw/tmp/audit-main-menu/` (PNGs por página/tamaño + metrics-v3.json).
+**Método**: sonda Playwright (`.tmp/audit-menu3.mjs`) — métricas DOM por página (recortes vs `.game-viewport`, scroll interno, alturas de fila, `img` duplicadas, errores de consola) a 1280×720 y 800×600 + screenshots recortados al viewport 16:9 analizados con visión.
+**Evidencia cruda**: `.tmp/audit-main-menu/` (PNGs por página/tamaño + metrics-v3.json).
 
 ## ✅ Positivo (verificado)
 - **0 errores de consola** en las 7 páginas × 2 tamaños (pageerror + console.error vacíos).

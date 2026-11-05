@@ -5,7 +5,7 @@
 > "render tick-driven white screen transitions") y delta contra el informe estático de `503f31b7`
 > (`BATTLE_FILM_VERIFICATION_2026-09-07.md`).
 > Capturas: subagente visible `golden-visual-839bae71` · síntesis del informe: parent session.
-> Evidencia cruda: `.openclaw/tmp/battle-film-golden-visual-20260907/` (268+ PNG · 3+ JSONL ·
+> Evidencia cruda: `.tmp/battle-film-golden-visual-20260907/` (268+ PNG · 3+ JSONL ·
 > `movies-summary-golden.json` · watchdog `probe-golden.mjs`).
 
 **HEAD verificado:** `839bae71` (== origin/main en el momento de las capturas).  
@@ -97,4 +97,4 @@ arranque de la movie); (2) G4 **no produce pantalla blanca visible** pese al wir
 `b8db1e9d` — el siguiente fix del frente es decidir render-vs-captura y, si es render,
 hacer efectivo `flashWhite` en el tick correcto; (3) G6 enemy-stage sigue sin coreografía
 (0 impacts, SOLO largo); (4) G2 parcial (película Pixi más corta que la movie DOM en
-enemy/beam/support). Evidencia completa en `.openclaw/tmp/battle-film-golden-visual-20260907/`.
+enemy/beam/support). Evidencia completa en `.tmp/battle-film-golden-visual-20260907/`.

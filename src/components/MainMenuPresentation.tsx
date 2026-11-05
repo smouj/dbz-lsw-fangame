@@ -55,6 +55,6 @@ export function MainMenuPresentation({
         {screen !== 'story' && <ChevronRight className="shell-panel-arrow" aria-hidden="true" />}
       </button>)}
     </nav>
-    <footer className="shell-footer"><span>DBZ LSW Fangame · FAN GAME</span><span>↑ ↓ ← → {navigateLabel} <b>ENTER</b> {selectLabel}</span></footer>
+    <footer className="shell-footer"><span>DBZ LSW FANGAME · FAN GAME</span><span>↑ ↓ ← → {navigateLabel} <b>ENTER</b> {selectLabel}</span></footer>
   </main>;
 }

@@ -54,8 +54,7 @@ Con flag: STANDARD_DAMAGE player/enemy → ROM (runtime cutover); BEAM_BASE / ST
 ## 5. Entregables
 
 - Informe: `docs/audits/BATTLE_FILM_VERIFICATION_2026-09-07.md` (este archivo).
-- Evidencia: `.openclaw/tmp/battle-film-audit-20260907/` (README + screenshots/JSONL pendientes de browser run completo post-gateway).
-- Workboard card `[internal-reference-removed]`: proof adjuntado + comentario (dependencia del epic 0b858548 bloquea claim/complete; se deja con proof como instruido).
+- Evidencia: `.tmp/battle-film-audit-20260907/` (README + screenshots/JSONL pendientes de browser run completo post-gateway).
 - HEAD verificado: 503f31b7. Gates de commits desktop: PASSED. Claims ff2902bd/adf59d62: WIREDO (STANDARD_DAMAGE player+enemy + static defenders). G3/G5 → RESUELTO para esas rutas. G1 sigue gated.
 
 **Siguiente:** Reanudar browser audit (seed localStorage literal '***', Training cap.1 gohan_young vs piccolo_evil, 4 acciones, sampling `window.__ROM_TICKS_BRIDGE__`, screenshots por beat) cuando el gateway permita evaluate/addInitScript estable. El cableado estático ya confirma las claims del desktop.

@@ -66,14 +66,17 @@ def main():
     # ── Modo ONLINE: yt-dlp con cookies del navegador + sección ──
     else:
         print(f'→ descargando sección {t_start}–{t_end} de {source_id}…')
-        r = subprocess.run([
-            'python3', '-m', 'yt_dlp', '--js-runtimes', 'node',
-            '--cookies-from-browser', 'chrome:/home/local-user/.openclaw/browser/openclaw/user-data',
+        command = ['python3', '-m', 'yt_dlp', '--js-runtimes', 'node']
+        cookies_browser = os.environ.get('DBZ_LSW_YTDLP_COOKIES_FROM_BROWSER')
+        if cookies_browser:
+            command.extend(['--cookies-from-browser', cookies_browser])
+        command.extend([
             '-f', '18', '--no-playlist',
             '--download-sections', f'*{t_start}-{t_end}',
             '-o', os.path.join(CLIPS, f'{clip_id}.%(ext)s'),
             src['url'],
-        ], capture_output=True, text=True)
+        ])
+        r = subprocess.run(command, capture_output=True, text=True)
         if r.returncode != 0:
             print('❌ yt-dlp falló:', r.stderr[-2000:])
             print('   → usa --video /ruta/al.mp4 con el longplay descargado desde tu navegador')

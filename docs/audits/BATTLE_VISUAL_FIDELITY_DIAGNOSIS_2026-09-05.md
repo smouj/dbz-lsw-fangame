@@ -5,8 +5,8 @@
 > no se ve el robo de carta, los cambios de plano/cámara no se ven, la sincronización de
 > acciones/actores está desfasada.
 >
-> Evidencia cruda: `.openclaw/tmp/battle-visual-audit/` (capturas + `*-samples.jsonl` + `*-summary.json`).
-> Nada de producción fue modificado; los probes viven en `.openclaw/tmp/`.
+> Evidencia cruda: `.tmp/battle-visual-audit/` (capturas + `*-samples.jsonl` + `*-summary.json`).
+> Nada de producción fue modificado; los probes viven en `.tmp/`.
 
 ---
 
@@ -21,7 +21,7 @@
 4. Flujo: MAIN → STORY → capítulo 1 (Evil Mentor! Gohans' Training, Gohan Kid vs Piccolo) → intro
    (18 viñetas, click) → batalla. Jugar varios exchanges reales clicando cartas de ataque,
    defendiendo GUARD (BASIC→DEFEND) y un Stage Attack propio (QTE con Q/E/WASD).
-5. Probes usados (en `.openclaw/tmp/battle-visual-audit/`): `probe.mjs dom|rom` (juega y muestrea
+5. Probes usados (en `.tmp/battle-visual-audit/`): `probe.mjs dom|rom` (juega y muestrea
    overlay por beat + screenshots), `dbg-domlayer.mjs` (métricas DOM por capa durante una acción),
    `classify-route.ts` (clasificación estática de las 125 cartas, `npx tsx`).
 
@@ -161,7 +161,7 @@ En la producción sin flag, la distribución efectiva por acción es la del perf
 ## 8. Archivos de evidencia
 
 `docs/audits/BATTLE_VISUAL_FIDELITY_DIAGNOSIS_2026-09-05.md` (este informe) + capturas/logs en
-`.openclaw/tmp/battle-visual-audit/`:
+`.tmp/battle-visual-audit/`:
 
 **DOM (producción, `?debugCinematics=1&debugState=1`):**
 - `dom-02-battle-ready.png` — campo táctico inicial (OVERVIEW, tick 0).

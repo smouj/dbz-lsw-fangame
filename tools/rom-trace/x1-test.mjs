@@ -1,6 +1,6 @@
 // Test x/1 con distintos formatos de dirección
 import { spawn } from 'child_process';
-const p = spawn('script', ['-qec', "/usr/games/mgba -d /home/local-user/.openclaw/workspace/dbz-lsw-decomp/13_raw_rom/dbz-lsw-usa.gbc", '/dev/null'], { stdio: ['pipe', 'pipe', 'pipe'] });
+const p = spawn('script', ['-qec', "/usr/games/mgba -d rom-research/13_raw_rom/dbz-lsw-usa.gbc", '/dev/null'], { stdio: ['pipe', 'pipe', 'pipe'] });
 let buf = '';
 p.stdout.on('data', c => { buf += c.toString().replace(/\r/g, ''); });
 const sleep = ms => new Promise(r => setTimeout(r, ms));

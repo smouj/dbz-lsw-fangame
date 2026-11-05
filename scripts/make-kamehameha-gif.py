@@ -138,7 +138,7 @@ def main():
     # ─── Write frames and generate GIF with ffmpeg ───
     # Key: use stats_mode=full on a MOSAIC of ALL frames to ensure
     # beam colors are in the palette
-    tmp = os.path.join(ROOT, '.openclaw', 'tmp', 'gif-frames')
+    tmp = os.path.join(ROOT, '.tmp', 'gif-frames')
     os.makedirs(tmp, exist_ok=True)
     for i, frame in enumerate(frames):
         frame.save(os.path.join(tmp, f'frame_{i:03d}.png'))

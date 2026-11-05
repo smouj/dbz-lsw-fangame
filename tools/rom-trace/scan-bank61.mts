@@ -2,7 +2,7 @@
 import { resourceIndex, decodeActionObjectFull } from './physical-decode.ts';
 import { readFileSync } from 'fs';
 
-const ROM = readFileSync('/home/local-user/.openclaw/workspace/dbz-lsw-decomp/13_raw_rom/dbz-lsw-usa.gbc');
+const ROM = readFileSync('rom-research/13_raw_rom/dbz-lsw-usa.gbc');
 const bank = 0x61;
 const off = bank * 0x4000;
 const u16 = (a: number) => ROM[off + a] | (ROM[off + a + 1] << 8);

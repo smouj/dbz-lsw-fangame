@@ -32,8 +32,25 @@ import { romFxWindowRuntimeSummary } from '../battle/romFxWindow';
 import { ANIMATION_RESOURCE_CATALOG } from '../battle/animationResources';
 import { ROM_BANK61_ANIMATION_CORE } from '../data/generated/romAnimationCore.generated';
 import { romSequenceRegistrySummary } from '../data/romSequenceRegistry';
-import runtimeCutover from '../../generated/rom-fx/runtime_cutover.json';
 import { BATTLE_PRESENTATION_DEPLOYMENT } from '../renderer/pixi/flag';
+
+interface RomFxRuntimeCutoverArtifact {
+  totals: {
+    runtimeCards: number;
+    windowCues: number;
+    distributionErrors: number;
+    sideSelectionComplete: number;
+    sideSelectionPending: number;
+  };
+}
+
+// This artifact is generated from a locally supplied ROM and is intentionally
+// absent from a clean public checkout. Keep the Dev Studio usable without it.
+const runtimeCutoverArtifacts = import.meta.glob<RomFxRuntimeCutoverArtifact>(
+  '../../generated/rom-fx/runtime_cutover.json',
+  { eager: true, import: 'default' },
+);
+const runtimeCutover = Object.values(runtimeCutoverArtifacts)[0] ?? null;
 
 export interface DevSnapshot {
   roster: { forms: number; formsTotal: number; characters: number; withSpriteDir: number; withoutSpriteDir: string[] };
@@ -125,11 +142,12 @@ export interface DevSnapshot {
     errors: number;
     supportOrCategorySpecificResources: number;
     runtimeCutover: string;
-    runtimeCards: number;
-    runtimeWindowCues: number;
-    runtimeDistributionErrors: number;
-    runtimeSideSelectionComplete: number;
-    runtimeSideSelectionPending: number;
+    runtimeCutoverAvailable: boolean;
+    runtimeCards: number | null;
+    runtimeWindowCues: number | null;
+    runtimeDistributionErrors: number | null;
+    runtimeSideSelectionComplete: number | null;
+    runtimeSideSelectionPending: number | null;
     runtimeStaticComplete: number;
     runtimeDynamicComplete: number;
     runtimeWindowComplete: number;
@@ -281,12 +299,15 @@ function computeFxCorpusMetrics(): DevSnapshot['fxCorpus'] {
     consumingCards: totals.consumingCards,
     errors: totals.errors,
     supportOrCategorySpecificResources: totals.supportOrCategorySpecificResources,
-    runtimeCutover: ROM_FX_CORPUS_SUMMARY.statuses.runtimeCutover,
-    runtimeCards: runtimeCutover.totals.runtimeCards,
-    runtimeWindowCues: runtimeCutover.totals.windowCues,
-    runtimeDistributionErrors: runtimeCutover.totals.distributionErrors,
-    runtimeSideSelectionComplete: runtimeCutover.totals.sideSelectionComplete,
-    runtimeSideSelectionPending: runtimeCutover.totals.sideSelectionPending,
+    runtimeCutoverAvailable: runtimeCutover !== null,
+    runtimeCutover: runtimeCutover
+      ? ROM_FX_CORPUS_SUMMARY.statuses.runtimeCutover
+      : 'LOCAL_GENERATION_REQUIRED',
+    runtimeCards: runtimeCutover?.totals.runtimeCards ?? null,
+    runtimeWindowCues: runtimeCutover?.totals.windowCues ?? null,
+    runtimeDistributionErrors: runtimeCutover?.totals.distributionErrors ?? null,
+    runtimeSideSelectionComplete: runtimeCutover?.totals.sideSelectionComplete ?? null,
+    runtimeSideSelectionPending: runtimeCutover?.totals.sideSelectionPending ?? null,
     runtimeStaticComplete: runtime.staticComplete,
     runtimeDynamicComplete: runtime.dynamicComplete,
     runtimeWindowComplete: runtime.complete,

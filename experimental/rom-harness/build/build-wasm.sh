@@ -6,11 +6,11 @@ set -euo pipefail
 HARNESS_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 OUT_DIR="$HARNESS_DIR/build/out"
 SAMEBOY_COMMIT="213a12ce93d66b105a113debd9396306066a7cfc"
-SAMEBOY_DIR="${SAMEBOY_DIR:-/home/local-user/sameboy}"
+SAMEBOY_DIR="${SAMEBOY_DIR:-$HOME/sameboy}"
 
 # Emscripten
-if [ -f /home/local-user/emsdk/emsdk_env.sh ]; then
-  . /home/local-user/emsdk/emsdk_env.sh
+if [ -f "$HOME/emsdk/emsdk_env.sh" ]; then
+  . "$HOME/emsdk/emsdk_env.sh"
 fi
 command -v emcc >/dev/null || { echo "emcc no encontrado; source emsdk_env.sh" >&2; exit 1; }
 

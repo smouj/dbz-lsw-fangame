@@ -16,7 +16,7 @@ This script:
 
 import os, json, shutil
 
-SPRITES_DIR = '/home/local-user/.openclaw/workspace/dbz-lsw-fangame/public/assets/sprites'
+SPRITES_DIR = 'public/assets/sprites'
 
 # Mapping of old_prefix → new_prefix for each directory
 # The key is the directory name (form_id), value is what the files currently start with

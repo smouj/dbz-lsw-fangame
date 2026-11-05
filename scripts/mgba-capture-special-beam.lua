@@ -13,8 +13,8 @@
 -- ═══════════════════════════════════════════════════════════════════════
 
 -- ═══ Configuration ═══
-local ROM_PATH = "/home/local-user/.openclaw/workspace/dbz-lsw-decomp/13_raw_rom/dbz-lsw-usa.gbc"
-local OUTPUT_DIR = "/home/local-user/.openclaw/workspace/dbz-lsw-fangame/capture-output"
+local ROM_PATH = os.getenv("DBZ_LSW_ROM") or "rom-research/13_raw_rom/dbz-lsw-usa.gbc"
+local OUTPUT_DIR = os.getenv("DBZ_LSW_CAPTURE_DIR") or "capture-output"
 local MAX_FRAMES = 600   -- ~10 seconds at 60fps
 local CAPTURE_IDLE_FRAMES = 30  -- Capture 30 frames after action ends
 

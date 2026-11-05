@@ -129,7 +129,7 @@ async function main() {
   captureFrame();
 
   // Write frames as numbered PNGs for ffmpeg
-  const TMP = join(ROOT, '.openclaw', 'tmp', 'gif-frames');
+  const TMP = join(ROOT, '.tmp', 'gif-frames');
   const { mkdirSync, writeFileSync } = await import('fs');
   mkdirSync(TMP, { recursive: true });
 

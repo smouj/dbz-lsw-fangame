@@ -13,7 +13,7 @@ import os
 from pathlib import Path
 from PIL import Image
 
-BASE = Path('/home/local-user/.openclaw/workspace/dbz-lsw-fangame/public/assets/sprites/_output')
+BASE = Path('public/assets/sprites/_output')
 
 AURA_POSES = {'aura_power', 'aura_support'}
 PAD = 1  # Padding en píxeles

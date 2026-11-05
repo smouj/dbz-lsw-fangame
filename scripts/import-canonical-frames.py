@@ -27,7 +27,7 @@ from PIL import Image
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ZIP = os.path.join(
     os.path.dirname(ROOT),  # workspace
-    '.openclaw', 'tmp', 'canonical_frames_official', 'Canonical_Frames_Official')
+    '.tmp', 'canonical_frames_official', 'Canonical_Frames_Official')
 V9 = os.path.join(ROOT, 'sprites-source', 'catalog-v9', 'forms_by_runtime')
 SPRITES = os.path.join(ROOT, 'public', 'assets', 'sprites')
 

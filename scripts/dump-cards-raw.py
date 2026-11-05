@@ -5,7 +5,7 @@ Verifica el rango de bytes de la máscara de compatibilidad con cartas de
 compatibilidad CONOCIDA (wiki incontestable): F.Kamehameha = solo Goku,
 Tail = solo Gohan Kid, Misty KiWave = solo Krillin, Kaio Ken = solo Goku.
 """
-BASE = '/home/local-user/.openclaw/workspace/dbz-lsw-decomp/13_raw_rom/'
+BASE = 'rom-research/13_raw_rom/'
 rom = open(BASE + 'dbz-lsw-usa.gbc', 'rb').read()
 base = 0x44000 + 0x320  # RO11:$4320 físico
 

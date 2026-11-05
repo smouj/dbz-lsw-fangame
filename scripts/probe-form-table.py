@@ -4,7 +4,7 @@
 Si las dos ROMs comparten bytes → estructura (tabla de personajes/formas).
 Si difieren → texto (nombres localizados).
 """
-BASE = '/home/local-user/.openclaw/workspace/dbz-lsw-decomp/13_raw_rom/'
+BASE = 'rom-research/13_raw_rom/'
 
 def bank11(name):
     rom = open(BASE + name, 'rb').read()

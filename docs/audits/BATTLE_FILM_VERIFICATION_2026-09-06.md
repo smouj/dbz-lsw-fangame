@@ -7,7 +7,7 @@
 > `BATTLE_VISUAL_FIDELITY_DIAGNOSIS_2026-09-05.md` (HEAD 251eee81) queda obsoleto como ground
 > truth; este slice lo sustituye con evidencia nueva EN BROWSER.
 >
-> Evidencia cruda: `.openclaw/tmp/battle-film-audit-20260906/` (898 PNG por beat + 13 JSONL
+> Evidencia cruda: `.tmp/battle-film-audit-20260906/` (898 PNG por beat + 13 JSONL
 > con 5.173 samples + `movies-summary.json` + `fine-segments.json` + `summary.json`).
 > CERO cambios en `src/`; `git status --short` solo muestra este informe (ver §9).
 
@@ -19,7 +19,7 @@
    RAM ~4.8G: nada en paralelo; verifies solo secuenciales.
 2. Chromium headless de `~/.cache/ms-playwright/chromium-1228/chrome-linux64/chrome`
    (viewport 1280×720) vía el probe `probe-film.mjs dom|rom [run]` de
-   `.openclaw/tmp/battle-film-audit-20260906/` (reutiliza y extiende los probes del slice previo).
+   `.tmp/battle-film-audit-20260906/` (reutiliza y extiende los probes del slice previo).
 3. Seed de localStorage con la clave REAL `'***'` (UNLOCK_KEY literal,
    `src/data/unlocks.ts`) + `dbzlsw_unlocks` + `dbzlsw_story_progress='1'`
    `{starterDeck:'damage', characters:['gohan_kid','piccolo'], cards:[1,2,3,5,6,7,8,11,29,41,43,88,97,117,119,121,124,125], pendingReward:null}`.
@@ -245,7 +245,7 @@ forms/cartas). Dunk Shot/V-ball/Atomic Break permanecen LEGACY en producción y 
 ## 9. Verificación de entregable
 
 - `git status --short` en HEAD 62001cc1: sin cambios en `src/` (solo este informe nuevo).
-- Evidencia en `.openclaw/tmp/battle-film-audit-20260906/`: 898 PNG por beat
+- Evidencia en `.tmp/battle-film-audit-20260906/`: 898 PNG por beat
   (`dom-r6/r8/r9-act*`, `rom-r1..r4-act*`, nombres `actNN-t{domT}-{offMs}-{acción}.png`),
   13 JSONL (`dom-r*/rom-r*-samples.jsonl`), `movies-summary.json` (segmentación por movie),
   `fine-segments.json` (detalle por tick de las representativas), `summary.json`,

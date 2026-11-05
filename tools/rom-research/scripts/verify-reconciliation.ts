@@ -19,7 +19,7 @@ import { PNG } from 'pngjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 const OUT_DIR = join(ROOT, 'docs/rom/generated/reconciliation');
-const CANONICAL_ROOT = resolve(ROOT, '../.openclaw/tmp/canonical_frames_official/Canonical_Frames_Official');
+const CANONICAL_ROOT = resolve(ROOT, '../.tmp/canonical_frames_official/Canonical_Frames_Official');
 const REQUIRE_RENDER_PROVENANCE = process.env.REQUIRE_RENDER_PROVENANCE === '1';
 
 let failures = 0;

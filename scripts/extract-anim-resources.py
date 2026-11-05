@@ -20,8 +20,8 @@ Verificación contra el análisis: Kamehameha resource=$03 → 6 secuencias × 8
 """
 import json, os, sys
 
-BASE = '/home/local-user/.openclaw/workspace/dbz-lsw-decomp/13_raw_rom/'
-OUT = '/home/local-user/.openclaw/workspace/dbz-lsw-decomp/12_data/cards/rom-anim-resources.json'
+BASE = 'rom-research/13_raw_rom/'
+OUT = 'rom-research/12_data/cards/rom-anim-resources.json'
 
 def bank(n):
     rom = open(BASE + 'dbz-lsw-usa.gbc', 'rb').read()

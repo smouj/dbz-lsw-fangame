@@ -27,7 +27,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 OW_DIR = ROOT / 'public/assets/overworld/panel_sprites'
-DEFAULT_V9 = ROOT.parent / '.openclaw/tmp/v9/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime'
+DEFAULT_V9 = ROOT.parent / '.tmp/v9/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime'
 
 # Formas sin bucket OW en el V9 → comparar contra atomic/ con estos frames
 ATOMIC_FALLBACK = {

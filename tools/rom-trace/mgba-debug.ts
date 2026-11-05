@@ -1,7 +1,7 @@
 // Depuración mínima del driver mGBA: arranca, lee 3 bytes, avanza frame, lee otra vez.
 import { spawn } from 'child_process';
 
-const proc = spawn('xvfb-run', ['-a', '/usr/games/mgba', '-d', '/home/local-user/.openclaw/workspace/dbz-lsw-decomp/13_raw_rom/dbz-lsw-usa.gbc'], { stdio: ['pipe', 'pipe', 'pipe'] });
+const proc = spawn('xvfb-run', ['-a', '/usr/games/mgba', '-d', 'rom-research/13_raw_rom/dbz-lsw-usa.gbc'], { stdio: ['pipe', 'pipe', 'pipe'] });
 let buf = '';
 let log: string[] = [];
 proc.stdout.on('data', (c: Buffer) => { buf += c.toString(); console.log('OUT:', JSON.stringify(c.toString().slice(-200))); });

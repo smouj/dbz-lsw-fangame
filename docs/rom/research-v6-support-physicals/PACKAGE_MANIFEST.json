@@ -16,7 +16,7 @@
     ]
   },
   "rom": {
-    "path": "/home/local-user/.openclaw/workspace/dbz-lsw-decomp/13_raw_rom/dbz-lsw-usa.gbc",
+    "path": "rom-research/13_raw_rom/dbz-lsw-usa.gbc",
     "sha256": "8dab48cc81d14bcee7c73274df09cf5c4dd44c3b93d10a5a3175e04fead25dee"
   },
   "closedInThisSlice": [

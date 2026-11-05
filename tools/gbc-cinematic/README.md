@@ -85,7 +85,7 @@ sesión sí descarga) y pasa el archivo al harness:
 ```bash
 # 1. En tu navegador: abre el longplay y descárgalo (o usa un descargador
 #    con tu sesión). Guarda el .mp4, p.ej. en:
-#    ~/.openclaw/workspace/dbz-lsw-fangame/tools/gbc-cinematic/videos/gbc_longplay_xbuster6.mp4
+#    ./tools/gbc-cinematic/videos/gbc_longplay_xbuster6.mp4
 
 # 2. Extraer clips desde el archivo local:
 python3 tools/gbc-cinematic/extract-clip.py \

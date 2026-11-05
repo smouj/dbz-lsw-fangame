@@ -1,0 +1,54 @@
+name: Bug report
+description: Report a reproducible problem in the game or development tools.
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please search existing issues first. Do not attach ROMs, save files, credentials, or private user data.
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      description: Include the release version or Git commit if known.
+      placeholder: v0.10.0 or commit SHA
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Operating system and relevant Node.js or desktop runtime version.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: List the actions needed to reproduce the issue.
+      placeholder: |
+        1. Open...
+        2. Select...
+        3. Observe...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Logs or screenshots
+      description: Remove personal paths, account data and secrets before sharing.
+    validations:
+      required: false

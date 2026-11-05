@@ -32,7 +32,7 @@ import hashlib
 from pathlib import Path
 from PIL import Image
 
-BASE = Path('/home/local-user/.openclaw/workspace/dbz-lsw-fangame/public/assets/sprites')
+BASE = Path('public/assets/sprites')
 OUTPUT = BASE / '_output'
 EFFECTS = BASE / 'effects'
 

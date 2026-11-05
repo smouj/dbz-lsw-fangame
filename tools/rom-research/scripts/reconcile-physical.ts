@@ -21,7 +21,7 @@ import { createHash } from 'crypto';
 import { PNG } from 'pngjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
-const CANONICAL_ROOT = resolve(ROOT, '../.openclaw/tmp/canonical_frames_official/Canonical_Frames_Official');
+const CANONICAL_ROOT = resolve(ROOT, '../.tmp/canonical_frames_official/Canonical_Frames_Official');
 const ROM_RENDERS = join(ROOT, 'docs/rom/generated/fighters/resource_03');
 const OUT_DIR = join(ROOT, 'docs/rom/generated/reconciliation');
 

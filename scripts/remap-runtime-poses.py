@@ -15,7 +15,7 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parent.parent
 REPO = ROOT / 'public/assets/sprites'
 V9 = ROOT / 'sprites-source/catalog-v9/forms_by_runtime'
-FIXED = ROOT.parent / '.openclaw/tmp/fixed-src'
+FIXED = ROOT.parent / '.tmp/fixed-src'
 BG = {(211, 249, 188), (0, 0, 0)}
 
 POSE_FROM_FIXED = {

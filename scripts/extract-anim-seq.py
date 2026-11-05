@@ -15,8 +15,8 @@ Uso: python3 scripts/extract-anim-seq.py
 """
 import json, os, sys
 
-BASE = '/home/local-user/.openclaw/workspace/dbz-lsw-decomp/13_raw_rom/'
-OUT = '/home/local-user/.openclaw/workspace/dbz-lsw-decomp/12_data/cards/rom-anim-sequences.json'
+BASE = 'rom-research/13_raw_rom/'
+OUT = 'rom-research/12_data/cards/rom-anim-sequences.json'
 
 # Ground truth del análisis (ticks totales por secuencia de técnica conocida)
 KNOWN = {

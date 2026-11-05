@@ -43,7 +43,7 @@ import { readFileSync } from 'fs';
 import { resolve } from 'path';
 
 const ROM_DEFAULT =
-  '/home/local-user/.openclaw/media/inbound/Dragon_Ball_Z_-_Guerreros_de_Leyenda_Spain---c05adf5e-bff6-45b8-a5fb-f8e340113eaa.gbc';
+  'rom-research/13_raw_rom/dbz-lsw-spain.gbc';
 const ROM = process.env.ROM_PATH ?? ROM_DEFAULT;
 
 // Bank layout: qué banco aloja cada rango de resourceId.

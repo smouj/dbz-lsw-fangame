@@ -1,4 +1,4 @@
-# DBZLSW Online Design System
+# DBZ LSW Fangame Design System
 
 Direction: Neo-GBC / Dragon Ball Pixel 32-bit.
 

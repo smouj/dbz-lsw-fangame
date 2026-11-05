@@ -32,7 +32,7 @@ Clasificación heurística (best-effort, documentada en REPORT):
 
 Uso:
   python3 scripts/extract-canonical-sheets.py \
-      "/mnt/c/Users/local-user/Desktop/Sheets_Canonic_Characters_DBZ" \
+      "./Sheets_Canonic_Characters_DBZ" \
       [--out OUT] [--canvas 64]
 """
 import argparse

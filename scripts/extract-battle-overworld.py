@@ -26,8 +26,8 @@ from pathlib import Path
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parent.parent
-V6 = ROOT / '.openclaw/tmp/v6src/DBZ_LSW_SPRITES_RECUT_V6_CANONICAL/characters'
-SRC = ROOT / '.openclaw/tmp/v6src/DBZ_LSW_SPRITES_RECUT_V6_CANONICAL/source_sheets_png_transparent'
+V6 = ROOT / '.tmp/v6src/DBZ_LSW_SPRITES_RECUT_V6_CANONICAL/characters'
+SRC = ROOT / '.tmp/v6src/DBZ_LSW_SPRITES_RECUT_V6_CANONICAL/source_sheets_png_transparent'
 OUT = ROOT / 'public/assets/overworld/battle'
 
 # (sheet, char_v6, form_v6) → (char, form) de nuestro proyecto

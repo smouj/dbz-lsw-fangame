@@ -18,6 +18,21 @@ public/release/
 .openclaw_tmp_dev.log
 openclaw-workspace-state.json
 
+# Personal assistant memory and workspace notes must not be versioned.
+/DREAMS.md
+/IDENTITY.md
+/MEMORY.md
+/REDDIT_POST.md
+/SOUL.md
+/USER.md
+/memory/
+
+# Local research inputs and exports.
+/rom-research/
+/capture-output/
+/exports/
+/OUT_frames/
+
 # ───────────────────────────────────────────────────────────────────────
 # Assets ROM regenerables (fuente = ROM + extractor + código).
 # Regenerar con: npm run gen:rom-runtime-assets

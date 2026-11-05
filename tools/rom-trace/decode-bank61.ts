@@ -1,6 +1,6 @@
 // Decodifica resources del bank 0x61 (Gohan/Piccolo) → entradas de catálogo R2.3
 import { readFileSync, writeFileSync } from 'fs';
-const ROM = readFileSync('/home/local-user/.openclaw/workspace/dbz-lsw-decomp/13_raw_rom/dbz-lsw-usa.gbc');
+const ROM = readFileSync('rom-research/13_raw_rom/dbz-lsw-usa.gbc');
 const BANK = 0x61;
 const off = BANK * 0x4000;
 const u16 = (a: number) => ROM[off + (a & 0x3fff)] | (ROM[off + ((a + 1) & 0x3fff)] << 8);

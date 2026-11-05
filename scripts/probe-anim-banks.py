@@ -5,7 +5,7 @@ Busca la tabla de punteros que mapea resourceIndex → dirección del recurso
 dentro de los bancos de animación. Según el análisis: byte+06 de la carta se
 transforma en `$62 + bankOffset, resourceIndex`.
 """
-BASE = '/home/local-user/.openclaw/workspace/dbz-lsw-decomp/13_raw_rom/'
+BASE = 'rom-research/13_raw_rom/'
 rom = open(BASE + 'dbz-lsw-usa.gbc', 'rb').read()
 
 def bank(n):

@@ -18,7 +18,7 @@ import numpy as np
 ROOT = Path(__file__).resolve().parent.parent
 SPRITES = ROOT / 'public' / 'assets' / 'sprites'
 V9 = ROOT / 'sprites-source' / 'catalog-v9' / 'forms_by_runtime'
-OUT = Path('/mnt/c/Users/local-user/Desktop/Sheets_Canonic_Characters_DBZ/OUT_frames')
+OUT = Path(os.environ.get('DBZ_LSW_OUT_FRAMES', str(ROOT / 'OUT_frames'))).expanduser()
 
 # ── canon_form → sheet OUT (sheet correcto de cada personaje) ──
 CANON_TO_SHEET = {

@@ -37,8 +37,8 @@ import sys
 from pathlib import Path
 
 ROOTS = [
-    Path('/home/local-user/.openclaw/workspace/.openclaw/tmp/v9/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime'),
-    Path('/home/local-user/.openclaw/workspace/dbz-lsw-fangame/sprites-source/catalog-v9/forms_by_runtime'),
+    Path('generated/sprites/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime'),
+    Path('./sprites-source/catalog-v9/forms_by_runtime'),
 ]
 
 # forma -> {old -> new}

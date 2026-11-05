@@ -24,7 +24,10 @@ fn valid_repo(path: &Path) -> bool {
         return false;
     }
     std::fs::read_to_string(path.join("package.json"))
-        .map(|content| content.contains("\"name\": \"dbz-lsw-fangame\""))
+        .map(|content| {
+            content.contains("\"name\": \"dbz-lsw-fangame\"")
+                || content.contains("\"name\": \"dbz-lsw-fangame\"")
+        })
         .unwrap_or(false)
 }
 
@@ -58,9 +61,15 @@ fn resolve_repo(requested: Option<String>) -> Result<PathBuf, String> {
     let mut candidates = vec![
         PathBuf::from(r"D:\CodexProjects\dbz-lsw-fangame"),
         PathBuf::from(r"C:\CodexProjects\dbz-lsw-fangame"),
+        PathBuf::from(r"D:\CodexProjects\dbz-lsw-fangame"),
+        PathBuf::from(r"C:\CodexProjects\dbz-lsw-fangame"),
     ];
     if let Ok(home) = env::var("USERPROFILE").or_else(|_| env::var("HOME")) {
         let home = PathBuf::from(home);
+        candidates.push(home.join("CodexProjects").join("dbz-lsw-fangame"));
+        candidates.push(home.join("workspace").join("dbz-lsw-fangame"));
+        candidates.push(home.join("Documents").join("dbz-lsw-fangame"));
+        candidates.push(home.join("Documents").join("Playground").join("dbz-lsw-fangame"));
         candidates.push(home.join("CodexProjects").join("dbz-lsw-fangame"));
         candidates.push(home.join("workspace").join("dbz-lsw-fangame"));
         candidates.push(home.join("Documents").join("dbz-lsw-fangame"));
@@ -157,7 +166,7 @@ fn launch_wsl() -> Result<(), String> {
     let mut process = Command::new("wsl.exe");
     process.args([
         "-e", "bash", "-lc",
-        "cd ~/workspace/dbz-lsw-fangame 2>/dev/null || cd ~/dbz-lsw-fangame 2>/dev/null || cd ~; exec bash",
+        "cd ~/workspace/dbz-lsw-fangame 2>/dev/null || cd ~/dbz-lsw-fangame 2>/dev/null || cd ~/workspace/dbz-lsw-fangame 2>/dev/null || cd ~/dbz-lsw-fangame 2>/dev/null || cd ~; exec bash",
     ]);
     process.creation_flags(CREATE_NEW_CONSOLE);
     process.spawn().map(|_| ()).map_err(|error| format!("No se pudo abrir WSL: {error}"))

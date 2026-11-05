@@ -5,7 +5,7 @@ La tabla de offsets RO11:$4B00 (49×2 bytes) apunta a nombres cortos
 (offsets 0x62-0x16B). Los nombres deben estar al inicio del banco 11
 (slice 0x60-0x180). En la Spain serán legibles (español/ASCII o charset).
 """
-BASE = '/home/local-user/.openclaw/workspace/dbz-lsw-decomp/13_raw_rom/'
+BASE = 'rom-research/13_raw_rom/'
 
 def bank11(name):
     rom = open(BASE + name, 'rb').read()

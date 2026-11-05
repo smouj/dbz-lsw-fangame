@@ -1,0 +1,36 @@
+name: Feature request
+description: Propose a player-facing or developer-facing improvement.
+title: "[Feature]: "
+labels: ["enhancement", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please search existing issues first. For a substantial change, describe the problem before proposing implementation details.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or opportunity
+      description: What should be easier, clearer, or possible?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: Describe the outcome you would like to see.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+    validations:
+      required: false
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Context or references
+      description: Include relevant project docs or screenshots. Do not attach ROMs or private data.
+    validations:
+      required: false

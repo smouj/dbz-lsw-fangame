@@ -1,26 +1,12 @@
-# Screenshots — historical reference set
+# Screenshots
 
-The PNG files in this directory are retained as **historical UI captures from the 2026-08-31 build**.
+The current reference set is embedded in the root [README](../../README.md):
 
-They are not the current visual source of truth. The game UI, battle presentation and desktop/offline architecture have continued to change since these captures were produced.
+- **game-menu.png** — game menu and story entry point.
+- **game-setup.png** — team, character, form and deck setup.
+- **gameplay-battle.png** — an in-game battle.
+- **dev-workspace.png** — the Development Studio workspace editor.
 
-Current files:
+These captures are from the current game source snapshot and are intended to show the real interface, not mockups. The older August 2026 captures remain in [archive/2026-08-31](archive/2026-08-31/) for historical comparison only.
 
-```text
-menu.png
-story.png
-versus.png
-battle.png
-characters.png
-deck.png
-cards.png
-settings.png
-```
-
-## Usage rule
-
-Do not embed this set in the root README or external project pages as if it represented the current build.
-
-A replacement set should be captured from a release-like build and updated as one coherent batch so menu, story, setup, battle, characters, deck, cards and settings all represent the same commit/environment.
-
-Until that happens, these images are useful only for historical comparison and regression/reference work.
+When refreshing the current set, capture all images from the same source revision, use a consistent viewport, and verify that each image shows a fully rendered screen without personal paths or local account data.

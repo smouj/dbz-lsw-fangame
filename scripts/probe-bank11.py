@@ -6,7 +6,7 @@ legible confirma qué tabla es qué.
 """
 import string
 
-BASE = '/home/local-user/.openclaw/workspace/dbz-lsw-decomp/13_raw_rom/'
+BASE = 'rom-research/13_raw_rom/'
 
 def bank11(rom_name):
     rom = open(BASE + rom_name, 'rb').read()

@@ -42,7 +42,7 @@ resolvers apuntan SOLO ahí. Verificado por `audit:sprites`, `audit:sheets` y
    `goku-super-saiyan-2.png`/`ginyu-gokus-body.png` construidos desde
    `fixed_only/` (formas FIXED-only sin atomic sheet). Los viejos
    snake_case + card-icons + mini-portraits se movieron a trash
-   (`.openclaw/tmp/sheet-trash-20260817`).
+   (`.tmp/sheet-trash-20260817`).
 6. **Completitud canónica V9 (2026-08-17)** — 14 frames añadidos a
    `forms_by_runtime/` (en tmp y en `sprites-source/catalog-v9/`) para que
    TODAS las formas tengan el patrón OW/aura como las bien configuradas:

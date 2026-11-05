@@ -7,7 +7,7 @@ Regiones detectadas:
   0x0B62 ($4B62) listas 0x00-terminadas de IDs
 Imprime todo con interpretación.
 """
-BASE = '/home/local-user/.openclaw/workspace/dbz-lsw-decomp/13_raw_rom/'
+BASE = 'rom-research/13_raw_rom/'
 rom = open(BASE + 'dbz-lsw-usa.gbc', 'rb').read()
 b = rom[0x11 * 0x4000: 0x12 * 0x4000]
 

@@ -3,12 +3,15 @@
 # Usage: ./scripts/dev-server.sh [start|stop|restart|status|log]
 
 PORT=5178
-DIR="/home/local-user/.openclaw/workspace/dbz-lsw-fangame"
-LOG="/home/local-user/.openclaw/tmp/vite-dev.log"
-PIDFILE="/home/local-user/.openclaw/tmp/vite-dev.pid"
+SCRIPT_DIR="$(cd -- "$(dirname -- "$0")" && pwd)"
+DIR="$(dirname "$SCRIPT_DIR")"
+STATE_DIR="$DIR/.tmp"
+LOG="$STATE_DIR/vite-dev.log"
+PIDFILE="$STATE_DIR/vite-dev.pid"
 
 case "$1" in
   start)
+    mkdir -p "$STATE_DIR"
     if [ -f "$PIDFILE" ] && kill -0 "$(cat "$PIDFILE")" 2>/dev/null; then
       echo "Dev server already running (PID $(cat "$PIDFILE"))"
       echo "  http://localhost:$PORT/"

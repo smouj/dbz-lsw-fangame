@@ -125,7 +125,7 @@ const DevStudio: React.ComponentType<DevStudioProps> | null = import.meta.env.MO
 import { isDevRoute } from './devtools/route';
 
 // ═══════════════════════════════════════════════════════════
-// DBZ LSW Fangame — Estilo Magazine GBC Auténtico
+// DBZ LSW FANGAME — Estilo Magazine GBC Auténtico
 // Sprites reales, mecánicas fieles, pixel art nítido, 10 idiomas
 // ═══════════════════════════════════════════════════════════
 

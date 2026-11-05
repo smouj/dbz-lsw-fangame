@@ -5,7 +5,7 @@ import { createHash } from 'node:crypto';
 import createSameBoyHarness from './out/sameboy_harness.mjs';
 
 const ROM_PATH = process.env.ROM_PATH
-  || '/home/local-user/.openclaw/workspace/dbz-lsw-decomp/13_raw_rom/dbz-lsw-spain.gbc';
+  || 'rom-research/13_raw_rom/dbz-lsw-spain.gbc';
 const SPAIN_SHA = 'bd1df5d6653be9e262f96db3bcdd7bb8ae0cad6186c16f8c1e8eba3f091c8804';
 
 const results = [];

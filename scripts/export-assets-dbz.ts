@@ -1,6 +1,6 @@
 // ═══════════════════════════════════════════════════════════════════════
 // EXPORT Assets_DBZ v2 — organiza TODOS los assets por personaje en
-// [local-user]\Desktop\Assets_DBZ\ (o destino indicado por --out)
+// exports/Assets_DBZ/ (o destino indicado por --out)
 //
 // Estructura por personaje (orden del roster):
 //   NN_Nombre/
@@ -62,7 +62,7 @@ const PUB = join(ROOT, 'public', 'assets');
 // ─── Destino ───────────────────────────────────────────────────────────
 const OUT = process.argv.includes('--out')
   ? process.argv[process.argv.indexOf('--out') + 1]
-  : '/mnt/c/Users/local-user/Desktop/Assets_DBZ';
+  : join(ROOT, 'exports', 'Assets_DBZ');
 
 // Alias de personajes para mini/menu portraits (el roster usa gohan_kid/
 // gohan_adult/trunks_kid/trunks_future pero los mapas de iconos usan

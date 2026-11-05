@@ -151,20 +151,24 @@ export function ValidationModule() {
       `${fxCorpus.offensiveFxResources}/28 FXResource · ${fxCorpus.paletteBundles} FX/palette · ${fxCorpus.sideMapsByResource}/56 SIDE maps · ${fxCorpus.sidePhaseRenders} renders · errors ${fxCorpus.errors}`,
     );
     pass('P0.1A FX: Support/category-specific resources excluded from offensive promotion', fxCorpus.supportOrCategorySpecificResources === 3 && fxCorpus.supportVisuals === 'SEPARATE_DOMAIN', `${fxCorpus.supportOrCategorySpecificResources} separate · ${fxCorpus.supportVisuals}`);
-    pass(
-      'P0.1B ROM FX window contract is static-complete (dynamic still pending)',
-      fxCorpus.runtimeStaticComplete === 28
-        && fxCorpus.runtimeDynamicComplete === 0
-        && fxCorpus.runtimeWindowComplete === 0
-        && fxCorpus.runtimeWindowPartial === 0
-        && fxCorpus.runtimeWindowCues === 39
-        && fxCorpus.runtimeCards === 38
-        && fxCorpus.runtimeDistributionErrors === 0
-        && fxCorpus.runtimeSideSelectionComplete === 76
-        && fxCorpus.runtimeSideSelectionPending === 0
-        && fxCorpus.runtimeSilentFallback === 0,
-      `STATIC_COMPLETE ${fxCorpus.runtimeStaticComplete}/28 · COMPLETE ${fxCorpus.runtimeWindowComplete}/28 · ${fxCorpus.runtimeWindowCues} windows/${fxCorpus.runtimeCards} cards · distribution errors ${fxCorpus.runtimeDistributionErrors} · side selection ${fxCorpus.runtimeSideSelectionComplete}/${fxCorpus.runtimeSideSelectionPending} static · silent fallback ${fxCorpus.runtimeSilentFallback}`,
-    );
+    if (!fxCorpus.runtimeCutoverAvailable) {
+      info('P0.1B ROM FX window contract', 'datos runtime no generados en este checkout; para generarlos, usa npm run gen:rom-runtime-assets con una ROM local autorizada');
+    } else {
+      pass(
+        'P0.1B ROM FX window contract is static-complete (dynamic still pending)',
+        fxCorpus.runtimeStaticComplete === 28
+          && fxCorpus.runtimeDynamicComplete === 0
+          && fxCorpus.runtimeWindowComplete === 0
+          && fxCorpus.runtimeWindowPartial === 0
+          && fxCorpus.runtimeWindowCues === 39
+          && fxCorpus.runtimeCards === 38
+          && fxCorpus.runtimeDistributionErrors === 0
+          && fxCorpus.runtimeSideSelectionComplete === 76
+          && fxCorpus.runtimeSideSelectionPending === 0
+          && fxCorpus.runtimeSilentFallback === 0,
+        `STATIC_COMPLETE ${fxCorpus.runtimeStaticComplete}/28 · COMPLETE ${fxCorpus.runtimeWindowComplete}/28 · ${fxCorpus.runtimeWindowCues} windows/${fxCorpus.runtimeCards} cards · distribution errors ${fxCorpus.runtimeDistributionErrors} · side selection ${fxCorpus.runtimeSideSelectionComplete}/${fxCorpus.runtimeSideSelectionPending} static · silent fallback ${fxCorpus.runtimeSilentFallback}`,
+      );
+    }
     info('P0.1C-E Support/Aura state', `support visuals ${fxCorpus.supportVisuals} · support aura ${fxCorpus.supportAuraBlue} · gather aura ${fxCorpus.gatherPowerAuraOrange}`);
     const physicalMapping = snap.physicalMapping;
     pass('P0.3C ProductionFrameResolver: physical mapping explícito', physicalMapping.physicalMapping.romInstancesMapped === physicalMapping.physicalMapping.romInstancesTotal && physicalMapping.physicalMapping.unresolved === 0, `${physicalMapping.physicalMapping.romInstancesMapped}/${physicalMapping.physicalMapping.romInstancesTotal} mapped · unresolved ${physicalMapping.physicalMapping.unresolved}`);

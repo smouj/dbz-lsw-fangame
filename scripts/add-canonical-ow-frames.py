@@ -28,10 +28,10 @@ from pathlib import Path
 from PIL import Image
 
 ROOTS = [
-    Path('/home/local-user/.openclaw/workspace/.openclaw/tmp/v9/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime'),
-    Path('/home/local-user/.openclaw/workspace/dbz-lsw-fangame/sprites-source/catalog-v9/forms_by_runtime'),
+    Path('generated/sprites/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime'),
+    Path('./sprites-source/catalog-v9/forms_by_runtime'),
 ]
-RUNTIME = Path('/home/local-user/.openclaw/workspace/dbz-lsw-fangame/public/assets')
+RUNTIME = Path('public/assets')
 
 # ── plan: form -> list of (new_frame, source, bucket, note) ──
 # source: ('copy', path) | ('runtime', relpath) | ('gen', owwalk, tile) | ('reclass', new_bucket)

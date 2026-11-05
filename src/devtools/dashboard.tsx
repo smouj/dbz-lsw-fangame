@@ -76,7 +76,7 @@ export function DashboardModule({ onNavigate }: { onNavigate: (m: DevModuleId) =
     cards.count !== cards.total,
     physicalMapping.cards.mixed > 0,
     fxCorpus.errors > 0,
-    fxCorpus.runtimeDistributionErrors > 0,
+    fxCorpus.runtimeCutoverAvailable && (fxCorpus.runtimeDistributionErrors ?? 0) > 0,
     romTiming.missingDurationTicks > 0,
     romTiming.sequenceBoundaryErrors > 0,
   ].filter(Boolean).length;
@@ -129,13 +129,15 @@ export function DashboardModule({ onNavigate }: { onNavigate: (m: DevModuleId) =
     {
       title: 'FX y soporte ROM',
       icon: Layers3,
-      status: fxCorpus.errors === 0 && fxCorpus.runtimeDistributionErrors === 0 ? 'ok' : 'warn',
-      summary: `Fase ${fxCorpus.phase} (P0.1A offensive FX); offensive FX, windows runtime y support/defense desde registros generados.`,
+      status: !fxCorpus.runtimeCutoverAvailable ? 'info' : fxCorpus.errors === 0 && fxCorpus.runtimeDistributionErrors === 0 ? 'ok' : 'warn',
+      summary: !fxCorpus.runtimeCutoverAvailable
+        ? 'La vista está disponible; las métricas runtime requieren generar los datos ROM locales.'
+        : `Fase ${fxCorpus.phase} (P0.1A offensive FX); offensive FX, windows runtime y support/defense desde registros generados.`,
       stats: [
         { label: 'Offensive FX', value: fxCorpus.offensiveFxResources, total: 28, status: fxCorpus.offensiveFxResources === 28 ? 'ok' : 'warn', progress: pct(fxCorpus.offensiveFxResources, 28) },
-        { label: 'Runtime cards', value: fxCorpus.runtimeCards, status: 'ok', hint: `${fxCorpus.runtimeWindowCues} window cues` },
+        { label: 'Runtime cards', value: fxCorpus.runtimeCards ?? '—', status: fxCorpus.runtimeCutoverAvailable ? 'ok' : 'info', hint: fxCorpus.runtimeCutoverAvailable ? `${fxCorpus.runtimeWindowCues} window cues` : 'Genera ROM FX runtime localmente' },
         { label: 'Static complete', value: fxCorpus.runtimeStaticComplete, total: 28, status: fxCorpus.runtimeStaticComplete === 28 ? 'ok' : 'info', progress: pct(fxCorpus.runtimeStaticComplete, 28) },
-        { label: 'Distribution errors', value: fxCorpus.runtimeDistributionErrors, status: fxCorpus.runtimeDistributionErrors === 0 ? 'ok' : 'warn' },
+        { label: 'Distribution errors', value: fxCorpus.runtimeDistributionErrors ?? '—', status: !fxCorpus.runtimeCutoverAvailable ? 'info' : fxCorpus.runtimeDistributionErrors === 0 ? 'ok' : 'warn' },
       ],
       action: { label: 'Abrir ROM Display', module: 'romdisplay' },
     },

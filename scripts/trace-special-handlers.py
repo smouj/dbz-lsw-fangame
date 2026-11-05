@@ -15,7 +15,7 @@ import sys, os
 sys.path.insert(0, os.path.dirname(__file__))
 from z80dis import Dis
 
-ROM = '/home/local-user/.openclaw/workspace/dbz-lsw-decomp/13_raw_rom/dbz-lsw-usa.gbc'
+ROM = 'rom-research/13_raw_rom/dbz-lsw-usa.gbc'
 BANK = 3
 
 def load_bank(bank):
